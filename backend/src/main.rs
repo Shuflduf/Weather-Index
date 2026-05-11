@@ -17,7 +17,7 @@ async fn index(_conn: &State<DatabaseConnection>) -> String {
 async fn create_game_run(db: &State<DatabaseConnection>, data: Json<game_run::Model>) -> String {
     let game_run = game_run::ActiveModel {
         end_state: Set(data.end_state.clone()),
-        created_at: Set(chrono::Utc::now().naive_utc()),
+        upload_time: Set(chrono::Utc::now().naive_utc()),
         ..Default::default()
     };
 
