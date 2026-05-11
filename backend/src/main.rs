@@ -1,9 +1,9 @@
 #[macro_use]
 extern crate rocket;
 
-use rocket::State;
-use sea_orm::{DatabaseConnection, ActiveModelTrait, Set};
 use entity::game_run;
+use rocket::State;
+use sea_orm::{ActiveModelTrait, DatabaseConnection, Set};
 
 mod db;
 mod entity;
@@ -33,5 +33,7 @@ async fn rocket() -> _ {
 
     let db = db::init_db().await.expect("Failed to initialize database");
 
-    rocket::build().manage(db).mount("/", routes![index, create_game_run])
+    rocket::build()
+        .manage(db)
+        .mount("/", routes![index, create_game_run])
 }
