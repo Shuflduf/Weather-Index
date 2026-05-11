@@ -2,7 +2,7 @@
 extern crate rocket;
 
 use entity::game_run;
-use rocket::State;
+use rocket::{serde::json::Json, State};
 use sea_orm::{ActiveModelTrait, DatabaseConnection, Set};
 
 mod db;
@@ -13,10 +13,10 @@ async fn index(_conn: &State<DatabaseConnection>) -> String {
     "hello".into()
 }
 
-#[post("/game-run/<name>")]
-async fn create_game_run(db: &State<DatabaseConnection>, name: String) -> String {
+#[post("/new-run", data = "<data>")]
+async fn create_game_run(db: &State<DatabaseConnection>, data: Json<game_run::Model>) -> String {
     let game_run = game_run::ActiveModel {
-        name: Set(name),
+        name: Set(data.name.clone()),
         created_at: Set(chrono::Utc::now().naive_utc()),
         ..Default::default()
     };

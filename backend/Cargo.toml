@@ -8,10 +8,10 @@ chrono = { version = "0.4", features = ["serde"] }
 dotenvy = "0.15"
 rocket = { version = "0.5.1", features = ["json"] }
 sea-orm = { version = "2.0.0-rc", features = [
-  "schema-sync",
   "entity-registry",
   "macros",
   "runtime-tokio-native-tls",
+  "schema-sync",
   "sqlx-postgres",
   "with-chrono"
 ] }
