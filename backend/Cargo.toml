@@ -1,0 +1,18 @@
+[package]
+name = "rordb-backend"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+chrono = { version = "0.4", features = ["serde"] }
+dotenvy = "0.15"
+rocket = { version = "0.5.1", features = ["json"] }
+sea-orm = { version = "1.1.20", features = [
+  "macros",
+  "runtime-tokio-native-tls",
+  "sqlx-postgres",
+  "with-chrono"
+] }
+sea-orm-migration = "1.1.20"
+serde = { version = "1.0", features = ["derive"] }
+tokio = { version = "1", features = ["full"] }
