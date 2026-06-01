@@ -37,6 +37,7 @@ pub struct Model {
     pub upload_time: DateTime,
 
     // run info
+    pub survivor: String,
     pub end_time: DateTime,
     pub end_state: EndState,
     pub difficuly: Difficulty,
