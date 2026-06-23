@@ -1,9 +1,9 @@
-﻿
-using BepInEx;
+﻿using BepInEx;
 using R2API;
 using RoR2;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using BepInEx.Configuration;
 
 namespace WeatherIndex
 {
@@ -44,12 +44,20 @@ namespace WeatherIndex
 
         // We need our item definition to persist through our functions, and therefore make it a class field.
         private static ItemDef myItemDef;
+        private static ConfigEntry<KeyboardShortcut> endRunKeybind;
 
         // The Awake() method is run at the very start when the game is initialized.
         public void Awake()
         {
             // Init our logging class so that we can properly log for debugging
             Log.Init(Logger);
+
+            Run.onClientGameOverGlobal += (Run run, RunReport report) =>
+            {
+                Log.Info(report);
+            };
+
+            endRunKeybind = Config.Bind<KeyboardShortcut>("Debug", "End Run", new KeyboardShortcut(KeyCode.F10), "fucking");
 
             // First let's define our item
             myItemDef = ScriptableObject.CreateInstance<ItemDef>();
@@ -128,6 +136,12 @@ namespace WeatherIndex
         // The Update() method is run on every frame of the game.
         private void Update()
         {
+
+            if (Run.instance && endRunKeybind.Value.IsDown())
+            {
+                RoR2.Console.instance.SubmitCmd(null, "run_end");
+            }
+
             // This if statement checks if the player has currently pressed F2.
             if (Input.GetKeyDown(KeyCode.F2))
             {
