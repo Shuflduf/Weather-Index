@@ -1,4 +1,5 @@
-﻿using BepInEx;
+﻿
+using BepInEx;
 using R2API;
 using RoR2;
 using UnityEngine;
@@ -37,8 +38,8 @@ namespace WeatherIndex
         // we will deprecate this mod.
         // Change the PluginAuthor and the PluginName !
         public const string PluginGUID = PluginAuthor + "." + PluginName;
-        public const string PluginAuthor = "AuthorName";
-        public const string PluginName = "ExamplePlugin";
+        public const string PluginAuthor = "Shuflduf";
+        public const string PluginName = "WeatherIndex";
         public const string PluginVersion = "1.0.0";
 
         // We need our item definition to persist through our functions, and therefore make it a class field.
@@ -141,4 +142,3 @@ namespace WeatherIndex
         }
     }
 }
-

@@ -1,16 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.1</TargetFramework>
+		<LangVersion>preview</LangVersion>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
-    <RestoreAdditionalProjectSources>
+        <RestoreAdditionalProjectSources>
 			https://api.nuget.org/v3/index.json;
 			https://nuget.bepinex.dev/v3/index.json
 		</RestoreAdditionalProjectSources>
-  </PropertyGroup>
-
+	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="BepInEx.Analyzers" Version="1.0.*">
