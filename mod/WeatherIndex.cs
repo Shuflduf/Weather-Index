@@ -60,29 +60,45 @@ namespace WeatherIndex
                 var stats = player.statSheet;
                 var info = new
                 {
-                    ending = report.gameEnding.cachedName,
+                    // run info
                     survivor = player.bodyName,
+                    ending = report.gameEnding.cachedName,
+                    difficulty = DifficultyCatalog.GetDifficultyDef(report.ruleBook.FindDifficulty()).nameToken,
                     timeAlive = stats.GetStatValueAsDouble(StatDef.totalTimeAlive),
+                    stagesCompleted = stats.GetStatValueULong(StatDef.totalStagesCompleted),
+
+                    // items
+                    itemsCollected = stats.GetStatValueULong(StatDef.totalItemsCollected),
+
+                    // drones
+                    dronesPurchased = stats.GetStatValueULong(StatDef.totalDronesPurchased),
+                    turretsPurchased = stats.GetStatValueULong(StatDef.totalTurretsPurchased),
+
+                    // combat
                     kills = stats.GetStatValueULong(StatDef.totalKills),
                     eliteKills = stats.GetStatValueULong(StatDef.totalEliteKills),
                     minionKills = stats.GetStatValueULong(StatDef.totalMinionKills),
                     deaths = stats.GetStatValueULong(StatDef.totalDeaths),
+
+                    // damage
                     damageDealt = stats.GetStatValueULong(StatDef.totalDamageDealt),
                     minionDamageDealt = stats.GetStatValueULong(StatDef.totalMinionDamageDealt),
                     highestDamageDealt = stats.GetStatValueULong(StatDef.highestDamageDealt),
                     damageTaken = stats.GetStatValueULong(StatDef.totalDamageTaken),
+
+                    // healing
+                    healingRecieved = stats.GetStatValueULong(StatDef.totalHealthHealed),
+
+                    // progression
                     highestLevel = stats.GetStatValueULong(StatDef.highestLevel),
                     goldCollected = stats.GetStatValueULong(StatDef.goldCollected),
                     goldSpent = stats.GetStatValueULong(StatDef.totalGoldPurchases),
-                    stagesCompleted = stats.GetStatValueULong(StatDef.totalStagesCompleted),
-                    itemsCollected = stats.GetStatValueULong(StatDef.totalItemsCollected),
+                    lunarCoinsSpent = stats.GetStatValueULong(StatDef.totalLunarPurchases),
                     purchases = stats.GetStatValueULong(StatDef.totalPurchases),
+                    bloodPurchases = stats.GetStatValueULong(StatDef.totalBloodPurchases),
+
+                    // movement
                     distanceTraveled = stats.GetStatValueAsDouble(StatDef.totalDistanceTraveled),
-                    healingRecieved = stats.GetStatValueULong(StatDef.totalHealthHealed),
-                    dronesPurchased = stats.GetStatValueULong(StatDef.totalDronesPurchased),
-                    turretsPurchased = stats.GetStatValueULong(StatDef.totalTurretsPurchased),
-
-
                 };
                 var json = JsonConvert.SerializeObject(info, Formatting.Indented, new JsonSerializerSettings
                 {
