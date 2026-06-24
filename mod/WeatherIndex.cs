@@ -63,6 +63,7 @@ namespace WeatherIndex
                     // run info
                     survivor = player.bodyName,
                     ending = report.gameEnding.cachedName,
+                    startTime = report.runStartTimeUtc,
                     difficulty = DifficultyCatalog.GetDifficultyDef(report.ruleBook.FindDifficulty()).nameToken,
                     timeAlive = stats.GetStatValueAsDouble(StatDef.totalTimeAlive),
                     stagesCompleted = stats.GetStatValueULong(StatDef.totalStagesCompleted),
@@ -98,7 +99,7 @@ namespace WeatherIndex
                     bloodPurchases = stats.GetStatValueULong(StatDef.totalBloodPurchases),
 
                     // movement
-                    distanceTraveled = stats.GetStatValueAsDouble(StatDef.totalDistanceTraveled),
+                    distanceTraveledMetres = stats.GetStatValueAsDouble(StatDef.totalDistanceTraveled),
                 };
                 var json = JsonConvert.SerializeObject(info, Formatting.Indented, new JsonSerializerSettings
                 {

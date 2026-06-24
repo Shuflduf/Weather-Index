@@ -7,11 +7,11 @@ use serde::Deserialize;
     db_type = "String(StringLen::None)",
     rename_all = "PascalCase"
 )]
-pub enum EndState {
+pub enum Ending {
     Won,
     Lost,
-    Obliterated,
-    SuccumbedToTheVoid,
+    Limbo,
+    Obliteration,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Deserialize, DeriveActiveEnum, EnumIter)]
@@ -38,57 +38,60 @@ pub struct Model {
 
     // run info
     pub survivor: String,
-    pub end_time: DateTime,
-    pub end_state: EndState,
+    pub start_time: DateTime,
+    pub ending: Ending,
     pub difficuly: Difficulty,
     pub eclipse_level: Option<u8>,
     pub time_alive_seconds: u32,
-    pub run_time_seconds: u32,
     pub stages_complete: u16,
+    // pub run_time_seconds: u32,
 
     // items
-    pub items_picked_up: u16,
-    pub items_scrapped: u16,
-    pub chests_left_behind: u16,
+    pub items_collected: u16,
+    // pub items_scrapped: u16,
+    // pub chests_left_behind: u16,
 
     // drones
-    pub drones_repaired: u16,
-    pub drones_scrapped: u16,
-    pub drone_deaths: u32,
-    pub drones_left_behind: u16,
+    pub drones_purchased: u16,
+    pub turrets_purchased: u16,
+    // pub drones_scrapped: u16,
+    // pub drone_deaths: u32,
+    // pub drones_left_behind: u16,
 
     // combat
     pub kills: u32,
+    pub elite_kills: u32,
     pub minion_kills: u16,
     pub deaths: u32,
 
     // damage
     pub damage_dealt: u64,
     pub minion_damage_dealt: u64,
+    // pub minion_damage_taken: u64,
     pub damage_taken: u64,
-    pub minion_damage_taken: u64,
-    pub damage_dealt_over_time: u64,
-    pub highest_damage_hit: u64,
-    pub damage_blocked: u32,
+    // pub damage_dealt_over_time: u64,
+    pub highest_damage_dealt: u64,
+    // pub damage_blocked: u32,
 
     // healing
     pub healing_recieved: u64,
-    pub minion_healing_recieved: u64,
+    // pub minion_healing_recieved: u64,
 
     // progression
-    pub purchases: u16,
-    pub gold_collected: u64,
-    pub lunar_coins_spent: u32,
-    pub blood_purchases: u16,
     pub highest_level: u16,
+    pub gold_collected: u64,
+    pub gold_spent: u64,
+    pub lunar_coins_spent: u32,
+    pub purchases: u16,
+    pub blood_purchases: u16,
 
     // movement
     pub distance_traveled_metres: u32,
-    pub jumps: u32,
+    // pub jumps: u32,
 
     // abilities
-    pub equipment_activations: u16,
-    pub skill_activations: u16,
+    // pub equipment_activations: u16,
+    // pub skill_activations: u16,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
