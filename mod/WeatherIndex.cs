@@ -4,6 +4,8 @@ using RoR2;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using BepInEx.Configuration;
+using RoR2.Stats;
+using Newtonsoft.Json;
 
 namespace WeatherIndex
 {
@@ -54,8 +56,53 @@ namespace WeatherIndex
 
             Run.onClientGameOverGlobal += (Run run, RunReport report) =>
             {
-                Log.Info(report);
+                var player = report.playerInfos?[0];
+                var stats = player.statSheet;
+                var info = new
+                {
+                    ending = report.gameEnding.cachedName,
+                    survivor = player.bodyName,
+                    timeAlive = stats.GetStatValueAsDouble(StatDef.totalTimeAlive),
+                    kills = stats.GetStatValueULong(StatDef.totalKills),
+                    eliteKills = stats.GetStatValueULong(StatDef.totalEliteKills),
+                    minionKills = stats.GetStatValueULong(StatDef.totalMinionKills),
+                    deaths = stats.GetStatValueULong(StatDef.totalDeaths),
+                    damageDealt = stats.GetStatValueULong(StatDef.totalDamageDealt),
+                    minionDamageDealt = stats.GetStatValueULong(StatDef.totalMinionDamageDealt),
+                    highestDamageDealt = stats.GetStatValueULong(StatDef.highestDamageDealt),
+                    damageTaken = stats.GetStatValueULong(StatDef.totalDamageTaken),
+                    highestLevel = stats.GetStatValueULong(StatDef.highestLevel),
+                    goldCollected = stats.GetStatValueULong(StatDef.goldCollected),
+                    goldSpent = stats.GetStatValueULong(StatDef.totalGoldPurchases),
+                    stagesCompleted = stats.GetStatValueULong(StatDef.totalStagesCompleted),
+                    itemsCollected = stats.GetStatValueULong(StatDef.totalItemsCollected),
+                    purchases = stats.GetStatValueULong(StatDef.totalPurchases),
+                    distanceTraveled = stats.GetStatValueAsDouble(StatDef.totalDistanceTraveled),
+                    healingRecieved = stats.GetStatValueULong(StatDef.totalHealthHealed),
+                    dronesPurchased = stats.GetStatValueULong(StatDef.totalDronesPurchased),
+                    turretsPurchased = stats.GetStatValueULong(StatDef.totalTurretsPurchased),
+
+
+                };
+                var json = JsonConvert.SerializeObject(info, Formatting.Indented, new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    NullValueHandling = NullValueHandling.Ignore,
+                });
+                Log.Info(info);
             };
+
+            On.EntityStates.GameOver.RoR2MainEndingPlayCutscene.FixedUpdate += (orig, self) =>
+                {
+                    orig(self);
+                    self.outer.SetNextStateToMain();
+                };
+
+            On.EntityStates.GameOver.ShowCredits.OnEnter += (orig, self) =>
+                    {
+                        orig(self);
+                        self.outer.SetNextState(new EntityStates.GameOver.ShowReport());
+                    };
 
             endRunKeybind = Config.Bind<KeyboardShortcut>("Debug", "End Run", new KeyboardShortcut(KeyCode.F10), "fucking");
 
@@ -139,7 +186,7 @@ namespace WeatherIndex
 
             if (Run.instance && endRunKeybind.Value.IsDown())
             {
-                RoR2.Console.instance.SubmitCmd(null, "run_end");
+                Run.instance.BeginGameOver(RoR2Content.GameEndings.MainEnding);
             }
 
             // This if statement checks if the player has currently pressed F2.
