@@ -2,7 +2,7 @@
 extern crate rocket;
 
 use rocket::{serde::json::Json, State};
-use sea_orm::{ActiveModelTrait, DatabaseConnection, Set};
+use sea_orm::{ActiveModelTrait, DatabaseConnection};
 
 use crate::{entity::run_report, run_report_dto::RunReportDTO};
 

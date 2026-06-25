@@ -63,20 +63,39 @@ impl TryFrom<RunReportDTO> for run_report::ActiveModel {
                 .parse::<DateTime<Utc>>()
                 .expect("invalid start time format")
                 .naive_utc()),
+            difficulty: Set(dto.difficulty.try_into()?),
             ..Default::default()
         })
     }
 }
 
 impl TryFrom<String> for run_report::Ending {
-    type Error = String;
+    type Error = Box<dyn Error>;
     fn try_from(value: String) -> Result<Self, Self::Error> {
         match value.as_ref() {
             "MainEnding" => Ok(Self::Won),
             "StandardLoss" => Ok(Self::Lost),
             "LimboEnding" => Ok(Self::Limbo),
             "ObliterationEnding" => Ok(Self::Obliteration),
-            e => Err(format!("unknown ending: {e}")),
+            e => Err(format!("unknown ending: {e}").into()),
+        }
+    }
+}
+
+impl TryFrom<String> for run_report::Difficulty {
+    type Error = Box<dyn Error>;
+    fn try_from(value: String) -> Result<Self, Self::Error> {
+        match value.as_ref() {
+            "DIFFICULTY_EASY_NAME" => Ok(Self::Drizzle),
+            "DIFFICULTY_NORMAL_NAME" => Ok(Self::Rainstorm),
+            "DIFFICULTY_HARD_NAME" => Ok(Self::Monsoon),
+            other => {
+                if other.starts_with("ECLIPSE") {
+                    Ok(Self::Eclipse)
+                } else {
+                    Err(format!("unknown difficulty: {other}").into())
+                }
+            }
         }
     }
 }
