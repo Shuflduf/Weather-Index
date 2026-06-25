@@ -4,7 +4,7 @@ use chrono::{DateTime, Utc};
 use sea_orm::ActiveValue::Set;
 use serde::Deserialize;
 
-use crate::entity::run_report::{self};
+use crate::entity::run_report::{self, EclipseLevel};
 
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
@@ -63,7 +63,30 @@ impl TryFrom<RunReportDTO> for run_report::ActiveModel {
                 .parse::<DateTime<Utc>>()
                 .expect("invalid start time format")
                 .naive_utc()),
+            eclipse_level: Set(parse_eclipse_level(&dto.difficulty)),
             difficulty: Set(dto.difficulty.try_into()?),
+            time_alive_seconds: Set(dto.time_alive_seconds),
+            stages_completed: Set(dto.stages_completed),
+            items_collected: Set(dto.items_collected),
+            drones_purchased: Set(dto.drones_purchased),
+            turrets_purchased: Set(dto.turrets_purchased),
+            kills: Set(dto.kills),
+            elite_kills: Set(dto.elite_kills),
+            minion_kills: Set(dto.minion_kills),
+            deaths: Set(dto.deaths),
+            damage_dealt: Set(dto.damage_dealt),
+            minion_damage_dealt: Set(dto.minion_damage_dealt),
+            damage_taken: Set(dto.damage_taken),
+            highest_damage_dealt: Set(dto.highest_damage_dealt),
+            healing_recieved: Set(dto.healing_recieved),
+            highest_level: Set(dto.highest_level),
+            gold_collected: Set(dto.gold_collected),
+            gold_spent: Set(dto.gold_spent),
+            lunar_coins_spent: Set(dto.lunar_coins_spent),
+            purchases: Set(dto.purchases),
+            blood_purchases: Set(dto.blood_purchases),
+            distance_traveled_metres: Set(dto.distance_traveled_metres),
+
             ..Default::default()
         })
     }
@@ -97,5 +120,13 @@ impl TryFrom<String> for run_report::Difficulty {
                 }
             }
         }
+    }
+}
+
+fn parse_eclipse_level(value: &str) -> EclipseLevel {
+    if value.starts_with("ECLIPSE") {
+        value.split("_").nth(1)?.parse().ok()
+    } else {
+        None
     }
 }
