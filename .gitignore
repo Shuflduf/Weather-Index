@@ -1,3 +1,7 @@
+.env
+.env.fish
+
 /backend/target
+
+/mod/bin
 /mod/obj
-/mod/bin/

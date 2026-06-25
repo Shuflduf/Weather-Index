@@ -6,6 +6,8 @@ using UnityEngine.AddressableAssets;
 using BepInEx.Configuration;
 using RoR2.Stats;
 using Newtonsoft.Json;
+using System.Net.Http;
+using System.Text;
 
 namespace WeatherIndex
 {
@@ -65,7 +67,7 @@ namespace WeatherIndex
                     ending = report.gameEnding.cachedName,
                     startTime = report.runStartTimeUtc,
                     difficulty = DifficultyCatalog.GetDifficultyDef(report.ruleBook.FindDifficulty()).nameToken,
-                    timeAlive = stats.GetStatValueAsDouble(StatDef.totalTimeAlive),
+                    timeAliveSeconds = (ulong)stats.GetStatValueAsDouble(StatDef.totalTimeAlive),
                     stagesCompleted = stats.GetStatValueULong(StatDef.totalStagesCompleted),
 
                     // items
@@ -84,8 +86,8 @@ namespace WeatherIndex
                     // damage
                     damageDealt = stats.GetStatValueULong(StatDef.totalDamageDealt),
                     minionDamageDealt = stats.GetStatValueULong(StatDef.totalMinionDamageDealt),
-                    highestDamageDealt = stats.GetStatValueULong(StatDef.highestDamageDealt),
                     damageTaken = stats.GetStatValueULong(StatDef.totalDamageTaken),
+                    highestDamageDealt = stats.GetStatValueULong(StatDef.highestDamageDealt),
 
                     // healing
                     healingRecieved = stats.GetStatValueULong(StatDef.totalHealthHealed),
@@ -99,7 +101,7 @@ namespace WeatherIndex
                     bloodPurchases = stats.GetStatValueULong(StatDef.totalBloodPurchases),
 
                     // movement
-                    distanceTraveledMetres = stats.GetStatValueAsDouble(StatDef.totalDistanceTraveled),
+                    distanceTraveledMetres = (ulong)stats.GetStatValueAsDouble(StatDef.totalDistanceTraveled),
                 };
                 var json = JsonConvert.SerializeObject(info, Formatting.Indented, new JsonSerializerSettings
                 {
@@ -107,6 +109,8 @@ namespace WeatherIndex
                     NullValueHandling = NullValueHandling.Ignore,
                 });
                 Log.Info(info);
+                this.PostRunReport(json);
+                // using var req = new UnityWebRequest;
             };
 
             On.EntityStates.GameOver.RoR2MainEndingPlayCutscene.FixedUpdate += (orig, self) =>
@@ -169,6 +173,13 @@ namespace WeatherIndex
 
             // But now we have defined an item, but it doesn't do anything yet. So we'll need to define that ourselves.
             GlobalEventManager.onCharacterDeathGlobal += GlobalEventManager_onCharacterDeathGlobal;
+        }
+
+        private async void PostRunReport(string json)
+        {
+            using var client = new HttpClient();
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await client.PostAsync("http://localhost:8000/new-run", content);
         }
 
         private void GlobalEventManager_onCharacterDeathGlobal(DamageReport report)
