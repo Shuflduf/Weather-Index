@@ -30,7 +30,7 @@ pub enum Difficulty {
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel, Deserialize)]
-#[sea_orm(table_name = "game_run")]
+#[sea_orm(table_name = "run_reports")]
 pub struct Model {
     #[serde(default)]
     #[sea_orm(primary_key)]
@@ -43,7 +43,7 @@ pub struct Model {
     pub start_time: DateTime,
     pub ending: Ending,
     pub difficulty: Difficulty,
-    pub eclipse_level: EclipseLevel,
+    pub eclipse_level: Option<u8>, // cant be EclipseLevel for sea orm reasons 🐸🚀
     pub time_alive_seconds: u64,
     pub stages_completed: u64,
     // pub run_time_seconds: u32,

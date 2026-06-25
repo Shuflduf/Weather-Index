@@ -1,5 +1,5 @@
-.env
-.env.fish
+**/.env
+**/.env.fish
 
 /backend/target
 
