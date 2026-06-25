@@ -1,12 +1,14 @@
 #[macro_use]
 extern crate rocket;
 
-use entity::game_run;
 use rocket::{serde::json::Json, State};
 use sea_orm::{ActiveModelTrait, DatabaseConnection, Set};
 
+use crate::{entity::run_report, run_report_dto::RunReportDTO};
+
 mod db;
 mod entity;
+mod run_report_dto;
 
 #[get("/")]
 async fn index(_conn: &State<DatabaseConnection>) -> String {
@@ -14,13 +16,8 @@ async fn index(_conn: &State<DatabaseConnection>) -> String {
 }
 
 #[post("/new-run", data = "<data>")]
-async fn create_game_run(db: &State<DatabaseConnection>, data: Json<game_run::Model>) -> String {
-    let game_run = game_run::ActiveModel {
-        end_state: Set(data.end_state.clone()),
-        upload_time: Set(chrono::Utc::now().naive_utc()),
-        ..Default::default()
-    };
-
+async fn create_game_run(db: &State<DatabaseConnection>, data: Json<RunReportDTO>) -> String {
+    let game_run: run_report::ActiveModel = data.into_inner().try_into().unwrap();
     match game_run.insert(db.inner()).await {
         Ok(_) => "Game run created!".into(),
         Err(e) => format!("Error: {}", e),
