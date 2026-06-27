@@ -10,7 +10,7 @@ use better_auth::{
         oauth::OAuthProvider, AccountManagementPlugin, EmailPasswordPlugin, OAuthPlugin,
         PasswordManagementPlugin, SessionManagementPlugin,
     },
-    AuthConfig, AxumIntegration, BetterAuth, MemoryDatabaseAdapter,
+    AuthBuilder, AuthConfig, AxumIntegration, BetterAuth,
 };
 use sea_orm::{ActiveModelTrait, DatabaseConnection};
 
@@ -40,7 +40,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let auth_config =
         AuthConfig::new(env::var("ENCRYPTION_KEY")?).base_url("http://localhost:3000/auth");
     let auth = Arc::new(
-        BetterAuth::<MemoryDatabaseAdapter>::new(auth_config)
+        AuthBuilder::new(auth_config)
             .database(adapter)
             .plugin(EmailPasswordPlugin::new())
             .plugin(SessionManagementPlugin::new())
