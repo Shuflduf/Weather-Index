@@ -15,7 +15,7 @@ To recreate this project with the same configuration:
 
 ```sh
 # recreate this project
-deno run npm:sv@0.16.1 create --template minimal --types ts --add prettier --install deno ./
+deno run npm:sv@0.16.1 create --template minimal --types ts --add prettier eslint --install deno ./
 ```
 
 ## Developing
