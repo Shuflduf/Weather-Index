@@ -5,18 +5,21 @@ edition = "2021"
 
 [dependencies]
 axum = "0.8.9"
-better-auth-core = "0.10.0"
 chrono = { version = "0.4", features = ["serde"] }
 dotenvy = "0.15"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0.150"
-sqlx = { version = "0.9.0", features = ["chrono", "postgres"] }
+sqlx = { version = "0.8.6", features = ["chrono", "postgres"] }
 tokio = { version = "1", features = ["full"] }
 
 [dependencies.better-auth]
 version = "0.10.0"
 default-features = false
 features = ["axum", "derive", "rustls", "sqlx-postgres"]
+
+[dependencies.better-auth-core]
+version = "0.10.0"
+features = ["axum", "derive", "sqlx-postgres"]
 
 [dependencies.sea-orm]
 version = "2.0.0-rc"

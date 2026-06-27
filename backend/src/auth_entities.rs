@@ -5,5 +5,4 @@ pub type AppSession = session::Model;
 pub type AppAccount = account::Model;
 pub type AppVerification = verification::Model;
 
-pub type AppAdapter =
-    better_auth::adapters::SqlxAdapter<AppUser, AppSession, AppAccount, AppVerification>;
+pub type AppAdapter = better_auth::adapters::SqlxAdapter<AppUser, AppSession, AppAccount>;

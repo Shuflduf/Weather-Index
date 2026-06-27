@@ -14,7 +14,9 @@ use better_auth::{
 };
 use sea_orm::{ActiveModelTrait, DatabaseConnection};
 
-use crate::{entity::run_report, error::WIError, run_report_dto::RunReportDTO};
+use crate::{
+    auth_entities::AppAdapter, entity::run_report, error::WIError, run_report_dto::RunReportDTO,
+};
 
 mod auth_entities;
 mod db;
@@ -24,7 +26,7 @@ mod run_report_dto;
 
 struct WIState {
     db: DatabaseConnection,
-    auth: Arc<BetterAuth<MemoryDatabaseAdapter>>,
+    auth: Arc<BetterAuth<AppAdapter>>,
 }
 
 #[tokio::main]
@@ -32,12 +34,14 @@ async fn main() -> Result<(), Box<dyn Error>> {
     dotenvy::dotenv().ok();
 
     let db = db::init_db().await.expect("Failed to initialize database");
+    let pg_pool = db.get_postgres_connection_pool();
+    let adapter = AppAdapter::from_pool(pg_pool.clone());
 
     let auth_config =
         AuthConfig::new(env::var("ENCRYPTION_KEY")?).base_url("http://localhost:3000/auth");
     let auth = Arc::new(
         BetterAuth::<MemoryDatabaseAdapter>::new(auth_config)
-            .database(MemoryDatabaseAdapter::new())
+            .database(adapter)
             .plugin(EmailPasswordPlugin::new())
             .plugin(SessionManagementPlugin::new())
             .plugin(PasswordManagementPlugin::new())
