@@ -1,16 +1,17 @@
-use std::{net::SocketAddr, sync::Arc};
+use std::{error::Error, sync::Arc};
 
 use axum::{
     extract::State,
     routing::{get, post},
     Json, Router,
 };
-use sea_orm::{sea_query::prelude::serde_json, ActiveModelTrait, DatabaseConnection};
+use sea_orm::{ActiveModelTrait, DatabaseConnection};
 
-use crate::{entity::run_report, run_report_dto::RunReportDTO};
+use crate::{entity::run_report, error::WIError, run_report_dto::RunReportDTO};
 
 mod db;
 mod entity;
+mod error;
 mod run_report_dto;
 
 #[tokio::main]
@@ -32,10 +33,13 @@ async fn main() {
 async fn insert_new_run(
     State(db): State<Arc<DatabaseConnection>>,
     Json(payload): Json<RunReportDTO>,
-) -> String {
-    let game_run: run_report::ActiveModel = payload.try_into().unwrap();
-    match game_run.insert(&*db).await {
-        Ok(_) => "Game run created!".into(),
-        Err(e) => format!("Error: {}", e),
-    }
+) -> Result<Json<&'static str>, WIError> {
+    let game_run: run_report::ActiveModel = payload
+        .try_into()
+        .map_err(|e: Box<dyn Error>| WIError::Parse(e.to_string()))?;
+    game_run
+        .insert(&*db)
+        .await
+        .map_err(|e| WIError::DB(e.to_string()))?;
+    Ok(Json("Game run created"))
 }
