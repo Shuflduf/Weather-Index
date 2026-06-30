@@ -1,4 +1,4 @@
-use std::{collections::HashMap, env, error::Error, fs::File, io::Read, sync::Arc};
+use std::{collections::HashMap, env, error::Error, sync::Arc};
 
 use axum::{
     extract::{Query, State},
@@ -14,6 +14,7 @@ use better_auth::{
     },
     AuthBuilder, AuthConfig, AxumIntegration, BetterAuth, CsrfConfig,
 };
+use rand::{Rng, RngCore};
 use sea_orm::{ActiveModelTrait, ColumnTrait, DatabaseConnection, EntityTrait, QueryFilter, Set};
 
 use crate::{
@@ -90,9 +91,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
 fn random_hex(len: usize) -> String {
     let mut buf = vec![0u8; len];
-    File::open("/dev/urandom")
-        .and_then(|mut f| f.read_exact(&mut buf))
-        .expect("failed to read /dev/urandom");
+    rand::thread_rng().fill_bytes(&mut buf);
     buf.iter().map(|b| format!("{:02x}", b)).collect()
 }
 

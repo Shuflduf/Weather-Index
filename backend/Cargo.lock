@@ -2606,6 +2606,7 @@ dependencies = [
  "better-auth-core",
  "chrono",
  "dotenvy",
+ "rand 0.8.6",
  "reqwest",
  "sea-orm",
  "serde",
