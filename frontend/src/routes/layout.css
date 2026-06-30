@@ -21,11 +21,9 @@
   --color-default-border: #2e2e2e;
   --color-hover-border: #3d3d3d;
   --color-active-border: #828282;
-
 }
 
 @layer base {
-
   *,
   ::before,
   ::after {

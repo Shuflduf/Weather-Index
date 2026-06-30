@@ -1,7 +1,7 @@
 <script lang="ts">
   import "./layout.css";
-  import 'geist-svelte/font/sans';
-  import 'geist-svelte/font/mono';
+  import "geist-svelte/font/sans";
+  import "geist-svelte/font/mono";
   import favicon from "$lib/assets/favicon.svg";
 
   let { children } = $props();
