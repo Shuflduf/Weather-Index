@@ -2,7 +2,7 @@
   import Navbar from "$lib/Navbar.svelte";
   import { onMount } from "svelte";
 
-  let runs = $state([]);
+  let runs: any[] = $state([]);
   onMount(async () => {
     runs = await (await fetch("/api/get-run-reports")).json();
     console.log(runs);
@@ -13,7 +13,7 @@
 
 <div class="w-full p-8">
   <table class="text-primary w-full">
-    <thead class="text-xl tracking-tight text-center font-bold">
+    <thead class="text-xl tracking-tight text-center font-bold h-12">
       <tr>
         <td>ID</td>
         <td>Survivor</td>
