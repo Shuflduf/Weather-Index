@@ -1,10 +1,16 @@
 <script lang="ts">
   import Navbar from "$lib/Navbar.svelte";
+  import { onMount } from "svelte";
+
+  let runs = $state([]);
+  onMount(async () => {
+    runs = await (await fetch("/api/get-run-reports")).json();
+    console.log(runs);
+  });
 </script>
 
 <Navbar />
-<h1>Welcome to SvelteKit</h1>
-<p>
-  Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the
-  documentation
-</p>
+
+{#each runs as run}
+  <span class="text-primary">{JSON.stringify(run)}</span>
+{/each}

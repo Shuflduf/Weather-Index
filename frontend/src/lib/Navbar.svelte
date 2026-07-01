@@ -19,7 +19,6 @@
     let body = await resp.json();
     if (body.user) {
       user = body.user;
-      console.log(user);
     } else {
       user = false;
     }

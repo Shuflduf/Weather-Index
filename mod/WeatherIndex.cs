@@ -179,7 +179,7 @@ namespace WeatherIndex
         {
             using var client = new HttpClient();
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("http://localhost:8000/new-run", content);
+            var response = await client.PostAsync("http://localhost:3000/new-run", content);
         }
 
         private void GlobalEventManager_onCharacterDeathGlobal(DamageReport report)

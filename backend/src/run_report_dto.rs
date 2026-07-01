@@ -13,41 +13,41 @@ pub struct RunReportDTO {
     pub ending: String,
     pub start_time: String,
     pub difficulty: String,
-    pub time_alive_seconds: u64,
-    pub stages_completed: u64,
+    pub time_alive_seconds: i64,
+    pub stages_completed: i64,
 
     // items
-    pub items_collected: u64,
+    pub items_collected: i64,
 
     // drones
-    pub drones_purchased: u64,
-    pub turrets_purchased: u64,
+    pub drones_purchased: i64,
+    pub turrets_purchased: i64,
 
     // combat
-    pub kills: u64,
-    pub elite_kills: u64,
-    pub minion_kills: u64,
-    pub deaths: u64,
+    pub kills: i64,
+    pub elite_kills: i64,
+    pub minion_kills: i64,
+    pub deaths: i64,
 
     // damage
-    pub damage_dealt: u64,
-    pub minion_damage_dealt: u64,
-    pub damage_taken: u64,
-    pub highest_damage_dealt: u64,
+    pub damage_dealt: i64,
+    pub minion_damage_dealt: i64,
+    pub damage_taken: i64,
+    pub highest_damage_dealt: i64,
 
     // healing
-    pub healing_recieved: u64,
+    pub healing_recieved: i64,
 
     // progression
-    pub highest_level: u64,
-    pub gold_collected: u64,
-    pub gold_spent: u64,
-    pub lunar_coins_spent: u64,
-    pub purchases: u64,
-    pub blood_purchases: u64,
+    pub highest_level: i64,
+    pub gold_collected: i64,
+    pub gold_spent: i64,
+    pub lunar_coins_spent: i64,
+    pub purchases: i64,
+    pub blood_purchases: i64,
 
     // movement
-    pub distance_traveled_metres: u64,
+    pub distance_traveled_metres: i64,
 }
 
 impl TryFrom<RunReportDTO> for run_report::ActiveModel {
