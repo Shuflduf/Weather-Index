@@ -10,6 +10,7 @@ pub struct Model {
     pub value: String,
     pub expires_at: DateTimeUtc,
     pub created_at: DateTimeUtc,
+    #[sea_orm(default_expr = "Expr::current_timestamp()")]
     pub updated_at: DateTimeUtc,
 }
 

@@ -43,13 +43,13 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let db = db::init_db().await.expect("Failed to initialize database");
     let pg_pool = db.get_postgres_connection_pool();
 
-    for table in &["sessions", "users", "accounts", "verifications"] {
-        sqlx::query(&format!(
-            "ALTER TABLE {table} ALTER COLUMN updated_at SET DEFAULT NOW()"
-        ))
-        .execute(pg_pool)
-        .await?;
-    }
+    // for table in &["sessions", "users", "accounts", "verifications"] {
+    //     sqlx::query(&format!(
+    //         "ALTER TABLE {table} ALTER COLUMN updated_at SET DEFAULT NOW()"
+    //     ))
+    //     .execute(pg_pool)
+    //     .await?;
+    // }
 
     let adapter = AppAdapter::from_pool(pg_pool.clone());
 

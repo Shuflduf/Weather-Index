@@ -17,6 +17,7 @@ pub struct Model {
     pub scope: Option<String>,
     pub password: Option<String>,
     pub created_at: DateTimeUtc,
+    #[sea_orm(default_expr = "Expr::current_timestamp()")]
     pub updated_at: DateTimeUtc,
 }
 

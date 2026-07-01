@@ -25,6 +25,7 @@ pub struct Model {
     pub ban_expires: Option<DateTimeUtc>,
     pub metadata: Json,
     pub created_at: DateTimeUtc,
+    #[sea_orm(default_expr = "Expr::current_timestamp()")]
     pub updated_at: DateTimeUtc,
 }
 
