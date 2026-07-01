@@ -30,7 +30,7 @@ pub async fn handle_callback(
         .filter(verification::Column::Identifier.eq(format!("oauth:{}", state_param)))
         .one(&state.db)
         .await
-        .map_err(|e| db_error(e))?
+        .map_err(db_error)?
         .ok_or_else(|| make_error(StatusCode::BAD_REQUEST, "Invalid state".into()))?;
 
     let state_value: serde_json::Value =
@@ -156,7 +156,7 @@ pub async fn handle_callback(
         .filter(account::Column::AccountId.eq(github_id.to_string()))
         .one(&state.db)
         .await
-        .map_err(|e| db_error(e))?;
+        .map_err(db_error)?;
 
     let user_id = if let Some(acct) = existing_account {
         acct.user_id
@@ -166,7 +166,7 @@ pub async fn handle_callback(
                 .filter(user::Column::Email.eq(email))
                 .one(&state.db)
                 .await
-                .map_err(|e| db_error(e))?
+                .map_err(db_error)?
         } else {
             None
         };

@@ -14,7 +14,6 @@ use better_auth::{
 };
 use reqwest::StatusCode;
 use sea_orm::{ActiveModelTrait, DatabaseConnection};
-use serde_json::json;
 
 use crate::{
     auth_entities::AppAdapter,

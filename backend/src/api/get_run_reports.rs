@@ -3,7 +3,6 @@ use std::sync::Arc;
 use axum::{extract::State, Json};
 use reqwest::StatusCode;
 use sea_orm::EntityTrait;
-use serde_json::json;
 
 use crate::{
     entity::run_report::{self, Entity as RunReport},
