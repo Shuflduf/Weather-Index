@@ -7,8 +7,9 @@ use axum::{
 };
 use better_auth::{
     plugins::{
-        oauth::OAuthProvider, AccountManagementPlugin, EmailPasswordPlugin, OAuthPlugin,
-        PasswordManagementPlugin, SessionManagementPlugin,
+        oauth::OAuthProvider, AccountManagementPlugin, DeviceAuthorizationConfig,
+        DeviceAuthorizationPlugin, OAuthPlugin,
+        SessionManagementPlugin,
     },
     AuthBuilder, AuthConfig, AxumIntegration, BetterAuth, CsrfConfig,
 };
@@ -17,6 +18,7 @@ use sea_orm::{ActiveModelTrait, DatabaseConnection};
 
 use crate::{
     auth_entities::AppAdapter,
+    auth_extractor::AuthenticatedUser,
     entity::run_report,
     error::{make_error, WIError},
     run_report_dto::RunReportDTO,
@@ -24,6 +26,7 @@ use crate::{
 
 mod api;
 mod auth_entities;
+mod auth_extractor;
 mod db;
 mod entity;
 mod error;
@@ -65,6 +68,14 @@ async fn main() -> Result<(), Box<dyn Error>> {
                 "github",
                 OAuthProvider::github(&env::var("GITHUB_ID")?, &env::var("GITHUB_SECRET")?),
             ))
+            .plugin(DeviceAuthorizationPlugin::with_config(
+                DeviceAuthorizationConfig {
+                    enabled: true,
+                    verification_uri: "/device".into(),
+                    interval: 5,
+                    expires_in: 1800,
+                },
+            ))
             .build()
             .await?,
     );
@@ -89,9 +100,11 @@ async fn main() -> Result<(), Box<dyn Error>> {
 }
 
 async fn insert_new_run(
+    user: AuthenticatedUser,
     State(state): State<Arc<WIState>>,
     Json(payload): Json<RunReportDTO>,
 ) -> Result<Json<&'static str>, WIError> {
+    println!("{user:?}");
     let game_run: run_report::ActiveModel = payload.try_into().map_err(|e: Box<dyn Error>| {
         make_error(StatusCode::BAD_REQUEST, format!("Failed to parse: {e}"))
     })?;
