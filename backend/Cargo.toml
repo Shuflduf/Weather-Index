@@ -2,6 +2,9 @@
 name = "weather-index"
 version = "0.1.0"
 edition = "2021"
+license = "GPL-3.0-or-later"
+repository = "https://github.com/Shuflduf/Weather-Index"
+description = "Weather Index backend API"
 
 [dependencies]
 axum = "0.8.9"
