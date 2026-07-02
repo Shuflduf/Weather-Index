@@ -2598,24 +2598,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "rordb-backend"
-version = "0.1.0"
-dependencies = [
- "axum",
- "better-auth",
- "better-auth-core",
- "chrono",
- "dotenvy",
- "rand 0.8.6",
- "reqwest",
- "sea-orm",
- "serde",
- "serde_json",
- "sqlx",
- "tokio",
-]
-
-[[package]]
 name = "rsa"
 version = "0.9.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3857,6 +3839,24 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c4e0100b01e9f0d03189a92b96772a1fb998639d981193d7dbab487302513441"
 dependencies = [
  "unicode-ident",
+]
+
+[[package]]
+name = "weather-index"
+version = "0.1.0"
+dependencies = [
+ "axum",
+ "better-auth",
+ "better-auth-core",
+ "chrono",
+ "dotenvy",
+ "rand 0.8.6",
+ "reqwest",
+ "sea-orm",
+ "serde",
+ "serde_json",
+ "sqlx",
+ "tokio",
 ]
 
 [[package]]

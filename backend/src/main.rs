@@ -59,9 +59,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         AuthBuilder::new(auth_config)
             .csrf(CsrfConfig::new().enabled(false))
             .database(adapter)
-            .plugin(EmailPasswordPlugin::new())
             .plugin(SessionManagementPlugin::new())
-            .plugin(PasswordManagementPlugin::new())
             .plugin(AccountManagementPlugin::new())
             .plugin(OAuthPlugin::new().add_provider(
                 "github",

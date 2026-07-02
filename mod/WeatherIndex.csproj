@@ -5,7 +5,7 @@
 		<LangVersion>preview</LangVersion>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
-        <RestoreAdditionalProjectSources>
+    <RestoreAdditionalProjectSources>
 			https://api.nuget.org/v3/index.json;
 			https://nuget.bepinex.dev/v3/index.json
 		</RestoreAdditionalProjectSources>
@@ -25,7 +25,8 @@
 		<PackageReference Include="UnityEngine.Modules" Version="2021.3.33" IncludeAssets="compile" />
 		<PackageReference Include="RiskOfRain2.GameLibs" Version="*-*" />
 		<PackageReference Include="MMHOOK.RoR2" Version="*" NoWarn="NU1701" />
-        <PackageReference Include="RoR2BepInExPack" Version="*" />
+    <PackageReference Include="RoR2BepInExPack" Version="*" />
+    <PackageReference Include="Rune580.Mods.RiskOfRain2.RiskOfOptions" Version="2.8.*" />
 	</ItemGroup>
 
 </Project>
