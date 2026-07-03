@@ -32,7 +32,7 @@ namespace WeatherIndex
         private static ConfigEntry<KeyboardShortcut>? endRunKeybind;
         private static readonly HttpClient http = new();
         private static string backendURL = "http://localhost:3000";
-        private string? accessToken;
+        private static ConfigEntry<string>? accessToken;
 
         public void Awake()
         {
@@ -119,6 +119,12 @@ namespace WeatherIndex
                 new KeyboardShortcut(KeyCode.F10),
                 "fucking"
             );
+            accessToken = Config.Bind<string>(
+                "Account",
+                "Access Token",
+                "",
+                "Weather Index access token"
+            );
 
             ModSettingsManager.AddOption(
                 new GenericButtonOption(
@@ -138,11 +144,11 @@ namespace WeatherIndex
             {
                 Content = content,
             };
-            if (accessToken != null)
+            if (!string.IsNullOrEmpty(accessToken?.Value))
             {
                 request.Headers.Authorization = new AuthenticationHeaderValue(
                     "Bearer",
-                    accessToken
+                    accessToken.Value
                 );
             }
             var response = await http.SendAsync(request);
@@ -170,7 +176,10 @@ namespace WeatherIndex
                 }
             );
 
-            Application.OpenURL($"{body.verification_uri}?user_code={body.user_code}");
+            var deviceUri = $"{body.verification_uri}?user_code={body.user_code}";
+            // Log.Info(deviceUri);
+
+            Application.OpenURL(deviceUri);
 
             _ = Task.Run(async () =>
             {
@@ -198,10 +207,10 @@ namespace WeatherIndex
 
                     var tokenBody = JsonConvert.DeserializeAnonymousType(
                         await poll.Content.ReadAsStringAsync(),
-                        new { token = "", user = new { id = "" } }
+                        new { access_token = "" }
                     );
-                    accessToken = tokenBody.token;
-                    Log.Info(accessToken);
+                    accessToken!.Value = tokenBody.access_token;
+                    // Log.Info(await poll.Content.ReadAsStringAsync());
                     break;
                 }
             });
