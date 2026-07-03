@@ -1,11 +1,15 @@
-﻿using BepInEx;
+﻿#nullable enable
+
+using BepInEx;
 using RoR2;
 using UnityEngine;
 using BepInEx.Configuration;
 using RoR2.Stats;
 using Newtonsoft.Json;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
+using System.Threading.Tasks;
 using RiskOfOptions;
 using RiskOfOptions.Options;
 
@@ -27,7 +31,10 @@ namespace WeatherIndex
         public const string PluginName = "WeatherIndex";
         public const string PluginVersion = "1.0.0";
 
-        private static ConfigEntry<KeyboardShortcut> endRunKeybind;
+        private static ConfigEntry<KeyboardShortcut>? endRunKeybind;
+        private static readonly HttpClient http = new();
+        private static string backendURL = "http://localhost:3000";
+        private string? accessToken;
 
         public void Awake()
         {
@@ -36,7 +43,7 @@ namespace WeatherIndex
             Run.onClientGameOverGlobal += (Run run, RunReport report) =>
             {
                 var player = report.playerInfos?[0];
-                var stats = player.statSheet;
+                var stats = player!.statSheet;
                 var info = new
                 {
                     // run info
@@ -112,19 +119,57 @@ namespace WeatherIndex
 
         private async void PostRunReport(string json)
         {
-            using var client = new HttpClient();
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("http://localhost:3000/new-run", content);
+            var request = new HttpRequestMessage(HttpMethod.Post, $"{backendURL}/new-run") { Content = content };
+            if (accessToken != null)
+            {
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            }
+            var response = await http.SendAsync(request);
         }
 
-        private void OnConnectClick()
+        private async void OnConnectClick()
         {
-            Log.Info("shit");
+            var resp = await http.PostAsync(
+                $"{backendURL}/auth/device/code",
+                new StringContent(
+                    JsonConvert.SerializeObject(new { client_id = "weather-index-mod" }), Encoding.UTF8, "application/json"
+                )
+            );
+            var body = JsonConvert.DeserializeAnonymousType(await resp.Content.ReadAsStringAsync(), new { device_code = "", user_code = "", verification_uri = "", interval = 5, expires_in = 1800 });
+
+            Application.OpenURL($"{body.verification_uri}?user_code={body.user_code}");
+
+            _ = Task.Run(async () =>
+            {
+                while (true)
+                {
+                    await Task.Delay(body.interval * 1000);
+                    var poll = await http.PostAsync(
+                        $"{backendURL}/auth/device/token",
+                        new StringContent(JsonConvert.SerializeObject(new
+                        {
+                            grant_type = "urn:ietf:params:oauth:grant-type:device_code",
+                            device_code = body.device_code,
+                            client_id = "weather-index-mod"
+                        }),
+                            Encoding.UTF8,
+                            "application/json"
+                        ));
+
+                    if (!poll.IsSuccessStatusCode) continue;
+
+                    var tokenBody = JsonConvert.DeserializeAnonymousType(await poll.Content.ReadAsStringAsync(), new { token = "", user = new { id = "" } });
+                    accessToken = tokenBody.token;
+                    Log.Info(accessToken);
+                    break;
+                }
+            });
         }
 
         private void Update()
         {
-            if (Run.instance && endRunKeybind.Value.IsDown())
+            if (Run.instance && endRunKeybind!.Value.IsDown())
             {
                 Run.instance.BeginGameOver(RoR2Content.GameEndings.MainEnding);
             }

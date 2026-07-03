@@ -75,7 +75,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
             .plugin(DeviceAuthorizationPlugin::with_config(
                 DeviceAuthorizationConfig {
                     enabled: true,
-                    verification_uri: "/device".into(),
+                    verification_uri: format!("{}/device", env::var("FRONTEND_URL")?),
                     interval: 5,
                     expires_in: 1800,
                 },
