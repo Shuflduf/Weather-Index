@@ -1,24 +1,22 @@
 ﻿#nullable enable
 
-using BepInEx;
-using RoR2;
-using UnityEngine;
-using BepInEx.Configuration;
-using RoR2.Stats;
-using Newtonsoft.Json;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using BepInEx;
+using BepInEx.Configuration;
+using Newtonsoft.Json;
 using RiskOfOptions;
 using RiskOfOptions.Options;
+using RoR2;
+using RoR2.Stats;
+using UnityEngine;
 
 namespace WeatherIndex
 {
     [BepInPlugin(PluginGUID, PluginName, PluginVersion)]
-
     [BepInDependency("com.rune580.riskofoptions")]
-
     public class WeatherIndex : BaseUnityPlugin
     {
         // The Plugin GUID should be a unique ID for this plugin,
@@ -50,7 +48,9 @@ namespace WeatherIndex
                     survivor = player.bodyName,
                     ending = report.gameEnding.cachedName,
                     startTime = report.runStartTimeUtc,
-                    difficulty = DifficultyCatalog.GetDifficultyDef(report.ruleBook.FindDifficulty()).nameToken,
+                    difficulty = DifficultyCatalog
+                        .GetDifficultyDef(report.ruleBook.FindDifficulty())
+                        .nameToken,
                     timeAliveSeconds = (ulong)stats.GetStatValueAsDouble(StatDef.totalTimeAlive),
                     stagesCompleted = stats.GetStatValueULong(StatDef.totalStagesCompleted),
 
@@ -85,45 +85,65 @@ namespace WeatherIndex
                     bloodPurchases = stats.GetStatValueULong(StatDef.totalBloodPurchases),
 
                     // movement
-                    distanceTraveledMetres = (ulong)stats.GetStatValueAsDouble(StatDef.totalDistanceTraveled),
+                    distanceTraveledMetres = (ulong)
+                        stats.GetStatValueAsDouble(StatDef.totalDistanceTraveled),
                 };
-                var json = JsonConvert.SerializeObject(info, Formatting.Indented, new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    NullValueHandling = NullValueHandling.Ignore,
-                });
+                var json = JsonConvert.SerializeObject(
+                    info,
+                    Formatting.Indented,
+                    new JsonSerializerSettings
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                        NullValueHandling = NullValueHandling.Ignore,
+                    }
+                );
                 Log.Info(info);
                 this.PostRunReport(json);
             };
 
             On.EntityStates.GameOver.RoR2MainEndingPlayCutscene.FixedUpdate += (orig, self) =>
-                {
-                    orig(self);
-                    self.outer.SetNextStateToMain();
-                };
+            {
+                orig(self);
+                self.outer.SetNextStateToMain();
+            };
 
             On.EntityStates.GameOver.ShowCredits.OnEnter += (orig, self) =>
-                {
-                    orig(self);
-                    self.outer.SetNextState(new EntityStates.GameOver.ShowReport());
-                };
+            {
+                orig(self);
+                self.outer.SetNextState(new EntityStates.GameOver.ShowReport());
+            };
 
-            endRunKeybind = Config.Bind<KeyboardShortcut>("Debug", "End Run", new KeyboardShortcut(KeyCode.F10), "fucking");
+            endRunKeybind = Config.Bind<KeyboardShortcut>(
+                "Debug",
+                "End Run",
+                new KeyboardShortcut(KeyCode.F10),
+                "fucking"
+            );
 
-            ModSettingsManager.AddOption(new GenericButtonOption(
-                "Link Account", "General",
-                "Connects your Weather Index account to Risk of Rain 2. \n\nWill open your browser for authentication.",
-                "Connect", OnConnectClick
-            ));
+            ModSettingsManager.AddOption(
+                new GenericButtonOption(
+                    "Link Account",
+                    "General",
+                    "Connects your Weather Index account to Risk of Rain 2. \n\nWill open your browser for authentication.",
+                    "Connect",
+                    OnConnectClick
+                )
+            );
         }
 
         private async void PostRunReport(string json)
         {
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var request = new HttpRequestMessage(HttpMethod.Post, $"{backendURL}/new-run") { Content = content };
+            var request = new HttpRequestMessage(HttpMethod.Post, $"{backendURL}/new-run")
+            {
+                Content = content,
+            };
             if (accessToken != null)
             {
-                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+                request.Headers.Authorization = new AuthenticationHeaderValue(
+                    "Bearer",
+                    accessToken
+                );
             }
             var response = await http.SendAsync(request);
         }
@@ -133,10 +153,22 @@ namespace WeatherIndex
             var resp = await http.PostAsync(
                 $"{backendURL}/auth/device/code",
                 new StringContent(
-                    JsonConvert.SerializeObject(new { client_id = "weather-index-mod" }), Encoding.UTF8, "application/json"
+                    JsonConvert.SerializeObject(new { client_id = "weather-index-mod" }),
+                    Encoding.UTF8,
+                    "application/json"
                 )
             );
-            var body = JsonConvert.DeserializeAnonymousType(await resp.Content.ReadAsStringAsync(), new { device_code = "", user_code = "", verification_uri = "", interval = 5, expires_in = 1800 });
+            var body = JsonConvert.DeserializeAnonymousType(
+                await resp.Content.ReadAsStringAsync(),
+                new
+                {
+                    device_code = "",
+                    user_code = "",
+                    verification_uri = "",
+                    interval = 5,
+                    expires_in = 1800,
+                }
+            );
 
             Application.OpenURL($"{body.verification_uri}?user_code={body.user_code}");
 
@@ -147,19 +179,27 @@ namespace WeatherIndex
                     await Task.Delay(body.interval * 1000);
                     var poll = await http.PostAsync(
                         $"{backendURL}/auth/device/token",
-                        new StringContent(JsonConvert.SerializeObject(new
-                        {
-                            grant_type = "urn:ietf:params:oauth:grant-type:device_code",
-                            device_code = body.device_code,
-                            client_id = "weather-index-mod"
-                        }),
+                        new StringContent(
+                            JsonConvert.SerializeObject(
+                                new
+                                {
+                                    grant_type = "urn:ietf:params:oauth:grant-type:device_code",
+                                    device_code = body.device_code,
+                                    client_id = "weather-index-mod",
+                                }
+                            ),
                             Encoding.UTF8,
                             "application/json"
-                        ));
+                        )
+                    );
 
-                    if (!poll.IsSuccessStatusCode) continue;
+                    if (!poll.IsSuccessStatusCode)
+                        continue;
 
-                    var tokenBody = JsonConvert.DeserializeAnonymousType(await poll.Content.ReadAsStringAsync(), new { token = "", user = new { id = "" } });
+                    var tokenBody = JsonConvert.DeserializeAnonymousType(
+                        await poll.Content.ReadAsStringAsync(),
+                        new { token = "", user = new { id = "" } }
+                    );
                     accessToken = tokenBody.token;
                     Log.Info(accessToken);
                     break;
