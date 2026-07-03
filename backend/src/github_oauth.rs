@@ -106,7 +106,7 @@ pub async fn handle_callback(
     let user_resp = client
         .get("https://api.github.com/user")
         .header("Authorization", format!("Bearer {access_token}"))
-        .header("User-Agent", "rordb")
+        .header("User-Agent", "Weather-Index")
         .send()
         .await
         .map_err(|e| {
@@ -132,7 +132,7 @@ pub async fn handle_callback(
     let emails = client
         .get("https://api.github.com/user/emails")
         .header("Authorization", format!("Bearer {access_token}"))
-        .header("User-Agent", "rordb")
+        .header("User-Agent", "Weather-Index")
         .send()
         .await
         .map_err(|e| {

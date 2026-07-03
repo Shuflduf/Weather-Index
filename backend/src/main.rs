@@ -8,13 +8,12 @@ use axum::{
 use better_auth::{
     plugins::{
         oauth::OAuthProvider, AccountManagementPlugin, DeviceAuthorizationConfig,
-        DeviceAuthorizationPlugin, OAuthPlugin,
-        SessionManagementPlugin,
+        DeviceAuthorizationPlugin, OAuthPlugin, SessionManagementPlugin,
     },
     AuthBuilder, AuthConfig, AxumIntegration, BetterAuth, CsrfConfig,
 };
 use reqwest::StatusCode;
-use sea_orm::{ActiveModelTrait, DatabaseConnection};
+use sea_orm::{ActiveModelTrait, ActiveValue::Set, DatabaseConnection};
 
 use crate::{
     auth_entities::AppAdapter,
@@ -40,6 +39,11 @@ struct WIState {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
+    tracing_subscriber::fmt()
+        .with_env_filter(tracing_subscriber::EnvFilter::new(
+            "weather_index=debug,better_auth=debug,better_auth_core=debug,warn",
+        ))
+        .init();
     dotenvy::dotenv().ok();
 
     let db = db::init_db().await.expect("Failed to initialize database");
@@ -105,9 +109,11 @@ async fn insert_new_run(
     Json(payload): Json<RunReportDTO>,
 ) -> Result<Json<&'static str>, WIError> {
     println!("{user:?}");
-    let game_run: run_report::ActiveModel = payload.try_into().map_err(|e: Box<dyn Error>| {
-        make_error(StatusCode::BAD_REQUEST, format!("Failed to parse: {e}"))
-    })?;
+    let mut game_run: run_report::ActiveModel =
+        payload.try_into().map_err(|e: Box<dyn Error>| {
+            make_error(StatusCode::BAD_REQUEST, format!("Failed to parse: {e}"))
+        })?;
+    game_run.user_id = Set(user.user_id);
     game_run.insert(&state.db).await.map_err(|e| {
         make_error(
             StatusCode::INTERNAL_SERVER_ERROR,

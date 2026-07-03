@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Navbar from "$lib/Navbar.svelte";
   import { onMount } from "svelte";
 
   let runs: any[] = $state([]);
@@ -8,8 +7,6 @@
     console.log(runs);
   });
 </script>
-
-<Navbar />
 
 <div class="w-full p-8">
   <table class="text-primary w-full">
