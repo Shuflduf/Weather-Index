@@ -135,6 +135,16 @@ namespace WeatherIndex
                     OnConnectClick
                 )
             );
+
+            ModSettingsManager.AddOption(
+                new GenericButtonOption(
+                    "Dump Items",
+                    "Debug",
+                    "[DEBUG] Dumps all item data into the plugin folder",
+                    "Dump",
+                    ItemDumper.Dump
+                )
+            );
         }
 
         private async void PostRunReport(string json)
