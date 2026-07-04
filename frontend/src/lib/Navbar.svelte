@@ -28,17 +28,17 @@
 <div
   class="bg-bg-secondary flex flex-row items-center border justify-between h-18"
 >
-  <h1 class="text-primary text-2xl font-bold tracking-tighter pl-4">
+  <a class="text-primary text-2xl font-bold tracking-tighter pl-4" href="/">
     Weather Index
-  </h1>
+  </a>
   {#if user}
     <div
       class="flex flex-row h-full justify-center items-center gap-2 px-4 border-l"
     >
       <img src={user.image} alt="profile" class="h-4/5 rounded-full" />
-      <span class="text-primary text-xl"
-        >{user.displayName ?? user.username}</span
-      >
+      <span class="text-primary text-xl">
+        {user.displayName ?? user.username}
+      </span>
     </div>
   {:else}
     <button

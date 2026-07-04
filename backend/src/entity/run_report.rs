@@ -1,7 +1,7 @@
 use sea_orm::entity::prelude::*;
 use serde::{Deserialize, Serialize};
 
-pub type EclipseLevel = Option<i8>;
+pub type EclipseLevel = Option<i16>;
 
 #[derive(Clone, Debug, PartialEq, Eq, Deserialize, Serialize, DeriveActiveEnum, EnumIter)]
 #[sea_orm(
@@ -44,7 +44,7 @@ pub struct Model {
     pub start_time: DateTime,
     pub ending: Ending,
     pub difficulty: Difficulty,
-    pub eclipse_level: Option<i8>, // cant be EclipseLevel for sea orm reasons 🐸🚀
+    pub eclipse_level: Option<i16>, // cant be EclipseLevel for sea orm reasons 🐸🚀
     pub time_alive_seconds: i64,
     pub stages_completed: i64,
     // pub run_time_seconds: u32,

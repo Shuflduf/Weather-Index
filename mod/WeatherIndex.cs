@@ -152,6 +152,7 @@ namespace WeatherIndex
                 );
             }
             var response = await http.SendAsync(request);
+            Log.Info(await response.Content.ReadAsStringAsync());
         }
 
         private async void OnConnectClick()
