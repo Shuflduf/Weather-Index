@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import UserDisplay from "$lib/UserDisplay.svelte";
 
   let runs: any[] = $state([]);
   onMount(async () => {
@@ -13,6 +14,7 @@
     <thead class="text-xl tracking-tight text-center font-bold h-12">
       <tr>
         <td>ID</td>
+        <td>Player</td>
         <td>Survivor</td>
         <td>Ending</td>
         <td>Difficulty</td>
@@ -23,6 +25,15 @@
       {#each runs as run}
         <tr class="border bg-bg-secondary">
           <td class="border p-4">{run.id}</td>
+          <td class="border p-4">
+            <UserDisplay
+              user={{
+                username: run.user_username,
+                image: run.user_image,
+                displayName: null,
+              }}
+            />
+          </td>
           <td class="border p-4">{run.survivor}</td>
           <td class="border p-4">{run.ending}</td>
           <td class="border p-4">{run.difficulty}</td>

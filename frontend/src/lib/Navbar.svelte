@@ -1,6 +1,7 @@
 <script lang="ts">
   import { SiGithub } from "@icons-pack/svelte-simple-icons";
   import { onMount } from "svelte";
+  import UserDisplay from "./UserDisplay.svelte";
 
   let user: any = $state(null);
 
@@ -32,13 +33,8 @@
     Weather Index
   </a>
   {#if user}
-    <div
-      class="flex flex-row h-full justify-center items-center gap-2 px-4 border-l"
-    >
-      <img src={user.image} alt="profile" class="h-4/5 rounded-full" />
-      <span class="text-primary text-xl">
-        {user.displayName ?? user.username}
-      </span>
+    <div class="h-full border-l px-4">
+      <UserDisplay {user} />
     </div>
   {:else}
     <button
