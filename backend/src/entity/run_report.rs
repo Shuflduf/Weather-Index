@@ -1,21 +1,6 @@
 use sea_orm::entity::prelude::*;
 use serde::{Deserialize, Serialize};
 
-pub type EclipseLevel = Option<i16>;
-
-#[derive(Clone, Debug, PartialEq, Eq, Deserialize, Serialize, DeriveActiveEnum, EnumIter)]
-#[sea_orm(
-    rs_type = "String",
-    db_type = "String(StringLen::None)",
-    rename_all = "PascalCase"
-)]
-pub enum Difficulty {
-    Drizzle,
-    Rainstorm,
-    Monsoon,
-    Eclipse,
-}
-
 #[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel, Deserialize, Serialize)]
 #[sea_orm(table_name = "run_reports")]
 pub struct Model {
@@ -30,8 +15,7 @@ pub struct Model {
     pub survivor: String,
     pub start_time: DateTime,
     pub ending: String,
-    pub difficulty: Difficulty,
-    pub eclipse_level: Option<i16>, // cant be EclipseLevel for sea orm reasons 🐸🚀
+    pub difficulty: String,
     pub time_alive_seconds: i64,
     pub stages_completed: i16,
     pub score: i64,

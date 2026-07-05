@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { BODIES, ENDINGS, ITEMS, type Item } from "$lib/RoR2";
+  import { BODIES, DIFFICULTIES, ENDINGS, ITEMS, type Item } from "$lib/RoR2";
   import UserDisplay from "$lib/UserDisplay.svelte";
 
   let runs: any[] = $state([]);
@@ -59,7 +59,16 @@
               {ENDINGS[run.ending].displayName}
             </span>
           </td>
-          <td class="border p-4">{run.difficulty}</td>
+          <td class="border p-4">
+            <img
+              src={`/difficulties/${DIFFICULTIES[run.difficulty].icon}`}
+              alt={run.difficulty}
+              class="h-12 inline mr-2"
+            />
+            <span class="text-shadow-lg text-lg">
+              {DIFFICULTIES[run.difficulty].displayName}
+            </span>
+          </td>
           <td class="border p-4">{run.items_collected}</td>
           <td class="border p-4">{run.score}</td>
         </tr>

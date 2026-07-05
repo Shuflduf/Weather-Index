@@ -5,7 +5,7 @@ use sea_orm::ActiveValue::Set;
 use serde::Deserialize;
 
 use crate::{
-    entity::run_report::{self, EclipseLevel},
+    entity::run_report::{self},
     scoring_table::ScoringTable,
 };
 
@@ -23,6 +23,7 @@ pub struct RunReportDTO {
     pub items: serde_json::Value,
     pub items_collected: i32,
 
+    //
     // drones
     pub drones_purchased: i16,
     pub turrets_purchased: i16,
@@ -68,8 +69,7 @@ impl TryFrom<RunReportDTO> for run_report::ActiveModel {
                 .parse::<DateTime<Utc>>()
                 .expect("invalid start time format")
                 .naive_utc()),
-            eclipse_level: Set(parse_eclipse_level(&dto.difficulty)),
-            difficulty: Set(dto.difficulty.try_into()?),
+            difficulty: Set(dto.difficulty),
             time_alive_seconds: Set(dto.time_alive_seconds),
             stages_completed: Set(dto.stages_completed),
             score: Set(score),
@@ -96,32 +96,6 @@ impl TryFrom<RunReportDTO> for run_report::ActiveModel {
 
             ..Default::default()
         })
-    }
-}
-
-impl TryFrom<String> for run_report::Difficulty {
-    type Error = Box<dyn Error>;
-    fn try_from(value: String) -> Result<Self, Self::Error> {
-        match value.as_ref() {
-            "DIFFICULTY_EASY_NAME" => Ok(Self::Drizzle),
-            "DIFFICULTY_NORMAL_NAME" => Ok(Self::Rainstorm),
-            "DIFFICULTY_HARD_NAME" => Ok(Self::Monsoon),
-            other => {
-                if other.starts_with("ECLIPSE") {
-                    Ok(Self::Eclipse)
-                } else {
-                    Err(format!("unknown difficulty: {other}").into())
-                }
-            }
-        }
-    }
-}
-
-fn parse_eclipse_level(value: &str) -> EclipseLevel {
-    if value.starts_with("ECLIPSE") {
-        value.split("_").nth(1)?.parse().ok()
-    } else {
-        None
     }
 }
 
