@@ -114,6 +114,8 @@ namespace WeatherIndex
                         endingMessage = RoR2.Language.GetString(def.endingTextToken),
                         isWin = def.isWin,
                         icon = filename,
+                        colorFg = ToHex(def.foregroundColor),
+                        colorBg = ToHex(def.backgroundColor),
                     }
                 );
             }
@@ -165,6 +167,11 @@ namespace WeatherIndex
             tex = readable;
             File.WriteAllBytes(path, tex.EncodeToPNG());
             Object.Destroy(tex);
+        }
+
+        private static string ToHex(Color c)
+        {
+            return $"#{(byte)(c.r * 255):X2}{(byte)(c.g * 255):X2}{(byte)(c.b * 255):X2}";
         }
     }
 }

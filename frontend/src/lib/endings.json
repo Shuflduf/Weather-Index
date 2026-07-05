@@ -3,72 +3,90 @@
     "name": "DecompileEnding",
     "nameToken": "GAME_RESULT_DECOMPILE",
     "endingMessage": "Decompiled into the Collective",
-    "isWin": true,
     "displayName": "Decompiled",
-    "icon": "DecompileEnding.png"
+    "isWin": true,
+    "icon": "DecompileEnding.png",
+    "colorFg": "#2759B2",
+    "colorBg": "#438EDD"
   },
   {
     "name": "EscapeSequenceFailed",
     "nameToken": "GAME_RESULT_LOST",
     "endingMessage": "Defeat!",
-    "isWin": false,
     "displayName": "Failed Escape",
-    "icon": "EscapeSequenceFailed.png"
+    "isWin": false,
+    "icon": "EscapeSequenceFailed.png",
+    "colorFg": "#DD8080",
+    "colorBg": "#603737"
   },
   {
     "name": "LimboEnding",
     "nameToken": "GAME_RESULT_UNKNOWN",
     "endingMessage": "Fate Unknown..",
-    "isWin": true,
     "displayName": "Limbo",
-    "icon": "LimboEnding.png"
+    "isWin": true,
+    "icon": "LimboEnding.png",
+    "colorFg": "#9C8CE0",
+    "colorBg": "#6586CC"
   },
   {
     "name": "MainEnding",
     "nameToken": "GAME_RESULT_WON",
     "endingMessage": "Victory!",
-    "isWin": true,
     "displayName": "Victory",
-    "icon": "MainEnding.png"
+    "isWin": true,
+    "icon": "MainEnding.png",
+    "colorFg": "#B0DD80",
+    "colorBg": "#8AC368"
   },
   {
     "name": "ObliterationEnding",
     "nameToken": "GAME_RESULT_UNKNOWN",
     "endingMessage": "Fate Unknown..",
+    "displayName": "Obliterated",
     "isWin": true,
-    "displayName": "Obliteration",
-    "icon": "ObliterationEnding.png"
+    "icon": "ObliterationEnding.png",
+    "colorFg": "#9C8CE0",
+    "colorBg": "#6586CC"
   },
   {
     "name": "PrismaticTrialEnding",
     "nameToken": "GAME_RESULT_WON",
     "endingMessage": "Victory!",
+    "displayName": "PrismaticTrialEnding",
     "isWin": true,
-    "displayName": "Prismatic Trial",
-    "icon": "PrismaticTrialEnding.png"
+    "icon": "PrismaticTrialEnding.png",
+    "colorFg": "#B0DD80",
+    "colorBg": "#8AC368"
   },
   {
     "name": "RebirthEndingDef",
     "nameToken": "GAME_RESULT_REBIRTH",
     "endingMessage": "Gifted with Rebirth",
-    "isWin": true,
     "displayName": "Rebirthed",
-    "icon": "RebirthEndingDef.png"
+    "isWin": true,
+    "icon": "RebirthEndingDef.png",
+    "colorFg": "#4BA300",
+    "colorBg": "#026C00"
   },
   {
     "name": "StandardLoss",
     "nameToken": "GAME_RESULT_LOST",
     "endingMessage": "Defeat!",
+    "displayName": "Lost",
     "isWin": false,
-    "displayName": "Loss",
-    "icon": "StandardLoss.png"
+    "icon": "StandardLoss.png",
+    "colorFg": "#DD8080",
+    "colorBg": "#603737"
   },
   {
     "name": "VoidEnding",
     "nameToken": "GAME_RESULT_UNKNOWN",
     "endingMessage": "Fate Unknown..",
-    "isWin": true,
     "displayName": "Void",
-    "icon": "VoidEnding.png"
+    "isWin": true,
+    "icon": "VoidEnding.png",
+    "colorFg": "#8152A1",
+    "colorBg": "#A451B6"
   }
 ]

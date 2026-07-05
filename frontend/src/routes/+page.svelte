@@ -46,13 +46,16 @@
               {BODIES[run.survivor].displayName}
             </span>
           </td>
-          <td class="border p-4">
+          <td
+            class="border p-4"
+            style={`background-color: ${ENDINGS[run.ending].colorBg};`}
+          >
             <img
               src={`/endings/${ENDINGS[run.ending].icon}`}
               alt={run.ending}
               class="h-12 inline mr-2"
             />
-            <span>
+            <span class="text-shadow-lg text-lg">
               {ENDINGS[run.ending].displayName}
             </span>
           </td>

@@ -21,9 +21,12 @@ export type Body = {
 export type Ending = {
   name: string;
   nameToken: string;
+  endingMessage: string;
   displayName: string;
   isWin: boolean;
   icon: string;
+  colorFg: string;
+  colorBg: string;
 };
 
 export const ITEMS = Object.fromEntries(items.map((item: Item) => [item.id, item]));
