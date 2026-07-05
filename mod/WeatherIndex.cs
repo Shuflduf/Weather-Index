@@ -149,9 +149,18 @@ namespace WeatherIndex
                 new GenericButtonOption(
                     "Dump Items",
                     "Debug",
-                    "[DEBUG] Dumps all item data into the plugin folder",
+                    "Dumps all item data into the plugin folder",
                     "Dump",
-                    ItemDumper.Dump
+                    DataDumper.DumpItems
+                )
+            );
+            ModSettingsManager.AddOption(
+                new GenericButtonOption(
+                    "Dump Bodies",
+                    "Debug",
+                    "Dumps all body data (survivors/enemies/etc) into the plugin folder",
+                    "Dump",
+                    DataDumper.DumpBodies
                 )
             );
         }
