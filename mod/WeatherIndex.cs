@@ -44,6 +44,12 @@ namespace WeatherIndex
                 var player = report.playerInfos?[0];
                 var stats = player!.statSheet;
                 var itemCounts = getItemCounts(player.itemStacks);
+                foreach (var statDef in StatDef.allStatDefs)
+                {
+                    var val = statDef.pointValue;
+                    if (val != 0)
+                        Log.Info($"{statDef.name} = {val}");
+                }
                 var info = new
                 {
                     // run info
@@ -58,6 +64,7 @@ namespace WeatherIndex
 
                     // items
                     items = itemCounts,
+                    itemsCollected = stats.GetStatValueULong(StatDef.totalItemsCollected),
 
                     // drones
                     dronesPurchased = stats.GetStatValueULong(StatDef.totalDronesPurchased),

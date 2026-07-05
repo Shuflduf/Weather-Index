@@ -20,12 +20,13 @@
         <td>Ending</td>
         <td>Difficulty</td>
         <td>Items</td>
+        <td>Score</td>
       </tr>
     </thead>
     <tbody>
       {#each runs as run}
         <tr class="border bg-bg-secondary">
-          <td class="border p-4">{run.id}</td>
+          <td class="border p-4"><a href={`/run/${run.id}`}>{run.id}</a></td>
           <td class="border p-4">
             <UserDisplay
               user={{
@@ -38,11 +39,8 @@
           <td class="border p-4">{run.survivor}</td>
           <td class="border p-4">{run.ending}</td>
           <td class="border p-4">{run.difficulty}</td>
-          <td class="border p-4">
-            {Object.entries(run.items)
-              .filter(([key, value]) => !ITEMS[Number(key)].helper)
-              .reduce((accum, [_, count]) => accum + (count as number), 0)}
-          </td>
+          <td class="border p-4">{run.items_collected}</td>
+          <td class="border p-4">{run.score}</td>
         </tr>
       {/each}
     </tbody>

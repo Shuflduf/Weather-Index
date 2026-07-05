@@ -1,0 +1,13 @@
+{
+  "timeAliveSeconds": 1,
+  "kills": 10,
+  "minionKills": 10,
+  "damageDealt": 0.01,
+  "minionDamageDealt": 0.01,
+  "highestDamageDealt": 1,
+  "highestLevel": 100,
+  "goldCollected": 1,
+  "itemsCollected": 110,
+  "stagesCompleted": 100,
+  "purchases": 35
+}

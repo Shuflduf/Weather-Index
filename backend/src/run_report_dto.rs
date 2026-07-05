@@ -4,9 +4,12 @@ use chrono::{DateTime, Utc};
 use sea_orm::ActiveValue::Set;
 use serde::Deserialize;
 
-use crate::entity::run_report::{self, EclipseLevel};
+use crate::{
+    entity::run_report::{self, EclipseLevel},
+    scoring_table::ScoringTable,
+};
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct RunReportDTO {
     pub survivor: String,
@@ -14,21 +17,21 @@ pub struct RunReportDTO {
     pub start_time: String,
     pub difficulty: String,
     pub time_alive_seconds: i64,
-    pub stages_completed: i64,
+    pub stages_completed: i16,
 
     // items
     pub items: serde_json::Value,
-    // pub items_collected: i64,
+    pub items_collected: i32,
 
     // drones
-    pub drones_purchased: i64,
-    pub turrets_purchased: i64,
+    pub drones_purchased: i16,
+    pub turrets_purchased: i16,
 
     // combat
-    pub kills: i64,
-    pub elite_kills: i64,
-    pub minion_kills: i64,
-    pub deaths: i64,
+    pub kills: i32,
+    pub elite_kills: i32,
+    pub minion_kills: i32,
+    pub deaths: i32,
 
     // damage
     pub damage_dealt: i64,
@@ -40,12 +43,12 @@ pub struct RunReportDTO {
     pub healing_recieved: i64,
 
     // progression
-    pub highest_level: i64,
+    pub highest_level: i32,
     pub gold_collected: i64,
     pub gold_spent: i64,
     pub lunar_coins_spent: i64,
-    pub purchases: i64,
-    pub blood_purchases: i64,
+    pub purchases: i32,
+    pub blood_purchases: i32,
 
     // movement
     pub distance_traveled_metres: i64,
@@ -54,6 +57,7 @@ pub struct RunReportDTO {
 impl TryFrom<RunReportDTO> for run_report::ActiveModel {
     type Error = Box<dyn Error>;
     fn try_from(dto: RunReportDTO) -> Result<Self, Self::Error> {
+        let score = total_run_score(&dto);
         Ok(Self {
             upload_time: Set(chrono::Utc::now().naive_utc()),
 
@@ -68,7 +72,9 @@ impl TryFrom<RunReportDTO> for run_report::ActiveModel {
             difficulty: Set(dto.difficulty.try_into()?),
             time_alive_seconds: Set(dto.time_alive_seconds),
             stages_completed: Set(dto.stages_completed),
+            score: Set(score),
             items: Set(dto.items),
+            items_collected: Set(dto.items_collected),
             drones_purchased: Set(dto.drones_purchased),
             turrets_purchased: Set(dto.turrets_purchased),
             kills: Set(dto.kills),
@@ -130,4 +136,20 @@ fn parse_eclipse_level(value: &str) -> EclipseLevel {
     } else {
         None
     }
+}
+
+fn total_run_score(dto: &RunReportDTO) -> i64 {
+    let s = ScoringTable::new();
+    let score = dto.time_alive_seconds as f32 * s.time_alive_seconds
+        + dto.kills as f32 * s.kills
+        + dto.minion_kills as f32 * s.minion_kills
+        + dto.damage_dealt as f32 * s.damage_dealt
+        + dto.minion_damage_dealt as f32 * s.minion_damage_dealt
+        + dto.highest_damage_dealt as f32 * s.highest_damage_dealt
+        + dto.highest_level as f32 * s.highest_level
+        + dto.gold_collected as f32 * s.gold_collected
+        + dto.items_collected as f32 * s.items_collected
+        + dto.stages_completed as f32 * s.stages_completed
+        + dto.purchases as f32 * s.purchases;
+    score as i64
 }

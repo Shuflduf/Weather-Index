@@ -31,6 +31,7 @@ mod entity;
 mod error;
 mod github_oauth;
 mod run_report_dto;
+mod scoring_table;
 
 struct WIState {
     db: DatabaseConnection,
