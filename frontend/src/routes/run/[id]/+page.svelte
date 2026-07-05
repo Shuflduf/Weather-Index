@@ -24,7 +24,7 @@
   {:then run}
     <div
       style={`background-color: ${ENDINGS[run.ending].colorBg};`}
-      class="m-4 border mb-0"
+      class="m-4 border mb-0 p-2"
     >
       <img
         src={`/endings/${ENDINGS[run.ending].icon}`}
@@ -61,7 +61,7 @@
                 run.time_alive_seconds * SCORING_TABLE.timeAliveSeconds,
               )}
             </span>
-            pts
+            pts.
           </span>
         </div>
         <div class="flex flex-row justify-between items-center p-2">
@@ -74,7 +74,7 @@
             <span class="text-yellow-200">
               {formatBig(run.kills * SCORING_TABLE.kills)}
             </span>
-            pts
+            pts.
           </span>
         </div>
         <div class="flex flex-row justify-between items-center p-2">
@@ -87,7 +87,7 @@
             <span class="text-yellow-200">
               {formatBig(run.minion_kills * SCORING_TABLE.minionKills)}
             </span>
-            pts
+            pts.
           </span>
         </div>
         <div class="flex flex-row justify-between items-center p-2">
@@ -98,7 +98,7 @@
           </span>
           <span>
             <span class="text-yellow-200">0</span>
-            pts
+            pts.
           </span>
         </div>
         <div class="flex flex-row justify-between items-center p-2">
@@ -111,7 +111,7 @@
             <span class="text-yellow-200">
               {formatBig(run.damage_dealt * SCORING_TABLE.damageDealt)}
             </span>
-            pts
+            pts.
           </span>
         </div>
         <div class="flex flex-row justify-between items-center p-2">
@@ -126,7 +126,7 @@
                 run.minion_damage_dealt * SCORING_TABLE.minionDamageDealt,
               )}
             </span>
-            pts
+            pts.
           </span>
         </div>
         <div class="flex flex-row justify-between items-center p-2">
@@ -141,7 +141,7 @@
                 run.highest_damage_dealt * SCORING_TABLE.highestDamageDealt,
               )}
             </span>
-            pts
+            pts.
           </span>
         </div>
         <div class="flex flex-row justify-between items-center p-2">
@@ -152,7 +152,7 @@
           </span>
           <span>
             <span class="text-yellow-200">0</span>
-            pts
+            pts.
           </span>
         </div>
         <div class="flex flex-row justify-between items-center p-2">
@@ -165,7 +165,7 @@
             <span class="text-yellow-200">
               {formatBig(run.highest_level * SCORING_TABLE.highestLevel)}
             </span>
-            pts
+            pts.
           </span>
         </div>
         <div class="flex flex-row justify-between items-center p-2">
@@ -178,7 +178,7 @@
             <span class="text-yellow-200">
               {formatBig(run.gold_collected * SCORING_TABLE.goldCollected)}
             </span>
-            pts
+            pts.
           </span>
         </div>
         <div class="flex flex-row justify-between items-center p-2">
@@ -191,7 +191,7 @@
             <span class="text-yellow-200">
               {formatBig(run.items_collected * SCORING_TABLE.itemsCollected)}
             </span>
-            pts
+            pts.
           </span>
         </div>
         <div class="flex flex-row justify-between items-center p-2">
@@ -204,7 +204,7 @@
             <span class="text-yellow-200">
               {formatBig(run.stages_completed * SCORING_TABLE.stagesCompleted)}
             </span>
-            pts
+            pts.
           </span>
         </div>
         <div class="flex flex-row justify-between items-center p-2">
@@ -217,7 +217,16 @@
             <span class="text-yellow-200">
               {formatBig(run.purchases * SCORING_TABLE.purchases)}
             </span>
-            pts
+            pts.
+          </span>
+        </div>
+        <div class="flex flex-row justify-around items-center p-2 mt-2 text-xl">
+          <span>Total</span>
+          <span>
+            <span class="text-yellow-200">
+              {formatBig(run.score)}
+            </span>
+            pts.
           </span>
         </div>
       </div>
