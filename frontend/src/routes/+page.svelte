@@ -1,6 +1,13 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { BODIES, DIFFICULTIES, ENDINGS, ITEMS, type Item } from "$lib/RoR2";
+  import {
+    BODIES,
+    countRealItems,
+    DIFFICULTIES,
+    ENDINGS,
+    ITEMS,
+    type Item,
+  } from "$lib/RoR2";
   import UserDisplay from "$lib/UserDisplay.svelte";
 
   let runs: any[] = $state([]);
@@ -42,7 +49,7 @@
               alt={BODIES[run.survivor].displayName}
               class="h-12 inline rounded-full mr-2"
             />
-            <span>
+            <span class="text-lg">
               {BODIES[run.survivor].displayName}
             </span>
           </td>
@@ -65,11 +72,11 @@
               alt={run.difficulty}
               class="h-12 inline mr-2"
             />
-            <span class="text-shadow-lg text-lg">
+            <span class="text-lg">
               {DIFFICULTIES[run.difficulty].displayName}
             </span>
           </td>
-          <td class="border p-4">{run.items_collected}</td>
+          <td class="border p-4">{countRealItems(run.items)}</td>
           <td class="border p-4">{run.score}</td>
         </tr>
       {/each}

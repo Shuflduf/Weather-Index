@@ -29,6 +29,7 @@ pub async fn list(
     State(state): State<Arc<WIState>>,
 ) -> Result<Json<Vec<RunReportWithUser>>, WIError> {
     let reports = RunReport::find()
+        .order_by_id_desc()
         .find_also_related(user::Entity)
         .all(&state.db)
         .await

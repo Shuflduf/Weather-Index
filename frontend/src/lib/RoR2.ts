@@ -42,3 +42,10 @@ export const ENDINGS = Object.fromEntries(endings.map((ending: Ending) => [endin
 export const DIFFICULTIES = Object.fromEntries(
   difficulties.map((difficulty: Difficulty) => [difficulty.nameToken, difficulty]),
 );
+
+export function countRealItems(items: Record<string, number>): number {
+  return Object.entries(items).filter(([id, _]) => !ITEMS[id].helper).reduce(
+    (accum, [_, current]) => accum + current,
+    0,
+  );
+}
