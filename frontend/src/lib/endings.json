@@ -2,64 +2,73 @@
   {
     "name": "DecompileEnding",
     "nameToken": "GAME_RESULT_DECOMPILE",
-    "displayName": "Decompiled into the Collective",
+    "endingMessage": "Decompiled into the Collective",
     "isWin": true,
+    "displayName": "Decompiled",
     "icon": "DecompileEnding.png"
   },
   {
     "name": "EscapeSequenceFailed",
     "nameToken": "GAME_RESULT_LOST",
-    "displayName": "Defeat!",
+    "endingMessage": "Defeat!",
     "isWin": false,
+    "displayName": "Failed Escape",
     "icon": "EscapeSequenceFailed.png"
   },
   {
     "name": "LimboEnding",
     "nameToken": "GAME_RESULT_UNKNOWN",
-    "displayName": "Fate Unknown..",
+    "endingMessage": "Fate Unknown..",
     "isWin": true,
+    "displayName": "Limbo",
     "icon": "LimboEnding.png"
   },
   {
     "name": "MainEnding",
     "nameToken": "GAME_RESULT_WON",
-    "displayName": "Victory!",
+    "endingMessage": "Victory!",
     "isWin": true,
+    "displayName": "Victory",
     "icon": "MainEnding.png"
   },
   {
     "name": "ObliterationEnding",
     "nameToken": "GAME_RESULT_UNKNOWN",
-    "displayName": "Fate Unknown..",
+    "endingMessage": "Fate Unknown..",
     "isWin": true,
+    "displayName": "Obliteration",
     "icon": "ObliterationEnding.png"
   },
   {
     "name": "PrismaticTrialEnding",
     "nameToken": "GAME_RESULT_WON",
-    "displayName": "Victory!",
+    "endingMessage": "Victory!",
     "isWin": true,
+    "displayName": "Prismatic Trial",
     "icon": "PrismaticTrialEnding.png"
   },
   {
     "name": "RebirthEndingDef",
     "nameToken": "GAME_RESULT_REBIRTH",
-    "displayName": "Gifted with Rebirth",
+    "endingMessage": "Gifted with Rebirth",
     "isWin": true,
+    "displayName": "Rebirthed",
     "icon": "RebirthEndingDef.png"
   },
   {
     "name": "StandardLoss",
     "nameToken": "GAME_RESULT_LOST",
-    "displayName": "Defeat!",
+    "endingMessage": "Defeat!",
     "isWin": false,
+    "displayName": "Loss",
     "icon": "StandardLoss.png"
   },
   {
     "name": "VoidEnding",
     "nameToken": "GAME_RESULT_UNKNOWN",
-    "displayName": "Fate Unknown..",
+    "endingMessage": "Fate Unknown..",
     "isWin": true,
+    "displayName": "Void",
     "icon": "VoidEnding.png"
   }
 ]

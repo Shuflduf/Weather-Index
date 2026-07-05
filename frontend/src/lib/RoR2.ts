@@ -1,4 +1,5 @@
 import bodies from "$lib/bodies.json";
+import endings from "$lib/endings.json";
 import items from "$lib/items.json";
 
 export type Item = {
@@ -17,5 +18,14 @@ export type Body = {
   icon: string;
 };
 
+export type Ending = {
+  name: string;
+  nameToken: string;
+  displayName: string;
+  isWin: boolean;
+  icon: string;
+};
+
 export const ITEMS = Object.fromEntries(items.map((item: Item) => [item.id, item]));
 export const BODIES = Object.fromEntries(bodies.map((body: Body) => [body.name, body]));
+export const ENDINGS = Object.fromEntries(endings.map((ending: Ending) => [ending.name, ending]));

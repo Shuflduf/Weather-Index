@@ -111,7 +111,7 @@ namespace WeatherIndex
                     {
                         name = def.cachedName,
                         nameToken = def.endingTextToken,
-                        displayName = RoR2.Language.GetString(def.endingTextToken),
+                        endingMessage = RoR2.Language.GetString(def.endingTextToken),
                         isWin = def.isWin,
                         icon = filename,
                     }
@@ -137,10 +137,11 @@ namespace WeatherIndex
             for (int i = 0; i < pixels.Length; i++)
             {
                 float luminance = (pixels[i].r + pixels[i].g + pixels[i].b) / (3f * 255f);
+
                 pixels[i] = new Color32(
-                    (byte)(color.r * 255),
-                    (byte)(color.g * 255),
-                    (byte)(color.b * 255),
+                    (byte)(255),
+                    (byte)(255),
+                    (byte)(255),
                     (byte)(luminance * 255)
                 );
             }
