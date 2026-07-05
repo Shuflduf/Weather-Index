@@ -74,5 +74,5 @@ export function formatSeconds(seconds: number): string {
 }
 
 export function formatBig(big: number): string {
-  return big.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return Math.round(big).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
