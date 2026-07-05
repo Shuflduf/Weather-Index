@@ -1,5 +1,6 @@
 ﻿#nullable enable
 
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -42,6 +43,7 @@ namespace WeatherIndex
             {
                 var player = report.playerInfos?[0];
                 var stats = player!.statSheet;
+                var itemCounts = getItemCounts(player.itemStacks);
                 var info = new
                 {
                     // run info
@@ -55,7 +57,7 @@ namespace WeatherIndex
                     stagesCompleted = stats.GetStatValueULong(StatDef.totalStagesCompleted),
 
                     // items
-                    itemsCollected = stats.GetStatValueULong(StatDef.totalItemsCollected),
+                    items = itemCounts,
 
                     // drones
                     dronesPurchased = stats.GetStatValueULong(StatDef.totalDronesPurchased),
@@ -225,6 +227,19 @@ namespace WeatherIndex
                     break;
                 }
             });
+        }
+
+        private Dictionary<int, int> getItemCounts(int[] itemStacks)
+        {
+            Dictionary<int, int> itemCounts = new();
+            for (int i = 0; i < itemStacks.Length; i++)
+            {
+                if (itemStacks[i] > 0)
+                {
+                    itemCounts[i] = itemStacks[i];
+                }
+            }
+            return itemCounts;
         }
 
         private void Update()

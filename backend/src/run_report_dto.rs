@@ -17,7 +17,8 @@ pub struct RunReportDTO {
     pub stages_completed: i64,
 
     // items
-    pub items_collected: i64,
+    pub items: serde_json::Value,
+    // pub items_collected: i64,
 
     // drones
     pub drones_purchased: i64,
@@ -67,7 +68,7 @@ impl TryFrom<RunReportDTO> for run_report::ActiveModel {
             difficulty: Set(dto.difficulty.try_into()?),
             time_alive_seconds: Set(dto.time_alive_seconds),
             stages_completed: Set(dto.stages_completed),
-            items_collected: Set(dto.items_collected),
+            items: Set(dto.items),
             drones_purchased: Set(dto.drones_purchased),
             turrets_purchased: Set(dto.turrets_purchased),
             kills: Set(dto.kills),

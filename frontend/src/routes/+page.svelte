@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import { ITEMS, type Item } from "$lib/Items";
   import UserDisplay from "$lib/UserDisplay.svelte";
 
   let runs: any[] = $state([]);
@@ -37,7 +38,11 @@
           <td class="border p-4">{run.survivor}</td>
           <td class="border p-4">{run.ending}</td>
           <td class="border p-4">{run.difficulty}</td>
-          <td class="border p-4">{run.items_collected}</td>
+          <td class="border p-4">
+            {Object.entries(run.items)
+              .filter(([key, value]) => !ITEMS[Number(key)].helper)
+              .reduce((accum, [_, count]) => accum + (count as number), 0)}
+          </td>
         </tr>
       {/each}
     </tbody>

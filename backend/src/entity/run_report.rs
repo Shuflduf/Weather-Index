@@ -50,7 +50,8 @@ pub struct Model {
     // pub run_time_seconds: u32,
 
     // items
-    pub items_collected: i64,
+    pub items: serde_json::Value,
+    // pub items_collected: i64,
     // pub items_scrapped: u16,
     // pub chests_left_behind: u16,
 
