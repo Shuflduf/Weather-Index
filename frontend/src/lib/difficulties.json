@@ -1,0 +1,25 @@
+[
+  {
+    "nameToken": "DIFFICULTY_EASY_NAME",
+    "displayName": "Drizzle",
+    "icon": "DIFFICULTY_EASY_NAME.png"
+  },
+  {
+    "nameToken": "DIFFICULTY_NORMAL_NAME",
+    "displayName": "Rainstorm",
+    "icon": "DIFFICULTY_NORMAL_NAME.png"
+  },
+  {
+    "nameToken": "DIFFICULTY_HARD_NAME",
+    "displayName": "Monsoon",
+    "icon": "DIFFICULTY_HARD_NAME.png"
+  },
+  { "nameToken": "ECLIPSE_1_NAME", "displayName": "Eclipse (1)", "icon": "ECLIPSE_1_NAME.png" },
+  { "nameToken": "ECLIPSE_2_NAME", "displayName": "Eclipse (2)", "icon": "ECLIPSE_2_NAME.png" },
+  { "nameToken": "ECLIPSE_3_NAME", "displayName": "Eclipse (3)", "icon": "ECLIPSE_3_NAME.png" },
+  { "nameToken": "ECLIPSE_4_NAME", "displayName": "Eclipse (4)", "icon": "ECLIPSE_4_NAME.png" },
+  { "nameToken": "ECLIPSE_5_NAME", "displayName": "Eclipse (5)", "icon": "ECLIPSE_5_NAME.png" },
+  { "nameToken": "ECLIPSE_6_NAME", "displayName": "Eclipse (6)", "icon": "ECLIPSE_6_NAME.png" },
+  { "nameToken": "ECLIPSE_7_NAME", "displayName": "Eclipse (7)", "icon": "ECLIPSE_7_NAME.png" },
+  { "nameToken": "ECLIPSE_8_NAME", "displayName": "Eclipse (8)", "icon": "ECLIPSE_8_NAME.png" }
+]

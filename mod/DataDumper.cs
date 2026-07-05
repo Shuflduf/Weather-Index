@@ -123,6 +123,47 @@ namespace WeatherIndex
             File.WriteAllText(Path.Combine(outputDir, "endings.json"), json);
         }
 
+        public static void DumpDifficulties()
+        {
+            var outputDir = Path.Combine(pluginDir, "difficulties");
+            Directory.CreateDirectory(outputDir);
+            var difficulties = new List<object>();
+            foreach (
+                RoR2.DifficultyIndex idx in System.Enum.GetValues(typeof(RoR2.DifficultyIndex))
+            )
+            {
+                if (idx == RoR2.DifficultyIndex.Invalid || idx == RoR2.DifficultyIndex.Count)
+                    continue;
+
+                var def = RoR2.DifficultyCatalog.GetDifficultyDef(idx);
+                if (def == null)
+                    continue;
+
+                var sprite = def.GetIconSprite();
+                if (sprite == null)
+                    continue;
+
+                string? filename = null;
+                Texture2D tex = sprite.texture;
+                if (tex != null)
+                {
+                    filename = $"{def.nameToken}.png";
+                    writeTexture(Path.Combine(outputDir, filename), tex);
+                }
+
+                difficulties.Add(
+                    new
+                    {
+                        nameToken = def.nameToken,
+                        displayName = RoR2.Language.GetString(def.nameToken),
+                        icon = filename,
+                    }
+                );
+            }
+            var json = JsonConvert.SerializeObject(difficulties);
+            File.WriteAllText(Path.Combine(outputDir, "difficulties.json"), json);
+        }
+
         private static void writeEndingTexture(string path, Texture2D tex, Color color)
         {
             var readable = new Texture2D(tex.width, tex.height, TextureFormat.RGBA32, false);

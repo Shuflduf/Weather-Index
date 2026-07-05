@@ -172,6 +172,15 @@ namespace WeatherIndex
                     DataDumper.DumpEndings
                 )
             );
+            ModSettingsManager.AddOption(
+                new GenericButtonOption(
+                    "Dump Difficulties",
+                    "Debug",
+                    "i frogot",
+                    "Dump",
+                    DataDumper.DumpDifficulties
+                )
+            );
         }
 
         private async void PostRunReport(string json)
