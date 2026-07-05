@@ -1,0 +1,65 @@
+[
+  {
+    "name": "DecompileEnding",
+    "nameToken": "GAME_RESULT_DECOMPILE",
+    "displayName": "Decompiled into the Collective",
+    "isWin": true,
+    "icon": "DecompileEnding.png"
+  },
+  {
+    "name": "EscapeSequenceFailed",
+    "nameToken": "GAME_RESULT_LOST",
+    "displayName": "Defeat!",
+    "isWin": false,
+    "icon": "EscapeSequenceFailed.png"
+  },
+  {
+    "name": "LimboEnding",
+    "nameToken": "GAME_RESULT_UNKNOWN",
+    "displayName": "Fate Unknown..",
+    "isWin": true,
+    "icon": "LimboEnding.png"
+  },
+  {
+    "name": "MainEnding",
+    "nameToken": "GAME_RESULT_WON",
+    "displayName": "Victory!",
+    "isWin": true,
+    "icon": "MainEnding.png"
+  },
+  {
+    "name": "ObliterationEnding",
+    "nameToken": "GAME_RESULT_UNKNOWN",
+    "displayName": "Fate Unknown..",
+    "isWin": true,
+    "icon": "ObliterationEnding.png"
+  },
+  {
+    "name": "PrismaticTrialEnding",
+    "nameToken": "GAME_RESULT_WON",
+    "displayName": "Victory!",
+    "isWin": true,
+    "icon": "PrismaticTrialEnding.png"
+  },
+  {
+    "name": "RebirthEndingDef",
+    "nameToken": "GAME_RESULT_REBIRTH",
+    "displayName": "Gifted with Rebirth",
+    "isWin": true,
+    "icon": "RebirthEndingDef.png"
+  },
+  {
+    "name": "StandardLoss",
+    "nameToken": "GAME_RESULT_LOST",
+    "displayName": "Defeat!",
+    "isWin": false,
+    "icon": "StandardLoss.png"
+  },
+  {
+    "name": "VoidEnding",
+    "nameToken": "GAME_RESULT_UNKNOWN",
+    "displayName": "Fate Unknown..",
+    "isWin": true,
+    "icon": "VoidEnding.png"
+  }
+]

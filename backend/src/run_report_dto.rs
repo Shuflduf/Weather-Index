@@ -62,7 +62,7 @@ impl TryFrom<RunReportDTO> for run_report::ActiveModel {
             upload_time: Set(chrono::Utc::now().naive_utc()),
 
             survivor: Set(dto.survivor),
-            ending: Set(dto.ending.try_into()?),
+            ending: Set(dto.ending),
             start_time: Set(dto
                 .start_time
                 .parse::<DateTime<Utc>>()
@@ -96,19 +96,6 @@ impl TryFrom<RunReportDTO> for run_report::ActiveModel {
 
             ..Default::default()
         })
-    }
-}
-
-impl TryFrom<String> for run_report::Ending {
-    type Error = Box<dyn Error>;
-    fn try_from(value: String) -> Result<Self, Self::Error> {
-        match value.as_ref() {
-            "MainEnding" => Ok(Self::Won),
-            "StandardLoss" => Ok(Self::Lost),
-            "LimboEnding" => Ok(Self::Limbo),
-            "ObliterationEnding" => Ok(Self::Obliteration),
-            e => Err(format!("unknown ending: {e}").into()),
-        }
     }
 }
 

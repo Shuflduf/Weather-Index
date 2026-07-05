@@ -85,6 +85,71 @@ namespace WeatherIndex
             File.WriteAllText(Path.Combine(outputDir, "bodies.json"), json);
         }
 
+        public static void DumpEndings()
+        {
+            var outputDir = Path.Combine(pluginDir, "endings");
+            Directory.CreateDirectory(outputDir);
+            var endings = new List<object>();
+            foreach (var def in RoR2.GameEndingCatalog.gameEndingDefs)
+            {
+                if (def == null)
+                    continue;
+
+                var sprite = def.icon;
+                if (sprite == null || sprite.texture == null)
+                    continue;
+
+                Texture2D tex = sprite.texture;
+                if (tex == null)
+                    continue;
+
+                string filename = $"{def.cachedName}.png";
+                writeEndingTexture(Path.Combine(outputDir, filename), tex, def.foregroundColor);
+
+                endings.Add(
+                    new
+                    {
+                        name = def.cachedName,
+                        nameToken = def.endingTextToken,
+                        displayName = RoR2.Language.GetString(def.endingTextToken),
+                        isWin = def.isWin,
+                        icon = filename,
+                    }
+                );
+            }
+            var json = JsonConvert.SerializeObject(endings);
+            File.WriteAllText(Path.Combine(outputDir, "endings.json"), json);
+        }
+
+        private static void writeEndingTexture(string path, Texture2D tex, Color color)
+        {
+            var readable = new Texture2D(tex.width, tex.height, TextureFormat.RGBA32, false);
+            RenderTexture current = RenderTexture.active;
+            var rt = RenderTexture.GetTemporary(tex.width, tex.height);
+            Graphics.Blit(tex, rt);
+            RenderTexture.active = rt;
+            readable.ReadPixels(new Rect(0, 0, rt.width, rt.height), 0, 0);
+            readable.Apply();
+            RenderTexture.active = current;
+            RenderTexture.ReleaseTemporary(rt);
+
+            var pixels = readable.GetPixels32();
+            for (int i = 0; i < pixels.Length; i++)
+            {
+                float luminance = (pixels[i].r + pixels[i].g + pixels[i].b) / (3f * 255f);
+                pixels[i] = new Color32(
+                    (byte)(color.r * 255),
+                    (byte)(color.g * 255),
+                    (byte)(color.b * 255),
+                    (byte)(luminance * 255)
+                );
+            }
+            readable.SetPixels32(pixels);
+            readable.Apply();
+            File.WriteAllBytes(path, readable.EncodeToPNG());
+            Object.Destroy(readable);
+        }
+
         private static void writeTexture(string path, Texture2D tex)
         {
             var readable = new Texture2D(tex.width, tex.height, TextureFormat.RGBA32, false);

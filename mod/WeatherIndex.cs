@@ -163,6 +163,15 @@ namespace WeatherIndex
                     DataDumper.DumpBodies
                 )
             );
+            ModSettingsManager.AddOption(
+                new GenericButtonOption(
+                    "Dump Endings",
+                    "Debug",
+                    "Dumps all game endings into the plugin folder",
+                    "Dump",
+                    DataDumper.DumpEndings
+                )
+            );
         }
 
         private async void PostRunReport(string json)
