@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from "$app/state";
-  import { ITEMS } from "$lib/Items";
+  import { ITEMS } from "$lib/RoR2";
   import { onMount } from "svelte";
 
   let run: any = $state();
