@@ -5,7 +5,7 @@
 
   let runs: any[] = $state([]);
   onMount(async () => {
-    runs = await (await fetch("/api/get-run-reports")).json();
+    runs = await (await fetch("/api/runs")).json();
     console.log(runs);
   });
 </script>
