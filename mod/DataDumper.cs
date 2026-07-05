@@ -44,6 +44,7 @@ namespace WeatherIndex
                         name = def.name,
                         nameToken = def.nameToken,
                         displayName = RoR2.Language.GetString(def.nameToken),
+                        tier = RoR2.ItemTierCatalog.GetItemTierDef(def.tier).name,
                         icon = filename,
                     }
                 );

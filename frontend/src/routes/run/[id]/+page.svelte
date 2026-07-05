@@ -1,6 +1,7 @@
 <script lang="ts">
   import { page } from "$app/state";
   import {
+    BODIES,
     DIFFICULTIES,
     ENDINGS,
     formatBig,
@@ -134,30 +135,47 @@
           </span>
         </div>
       </div>
-      <div class="bg-red-500 w-full">
-        <h1>Info</h1>
+      <div class="border bg-bg-secondary w-full p-2">
+        <h1 class="text-3xl text-center">Info</h1>
+        <div class="flex flex-row items-center p-2 gap-4">
+          <img
+            src={`/bodies/${BODIES[run.survivor].icon}`}
+            alt={BODIES[run.survivor].displayName}
+            class="h-12 inline mr-2"
+          />
+
+          <span class="text-lg">
+            Class:
+            <span class="text-yellow-200">
+              {BODIES[run.survivor].displayName}
+            </span>
+          </span>
+        </div>
+        <h1 class="text-2xl text-center">Items Collected</h1>
+        <ul class="flex flex-row flex-wrap mt-4">
+          {#each Object.entries(run.items) as [itemId, itemCount]}
+            {@const item = ITEMS[Number(itemId)]}
+            {#if !item.helper}
+              <li class="relative">
+                <img
+                  src={`/items/${item.icon}`}
+                  alt={item.displayName}
+                  class="w-16 inline"
+                  title={item.displayName}
+                />
+                {#if itemCount != 1}
+                  <p
+                    class="text-xl font-bold absolute top-0 right-0 text-shadow-lg/50"
+                  >
+                    x{itemCount}
+                  </p>
+                {/if}
+              </li>
+            {/if}
+          {/each}
+        </ul>
       </div>
     </div>
-    <ul class="flex flex-row">
-      {#each Object.entries(run.items) as [itemId, itemCount]}
-        {@const item = ITEMS[Number(itemId)]}
-        {#if !item.helper}
-          <li class="relative">
-            <img
-              src={`/items/${item.icon}`}
-              alt={item.displayName}
-              class="w-16 inline"
-              title={item.displayName}
-            />
-            <p
-              class="font-ror2 text-2xl absolute top-0 right-0 text-shadow-lg/50"
-            >
-              x{itemCount}
-            </p>
-          </li>
-        {/if}
-      {/each}
-    </ul>
   {:catch err}
     {err}
   {/await}
