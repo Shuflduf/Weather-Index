@@ -49,177 +49,81 @@
             class="h-12 inline mr-2"
           />
         </div>
-        <div class="flex flex-row justify-between items-center p-2">
-          <span>
-            Time Alive: <span class="text-yellow-200">
-              {formatSeconds(run.time_alive_seconds)}
+        {#snippet score(label: string, value: string, points: string)}
+          <div class="flex flex-row justify-between items-center p-2">
+            <span>
+              {label}:
+              <span class="text-yellow-200">
+                {value}
+              </span>
             </span>
-          </span>
-          <span>
-            <span class="text-yellow-200">
-              {formatBig(
-                run.time_alive_seconds * SCORING_TABLE.timeAliveSeconds,
-              )}
+            <span>
+              <span class="text-yellow-200">
+                {points}
+              </span>
+              pts.
             </span>
-            pts.
-          </span>
-        </div>
-        <div class="flex flex-row justify-between items-center p-2">
-          <span>
-            Kills: <span class="text-yellow-200">
-              {formatBig(run.kills)}
-            </span>
-          </span>
-          <span>
-            <span class="text-yellow-200">
-              {formatBig(run.kills * SCORING_TABLE.kills)}
-            </span>
-            pts.
-          </span>
-        </div>
-        <div class="flex flex-row justify-between items-center p-2">
-          <span>
-            Minion Kills: <span class="text-yellow-200">
-              {formatBig(run.minion_kills)}
-            </span>
-          </span>
-          <span>
-            <span class="text-yellow-200">
-              {formatBig(run.minion_kills * SCORING_TABLE.minionKills)}
-            </span>
-            pts.
-          </span>
-        </div>
-        <div class="flex flex-row justify-between items-center p-2">
-          <span>
-            Deaths: <span class="text-yellow-200">
-              {formatBig(run.deaths)}
-            </span>
-          </span>
-          <span>
-            <span class="text-yellow-200">0</span>
-            pts.
-          </span>
-        </div>
-        <div class="flex flex-row justify-between items-center p-2">
-          <span>
-            Damage Dealt: <span class="text-yellow-200">
-              {formatBig(run.damage_dealt)}
-            </span>
-          </span>
-          <span>
-            <span class="text-yellow-200">
-              {formatBig(run.damage_dealt * SCORING_TABLE.damageDealt)}
-            </span>
-            pts.
-          </span>
-        </div>
-        <div class="flex flex-row justify-between items-center p-2">
-          <span>
-            Minion Damage Dealt: <span class="text-yellow-200">
-              {formatBig(run.minion_damage_dealt)}
-            </span>
-          </span>
-          <span>
-            <span class="text-yellow-200">
-              {formatBig(
-                run.minion_damage_dealt * SCORING_TABLE.minionDamageDealt,
-              )}
-            </span>
-            pts.
-          </span>
-        </div>
-        <div class="flex flex-row justify-between items-center p-2">
-          <span>
-            Most Damage Dealt: <span class="text-yellow-200">
-              {formatBig(run.highest_damage_dealt)}
-            </span>
-          </span>
-          <span>
-            <span class="text-yellow-200">
-              {formatBig(
-                run.highest_damage_dealt * SCORING_TABLE.highestDamageDealt,
-              )}
-            </span>
-            pts.
-          </span>
-        </div>
-        <div class="flex flex-row justify-between items-center p-2">
-          <span>
-            Damage Taken: <span class="text-yellow-200">
-              {formatBig(run.damage_taken)}
-            </span>
-          </span>
-          <span>
-            <span class="text-yellow-200">0</span>
-            pts.
-          </span>
-        </div>
-        <div class="flex flex-row justify-between items-center p-2">
-          <span>
-            Highest Level: <span class="text-yellow-200">
-              {formatBig(run.highest_level)}
-            </span>
-          </span>
-          <span>
-            <span class="text-yellow-200">
-              {formatBig(run.highest_level * SCORING_TABLE.highestLevel)}
-            </span>
-            pts.
-          </span>
-        </div>
-        <div class="flex flex-row justify-between items-center p-2">
-          <span>
-            Gold Collected: <span class="text-yellow-200">
-              {formatBig(run.gold_collected)}
-            </span>
-          </span>
-          <span>
-            <span class="text-yellow-200">
-              {formatBig(run.gold_collected * SCORING_TABLE.goldCollected)}
-            </span>
-            pts.
-          </span>
-        </div>
-        <div class="flex flex-row justify-between items-center p-2">
-          <span>
-            Items Collected: <span class="text-yellow-200">
-              {formatBig(run.items_collected)}
-            </span>
-          </span>
-          <span>
-            <span class="text-yellow-200">
-              {formatBig(run.items_collected * SCORING_TABLE.itemsCollected)}
-            </span>
-            pts.
-          </span>
-        </div>
-        <div class="flex flex-row justify-between items-center p-2">
-          <span>
-            Stages Completed: <span class="text-yellow-200">
-              {formatBig(run.stages_completed)}
-            </span>
-          </span>
-          <span>
-            <span class="text-yellow-200">
-              {formatBig(run.stages_completed * SCORING_TABLE.stagesCompleted)}
-            </span>
-            pts.
-          </span>
-        </div>
-        <div class="flex flex-row justify-between items-center p-2">
-          <span>
-            Purchases: <span class="text-yellow-200">
-              {formatBig(run.purchases)}
-            </span>
-          </span>
-          <span>
-            <span class="text-yellow-200">
-              {formatBig(run.purchases * SCORING_TABLE.purchases)}
-            </span>
-            pts.
-          </span>
-        </div>
+          </div>
+        {/snippet}
+        {@render score(
+          "Time Alive",
+          formatSeconds(run.time_alive_seconds),
+          formatBig(run.time_alive_seconds * SCORING_TABLE.timeAliveSeconds),
+        )}
+        {@render score(
+          "Kills",
+          formatBig(run.kills),
+          formatBig(run.kills * SCORING_TABLE.kills),
+        )}
+        {@render score(
+          "Minion Kills",
+          formatBig(run.minion_kills),
+          formatBig(run.minion_kills * SCORING_TABLE.minionKills),
+        )}
+        {@render score("Deaths", formatBig(run.deaths), "0")}
+        {@render score(
+          "Damage Dealt",
+          formatBig(run.damage_dealt),
+          formatBig(run.damage_dealt * SCORING_TABLE.damageDealt),
+        )}
+        {@render score(
+          "Minion Damage Dealt",
+          formatBig(run.minion_damage_dealt),
+          formatBig(run.minion_damage_dealt * SCORING_TABLE.minionDamageDealt),
+        )}
+        {@render score(
+          "Most Damage Dealt",
+          formatBig(run.highest_damage_dealt),
+          formatBig(
+            run.highest_damage_dealt * SCORING_TABLE.highestDamageDealt,
+          ),
+        )}
+        {@render score("Damage Taken", formatBig(run.damage_taken), "0")}
+        {@render score(
+          "Highest Level",
+          formatBig(run.highest_level),
+          formatBig(run.highest_level * SCORING_TABLE.highestLevel),
+        )}
+        {@render score(
+          "Gold Collected",
+          formatBig(run.gold_collected),
+          formatBig(run.gold_collected * SCORING_TABLE.goldCollected),
+        )}
+        {@render score(
+          "Items Collected",
+          formatBig(run.items_collected),
+          formatBig(run.items_collected * SCORING_TABLE.itemsCollected),
+        )}
+        {@render score(
+          "Stages Completed",
+          formatBig(run.stages_completed),
+          formatBig(run.stages_completed * SCORING_TABLE.stagesCompleted),
+        )}
+        {@render score(
+          "Purchases",
+          formatBig(run.purchases),
+          formatBig(run.purchases * SCORING_TABLE.purchases),
+        )}
         <div class="flex flex-row justify-around items-center p-2 mt-2 text-xl">
           <span>Total</span>
           <span>
