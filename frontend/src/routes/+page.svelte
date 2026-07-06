@@ -87,29 +87,54 @@
     if (!drag.dragging || !drag.elem) return;
 
     drag.elem.style.transform = "none";
-    const dx = e.clientX - drag.startX - drag.elem.getBoundingClientRect().left;
+    const normalWidth = drag.elem.getBoundingClientRect().width;
+    const normalLeft = drag.elem.getBoundingClientRect().left;
+    const normalCenter = normalLeft + normalWidth / 2.0;
+    const dx = e.clientX - drag.startX - normalLeft;
+    const elemCenter = normalCenter + dx;
     drag.elem.style.transform = `translateX(${dx}px)`;
     drag.elem.style.zIndex = "10";
     console.log(drag);
 
-    const headers = document.querySelectorAll("[data-col-header]");
-    for (const header of headers) {
-      const el = header as HTMLElement;
-      const rect = el.getBoundingClientRect();
-      if (e.clientX > rect.left && e.clientX < rect.right && el.id != drag.id) {
-        const prevLeft = drag.elem.getBoundingClientRect().left;
+    const headers = [
+      ...document.querySelectorAll("[data-col-header]"),
+    ] as HTMLElement[];
+    headers.sort((a, b) => properties[a.id].order - properties[b.id].order);
+    const curIdx = headers.findIndex((h) => h.id == drag.id);
+    if (curIdx == -1) return;
 
+    if (curIdx > 0) {
+      const leftRect = headers[curIdx - 1].getBoundingClientRect();
+      const leftCenter = leftRect.left + leftRect.width / 2.0;
+      const diff = (leftCenter + normalCenter) / 2.0;
+      if (elemCenter < diff) {
         const temp = properties[drag.id].order;
-        properties[drag.id].order = properties[el.id].order;
-        properties[el.id].order = temp;
-
-        // requestAnimationFrame(() => {
-        //   const newLeft = drag.elem!.getBoundingClientRect().left;
-        //   drag.startX += newLeft - prevLeft;
-        // });
-        break;
+        properties[drag.id].order = properties[headers[curIdx - 1].id].order;
+        properties[headers[curIdx - 1].id].order = temp;
+        drag.elem.style.transform = `translateX(${dx}px)`;
+        return;
       }
     }
+    if (curIdx < headers.length - 1) {
+      const rightRect = headers[curIdx + 1].getBoundingClientRect();
+      const rightCenter = rightRect.left + rightRect.width / 2.0;
+      const diff = (rightCenter + normalCenter) / 2.0;
+      if (elemCenter > diff) {
+        const temp = properties[drag.id].order;
+        properties[drag.id].order = properties[headers[curIdx + 1].id].order;
+        properties[headers[curIdx + 1].id].order = temp;
+        return;
+      }
+    }
+
+    // for (const header of headers) {
+    //   const el = header as HTMLElement;
+    //   const rect = el.getBoundingClientRect();
+    //   if (e.clientX > rect.left && e.clientX < rect.right && el.id != drag.id) {
+
+    //     break;
+    //   }
+    // }
   }
 
   function endDrag(_e: PointerEvent) {
