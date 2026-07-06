@@ -5,6 +5,58 @@ import items from "$lib/items.json";
 import scoring_table from "$lib/scoring.json";
 import tiers from "$lib/tiers.json";
 
+export type RunReportWithUser = {
+  user_image: string;
+  user_username: string;
+  id: number;
+  user_id: string;
+  upload_time: Date;
+
+  // run info
+  survivor: string;
+  start_time: Date;
+  ending: string;
+  difficulty: string;
+  time_alive_seconds: number;
+  artifacts: string[];
+  stages_completed: number;
+  score: number;
+
+  // items
+  items: Record<string, number>;
+  items_collected: number;
+
+  // drones
+  drones_purchased: number;
+  turrets_purchased: number;
+
+  // combat
+  kills: number;
+  elite_kills: number;
+  minion_kills: number;
+  deaths: number;
+
+  // damage
+  damage_dealt: number;
+  minion_damage_dealt: number;
+  damage_taken: number;
+  highest_damage_dealt: number;
+
+  // healing
+  healing_recieved: number;
+
+  // progression
+  highest_level: number;
+  gold_collected: number;
+  gold_spent: number;
+  lunar_coins_spent: number;
+  purchases: number;
+  blood_purchases: number;
+
+  // movement
+  distance_traveled_metres: number;
+};
+
 export type Item = {
   id: number;
   name: string;
@@ -103,7 +155,7 @@ function sortByCount(
 }
 
 export function formatSeconds(seconds: number): string {
-  const date = new Date(null);
+  const date = new Date();
   date.setSeconds(seconds);
   const result = date.toISOString().slice(11, 19);
   return result;

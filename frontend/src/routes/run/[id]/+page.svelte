@@ -9,11 +9,12 @@
     ITEMS,
     SCORING_TABLE,
     sortItems,
+    type RunReportWithUser,
   } from "$lib/RoR2";
   import UserDisplay from "$lib/UserDisplay.svelte";
   import { onMount } from "svelte";
 
-  let runPromise: Promise<any> = $state(new Promise(() => {}));
+  let runPromise: Promise<RunReportWithUser> = $state(new Promise(() => {}));
 
   onMount(async () => {
     const runId = page.params.id;
