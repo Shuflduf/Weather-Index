@@ -186,7 +186,9 @@
 
     <div
       class="grid"
-      style="grid-template-columns: repeat({columnCount}, auto);"
+      style="grid-template-columns: repeat({columnCount}, auto); user-select: {drag.dragging
+        ? 'none'
+        : ''};"
     >
       {#snippet propHeader(name: string, id: string)}
         <div
