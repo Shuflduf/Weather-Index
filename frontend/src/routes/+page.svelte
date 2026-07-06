@@ -12,14 +12,51 @@
 
   let visibleProperties: Record<string, boolean> = $state({
     id: true,
-    survivor: true,
     player: true,
+    uploadTime: false,
+
+    // run info
+    survivor: true,
+    startTime: false,
     ending: true,
     difficulty: true,
-    itemCount: true,
+    timeAlive: false,
+    artifacts: false,
+    stagesCompleted: false,
     score: true,
-    uploadTime: false,
-    startTime: false,
+
+    // items
+    itemsCollected: true,
+
+    // drones
+    dronesPurchased: false,
+    turretsPurchased: false,
+
+    // combat
+    kills: false,
+    eliteKills: false,
+    minionKills: false,
+    deaths: false,
+
+    // damage
+    damageDealt: false,
+    minionDamageDealt: false,
+    damageTaken: false,
+    highestDamageDealt: false,
+
+    // healing
+    healingRecieved: false,
+
+    // progression
+    highestLevel: false,
+    goldCollected: false,
+    goldSpent: false,
+    lunarCoinsSpent: false,
+    purchases: false,
+    bloodPurchases: false,
+
+    // movement
+    distanceTraveledMetres: false,
   });
 
   let runPromise: Promise<any[]> = $state(new Promise(() => {}));
@@ -46,7 +83,7 @@
     {@render visibleProperty("Survivor", "survivor")}
     {@render visibleProperty("Ending", "ending")}
     {@render visibleProperty("Difficulty", "difficulty")}
-    {@render visibleProperty("Items", "itemCount")}
+    {@render visibleProperty("Items", "itemsCollected")}
     {@render visibleProperty("Score", "score")}
   </div>
 </div>
@@ -80,7 +117,7 @@
           {#if visibleProperties.difficulty}
             <td>Difficulty</td>
           {/if}
-          {#if visibleProperties.itemCount}
+          {#if visibleProperties.itemsCollected}
             <td>Items</td>
           {/if}
           {#if visibleProperties.score}
@@ -147,7 +184,7 @@
                 </span>
               </td>
             {/if}
-            {#if visibleProperties.itemCount}
+            {#if visibleProperties.itemsCollected}
               <td class="border p-4">{countRealItems(run.items)}</td>
             {/if}
             {#if visibleProperties.score}
