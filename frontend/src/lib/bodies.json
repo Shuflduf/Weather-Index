@@ -575,7 +575,12 @@
     "displayName": "Geep",
     "icon": "GeepBody.png"
   },
-  { "name": "GipBody", "nameToken": "GIP_BODY_NAME", "displayName": "Gip", "icon": "GipBody.png" },
+  {
+    "name": "GipBody",
+    "nameToken": "GIP_BODY_NAME",
+    "displayName": "Gip",
+    "icon": "GipBody.png"
+  },
   {
     "name": "GolemBody",
     "nameToken": "GOLEM_BODY_NAME",
@@ -612,7 +617,12 @@
     "displayName": "Greater Wisp",
     "icon": "GreaterWispBody.png"
   },
-  { "name": "GupBody", "nameToken": "GUP_BODY_NAME", "displayName": "Gup", "icon": "GupBody.png" },
+  {
+    "name": "GupBody",
+    "nameToken": "GUP_BODY_NAME",
+    "displayName": "Gup",
+    "icon": "GupBody.png"
+  },
   {
     "name": "HANDBody",
     "nameToken": "HAND_BODY_NAME",
@@ -685,7 +695,12 @@
     "displayName": "Mithrix",
     "icon": "ITBrotherBody.png"
   },
-  { "name": "ImpBody", "nameToken": "IMP_BODY_NAME", "displayName": "Imp", "icon": "ImpBody.png" },
+  {
+    "name": "ImpBody",
+    "nameToken": "IMP_BODY_NAME",
+    "displayName": "Imp",
+    "icon": "ImpBody.png"
+  },
   {
     "name": "ImpBossBody",
     "nameToken": "IMPBOSS_BODY_NAME",

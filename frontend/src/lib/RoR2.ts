@@ -117,33 +117,41 @@ export type Artifact = {
   icon: string;
 };
 
-export const ITEMS = Object.fromEntries(items.map((item: Item) => [item.id, item]));
-export const BODIES = Object.fromEntries(bodies.map((body: Body) => [body.name, body]));
-export const ENDINGS = Object.fromEntries(endings.map((ending: Ending) => [ending.name, ending]));
+export const ITEMS = Object.fromEntries(
+  items.map((item: Item) => [item.id, item]),
+);
+export const BODIES = Object.fromEntries(
+  bodies.map((body: Body) => [body.name, body]),
+);
+export const ENDINGS = Object.fromEntries(
+  endings.map((ending: Ending) => [ending.name, ending]),
+);
 export const DIFFICULTIES = Object.fromEntries(
-  difficulties.map((difficulty: Difficulty) => [difficulty.nameToken, difficulty]),
+  difficulties.map((difficulty: Difficulty) => [
+    difficulty.nameToken,
+    difficulty,
+  ]),
 );
 export const SCORING_TABLE = scoring_table as ScoringTable;
-export const TIERS = Object.fromEntries(tiers.map((tier: Tier) => [tier.name, tier]));
+export const TIERS = Object.fromEntries(
+  tiers.map((tier: Tier) => [tier.name, tier]),
+);
 export const ARTIFACTS = Object.fromEntries(
   artifacts.map((artifact: Artifact) => [artifact.name, artifact]),
 );
 
 export function countRealItems(items: Record<string, number>): number {
-  return Object.entries(items).filter(([id, _]) => !ITEMS[id].helper).reduce(
-    (accum, [_, current]) => accum + current,
-    0,
-  );
+  return Object.entries(items)
+    .filter(([id, _]) => !ITEMS[id].helper)
+    .reduce((accum, [_, current]) => accum + current, 0);
 }
 
 export function sortItems(items: Record<string, number>): [number, number][] {
-  return Object.entries(items).map(([id, count]) => [Number(id), count] as [number, number]).filter(
-    removeHelpers,
-  ).sort(
-    sortByCount,
-  ).sort(
-    sortByTier,
-  );
+  return Object.entries(items)
+    .map(([id, count]) => [Number(id), count] as [number, number])
+    .filter(removeHelpers)
+    .sort(sortByCount)
+    .sort(sortByTier);
 }
 
 function removeHelpers([id, _count]: [number, number]): boolean {
@@ -172,5 +180,7 @@ export function formatSeconds(seconds: number): string {
 }
 
 export function formatBig(big: number): string {
-  return Math.round(big).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return Math.round(big)
+    .toString()
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }

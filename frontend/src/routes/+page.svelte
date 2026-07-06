@@ -1,13 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import {
-    BODIES,
-    countRealItems,
-    DIFFICULTIES,
-    ENDINGS,
-    ITEMS,
-    type Item,
-  } from "$lib/RoR2";
+  import { BODIES, DIFFICULTIES, ENDINGS, type Item } from "$lib/RoR2";
   import UserDisplay from "$lib/UserDisplay.svelte";
   import TableBlock from "./TableBlock.svelte";
 
@@ -114,12 +107,16 @@
       style="grid-template-columns: repeat({columnCount}, auto);"
     >
       {#snippet propHeader(name: string, order: number)}
-        <h2
-          class="text-xl tracking-tight text-center font-bold mb-4"
-          style="order: {order};"
+        <div
+          class="items-center justify-center h-12 hover:bg-hover transition cursor-grab flex"
         >
-          {name}
-        </h2>
+          <h2
+            class="text-xl tracking-tight text-center font-bold"
+            style="order: {order};"
+          >
+            {name}
+          </h2>
+        </div>
       {/snippet}
 
       {#if properties.id.enabled}
@@ -132,7 +129,7 @@
       {/if}
 
       {#if properties.player.enabled}
-        {@render propHeader("Player", 1)}
+        {@render propHeader("Player", properties.player.order)}
         {#each runs as run, idx}
           <TableBlock order={properties.player.order} {idx}>
             <UserDisplay
@@ -148,7 +145,7 @@
       {/if}
 
       {#if properties.survivor.enabled}
-        {@render propHeader("Survivor", 1)}
+        {@render propHeader("Survivor", properties.survivor.order)}
         {#each runs as run, idx}
           <TableBlock order={properties.survivor.order} {idx}>
             <img
@@ -162,6 +159,7 @@
           </TableBlock>
         {/each}
       {/if}
+
       {#if properties.ending.enabled}
         {@render propHeader("Ending", 1)}
         {#each runs as run, idx}
@@ -181,6 +179,7 @@
           </TableBlock>
         {/each}
       {/if}
+
       {#if properties.difficulty.enabled}
         {@render propHeader("Difficulty", 1)}
         {#each runs as run, idx}
@@ -196,6 +195,7 @@
           </TableBlock>
         {/each}
       {/if}
+
       {#if properties.itemsCollected.enabled}
         {@render propHeader("Items", 1)}
         {#each runs as run, idx}
