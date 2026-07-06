@@ -37,14 +37,18 @@ namespace WeatherIndex
                     writeTexture(Path.Combine(outputDir, filename), tex);
                 }
 
+                string displayName = RoR2.Language.GetString(def.nameToken);
+                bool helper = string.IsNullOrEmpty(def.nameToken) || displayName == def.nameToken;
+
                 items.Add(
                     new
                     {
                         id = (int)idx,
                         name = def.name,
                         nameToken = def.nameToken,
-                        displayName = RoR2.Language.GetString(def.nameToken),
-                        tier = RoR2.ItemTierCatalog.GetItemTierDef(def.tier).name,
+                        displayName = displayName,
+                        tier = RoR2.ItemTierCatalog.GetItemTierDef(def.tier)?.name,
+                        helper = helper,
                         icon = filename,
                     }
                 );
@@ -163,6 +167,36 @@ namespace WeatherIndex
             }
             var json = JsonConvert.SerializeObject(difficulties);
             File.WriteAllText(Path.Combine(outputDir, "difficulties.json"), json);
+        }
+
+        public static void DumpItemTiers()
+        {
+            var outputDir = Path.Combine(pluginDir, "tiers");
+            Directory.CreateDirectory(outputDir);
+            var tiers = new List<object>();
+            var tierOrder = new RoR2.ItemTier[]
+            {
+                RoR2.ItemTier.NoTier,
+                RoR2.ItemTier.AssignedAtRuntime,
+                RoR2.ItemTier.Lunar,
+                RoR2.ItemTier.Tier1,
+                RoR2.ItemTier.VoidTier1,
+                RoR2.ItemTier.Tier2,
+                RoR2.ItemTier.VoidTier2,
+                RoR2.ItemTier.Tier3,
+                RoR2.ItemTier.VoidTier3,
+                RoR2.ItemTier.Boss,
+                RoR2.ItemTier.VoidBoss,
+                RoR2.ItemTier.FoodTier,
+            };
+            foreach (var def in RoR2.ItemTierCatalog.allItemTierDefs)
+            {
+                tiers.Add(
+                    new { name = def.name, sort = System.Array.IndexOf(tierOrder, def.tier) }
+                );
+            }
+            var json = JsonConvert.SerializeObject(tiers);
+            File.WriteAllText(Path.Combine(outputDir, "tiers.json"), json);
         }
 
         private static void writeEndingTexture(string path, Texture2D tex, Color color)

@@ -36,6 +36,7 @@
           <td class="border p-4"><a href={`/run/${run.id}`}>{run.id}</a></td>
           <td class="border p-4">
             <UserDisplay
+              class="h-12"
               user={{
                 username: run.user_username,
                 image: run.user_image,

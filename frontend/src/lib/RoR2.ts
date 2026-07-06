@@ -3,14 +3,16 @@ import difficulties from "$lib/difficulties.json";
 import endings from "$lib/endings.json";
 import items from "$lib/items.json";
 import scoring_table from "$lib/scoring.json";
+import tiers from "$lib/tiers.json";
 
 export type Item = {
   id: number;
   name: string;
   nameToken: string;
   displayName: string;
-  icon: string;
+  tier: string | null;
   helper: boolean;
+  icon: string;
 };
 
 export type Body = {
@@ -51,6 +53,11 @@ export type ScoringTable = {
   purchases: number;
 };
 
+export type Tier = {
+  name: string;
+  sort: number;
+};
+
 export const ITEMS = Object.fromEntries(items.map((item: Item) => [item.id, item]));
 export const BODIES = Object.fromEntries(bodies.map((body: Body) => [body.name, body]));
 export const ENDINGS = Object.fromEntries(endings.map((ending: Ending) => [ending.name, ending]));
@@ -58,12 +65,41 @@ export const DIFFICULTIES = Object.fromEntries(
   difficulties.map((difficulty: Difficulty) => [difficulty.nameToken, difficulty]),
 );
 export const SCORING_TABLE = scoring_table as ScoringTable;
+export const TIERS = Object.fromEntries(tiers.map((tier: Tier) => [tier.name, tier]));
 
 export function countRealItems(items: Record<string, number>): number {
   return Object.entries(items).filter(([id, _]) => !ITEMS[id].helper).reduce(
     (accum, [_, current]) => accum + current,
     0,
   );
+}
+
+export function sortItems(items: Record<string, number>): [number, number][] {
+  return Object.entries(items).map(([id, count]) => [Number(id), count] as [number, number]).filter(
+    removeHelpers,
+  ).sort(
+    sortByCount,
+  ).sort(
+    sortByTier,
+  );
+}
+
+function removeHelpers([id, _count]: [number, number]): boolean {
+  return !ITEMS[id].helper;
+}
+
+function sortByTier(
+  [id_1, _count_1]: [number, number],
+  [id_2, _count_2]: [number, number],
+): number {
+  console.log(id_2);
+  return TIERS[ITEMS[id_2].tier!].sort - TIERS[ITEMS[id_1].tier!].sort;
+}
+function sortByCount(
+  [_id_1, count_1]: [number, number],
+  [_id_2, count_2]: [number, number],
+): number {
+  return count_2 - count_1;
 }
 
 export function formatSeconds(seconds: number): string {

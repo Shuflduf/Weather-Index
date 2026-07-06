@@ -4,1823 +4,2051 @@
     "name": "AACannon",
     "nameToken": "ITEM_AACANNON_NAME",
     "displayName": "ITEM_AACANNON_NAME",
-    "icon": "AACannon.png",
-    "helper": true
+    "tier": null,
+    "helper": true,
+    "icon": "AACannon.png"
   },
   {
     "id": 2,
     "name": "AlienHead",
     "nameToken": "ITEM_ALIENHEAD_NAME",
     "displayName": "Alien Head",
-    "icon": "AlienHead.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "AlienHead.png"
   },
   {
     "id": 3,
     "name": "ArmorPlate",
     "nameToken": "ITEM_REPULSIONARMORPLATE_NAME",
     "displayName": "Repulsion Armor Plate",
-    "icon": "ArmorPlate.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "ArmorPlate.png"
   },
   {
     "id": 4,
     "name": "ArmorReductionOnHit",
     "nameToken": "ITEM_ARMORREDUCTIONONHIT_NAME",
     "displayName": "Shattering Justice",
-    "icon": "ArmorReductionOnHit.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "ArmorReductionOnHit.png"
   },
   {
     "id": 5,
     "name": "ArtifactKey",
     "nameToken": "ITEM_ARTIFACTKEY_NAME",
     "displayName": "Artifact Key",
-    "icon": "ArtifactKey.png",
-    "helper": false
+    "tier": "BossTierDef",
+    "helper": false,
+    "icon": "ArtifactKey.png"
   },
   {
     "id": 6,
     "name": "AttackSpeedAndMoveSpeed",
     "nameToken": "ITEM_ATTACKSPEEDANDMOVESPEED_NAME",
     "displayName": "Mocha",
-    "icon": "AttackSpeedAndMoveSpeed.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "AttackSpeedAndMoveSpeed.png"
   },
   {
     "id": 7,
     "name": "AttackSpeedOnCrit",
     "nameToken": "ITEM_ATTACKSPEEDONCRIT_NAME",
     "displayName": "Predatory Instincts",
-    "icon": "AttackSpeedOnCrit.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "AttackSpeedOnCrit.png"
   },
   {
     "id": 8,
     "name": "AttackSpeedPerNearbyAllyOrEnemy",
     "nameToken": "ITEM_ATTACKSPEEDPERNEARBYALLYORENEMY_NAME",
     "displayName": "Bolstering Lantern",
-    "icon": "AttackSpeedPerNearbyAllyOrEnemy.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "AttackSpeedPerNearbyAllyOrEnemy.png"
   },
   {
     "id": 9,
     "name": "AutoCastEquipment",
     "nameToken": "ITEM_AUTOCASTEQUIPMENT_NAME",
     "displayName": "Gesture of the Drowned",
-    "icon": "AutoCastEquipment.png",
-    "helper": false
+    "tier": "LunarTierDef",
+    "helper": false,
+    "icon": "AutoCastEquipment.png"
   },
   {
     "id": 10,
     "name": "Bandolier",
     "nameToken": "ITEM_BANDOLIER_NAME",
     "displayName": "Bandolier",
-    "icon": "Bandolier.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "Bandolier.png"
   },
   {
     "id": 11,
     "name": "BarrageOnBoss",
     "nameToken": "ITEM_BARRAGEONBOSS_NAME",
     "displayName": "War Bonds",
-    "icon": "BarrageOnBoss.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "BarrageOnBoss.png"
   },
   {
     "id": 12,
     "name": "BarrierOnCooldown",
     "nameToken": "ITEM_BARRIERONCOOLDOWN_NAME",
     "displayName": "Eclipse Lite",
-    "icon": "BarrierOnCooldown.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "BarrierOnCooldown.png"
   },
   {
     "id": 13,
     "name": "BarrierOnKill",
     "nameToken": "ITEM_BARRIERONKILL_NAME",
     "displayName": "Topaz Brooch",
-    "icon": "BarrierOnKill.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "BarrierOnKill.png"
   },
   {
     "id": 14,
     "name": "BarrierOnOverHeal",
     "nameToken": "ITEM_BARRIERONOVERHEAL_NAME",
     "displayName": "Aegis",
-    "icon": "BarrierOnOverHeal.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "BarrierOnOverHeal.png"
   },
   {
     "id": 15,
     "name": "Bear",
     "nameToken": "ITEM_BEAR_NAME",
     "displayName": "Tougher Times",
-    "icon": "Bear.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "Bear.png"
   },
   {
     "id": 16,
     "name": "BearVoid",
     "nameToken": "ITEM_BEARVOID_NAME",
     "displayName": "Safer Spaces",
-    "icon": "BearVoid.png",
-    "helper": false
+    "tier": "VoidTier1Def",
+    "helper": false,
+    "icon": "BearVoid.png"
   },
   {
     "id": 17,
     "name": "BeetleGland",
     "nameToken": "ITEM_BEETLEGLAND_NAME",
     "displayName": "Queen's Gland",
-    "icon": "BeetleGland.png",
-    "helper": false
+    "tier": "BossTierDef",
+    "helper": false,
+    "icon": "BeetleGland.png"
   },
   {
     "id": 18,
     "name": "Behemoth",
     "nameToken": "ITEM_BEHEMOTH_NAME",
     "displayName": "Brilliant Behemoth",
-    "icon": "Behemoth.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "Behemoth.png"
   },
   {
     "id": 19,
     "name": "BleedOnHit",
     "nameToken": "ITEM_BLEEDONHIT_NAME",
     "displayName": "Tri-Tip Dagger",
-    "icon": "BleedOnHit.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "BleedOnHit.png"
   },
   {
     "id": 20,
     "name": "BleedOnHitAndExplode",
     "nameToken": "ITEM_BLEEDONHITANDEXPLODE_NAME",
     "displayName": "Shatterspleen",
-    "icon": "BleedOnHitAndExplode.png",
-    "helper": false
+    "tier": "BossTierDef",
+    "helper": false,
+    "icon": "BleedOnHitAndExplode.png"
   },
   {
     "id": 21,
     "name": "BleedOnHitVoid",
     "nameToken": "ITEM_BLEEDONHITVOID_NAME",
     "displayName": "Needletick",
-    "icon": "BleedOnHitVoid.png",
-    "helper": false
+    "tier": "VoidTier1Def",
+    "helper": false,
+    "icon": "BleedOnHitVoid.png"
   },
   {
     "id": 22,
     "name": "BonusGoldPackOnKill",
     "nameToken": "ITEM_BONUSGOLDPACKONKILL_NAME",
     "displayName": "Ghor's Tome",
-    "icon": "BonusGoldPackOnKill.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "BonusGoldPackOnKill.png"
   },
   {
     "id": 23,
     "name": "BonusHealthBoost",
     "nameToken": "ITEM_BONUSHEALTHBOOST_NAME",
     "displayName": "Quick Fix",
-    "icon": "BonusHealthBoost.png",
-    "helper": false
+    "tier": "FoodTier",
+    "helper": false,
+    "icon": "BonusHealthBoost.png"
   },
   {
     "id": 24,
     "name": "BoostAllStats",
     "nameToken": "ITEM_BOOSTALLSTATS_NAME",
     "displayName": "Growth Nectar",
-    "icon": "BoostAllStats.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "BoostAllStats.png"
   },
   {
     "id": 25,
     "name": "BoostAttackSpeed",
     "nameToken": "ITEM_BOOSTATTACKSPEED_NAME",
     "displayName": "ITEM_BOOSTATTACKSPEED_NAME",
-    "icon": "BoostAttackSpeed.png",
-    "helper": true
+    "tier": null,
+    "helper": true,
+    "icon": "BoostAttackSpeed.png"
   },
   {
     "id": 26,
     "name": "BoostDamage",
     "nameToken": "ITEM_BOOSTDAMAGE_NAME",
     "displayName": "ITEM_BOOSTDAMAGE_NAME",
-    "icon": "BoostDamage.png",
-    "helper": true
+    "tier": null,
+    "helper": true,
+    "icon": "BoostDamage.png"
   },
   {
     "id": 28,
     "name": "BoostHp",
     "nameToken": "ITEM_BOOSTHP_NAME",
     "displayName": "ITEM_BOOSTHP_NAME",
-    "icon": "BoostHp.png",
-    "helper": true
+    "tier": null,
+    "helper": true,
+    "icon": "BoostHp.png"
   },
   {
     "id": 29,
     "name": "BossDamageBonus",
     "nameToken": "ITEM_BOSSDAMAGEBONUS_NAME",
     "displayName": "Armor-Piercing Rounds",
-    "icon": "BossDamageBonus.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "BossDamageBonus.png"
   },
   {
     "id": 30,
     "name": "BounceNearby",
     "nameToken": "ITEM_BOUNCENEARBY_NAME",
     "displayName": "Sentient Meat Hook",
-    "icon": "BounceNearby.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "BounceNearby.png"
   },
   {
     "id": 31,
     "name": "BurnNearby",
     "nameToken": "ITEM_BURNNEARBY_NAME",
     "displayName": "ITEM_BURNNEARBY_NAME",
-    "icon": "BurnNearby.png",
-    "helper": true
+    "tier": null,
+    "helper": true,
+    "icon": "BurnNearby.png"
   },
   {
     "id": 32,
     "name": "CaptainDefenseMatrix",
     "nameToken": "ITEM_CAPTAINDEFENSEMATRIX_NAME",
     "displayName": "Defensive Microbots",
-    "icon": "CaptainDefenseMatrix.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "CaptainDefenseMatrix.png"
   },
   {
     "id": 33,
     "name": "ChainLightning",
     "nameToken": "ITEM_CHAINLIGHTNING_NAME",
     "displayName": "Ukulele",
-    "icon": "ChainLightning.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "ChainLightning.png"
   },
   {
     "id": 34,
     "name": "ChainLightningVoid",
     "nameToken": "ITEM_CHAINLIGHTNINGVOID_NAME",
     "displayName": "Polylute",
-    "icon": "ChainLightningVoid.png",
-    "helper": false
+    "tier": "VoidTier2Def",
+    "helper": false,
+    "icon": "ChainLightningVoid.png"
   },
   {
     "id": 35,
     "name": "Clover",
     "nameToken": "ITEM_CLOVER_NAME",
     "displayName": "57 Leaf Clover",
-    "icon": "Clover.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "Clover.png"
   },
   {
     "id": 36,
     "name": "CloverVoid",
     "nameToken": "ITEM_CLOVERVOID_NAME",
     "displayName": "Benthic Bloom",
-    "icon": "CloverVoid.png",
-    "helper": false
+    "tier": "VoidTier3Def",
+    "helper": false,
+    "icon": "CloverVoid.png"
   },
   {
     "id": 37,
     "name": "ConvertCritChanceToCritDamage",
     "nameToken": "ITEM_CONVERTCRITCHANCETOCRITDAMAGE_NAME",
     "displayName": "ITEM_CONVERTCRITCHANCETOCRITDAMAGE_NAME",
-    "icon": "ConvertCritChanceToCritDamage.png",
-    "helper": true
+    "tier": null,
+    "helper": true,
+    "icon": "ConvertCritChanceToCritDamage.png"
   },
   {
     "id": 38,
     "name": "CookedSteak",
     "nameToken": "ITEM_COOKEDSTEAK_NAME",
     "displayName": "Seared Steak",
-    "icon": "CookedSteak.png",
-    "helper": false
+    "tier": "FoodTier",
+    "helper": false,
+    "icon": "CookedSteak.png"
   },
   {
     "id": 39,
     "name": "CooldownOnCrit",
     "nameToken": "ITEM_COOLDOWNONCRIT_NAME",
     "displayName": "Wicked Ring",
-    "icon": "CooldownOnCrit.png",
-    "helper": false
+    "tier": null,
+    "helper": false,
+    "icon": "CooldownOnCrit.png"
   },
   {
     "id": 40,
     "name": "CrippleWardOnLevel",
     "nameToken": "ITEM_CRIPPLEWARDONLEVEL_NAME",
     "displayName": "ITEM_CRIPPLEWARDONLEVEL_NAME",
-    "icon": "CrippleWardOnLevel.png",
-    "helper": true
+    "tier": null,
+    "helper": true,
+    "icon": "CrippleWardOnLevel.png"
   },
   {
     "id": 41,
     "name": "CritAtLowerElevation",
     "nameToken": "ITEM_CRITATLOWERELEVATION_NAME",
     "displayName": "Hiker's Boots",
-    "icon": "CritAtLowerElevation.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "CritAtLowerElevation.png"
   },
   {
     "id": 42,
     "name": "CritDamage",
     "nameToken": "ITEM_CRITDAMAGE_NAME",
     "displayName": "Laser Scope",
-    "icon": "CritDamage.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "CritDamage.png"
   },
   {
     "id": 43,
     "name": "CritGlasses",
     "nameToken": "ITEM_CRITGLASSES_NAME",
     "displayName": "Lens-Maker's Glasses",
-    "icon": "CritGlasses.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "CritGlasses.png"
   },
   {
     "id": 44,
     "name": "CritGlassesVoid",
     "nameToken": "ITEM_CRITGLASSESVOID_NAME",
     "displayName": "Lost Seer's Lenses",
-    "icon": "CritGlassesVoid.png",
-    "helper": false
+    "tier": "VoidTier1Def",
+    "helper": false,
+    "icon": "CritGlassesVoid.png"
   },
   {
     "id": 45,
     "name": "CritHeal",
     "nameToken": "ITEM_CRITHEAL_NAME",
     "displayName": "ITEM_CRITHEAL_NAME",
-    "icon": "CritHeal.png",
-    "helper": true
+    "tier": null,
+    "helper": true,
+    "icon": "CritHeal.png"
   },
   {
     "id": 46,
     "name": "Crowbar",
     "nameToken": "ITEM_CROWBAR_NAME",
     "displayName": "Crowbar",
-    "icon": "Crowbar.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "Crowbar.png"
   },
   {
     "id": 47,
     "name": "CutHp",
     "nameToken": "ITEM_CUTHP_NAME",
     "displayName": "ITEM_CUTHP_NAME",
-    "icon": "CutHp.png",
-    "helper": true
+    "tier": null,
+    "helper": true,
+    "icon": "CutHp.png"
   },
   {
     "id": 48,
     "name": "Dagger",
     "nameToken": "ITEM_DAGGER_NAME",
     "displayName": "Ceremonial Dagger",
-    "icon": "Dagger.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "Dagger.png"
   },
   {
     "id": 49,
     "name": "DeathMark",
     "nameToken": "ITEM_DEATHMARK_NAME",
     "displayName": "Death Mark",
-    "icon": "DeathMark.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "DeathMark.png"
   },
   {
     "id": 50,
     "name": "DelayedDamage",
     "nameToken": "ITEM_DELAYEDDAMAGE_NAME",
     "displayName": "Warped Echo",
-    "icon": "DelayedDamage.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "DelayedDamage.png"
   },
   {
     "id": 51,
     "name": "DestructibleSpawner",
     "nameToken": "ITEM_DESTRUCTIBLESPAWNER_NAME",
     "displayName": "ITEM_DESTRUCTIBLESPAWNER_NAME",
-    "icon": "DestructibleSpawner.png",
-    "helper": true
+    "tier": null,
+    "helper": true,
+    "icon": "DestructibleSpawner.png"
   },
   {
     "id": 52,
     "name": "DrizzlePlayerHelper",
     "nameToken": "ITEM_DRIZZLEPLAYERHELPER_NAME",
     "displayName": "ITEM_DRIZZLEPLAYERHELPER_NAME",
-    "icon": "DrizzlePlayerHelper.png",
-    "helper": true
+    "tier": null,
+    "helper": true,
+    "icon": "DrizzlePlayerHelper.png"
   },
   {
     "id": 53,
     "name": "DroneDynamiteDisplay",
     "nameToken": "ITEM_DRONEDYNAMITEDISPLAY_NAME",
     "displayName": "ITEM_DRONEDYNAMITEDISPLAY_NAME",
-    "icon": "DroneDynamiteDisplay.png",
-    "helper": true
+    "tier": null,
+    "helper": true,
+    "icon": "DroneDynamiteDisplay.png"
   },
   {
     "id": 55,
     "name": "DroneWeapons",
     "nameToken": "ITEM_DRONEWEAPONS_NAME",
     "displayName": "Spare Drone Parts",
-    "icon": "DroneWeapons.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "DroneWeapons.png"
   },
   {
     "id": 56,
     "name": "DroneWeaponsBoost",
     "nameToken": "ITEM_DRONEWEAPONSBOOST_NAME",
     "displayName": "ITEM_DRONEWEAPONSBOOST_NAME",
-    "icon": "DroneWeaponsBoost.png",
-    "helper": true
+    "tier": null,
+    "helper": true,
+    "icon": "DroneWeaponsBoost.png"
   },
   {
     "id": 57,
     "name": "DroneWeaponsDisplay1",
     "nameToken": "ITEM_DRONEWEAPONSDISPLAY1_NAME",
     "displayName": "ITEM_DRONEWEAPONSDISPLAY1_NAME",
-    "icon": "DroneWeaponsDisplay1.png",
-    "helper": true
+    "tier": null,
+    "helper": true,
+    "icon": "DroneWeaponsDisplay1.png"
   },
   {
     "id": 58,
     "name": "DroneWeaponsDisplay2",
     "nameToken": "ITEM_DRONEWEAPONSDISPLAY2_NAME",
     "displayName": "ITEM_DRONEWEAPONSDISPLAY2_NAME",
-    "icon": "DroneWeaponsDisplay2.png",
-    "helper": true
+    "tier": null,
+    "helper": true,
+    "icon": "DroneWeaponsDisplay2.png"
   },
   {
     "id": 59,
     "name": "DronesDropDynamite",
     "nameToken": "ITEM_DRONESDROPDYNAMITE_NAME",
     "displayName": "Box of Dynamite",
-    "icon": "DronesDropDynamite.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "DronesDropDynamite.png"
   },
   {
     "id": 60,
     "name": "Duplicator",
     "nameToken": "ITEM_DUPLICATOR_NAME",
     "displayName": "Substandard Duplicator",
-    "icon": "Duplicator.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "Duplicator.png"
   },
   {
     "id": 61,
     "name": "ElementalRingVoid",
     "nameToken": "ITEM_ELEMENTALRINGVOID_NAME",
     "displayName": "Singularity Band",
-    "icon": "ElementalRingVoid.png",
-    "helper": false
+    "tier": "VoidTier2Def",
+    "helper": false,
+    "icon": "ElementalRingVoid.png"
   },
   {
     "id": 62,
     "name": "EmpowerAlways",
     "nameToken": "ITEM_EMPOWERALWAYS_NAME",
     "displayName": "ITEM_EMPOWERALWAYS_NAME",
-    "icon": "EmpowerAlways.png",
-    "helper": true
+    "tier": null,
+    "helper": true,
+    "icon": "EmpowerAlways.png"
   },
   {
     "id": 63,
     "name": "EnergizedOnEquipmentUse",
     "nameToken": "ITEM_ENERGIZEDONEQUIPMENTUSE_NAME",
     "displayName": "War Horn",
-    "icon": "EnergizedOnEquipmentUse.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "EnergizedOnEquipmentUse.png"
   },
   {
     "id": 64,
     "name": "EquipmentMagazine",
     "nameToken": "ITEM_EQUIPMENTMAGAZINE_NAME",
     "displayName": "Fuel Cell",
-    "icon": "EquipmentMagazine.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "EquipmentMagazine.png"
   },
   {
     "id": 65,
     "name": "EquipmentMagazineVoid",
     "nameToken": "ITEM_EQUIPMENTMAGAZINEVOID_NAME",
     "displayName": "Lysate Cell",
-    "icon": "EquipmentMagazineVoid.png",
-    "helper": false
+    "tier": "VoidTier2Def",
+    "helper": false,
+    "icon": "EquipmentMagazineVoid.png"
   },
   {
     "id": 66,
     "name": "ExecuteLowHealthElite",
     "nameToken": "ITEM_EXECUTELOWHEALTHELITE_NAME",
     "displayName": "Old Guillotine",
-    "icon": "ExecuteLowHealthElite.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "ExecuteLowHealthElite.png"
   },
   {
     "id": 67,
     "name": "ExplodeOnDeath",
     "nameToken": "ITEM_EXPLODEONDEATH_NAME",
     "displayName": "Will-o'-the-wisp",
-    "icon": "ExplodeOnDeath.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "ExplodeOnDeath.png"
   },
   {
     "id": 68,
     "name": "ExplodeOnDeathVoid",
     "nameToken": "ITEM_EXPLODEONDEATHVOID_NAME",
     "displayName": "Voidsent Flame",
-    "icon": "ExplodeOnDeathVoid.png",
-    "helper": false
+    "tier": "VoidTier2Def",
+    "helper": false,
+    "icon": "ExplodeOnDeathVoid.png"
   },
   {
     "id": 69,
     "name": "ExtraEquipment",
     "nameToken": "ITEM_EXTRAEQUIPMENT_NAME",
     "displayName": "Functional Coupler",
-    "icon": "ExtraEquipment.png",
-    "helper": false
+    "tier": "BossTierDef",
+    "helper": false,
+    "icon": "ExtraEquipment.png"
   },
   {
     "id": 70,
     "name": "ExtraLife",
     "nameToken": "ITEM_EXTRALIFE_NAME",
     "displayName": "Dio's Best Friend",
-    "icon": "ExtraLife.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "ExtraLife.png"
   },
   {
     "id": 71,
     "name": "ExtraLifeConsumed",
     "nameToken": "ITEM_EXTRALIFECONSUMED_NAME",
     "displayName": "Dio's Best Friend (Consumed)",
-    "icon": "ExtraLifeConsumed.png",
-    "helper": false
+    "tier": null,
+    "helper": false,
+    "icon": "ExtraLifeConsumed.png"
   },
   {
     "id": 72,
     "name": "ExtraLifeVoid",
     "nameToken": "ITEM_EXTRALIFEVOID_NAME",
     "displayName": "Pluripotent Larva",
-    "icon": "ExtraLifeVoid.png",
-    "helper": false
+    "tier": "VoidTier3Def",
+    "helper": false,
+    "icon": "ExtraLifeVoid.png"
   },
   {
     "id": 73,
     "name": "ExtraLifeVoidConsumed",
     "nameToken": "ITEM_EXTRALIFEVOIDCONSUMED_NAME",
     "displayName": "Pluripotent Larva (Consumed)",
-    "icon": "ExtraLifeVoidConsumed.png",
-    "helper": false
+    "tier": null,
+    "helper": false,
+    "icon": "ExtraLifeVoidConsumed.png"
   },
   {
     "id": 74,
     "name": "ExtraShrineItem",
     "nameToken": "ITEM_EXTRASHRINEITEM_NAME",
     "displayName": "Chance Doll",
-    "icon": "ExtraShrineItem.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "ExtraShrineItem.png"
   },
   {
     "id": 75,
     "name": "ExtraStatsOnLevelUp",
     "nameToken": "ITEM_EXTRASTATSONLEVELUP_NAME",
     "displayName": "Prayer Beads",
-    "icon": "ExtraStatsOnLevelUp.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "ExtraStatsOnLevelUp.png"
   },
   {
     "id": 76,
     "name": "FallBoots",
     "nameToken": "ITEM_FALLBOOTS_NAME",
     "displayName": "H3AD-5T v2",
-    "icon": "FallBoots.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "FallBoots.png"
   },
   {
     "id": 77,
     "name": "Feather",
     "nameToken": "ITEM_FEATHER_NAME",
     "displayName": "Hopoo Feather",
-    "icon": "Feather.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "Feather.png"
   },
   {
     "id": 78,
     "name": "FireRing",
     "nameToken": "ITEM_FIRERING_NAME",
     "displayName": "Kjaro's Band",
-    "icon": "FireRing.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "FireRing.png"
   },
   {
     "id": 79,
     "name": "FireballsOnHit",
     "nameToken": "ITEM_FIREBALLSONHIT_NAME",
     "displayName": "Molten Perforator",
-    "icon": "FireballsOnHit.png",
-    "helper": false
+    "tier": "BossTierDef",
+    "helper": false,
+    "icon": "FireballsOnHit.png"
   },
   {
     "id": 80,
     "name": "Firework",
     "nameToken": "ITEM_FIREWORK_NAME",
     "displayName": "Bundle of Fireworks",
-    "icon": "Firework.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "Firework.png"
   },
   {
     "id": 81,
     "name": "FlatHealth",
     "nameToken": "ITEM_FLATHEALTH_NAME",
     "displayName": "Bison Steak",
-    "icon": "FlatHealth.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "FlatHealth.png"
   },
   {
     "id": 82,
     "name": "FocusConvergence",
     "nameToken": "ITEM_FOCUSEDCONVERGENCE_NAME",
     "displayName": "Focused Convergence",
-    "icon": "FocusConvergence.png",
-    "helper": false
+    "tier": "LunarTierDef",
+    "helper": false,
+    "icon": "FocusConvergence.png"
   },
   {
     "id": 83,
     "name": "FragileDamageBonus",
     "nameToken": "ITEM_FRAGILEDAMAGEBONUS_NAME",
     "displayName": "Delicate Watch",
-    "icon": "FragileDamageBonus.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "FragileDamageBonus.png"
   },
   {
     "id": 84,
     "name": "FragileDamageBonusConsumed",
     "nameToken": "ITEM_FRAGILEDAMAGEBONUSCONSUMED_NAME",
     "displayName": "Delicate Watch (Broken)",
-    "icon": "FragileDamageBonusConsumed.png",
-    "helper": false
+    "tier": null,
+    "helper": false,
+    "icon": "FragileDamageBonusConsumed.png"
   },
   {
     "id": 85,
     "name": "FreeChest",
     "nameToken": "ITEM_FREECHEST_NAME",
     "displayName": "Shipping Request Form",
-    "icon": "FreeChest.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "FreeChest.png"
   },
   {
     "id": 86,
     "name": "Ghost",
     "nameToken": "ITEM_GHOST_NAME",
     "displayName": "ITEM_GHOST_NAME",
-    "icon": "Ghost.png",
-    "helper": true
+    "tier": null,
+    "helper": true,
+    "icon": "Ghost.png"
   },
   {
     "id": 87,
     "name": "GhostOnKill",
     "nameToken": "ITEM_GHOSTONKILL_NAME",
     "displayName": "Happiest Mask",
-    "icon": "GhostOnKill.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "GhostOnKill.png"
   },
   {
     "id": 88,
     "name": "GoldOnHit",
     "nameToken": "ITEM_GOLDONHIT_NAME",
     "displayName": "Brittle Crown",
-    "icon": "GoldOnHit.png",
-    "helper": false
+    "tier": "LunarTierDef",
+    "helper": false,
+    "icon": "GoldOnHit.png"
   },
   {
     "id": 89,
     "name": "GoldOnHurt",
     "nameToken": "ITEM_GOLDONHURT_NAME",
     "displayName": "Roll of Pennies",
-    "icon": "GoldOnHurt.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "GoldOnHurt.png"
   },
   {
     "id": 90,
     "name": "GummyCloneIdentifier",
     "nameToken": "ITEM_GUMMYCLONEIDENTIFIER_NAME",
     "displayName": "ITEM_GUMMYCLONEIDENTIFIER_NAME",
-    "icon": "GummyCloneIdentifier.png",
-    "helper": true
+    "tier": null,
+    "helper": true,
+    "icon": "GummyCloneIdentifier.png"
   },
   {
     "id": 91,
     "name": "HalfAttackSpeedHalfCooldowns",
     "nameToken": "ITEM_HALFATTACKSPEEDHALFCOOLDOWNS_NAME",
     "displayName": "Light Flux Pauldron",
-    "icon": "HalfAttackSpeedHalfCooldowns.png",
-    "helper": false
+    "tier": "LunarTierDef",
+    "helper": false,
+    "icon": "HalfAttackSpeedHalfCooldowns.png"
   },
   {
     "id": 92,
     "name": "HalfSpeedDoubleHealth",
     "nameToken": "ITEM_HALFSPEEDDOUBLEHEALTH_NAME",
     "displayName": "Stone Flux Pauldron",
-    "icon": "HalfSpeedDoubleHealth.png",
-    "helper": false
+    "tier": "LunarTierDef",
+    "helper": false,
+    "icon": "HalfSpeedDoubleHealth.png"
   },
   {
     "id": 93,
     "name": "HeadHunter",
     "nameToken": "ITEM_HEADHUNTER_NAME",
     "displayName": "Wake of Vultures",
-    "icon": "HeadHunter.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "HeadHunter.png"
   },
   {
     "id": 94,
     "name": "HealOnCrit",
     "nameToken": "ITEM_HEALONCRIT_NAME",
     "displayName": "Harvester's Scythe",
-    "icon": "HealOnCrit.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "HealOnCrit.png"
   },
   {
     "id": 95,
     "name": "HealWhileSafe",
     "nameToken": "ITEM_HEALWHILESAFE_NAME",
     "displayName": "Cautious Slug",
-    "icon": "HealWhileSafe.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "HealWhileSafe.png"
   },
   {
     "id": 96,
     "name": "HealingPotion",
     "nameToken": "ITEM_HEALINGPOTION_NAME",
     "displayName": "Power Elixir",
-    "icon": "HealingPotion.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "HealingPotion.png"
   },
   {
     "id": 97,
     "name": "HealingPotionConsumed",
     "nameToken": "ITEM_HEALINGPOTIONCONSUMED_NAME",
     "displayName": "Empty Bottle",
-    "icon": "HealingPotionConsumed.png",
-    "helper": false
+    "tier": null,
+    "helper": false,
+    "icon": "HealingPotionConsumed.png"
   },
   {
     "id": 98,
     "name": "HealthDecay",
     "nameToken": "ITEM_HEALTHDECAY_NAME",
     "displayName": "ITEM_HEALTHDECAY_NAME",
-    "icon": "HealthDecay.png",
-    "helper": true
+    "tier": null,
+    "helper": true,
+    "icon": "HealthDecay.png"
   },
   {
     "id": 99,
     "name": "Hoof",
     "nameToken": "ITEM_HOOF_NAME",
     "displayName": "Paul's Goat Hoof",
-    "icon": "Hoof.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "Hoof.png"
   },
   {
     "id": 100,
     "name": "IceRing",
     "nameToken": "ITEM_ICERING_NAME",
     "displayName": "Runald's Band",
-    "icon": "IceRing.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "IceRing.png"
   },
   {
     "id": 101,
     "name": "Icicle",
     "nameToken": "ITEM_ICICLE_NAME",
     "displayName": "Frost Relic",
-    "icon": "Icicle.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "Icicle.png"
   },
   {
     "id": 102,
     "name": "IgniteOnKill",
     "nameToken": "ITEM_IGNITEONKILL_NAME",
     "displayName": "Gasoline",
-    "icon": "IgniteOnKill.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "IgniteOnKill.png"
   },
   {
     "id": 103,
     "name": "ImmuneToDebuff",
     "nameToken": "ITEM_IMMUNETODEBUFF_NAME",
     "displayName": "Ben's Raincoat",
-    "icon": "ImmuneToDebuff.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "ImmuneToDebuff.png"
   },
   {
     "id": 104,
     "name": "IncreaseDamageOnMultiKill",
     "nameToken": "ITEM_INCREASEDAMAGEONMULTIKILL_NAME",
     "displayName": "Chronic Expansion",
-    "icon": "IncreaseDamageOnMultiKill.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "IncreaseDamageOnMultiKill.png"
   },
   {
     "id": 105,
     "name": "IncreaseHealing",
     "nameToken": "ITEM_INCREASEHEALING_NAME",
     "displayName": "Rejuvenation Rack",
-    "icon": "IncreaseHealing.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "IncreaseHealing.png"
   },
   {
     "id": 106,
     "name": "IncreasePrimaryDamage",
     "nameToken": "ITEM_INCREASEPRIMARYDAMAGE_NAME",
     "displayName": "Luminous Shot",
-    "icon": "IncreasePrimaryDamage.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "IncreasePrimaryDamage.png"
   },
   {
     "id": 107,
     "name": "Incubator",
     "nameToken": "ITEM_ANCESTRALINCUBATOR_NAME",
     "displayName": "Ancestral Incubator",
-    "icon": "Incubator.png",
-    "helper": false
+    "tier": null,
+    "helper": false,
+    "icon": "Incubator.png"
   },
   {
     "id": 108,
     "name": "Infusion",
     "nameToken": "ITEM_INFUSION_NAME",
     "displayName": "Infusion",
-    "icon": "Infusion.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "Infusion.png"
   },
   {
     "id": 109,
     "name": "InvadingDoppelganger",
     "nameToken": "ITEM_INVADINGDOPPELGANGER_NAME",
     "displayName": "ITEM_INVADINGDOPPELGANGER_NAME",
-    "icon": "InvadingDoppelganger.png",
-    "helper": true
+    "tier": null,
+    "helper": true,
+    "icon": "InvadingDoppelganger.png"
   },
   {
     "id": 110,
     "name": "ItemDropChanceOnKill",
     "nameToken": "ITEM_ITEMDROPCHANCEONKILL_NAME",
     "displayName": "Sonorous Whispers",
-    "icon": "ItemDropChanceOnKill.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "ItemDropChanceOnKill.png"
   },
   {
     "id": 111,
     "name": "JumpBoost",
     "nameToken": "ITEM_JUMPBOOST_NAME",
     "displayName": "Wax Quail",
-    "icon": "JumpBoost.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "JumpBoost.png"
   },
   {
     "id": 112,
     "name": "JumpDamageStrike",
     "nameToken": "ITEM_JUMPDAMAGESTRIKE_NAME",
     "displayName": "Faraday Spur",
-    "icon": "JumpDamageStrike.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "JumpDamageStrike.png"
   },
   {
     "id": 113,
     "name": "Junk",
     "nameToken": "ITEM_JUNK_NAME",
     "displayName": "Junk",
-    "icon": "Junk.png",
-    "helper": false
+    "tier": null,
+    "helper": false,
+    "icon": "Junk.png"
   },
   {
     "id": 114,
     "name": "KillEliteFrenzy",
     "nameToken": "ITEM_KILLELITEFRENZY_NAME",
     "displayName": "Brainstalks",
-    "icon": "KillEliteFrenzy.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "KillEliteFrenzy.png"
   },
   {
     "id": 115,
     "name": "KnockBackHitEnemies",
     "nameToken": "ITEM_KNOCKBACKHITENEMIES_NAME",
     "displayName": "Breaching Fin",
-    "icon": "KnockBackHitEnemies.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "KnockBackHitEnemies.png"
   },
   {
     "id": 116,
     "name": "Knurl",
     "nameToken": "ITEM_KNURL_NAME",
     "displayName": "Titanic Knurl",
-    "icon": "Knurl.png",
-    "helper": false
+    "tier": "BossTierDef",
+    "helper": false,
+    "icon": "Knurl.png"
   },
   {
     "id": 117,
     "name": "LaserTurbine",
     "nameToken": "ITEM_LASERTURBINE_NAME",
     "displayName": "Resonance Disc",
-    "icon": "LaserTurbine.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "LaserTurbine.png"
   },
   {
     "id": 118,
     "name": "LemurianHarness",
     "nameToken": "ITEM_LEMURIANHARNESS_NAME",
     "displayName": "ITEM_LEMURIANHARNESS_NAME",
-    "icon": "LemurianHarness.png",
-    "helper": true
+    "tier": null,
+    "helper": true,
+    "icon": "LemurianHarness.png"
   },
   {
     "id": 119,
     "name": "LevelBonus",
     "nameToken": "ITEM_LEVELBONUS_NAME",
     "displayName": "ITEM_LEVELBONUS_NAME",
-    "icon": "LevelBonus.png",
-    "helper": true
+    "tier": null,
+    "helper": true,
+    "icon": "LevelBonus.png"
   },
   {
     "id": 120,
     "name": "LightningStrikeOnHit",
     "nameToken": "ITEM_LIGHTNINGSTRIKEONHIT_NAME",
     "displayName": "Charged Perforator",
-    "icon": "LightningStrikeOnHit.png",
-    "helper": false
+    "tier": "BossTierDef",
+    "helper": false,
+    "icon": "LightningStrikeOnHit.png"
   },
   {
     "id": 121,
     "name": "LowerPricedChests",
     "nameToken": "ITEM_LOWERPRICEDCHESTS_NAME",
     "displayName": "Sale Star",
-    "icon": "LowerPricedChests.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "LowerPricedChests.png"
   },
   {
     "id": 122,
     "name": "LowerPricedChestsConsumed",
     "nameToken": "ITEM_LOWERPRICEDCHESTSCONSUMED_NAME",
     "displayName": "Sale Star (Consumed)",
-    "icon": "LowerPricedChestsConsumed.png",
-    "helper": false
+    "tier": null,
+    "helper": false,
+    "icon": "LowerPricedChestsConsumed.png"
   },
   {
     "id": 123,
     "name": "LunarBadLuck",
     "nameToken": "ITEM_LUNARBADLUCK_NAME",
     "displayName": "Purity",
-    "icon": "LunarBadLuck.png",
-    "helper": false
+    "tier": "LunarTierDef",
+    "helper": false,
+    "icon": "LunarBadLuck.png"
   },
   {
     "id": 124,
     "name": "LunarDagger",
     "nameToken": "ITEM_LUNARDAGGER_NAME",
     "displayName": "Shaped Glass",
-    "icon": "LunarDagger.png",
-    "helper": false
+    "tier": "LunarTierDef",
+    "helper": false,
+    "icon": "LunarDagger.png"
   },
   {
     "id": 125,
     "name": "LunarPrimaryReplacement",
     "nameToken": "ITEM_LUNARPRIMARYREPLACEMENT_NAME",
     "displayName": "Visions of Heresy",
-    "icon": "LunarPrimaryReplacement.png",
-    "helper": false
+    "tier": "LunarTierDef",
+    "helper": false,
+    "icon": "LunarPrimaryReplacement.png"
   },
   {
     "id": 126,
     "name": "LunarSecondaryReplacement",
     "nameToken": "ITEM_LUNARSECONDARYREPLACEMENT_NAME",
     "displayName": "Hooks of Heresy",
-    "icon": "LunarSecondaryReplacement.png",
-    "helper": false
+    "tier": "LunarTierDef",
+    "helper": false,
+    "icon": "LunarSecondaryReplacement.png"
   },
   {
     "id": 127,
     "name": "LunarSpecialReplacement",
     "nameToken": "ITEM_LUNARSPECIALREPLACEMENT_NAME",
     "displayName": "Essence of Heresy",
-    "icon": "LunarSpecialReplacement.png",
-    "helper": false
+    "tier": "LunarTierDef",
+    "helper": false,
+    "icon": "LunarSpecialReplacement.png"
   },
   {
     "id": 128,
     "name": "LunarSun",
     "nameToken": "ITEM_LUNARSUN_NAME",
     "displayName": "Egocentrism",
-    "icon": "LunarSun.png",
-    "helper": false
+    "tier": "LunarTierDef",
+    "helper": false,
+    "icon": "LunarSun.png"
   },
   {
     "id": 129,
     "name": "LunarTrinket",
     "nameToken": "ITEM_LUNARTRINKET_NAME",
     "displayName": "Beads of Fealty",
-    "icon": "LunarTrinket.png",
-    "helper": false
+    "tier": "LunarTierDef",
+    "helper": false,
+    "icon": "LunarTrinket.png"
   },
   {
     "id": 130,
     "name": "LunarUtilityReplacement",
     "nameToken": "ITEM_LUNARUTILITYREPLACEMENT_NAME",
     "displayName": "Strides of Heresy",
-    "icon": "LunarUtilityReplacement.png",
-    "helper": false
+    "tier": "LunarTierDef",
+    "helper": false,
+    "icon": "LunarUtilityReplacement.png"
   },
   {
     "id": 131,
     "name": "LunarWings",
     "nameToken": "ITEM_LUNARWINGS_NAME",
     "displayName": "Blessings of Terafirmae",
-    "icon": "LunarWings.png",
-    "helper": false
+    "tier": null,
+    "helper": false,
+    "icon": "LunarWings.png"
   },
   {
     "id": 132,
     "name": "MageAttunement",
     "nameToken": "ITEM_MAGEATTUNEMENT_NAME",
     "displayName": "ITEM_MAGEATTUNEMENT_NAME",
-    "icon": "MageAttunement.png",
-    "helper": true
+    "tier": null,
+    "helper": true,
+    "icon": "MageAttunement.png"
   },
   {
     "id": 133,
     "name": "MasterBattery",
     "nameToken": "ITEM_MASTERBATTERY_NAME",
     "displayName": "Encrypted Cerebellum",
-    "icon": "MasterBattery.png",
-    "helper": false
+    "tier": "BossTierDef",
+    "helper": false,
+    "icon": "MasterBattery.png"
   },
   {
     "id": 134,
     "name": "MasterCore",
     "nameToken": "ITEM_MASTERCORE_NAME",
     "displayName": "Exposed Cerebellum",
-    "icon": "MasterCore.png",
-    "helper": false
+    "tier": "BossTierDef",
+    "helper": false,
+    "icon": "MasterCore.png"
   },
   {
     "id": 135,
     "name": "Medkit",
     "nameToken": "ITEM_MEDKIT_NAME",
     "displayName": "Medkit",
-    "icon": "Medkit.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "Medkit.png"
   },
   {
     "id": 136,
     "name": "MeteorAttackOnHighDamage",
     "nameToken": "ITEM_METEORATTACKONHIGHDAMAGE_NAME",
     "displayName": "Runic Lens",
-    "icon": "MeteorAttackOnHighDamage.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "MeteorAttackOnHighDamage.png"
   },
   {
     "id": 137,
     "name": "MinHealthPercentage",
     "nameToken": "",
     "displayName": "",
-    "icon": "MinHealthPercentage.png",
-    "helper": true
+    "tier": null,
+    "helper": true,
+    "icon": "MinHealthPercentage.png"
   },
   {
     "id": 138,
     "name": "MinionLeash",
     "nameToken": "ITEM_MINIONLEASH_NAME",
     "displayName": "ITEM_MINIONLEASH_NAME",
-    "icon": "MinionLeash.png",
-    "helper": true
+    "tier": null,
+    "helper": true,
+    "icon": "MinionLeash.png"
   },
   {
     "id": 139,
     "name": "MinorConstructOnKill",
     "nameToken": "ITEM_MINORCONSTRUCTONKILL_NAME",
     "displayName": "Defense Nucleus",
-    "icon": "MinorConstructOnKill.png",
-    "helper": false
+    "tier": "BossTierDef",
+    "helper": false,
+    "icon": "MinorConstructOnKill.png"
   },
   {
     "id": 140,
     "name": "Missile",
     "nameToken": "ITEM_MISSILE_NAME",
     "displayName": "AtG Missile Mk. 1",
-    "icon": "Missile.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "Missile.png"
   },
   {
     "id": 141,
     "name": "MissileVoid",
     "nameToken": "ITEM_MISSILEVOID_NAME",
     "displayName": "Plasma Shrimp",
-    "icon": "MissileVoid.png",
-    "helper": false
+    "tier": "VoidTier2Def",
+    "helper": false,
+    "icon": "MissileVoid.png"
   },
   {
     "id": 142,
     "name": "MoneyLoan",
     "nameToken": "ITEM_MONEYLOAN_NAME",
     "displayName": "Ominous Loan Note",
-    "icon": "MoneyLoan.png",
-    "helper": false
+    "tier": null,
+    "helper": false,
+    "icon": "MoneyLoan.png"
   },
   {
     "id": 143,
     "name": "MonsoonPlayerHelper",
     "nameToken": "ITEM_MONSOONPLAYERHELPER_NAME",
     "displayName": "ITEM_MONSOONPLAYERHELPER_NAME",
-    "icon": "MonsoonPlayerHelper.png",
-    "helper": true
+    "tier": null,
+    "helper": true,
+    "icon": "MonsoonPlayerHelper.png"
   },
   {
     "id": 144,
     "name": "MonstersOnShrineUse",
     "nameToken": "ITEM_MONSTERSONSHRINEUSE_NAME",
     "displayName": "Defiant Gouge",
-    "icon": "MonstersOnShrineUse.png",
-    "helper": false
+    "tier": "LunarTierDef",
+    "helper": false,
+    "icon": "MonstersOnShrineUse.png"
   },
   {
     "id": 145,
     "name": "MoreMissile",
     "nameToken": "ITEM_MOREMISSILE_NAME",
     "displayName": "Pocket I.C.B.M.",
-    "icon": "MoreMissile.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "MoreMissile.png"
   },
   {
     "id": 146,
     "name": "MoveSpeedOnKill",
     "nameToken": "ITEM_MOVESPEEDONKILL_NAME",
     "displayName": "Hunter's Harpoon",
-    "icon": "MoveSpeedOnKill.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "MoveSpeedOnKill.png"
   },
   {
     "id": 147,
     "name": "Mushroom",
     "nameToken": "ITEM_MUSHROOM_NAME",
     "displayName": "Bustling Fungus",
-    "icon": "Mushroom.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "Mushroom.png"
   },
   {
     "id": 148,
     "name": "MushroomVoid",
     "nameToken": "ITEM_MUSHROOMVOID_NAME",
     "displayName": "Weeping Fungus",
-    "icon": "MushroomVoid.png",
-    "helper": false
+    "tier": "VoidTier1Def",
+    "helper": false,
+    "icon": "MushroomVoid.png"
   },
   {
     "id": 149,
     "name": "NearbyDamageBonus",
     "nameToken": "ITEM_NEARBYDAMAGEBONUS_NAME",
     "displayName": "Focus Crystal",
-    "icon": "NearbyDamageBonus.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "NearbyDamageBonus.png"
   },
   {
     "id": 150,
     "name": "NovaOnHeal",
     "nameToken": "ITEM_NOVAONHEAL_NAME",
     "displayName": "N'kuhana's Opinion",
-    "icon": "NovaOnHeal.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "NovaOnHeal.png"
   },
   {
     "id": 151,
     "name": "NovaOnLowHealth",
     "nameToken": "ITEM_NOVAONLOWHEALTH_NAME",
     "displayName": "Genesis Loop",
-    "icon": "NovaOnLowHealth.png",
-    "helper": false
+    "tier": "BossTierDef",
+    "helper": false,
+    "icon": "NovaOnLowHealth.png"
   },
   {
     "id": 152,
     "name": "OnLevelUpFreeUnlock",
     "nameToken": "ITEM_ONLEVELUPFREEUNLOCK_NAME",
     "displayName": "Longstanding Solitude",
-    "icon": "OnLevelUpFreeUnlock.png",
-    "helper": false
+    "tier": "LunarTierDef",
+    "helper": false,
+    "icon": "OnLevelUpFreeUnlock.png"
   },
   {
     "id": 153,
     "name": "OutOfCombatArmor",
     "nameToken": "ITEM_OUTOFCOMBATARMOR_NAME",
     "displayName": "Oddly-shaped Opal",
-    "icon": "OutOfCombatArmor.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "OutOfCombatArmor.png"
   },
   {
     "id": 154,
     "name": "ParentEgg",
     "nameToken": "ITEM_PARENTEGG_NAME",
     "displayName": "Planula",
-    "icon": "ParentEgg.png",
-    "helper": false
+    "tier": "BossTierDef",
+    "helper": false,
+    "icon": "ParentEgg.png"
   },
   {
     "id": 155,
     "name": "Pearl",
     "nameToken": "ITEM_PEARL_NAME",
     "displayName": "Pearl",
-    "icon": "Pearl.png",
-    "helper": false
+    "tier": "BossTierDef",
+    "helper": false,
+    "icon": "Pearl.png"
   },
   {
     "id": 156,
     "name": "PermanentDebuffOnHit",
     "nameToken": "ITEM_PERMANENTDEBUFFONHIT_NAME",
     "displayName": "Symbiotic Scorpion",
-    "icon": "PermanentDebuffOnHit.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "PermanentDebuffOnHit.png"
   },
   {
     "id": 157,
     "name": "PersonalShield",
     "nameToken": "ITEM_PERSONALSHIELD_NAME",
     "displayName": "Personal Shield Generator",
-    "icon": "PersonalShield.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "PersonalShield.png"
   },
   {
     "id": 158,
     "name": "Phasing",
     "nameToken": "ITEM_PHASING_NAME",
     "displayName": "Old War Stealthkit",
-    "icon": "Phasing.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "Phasing.png"
   },
   {
     "id": 159,
     "name": "PhysicsProjectile",
     "nameToken": "ITEM_PHYSICSPROJECTILE_NAME",
     "displayName": "Orphaned Core",
-    "icon": "PhysicsProjectile.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "PhysicsProjectile.png"
   },
   {
     "id": 160,
     "name": "Plant",
     "nameToken": "ITEM_INTERSTELLARDESKPLANT_NAME",
     "displayName": "Interstellar Desk Plant",
-    "icon": "Plant.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "Plant.png"
   },
   {
     "id": 161,
     "name": "PlantOnHit",
     "nameToken": "ITEM_PLANTONHIT_NAME",
     "displayName": "ITEM_PLANTONHIT_NAME",
-    "icon": "PlantOnHit.png",
-    "helper": true
+    "tier": null,
+    "helper": true,
+    "icon": "PlantOnHit.png"
   },
   {
     "id": 162,
     "name": "PlasmaCore",
     "nameToken": "ITEM_PLASMACORE_NAME",
     "displayName": "ITEM_PLASMACORE_NAME",
-    "icon": "PlasmaCore.png",
-    "helper": true
+    "tier": null,
+    "helper": true,
+    "icon": "PlasmaCore.png"
   },
   {
     "id": 163,
     "name": "PowerCube",
     "nameToken": "ITEM_POWERCUBE_NAME",
     "displayName": "Prison Matrix",
-    "icon": "PowerCube.png",
-    "helper": false
+    "tier": "BossTierDef",
+    "helper": false,
+    "icon": "PowerCube.png"
   },
   {
     "id": 164,
     "name": "PowerOrbSphere",
     "nameToken": "ITEM_POWERORB_NAME",
     "displayName": "Ocular Battery",
-    "icon": "PowerOrbSphere.png",
-    "helper": false
+    "tier": null,
+    "helper": false,
+    "icon": "PowerOrbSphere.png"
   },
   {
     "id": 165,
     "name": "PowerPyramid",
     "nameToken": "ITEM_POWERPYRAMID_NAME",
     "displayName": "Sentry Key",
-    "icon": "PowerPyramid.png",
-    "helper": false
+    "tier": "BossTierDef",
+    "helper": false,
+    "icon": "PowerPyramid.png"
   },
   {
     "id": 166,
     "name": "PrimarySkillShuriken",
     "nameToken": "ITEM_PRIMARYSKILLSHURIKEN_NAME",
     "displayName": "Shuriken",
-    "icon": "PrimarySkillShuriken.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "PrimarySkillShuriken.png"
   },
   {
     "id": 167,
     "name": "RandomDamageZone",
     "nameToken": "ITEM_RANDOMDAMAGEZONE_NAME",
     "displayName": "Mercurial Rachis",
-    "icon": "RandomDamageZone.png",
-    "helper": false
+    "tier": "LunarTierDef",
+    "helper": false,
+    "icon": "RandomDamageZone.png"
   },
   {
     "id": 168,
     "name": "RandomEquipmentTrigger",
     "nameToken": "ITEM_RANDOMEQUIPMENTTRIGGER_NAME",
     "displayName": "Bottled Chaos",
-    "icon": "RandomEquipmentTrigger.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "RandomEquipmentTrigger.png"
   },
   {
     "id": 169,
     "name": "RandomlyLunar",
     "nameToken": "ITEM_RANDOMLYLUNAR_NAME",
     "displayName": "Eulogy Zero",
-    "icon": "RandomlyLunar.png",
-    "helper": false
+    "tier": "LunarTierDef",
+    "helper": false,
+    "icon": "RandomlyLunar.png"
   },
   {
     "id": 170,
     "name": "RegeneratingScrap",
     "nameToken": "ITEM_REGENERATINGSCRAP_NAME",
     "displayName": "Regenerating Scrap",
-    "icon": "RegeneratingScrap.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "RegeneratingScrap.png"
   },
   {
     "id": 171,
     "name": "RegeneratingScrapConsumed",
     "nameToken": "ITEM_REGENERATINGSCRAPCONSUMED_NAME",
     "displayName": "Regenerating Scrap (Consumed)",
-    "icon": "RegeneratingScrapConsumed.png",
-    "helper": false
+    "tier": null,
+    "helper": false,
+    "icon": "RegeneratingScrapConsumed.png"
   },
   {
     "id": 172,
     "name": "RepeatHeal",
     "nameToken": "ITEM_REPEATHEAL_NAME",
     "displayName": "Corpsebloom",
-    "icon": "RepeatHeal.png",
-    "helper": false
+    "tier": "LunarTierDef",
+    "helper": false,
+    "icon": "RepeatHeal.png"
   },
   {
     "id": 173,
     "name": "RoboBallBuddy",
     "nameToken": "ITEM_ROBOBALLBUDDY_NAME",
     "displayName": "Empathy Cores",
-    "icon": "RoboBallBuddy.png",
-    "helper": false
+    "tier": "BossTierDef",
+    "helper": false,
+    "icon": "RoboBallBuddy.png"
   },
   {
     "id": 174,
     "name": "ScrapGreen",
     "nameToken": "ITEM_SCRAPGREEN_NAME",
     "displayName": "Item Scrap, Green",
-    "icon": "ScrapGreen.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "ScrapGreen.png"
   },
   {
     "id": 175,
     "name": "ScrapGreenSuppressed",
     "nameToken": "ITEM_SCRAPGREENSUPPRESSED_NAME",
     "displayName": "Strange Scrap, Green",
-    "icon": "ScrapGreenSuppressed.png",
-    "helper": false
+    "tier": null,
+    "helper": false,
+    "icon": "ScrapGreenSuppressed.png"
   },
   {
     "id": 176,
     "name": "ScrapRed",
     "nameToken": "ITEM_SCRAPRED_NAME",
     "displayName": "Item Scrap, Red",
-    "icon": "ScrapRed.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "ScrapRed.png"
   },
   {
     "id": 177,
     "name": "ScrapRedSuppressed",
     "nameToken": "ITEM_SCRAPREDSUPPRESSED_NAME",
     "displayName": "Strange Scrap, Red",
-    "icon": "ScrapRedSuppressed.png",
-    "helper": false
+    "tier": null,
+    "helper": false,
+    "icon": "ScrapRedSuppressed.png"
   },
   {
     "id": 178,
     "name": "ScrapWhite",
     "nameToken": "ITEM_SCRAPWHITE_NAME",
     "displayName": "Item Scrap, White",
-    "icon": "ScrapWhite.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "ScrapWhite.png"
   },
   {
     "id": 179,
     "name": "ScrapWhiteSuppressed",
     "nameToken": "ITEM_SCRAPWHITESUPPRESSED_NAME",
     "displayName": "Strange Scrap, White",
-    "icon": "ScrapWhiteSuppressed.png",
-    "helper": false
+    "tier": null,
+    "helper": false,
+    "icon": "ScrapWhiteSuppressed.png"
   },
   {
     "id": 180,
     "name": "ScrapYellow",
     "nameToken": "ITEM_SCRAPYELLOW_NAME",
     "displayName": "Item Scrap, Yellow",
-    "icon": "ScrapYellow.png",
-    "helper": false
+    "tier": "BossTierDef",
+    "helper": false,
+    "icon": "ScrapYellow.png"
   },
   {
     "id": 181,
     "name": "SecondarySkillMagazine",
     "nameToken": "ITEM_SECONDARYSKILLMAGAZINE_NAME",
     "displayName": "Backup Magazine",
-    "icon": "SecondarySkillMagazine.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "SecondarySkillMagazine.png"
   },
   {
     "id": 182,
     "name": "Seed",
     "nameToken": "ITEM_SEED_NAME",
     "displayName": "Leeching Seed",
-    "icon": "Seed.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "Seed.png"
   },
   {
     "id": 183,
     "name": "SharedSuffering",
     "nameToken": "ITEM_SHAREDSUFFERING_NAME",
     "displayName": "Networked Suffering",
-    "icon": "SharedSuffering.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "SharedSuffering.png"
   },
   {
     "id": 184,
     "name": "ShieldBooster",
     "nameToken": "ITEM_SHIELDBOOSTER_NAME",
     "displayName": "Kinetic Dampener",
-    "icon": "ShieldBooster.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "ShieldBooster.png"
   },
   {
     "id": 185,
     "name": "ShieldOnly",
     "nameToken": "ITEM_SHIELDONLY_NAME",
     "displayName": "Transcendence",
-    "icon": "ShieldOnly.png",
-    "helper": false
+    "tier": "LunarTierDef",
+    "helper": false,
+    "icon": "ShieldOnly.png"
   },
   {
     "id": 186,
     "name": "ShinyPearl",
     "nameToken": "ITEM_SHINYPEARL_NAME",
     "displayName": "Irradiant Pearl",
-    "icon": "ShinyPearl.png",
-    "helper": false
+    "tier": "BossTierDef",
+    "helper": false,
+    "icon": "ShinyPearl.png"
   },
   {
     "id": 187,
     "name": "ShockDamageAura",
     "nameToken": "ITEM_SHOCKDAMAGEAURA_NAME",
     "displayName": "Faulty Conductor",
-    "icon": "ShockDamageAura.png",
-    "helper": false
+    "tier": "BossTierDef",
+    "helper": false,
+    "icon": "ShockDamageAura.png"
   },
   {
     "id": 188,
     "name": "ShockNearby",
     "nameToken": "ITEM_SHOCKNEARBY_NAME",
     "displayName": "Unstable Tesla Coil",
-    "icon": "ShockNearby.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "ShockNearby.png"
   },
   {
     "id": 189,
     "name": "SiphonOnLowHealth",
     "nameToken": "ITEM_SIPHONONLOWHEALTH_NAME",
     "displayName": "Mired Urn",
-    "icon": "SiphonOnLowHealth.png",
-    "helper": false
+    "tier": "BossTierDef",
+    "helper": false,
+    "icon": "SiphonOnLowHealth.png"
   },
   {
     "id": 190,
     "name": "SkullCounter",
     "nameToken": "ITEM_SKULLCOUNTER_NAME",
     "displayName": "Skull Token",
-    "icon": "SkullCounter.png",
-    "helper": false
+    "tier": null,
+    "helper": false,
+    "icon": "SkullCounter.png"
   },
   {
     "id": 191,
     "name": "SlowOnHit",
     "nameToken": "ITEM_SLOWONHIT_NAME",
     "displayName": "Chronobauble",
-    "icon": "SlowOnHit.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "SlowOnHit.png"
   },
   {
     "id": 192,
     "name": "SlowOnHitVoid",
     "nameToken": "ITEM_SLOWONHITVOID_NAME",
     "displayName": "Tentabauble",
-    "icon": "SlowOnHitVoid.png",
-    "helper": false
+    "tier": "VoidTier2Def",
+    "helper": false,
+    "icon": "SlowOnHitVoid.png"
   },
   {
     "id": 193,
     "name": "SpeedBoostPickup",
     "nameToken": "ITEM_SPEEDBOOSTPICKUP_NAME",
     "displayName": "Elusive Antlers",
-    "icon": "SpeedBoostPickup.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "SpeedBoostPickup.png"
   },
   {
     "id": 194,
     "name": "SpeedOnPickup",
     "nameToken": "ITEM_SPEEDONPICKUP_NAME",
     "displayName": "Collector's Compulsion",
-    "icon": "SpeedOnPickup.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "SpeedOnPickup.png"
   },
   {
     "id": 195,
     "name": "SprintArmor",
     "nameToken": "ITEM_SPRINTARMOR_NAME",
     "displayName": "Rose Buckler",
-    "icon": "SprintArmor.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "SprintArmor.png"
   },
   {
     "id": 196,
     "name": "SprintBonus",
     "nameToken": "ITEM_SPRINTBONUS_NAME",
     "displayName": "Energy Drink",
-    "icon": "SprintBonus.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "SprintBonus.png"
   },
   {
     "id": 197,
     "name": "SprintOutOfCombat",
     "nameToken": "ITEM_SPRINTOUTOFCOMBAT_NAME",
     "displayName": "Red Whip",
-    "icon": "SprintOutOfCombat.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "SprintOutOfCombat.png"
   },
   {
     "id": 198,
     "name": "SprintWisp",
     "nameToken": "ITEM_SPRINTWISP_NAME",
     "displayName": "Little Disciple",
-    "icon": "SprintWisp.png",
-    "helper": false
+    "tier": "BossTierDef",
+    "helper": false,
+    "icon": "SprintWisp.png"
   },
   {
     "id": 199,
     "name": "Squid",
     "nameToken": "ITEM_SQUIDTURRET_NAME",
     "displayName": "Squid Polyp",
-    "icon": "Squid.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "Squid.png"
   },
   {
     "id": 200,
     "name": "StatsFromScrap",
     "nameToken": "ITEM_STATSFROMSCRAP_NAME",
     "displayName": "ITEM_STATSFROMSCRAP_NAME",
-    "icon": "StatsFromScrap.png",
-    "helper": true
+    "tier": null,
+    "helper": true,
+    "icon": "StatsFromScrap.png"
   },
   {
     "id": 201,
     "name": "Stew",
     "nameToken": "ITEM_STEW_NAME",
     "displayName": "Hearty Stew",
-    "icon": "Stew.png",
-    "helper": false
+    "tier": "FoodTier",
+    "helper": false,
+    "icon": "Stew.png"
   },
   {
     "id": 202,
     "name": "StickyBomb",
     "nameToken": "ITEM_STICKYBOMB_NAME",
     "displayName": "Sticky Bomb",
-    "icon": "StickyBomb.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "StickyBomb.png"
   },
   {
     "id": 203,
     "name": "StrengthenBurn",
     "nameToken": "ITEM_STRENGTHENBURN_NAME",
     "displayName": "Ignition Tank",
-    "icon": "StrengthenBurn.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "StrengthenBurn.png"
   },
   {
     "id": 204,
     "name": "StunAndPierce",
     "nameToken": "ITEM_STUNANDPIERCE_NAME",
     "displayName": "Electric Boomerang",
-    "icon": "StunAndPierce.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "StunAndPierce.png"
   },
   {
     "id": 205,
     "name": "StunChanceOnHit",
     "nameToken": "ITEM_STUNCHANCEONHIT_NAME",
     "displayName": "Stun Grenade",
-    "icon": "StunChanceOnHit.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "StunChanceOnHit.png"
   },
   {
     "id": 206,
     "name": "Syringe",
     "nameToken": "ITEM_SYRINGE_NAME",
     "displayName": "Soldier's Syringe",
-    "icon": "Syringe.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "Syringe.png"
   },
   {
     "id": 207,
     "name": "TPHealingNova",
     "nameToken": "ITEM_TPHEALINGNOVA_NAME",
     "displayName": "Lepton Daisy",
-    "icon": "TPHealingNova.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "TPHealingNova.png"
   },
   {
     "id": 208,
     "name": "Talisman",
     "nameToken": "ITEM_TALISMAN_NAME",
     "displayName": "Soulbound Catalyst",
-    "icon": "Talisman.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "Talisman.png"
   },
   {
     "id": 209,
     "name": "TeamSizeDamageBonus",
     "nameToken": "",
     "displayName": "",
-    "icon": "TeamSizeDamageBonus.png",
-    "helper": true
+    "tier": null,
+    "helper": true,
+    "icon": "TeamSizeDamageBonus.png"
   },
   {
     "id": 210,
     "name": "TeleportOnLowHealth",
     "nameToken": "ITEM_TELEPORTONLOWHEALTH_NAME",
     "displayName": "Unstable Transmitter",
-    "icon": "TeleportOnLowHealth.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "TeleportOnLowHealth.png"
   },
   {
     "id": 211,
     "name": "TeleportOnLowHealthConsumed",
     "nameToken": "ITEM_TELEPORTONLOWHEALTHCONSUMED_NAME",
     "displayName": "Unstable Transmitter (Consumed)",
-    "icon": "TeleportOnLowHealthConsumed.png",
-    "helper": false
+    "tier": null,
+    "helper": false,
+    "icon": "TeleportOnLowHealthConsumed.png"
   },
   {
     "id": 212,
     "name": "TeleportWhenOob",
     "nameToken": "",
     "displayName": "",
-    "icon": "TeleportWhenOob.png",
-    "helper": true
+    "tier": null,
+    "helper": true,
+    "icon": "TeleportWhenOob.png"
   },
   {
     "id": 213,
     "name": "TempestOnKill",
     "nameToken": "ITEM_TEMPESTONKILL_NAME",
     "displayName": "ITEM_TEMPESTONKILL_NAME",
-    "icon": "TempestOnKill.png",
-    "helper": true
+    "tier": null,
+    "helper": true,
+    "icon": "TempestOnKill.png"
   },
   {
     "id": 214,
     "name": "Thorns",
     "nameToken": "ITEM_THORNS_NAME",
     "displayName": "Razorwire",
-    "icon": "Thorns.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "Thorns.png"
   },
   {
     "id": 215,
     "name": "TitanGoldDuringTP",
     "nameToken": "ITEM_TITANGOLDDURINGTP_NAME",
     "displayName": "Halcyon Seed",
-    "icon": "TitanGoldDuringTP.png",
-    "helper": false
+    "tier": "BossTierDef",
+    "helper": false,
+    "icon": "TitanGoldDuringTP.png"
   },
   {
     "id": 216,
     "name": "TonicAffliction",
     "nameToken": "ITEM_TONICAFFLICTION_NAME",
     "displayName": "Tonic Affliction",
-    "icon": "TonicAffliction.png",
-    "helper": false
+    "tier": null,
+    "helper": false,
+    "icon": "TonicAffliction.png"
   },
   {
     "id": 217,
     "name": "Tooth",
     "nameToken": "ITEM_TOOTH_NAME",
     "displayName": "Monster Tooth",
-    "icon": "Tooth.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "Tooth.png"
   },
   {
     "id": 218,
     "name": "TransferDebuffOnHit",
     "nameToken": "ITEM_TRANSFERDEBUFFONHIT_NAME",
     "displayName": "Neutronium Weight",
-    "icon": "TransferDebuffOnHit.png",
-    "helper": false
+    "tier": "LunarTierDef",
+    "helper": false,
+    "icon": "TransferDebuffOnHit.png"
   },
   {
     "id": 219,
     "name": "TreasureCache",
     "nameToken": "ITEM_TREASURECACHE_NAME",
     "displayName": "Rusted Key",
-    "icon": "TreasureCache.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "TreasureCache.png"
   },
   {
     "id": 220,
     "name": "TreasureCacheVoid",
     "nameToken": "ITEM_TREASURECACHEVOID_NAME",
     "displayName": "Encrusted Key",
-    "icon": "TreasureCacheVoid.png",
-    "helper": false
+    "tier": "VoidTier1Def",
+    "helper": false,
+    "icon": "TreasureCacheVoid.png"
   },
   {
     "id": 221,
     "name": "TriggerEnemyDebuffs",
     "nameToken": "ITEM_TRIGGERENEMYDEBUFFS_NAME",
     "displayName": "Noxious Thorn",
-    "icon": "TriggerEnemyDebuffs.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "TriggerEnemyDebuffs.png"
   },
   {
     "id": 222,
     "name": "UltimateMeal",
     "nameToken": "ITEM_ULTIMATEMEAL_NAME",
     "displayName": "Ultimate Meal",
-    "icon": "UltimateMeal.png",
-    "helper": false
+    "tier": "FoodTier",
+    "helper": false,
+    "icon": "UltimateMeal.png"
   },
   {
     "id": 223,
     "name": "UseAmbientLevel",
     "nameToken": "",
     "displayName": "",
-    "icon": "UseAmbientLevel.png",
-    "helper": true
+    "tier": null,
+    "helper": true,
+    "icon": "UseAmbientLevel.png"
   },
   {
     "id": 224,
     "name": "UtilitySkillMagazine",
     "nameToken": "ITEM_UTILITYSKILLMAGAZINE_NAME",
     "displayName": "Hardlight Afterburner",
-    "icon": "UtilitySkillMagazine.png",
-    "helper": false
+    "tier": "Tier3Def",
+    "helper": false,
+    "icon": "UtilitySkillMagazine.png"
   },
   {
     "id": 225,
     "name": "VoidMegaCrabItem",
     "nameToken": "ITEM_VOIDMEGACRABITEM_NAME",
     "displayName": "Newly Hatched Zoea",
-    "icon": "VoidMegaCrabItem.png",
-    "helper": false
+    "tier": "VoidBossDef",
+    "helper": false,
+    "icon": "VoidMegaCrabItem.png"
   },
   {
     "id": 226,
     "name": "VoidmanPassiveItem",
     "nameToken": "",
     "displayName": "",
-    "icon": "VoidmanPassiveItem.png",
-    "helper": true
+    "tier": null,
+    "helper": true,
+    "icon": "VoidmanPassiveItem.png"
   },
   {
     "id": 227,
     "name": "WarCryOnCombat",
     "nameToken": "ITEM_WARCRYONCOMBAT_NAME",
     "displayName": "ITEM_WARCRYONCOMBAT_NAME",
-    "icon": "WarCryOnCombat.png",
-    "helper": true
+    "tier": null,
+    "helper": true,
+    "icon": "WarCryOnCombat.png"
   },
   {
     "id": 228,
     "name": "WarCryOnMultiKill",
     "nameToken": "ITEM_WARCRYONMULTIKILL_NAME",
     "displayName": "Berzerker's Pauldron",
-    "icon": "WarCryOnMultiKill.png",
-    "helper": false
+    "tier": "Tier2Def",
+    "helper": false,
+    "icon": "WarCryOnMultiKill.png"
   },
   {
     "id": 229,
     "name": "WardOnLevel",
     "nameToken": "ITEM_WARDONLEVEL_NAME",
     "displayName": "Warbanner",
-    "icon": "WardOnLevel.png",
-    "helper": false
+    "tier": "Tier1Def",
+    "helper": false,
+    "icon": "WardOnLevel.png"
   },
   {
     "id": 230,
     "name": "WyrmOnHit",
     "nameToken": "ITEM_WYRMONHIT_NAME",
     "displayName": "Sautéed Worms",
-    "icon": "WyrmOnHit.png",
-    "helper": false
+    "tier": "FoodTier",
+    "helper": false,
+    "icon": "WyrmOnHit.png"
   }
 ]

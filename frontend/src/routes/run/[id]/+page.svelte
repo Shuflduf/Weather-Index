@@ -8,7 +8,9 @@
     formatSeconds,
     ITEMS,
     SCORING_TABLE,
+    sortItems,
   } from "$lib/RoR2";
+  import UserDisplay from "$lib/UserDisplay.svelte";
   import { onMount } from "svelte";
 
   let runPromise: Promise<any> = $state(new Promise(() => {}));
@@ -153,7 +155,7 @@
         </div>
         <h1 class="text-2xl text-center">Items Collected</h1>
         <ul class="flex flex-row flex-wrap mt-4">
-          {#each Object.entries(run.items) as [itemId, itemCount]}
+          {#each sortItems(run.items) as [itemId, itemCount]}
             {@const item = ITEMS[Number(itemId)]}
             {#if !item.helper}
               <li class="relative">
@@ -174,6 +176,32 @@
             {/if}
           {/each}
         </ul>
+        <h1 class="text-2xl text-center mt-4">Metadata</h1>
+        <div class="flex flex-row justify-between items-center p-2">
+          <span>Player:</span>
+          <span>
+            <UserDisplay
+              class="h-12"
+              user={{
+                displayName: null,
+                image: run.user_image,
+                username: run.user_username,
+              }}
+            />
+          </span>
+        </div>
+        <div class="flex flex-row justify-between items-center p-2">
+          <span>Started:</span>
+          <span class="text-yellow-200">
+            {new Date(run.start_time).toLocaleString()}
+          </span>
+        </div>
+        <div class="flex flex-row justify-between items-center p-2">
+          <span>Uploaded:</span>
+          <span class="text-yellow-200">
+            {new Date(run.upload_time).toLocaleString()}
+          </span>
+        </div>
       </div>
     </div>
   {:catch err}

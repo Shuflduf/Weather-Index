@@ -181,6 +181,15 @@ namespace WeatherIndex
                     DataDumper.DumpDifficulties
                 )
             );
+            ModSettingsManager.AddOption(
+                new GenericButtonOption(
+                    "Dump Item Tiers",
+                    "Debug",
+                    "🐸🚀",
+                    "Dump",
+                    DataDumper.DumpItemTiers
+                )
+            );
         }
 
         private async void PostRunReport(string json)

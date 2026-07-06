@@ -33,8 +33,8 @@
     Weather Index
   </a>
   {#if user}
-    <div class="h-full border-l px-4">
-      <UserDisplay {user} />
+    <div class="h-full border-l px-4 flex justify-center">
+      <UserDisplay class="h-16" {user} />
     </div>
   {:else}
     <button
