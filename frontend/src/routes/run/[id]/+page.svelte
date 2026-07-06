@@ -35,7 +35,9 @@
         alt={ENDINGS[run.ending].name}
         title={ENDINGS[run.ending].name}
       />
-      <h1 class="inline text-4xl align-middle tracking-wide italic font-medium">
+      <h1
+        class="inline text-4xl align-middle tracking-wide font-mono italic font-medium"
+      >
         {ENDINGS[run.ending].endingMessage}
       </h1>
     </div>
@@ -167,7 +169,7 @@
                 />
                 {#if itemCount != 1}
                   <p
-                    class="text-xl font-bold absolute top-0 right-0 text-shadow-lg/50"
+                    class="text-xl font-bold absolute top-0 right-0 text-shadow-lg/50 font-mono"
                   >
                     x{itemCount}
                   </p>

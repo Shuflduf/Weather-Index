@@ -17,6 +17,7 @@ pub struct Model {
     pub ending: String,
     pub difficulty: String,
     pub time_alive_seconds: i64,
+    pub artifacts: Vec<String>,
     pub stages_completed: i16,
     pub score: i64,
     // pub run_time_seconds: u32,

@@ -44,12 +44,15 @@ namespace WeatherIndex
                 var player = report.playerInfos?[0];
                 var stats = player!.statSheet;
                 var itemCounts = getItemCounts(player.itemStacks);
-                foreach (var statDef in StatDef.allStatDefs)
+                List<string> artifacts = new List<string>();
+                foreach (var def in RoR2.ArtifactCatalog.artifactDefs)
                 {
-                    var val = statDef.pointValue;
-                    if (val != 0)
-                        Log.Info($"{statDef.name} = {val}");
+                    if (report.ruleBook.GenerateArtifactMask().HasArtifact(def.artifactIndex))
+                    {
+                        artifacts.Add(def.cachedName);
+                    }
                 }
+
                 var info = new
                 {
                     // run info
@@ -60,6 +63,7 @@ namespace WeatherIndex
                         .GetDifficultyDef(report.ruleBook.FindDifficulty())
                         .nameToken,
                     timeAliveSeconds = (ulong)stats.GetStatValueAsDouble(StatDef.totalTimeAlive),
+                    artifacts = artifacts,
                     stagesCompleted = stats.GetStatValueULong(StatDef.totalStagesCompleted),
 
                     // items
@@ -188,6 +192,15 @@ namespace WeatherIndex
                     "🐸🚀",
                     "Dump",
                     DataDumper.DumpItemTiers
+                )
+            );
+            ModSettingsManager.AddOption(
+                new GenericButtonOption(
+                    "Dump Artifacts",
+                    "Debug",
+                    "artifacts",
+                    "Dump",
+                    DataDumper.DumpArtifacts
                 )
             );
         }

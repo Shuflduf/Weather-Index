@@ -199,6 +199,42 @@ namespace WeatherIndex
             File.WriteAllText(Path.Combine(outputDir, "tiers.json"), json);
         }
 
+        public static void DumpArtifacts()
+        {
+            var outputDir = Path.Combine(pluginDir, "artifacts");
+            Directory.CreateDirectory(outputDir);
+            var artifacts = new List<object>();
+            foreach (var def in RoR2.ArtifactCatalog.artifactDefs)
+            {
+                if (def == null)
+                    continue;
+
+                var sprite = def.smallIconSelectedSprite;
+                if (sprite == null)
+                    continue;
+
+                string? filename = null;
+                Texture2D tex = sprite.texture;
+                if (tex != null)
+                {
+                    filename = $"{def.cachedName}.png";
+                    writeTexture(Path.Combine(outputDir, filename), tex);
+                }
+
+                artifacts.Add(
+                    new
+                    {
+                        name = def.cachedName,
+                        nameToken = def.nameToken,
+                        displayName = RoR2.Language.GetString(def.nameToken),
+                        icon = filename,
+                    }
+                );
+            }
+            var json = JsonConvert.SerializeObject(artifacts);
+            File.WriteAllText(Path.Combine(outputDir, "artifacts.json"), json);
+        }
+
         private static void writeEndingTexture(string path, Texture2D tex, Color color)
         {
             var readable = new Texture2D(tex.width, tex.height, TextureFormat.RGBA32, false);

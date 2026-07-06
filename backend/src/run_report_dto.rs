@@ -17,6 +17,7 @@ pub struct RunReportDTO {
     pub start_time: String,
     pub difficulty: String,
     pub time_alive_seconds: i64,
+    pub artifacts: Vec<String>,
     pub stages_completed: i16,
 
     // items
@@ -71,6 +72,7 @@ impl TryFrom<RunReportDTO> for run_report::ActiveModel {
                 .naive_utc()),
             difficulty: Set(dto.difficulty),
             time_alive_seconds: Set(dto.time_alive_seconds),
+            artifacts: Set(dto.artifacts),
             stages_completed: Set(dto.stages_completed),
             score: Set(score),
             items: Set(dto.items),
