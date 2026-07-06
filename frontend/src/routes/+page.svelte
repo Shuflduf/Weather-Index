@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { onMount, tick } from "svelte";
   import { BODIES, DIFFICULTIES, ENDINGS, type Item } from "$lib/RoR2";
   import UserDisplay from "$lib/UserDisplay.svelte";
   import TableBlock from "./TableBlock.svelte";
@@ -83,7 +83,7 @@
     window.addEventListener("pointerup", endDrag);
   }
 
-  function onDrag(e: PointerEvent) {
+  async function onDrag(e: PointerEvent) {
     if (!drag.dragging || !drag.elem) return;
 
     drag.elem.style.transform = "none";
@@ -103,6 +103,8 @@
     const curIdx = headers.findIndex((h) => h.id == drag.id);
     if (curIdx == -1) return;
 
+    let swapped = false;
+
     if (curIdx > 0) {
       const leftRect = headers[curIdx - 1].getBoundingClientRect();
       const leftCenter = leftRect.left + leftRect.width / 2.0;
@@ -112,7 +114,7 @@
         properties[drag.id].order = properties[headers[curIdx - 1].id].order;
         properties[headers[curIdx - 1].id].order = temp;
         drag.elem.style.transform = `translateX(${dx}px)`;
-        return;
+        swapped = true;
       }
     }
     if (curIdx < headers.length - 1) {
@@ -123,18 +125,16 @@
         const temp = properties[drag.id].order;
         properties[drag.id].order = properties[headers[curIdx + 1].id].order;
         properties[headers[curIdx + 1].id].order = temp;
-        return;
+        swapped = true;
       }
     }
 
-    // for (const header of headers) {
-    //   const el = header as HTMLElement;
-    //   const rect = el.getBoundingClientRect();
-    //   if (e.clientX > rect.left && e.clientX < rect.right && el.id != drag.id) {
-
-    //     break;
-    //   }
-    // }
+    if (swapped) {
+      await tick();
+      drag.elem.style.transform = "none";
+      const newLeft = drag.elem.getBoundingClientRect().left;
+      drag.elem.style.transform = `translateX(${e.clientX - drag.startX - newLeft}px)`;
+    }
   }
 
   function endDrag(_e: PointerEvent) {
