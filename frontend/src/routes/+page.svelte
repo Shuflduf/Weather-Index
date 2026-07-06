@@ -56,17 +56,51 @@
     Object.values(properties).filter((prop) => prop.enabled).length,
   );
 
-  let drag: { dragging: boolean; elem: HTMLElement | null; id: string } =
-    $state({
-      dragging: false,
-      elem: null,
-      id: "",
-    });
+  let drag: {
+    dragging: boolean;
+    elem: HTMLElement | null;
+    id: string;
+    startX: number;
+  } = $state({
+    dragging: false,
+    elem: null,
+    id: "",
+    startX: 0,
+  });
 
   let runPromise: Promise<any[]> = $state(new Promise(() => {}));
   onMount(async () => {
     runPromise = fetch("/api/runs").then((r) => r.json());
   });
+
+  function startDrag(e: PointerEvent, id: string) {
+    drag.dragging = true;
+    drag.id = id;
+    drag.elem = document.getElementById(id);
+    drag.startX = e.clientX;
+
+    window.addEventListener("pointermove", onDrag);
+    window.addEventListener("pointerup", endDrag);
+  }
+
+  function onDrag(e: PointerEvent) {
+    if (!drag.dragging || !drag.elem) return;
+
+    const dx = e.clientX - drag.startX;
+    drag.elem.style.transform = `translateX(${dx}px)`;
+    drag.elem.style.zIndex = "10";
+  }
+
+  function endDrag(_e: PointerEvent) {
+    if (!drag.dragging || !drag.elem) return;
+
+    drag.elem.style.transform = "";
+    drag.elem.style.zIndex = "";
+    drag.dragging = false;
+
+    window.removeEventListener("pointermove", onDrag);
+    window.removeEventListener("pointerup", endDrag);
+  }
 </script>
 
 <div
@@ -110,12 +144,15 @@
     >
       {#snippet propHeader(name: string, order: number)}
         <div
-          class="items-center justify-center h-12 hover:bg-hover transition cursor-grab flex"
+          role="button"
+          tabindex="-1"
+          onpointerdown={(e) => startDrag(e, name)}
+          onkeydown={null}
+          id={name}
+          class="items-center justify-center h-12 hover:bg-hover transition-colors cursor-grab flex"
+          style="order: {order}; grid-row: 1;"
         >
-          <h2
-            class="text-xl tracking-tight text-center font-bold"
-            style="order: {order};"
-          >
+          <h2 class="text-xl tracking-tight text-center font-bold">
             {name}
           </h2>
         </div>
