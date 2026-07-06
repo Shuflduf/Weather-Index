@@ -130,7 +130,35 @@
     }
 
     if (swapped) {
+      const allCells = [
+        ...document.querySelectorAll("[data-col-header], [data-col-cell]"),
+      ] as HTMLElement[];
+      const oldPositions = new Map<HTMLElement, DOMRect>();
+      for (const cell of allCells) {
+        if (cell != drag.elem) {
+          oldPositions.set(cell, cell.getBoundingClientRect());
+        }
+      }
+
       await tick();
+
+      for (const cell of allCells) {
+        if (cell == drag.elem) continue;
+        const oldRect = oldPositions.get(cell);
+        if (!oldRect) continue;
+        const newRect = cell.getBoundingClientRect();
+        const dx = oldRect.left - newRect.left;
+        if (Math.abs(dx) < 1.0) continue;
+
+        cell.style.transform = `translateX(${dx}px)`;
+        cell.style.transition = "none";
+
+        requestAnimationFrame(() => {
+          cell.style.transform = "";
+          cell.style.transition = "";
+        });
+      }
+
       drag.elem.style.transform = "none";
       const newLeft = drag.elem.getBoundingClientRect().left;
       drag.elem.style.transform = `translateX(${e.clientX - drag.startX - newLeft}px)`;

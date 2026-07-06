@@ -8,8 +8,9 @@
 </script>
 
 <div
-  class="border p-4 bg-bg-secondary flex items-center"
+  class="border p-4 bg-bg-secondary flex items-center transition-transform"
   style="order: {order}; grid-row: {idx + 2}; {styleName}"
+  data-col-cell
 >
   {@render children?.()}
 </div>
