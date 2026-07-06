@@ -10,77 +10,114 @@
   } from "$lib/RoR2";
   import UserDisplay from "$lib/UserDisplay.svelte";
 
-  let runs: any[] = $state([]);
+  let visibleProperties: Record<string, boolean> = $state({
+    id: true,
+    survivor: true,
+    player: true,
+    ending: true,
+    difficulty: true,
+    itemCount: true,
+    score: true,
+    uploadTime: false,
+    startTime: false,
+  });
+
+  let runPromise: Promise<any[]> = $state(new Promise(() => {}));
   onMount(async () => {
-    runs = await (await fetch("/api/runs")).json();
-    console.log(runs);
+    runPromise = fetch("/api/runs").then((r) => r.json());
   });
 </script>
 
+<div
+  id="visible-properties"
+  popover
+  class="fixed"
+  style="position-anchor: --visible-properties; position-area: bottom span-right;"
+>
+  lfksdfklfj djdsifdugfdgidfuoigdfu gudfoig uidofgu odufiog dfugdf ug
+</div>
+
 <div class="w-full p-8">
-  <table class="text-primary w-full">
-    <thead class="text-xl tracking-tight text-center font-bold h-12">
-      <tr>
-        <td>ID</td>
-        <td>Player</td>
-        <td>Survivor</td>
-        <td>Ending</td>
-        <td>Difficulty</td>
-        <td>Items</td>
-        <td>Score</td>
-      </tr>
-    </thead>
-    <tbody>
-      {#each runs as run}
-        <tr class="border bg-bg-secondary">
-          <td class="border p-4"><a href={`/run/${run.id}`}>{run.id}</a></td>
-          <td class="border p-4">
-            <UserDisplay
-              class="h-12"
-              user={{
-                username: run.user_username,
-                image: run.user_image,
-                displayName: null,
-              }}
-            />
-          </td>
-          <td class="border p-4">
-            <img
-              src={`/bodies/${BODIES[run.survivor].icon}`}
-              alt={BODIES[run.survivor].displayName}
-              class="h-12 inline rounded-full mr-2"
-            />
-            <span class="text-lg">
-              {BODIES[run.survivor].displayName}
-            </span>
-          </td>
-          <td
-            class="border p-4"
-            style={`background-color: ${ENDINGS[run.ending].colorBg};`}
-          >
-            <img
-              src={`/endings/${ENDINGS[run.ending].icon}`}
-              alt={run.ending}
-              class="h-12 inline mr-2"
-            />
-            <span class="text-shadow-lg text-lg">
-              {ENDINGS[run.ending].displayName}
-            </span>
-          </td>
-          <td class="border p-4">
-            <img
-              src={`/difficulties/${DIFFICULTIES[run.difficulty].icon}`}
-              alt={run.difficulty}
-              class="h-12 inline mr-2"
-            />
-            <span class="text-lg">
-              {DIFFICULTIES[run.difficulty].displayName}
-            </span>
-          </td>
-          <td class="border p-4">{countRealItems(run.items)}</td>
-          <td class="border p-4">{run.score}</td>
+  {#await runPromise}
+    <span class="text-primary">loading</span>
+  {:then runs}
+    <button
+      popovertarget="visible-properties"
+      class="text-primary"
+      style="anchor-name: --visible-properties;"
+    >
+      Visible Properties
+    </button>
+    <table class="text-primary w-full">
+      <thead class="text-xl tracking-tight text-center font-bold h-12">
+        <tr>
+          {#if visibleProperties.id}
+            <td>ID</td>
+          {/if}
+          <td>Player</td>
+          <td>Survivor</td>
+          <td>Ending</td>
+          <td>Difficulty</td>
+          <td>Items</td>
+          <td>Score</td>
         </tr>
-      {/each}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        {#each runs as run}
+          <tr class="border bg-bg-secondary">
+            {#if visibleProperties.id}
+              <td class="border p-4">
+                <a href={`/run/${run.id}`}>{run.id}</a>
+              </td>
+            {/if}
+            <td class="border p-4">
+              <UserDisplay
+                class="h-12"
+                user={{
+                  username: run.user_username,
+                  image: run.user_image,
+                  displayName: null,
+                }}
+              />
+            </td>
+            <td class="border p-4">
+              <img
+                src={`/bodies/${BODIES[run.survivor].icon}`}
+                alt={BODIES[run.survivor].displayName}
+                class="h-12 inline mr-2"
+              />
+              <span class="text-lg">
+                {BODIES[run.survivor].displayName}
+              </span>
+            </td>
+            <td
+              class="border p-4"
+              style={`background-color: ${ENDINGS[run.ending].colorBg};`}
+            >
+              <img
+                src={`/endings/${ENDINGS[run.ending].icon}`}
+                alt={run.ending}
+                class="h-12 inline mr-2"
+              />
+              <span class="text-shadow-lg text-lg">
+                {ENDINGS[run.ending].displayName}
+              </span>
+            </td>
+            <td class="border p-4">
+              <img
+                src={`/difficulties/${DIFFICULTIES[run.difficulty].icon}`}
+                alt={run.difficulty}
+                class="h-12 inline mr-2"
+              />
+              <span class="text-lg">
+                {DIFFICULTIES[run.difficulty].displayName}
+              </span>
+            </td>
+            <td class="border p-4">{countRealItems(run.items)}</td>
+            <td class="border p-4">{run.score}</td>
+          </tr>
+        {/each}
+      </tbody>
+    </table>
+  {/await}
 </div>
