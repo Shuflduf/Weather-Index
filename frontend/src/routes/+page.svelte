@@ -4,12 +4,7 @@
   import UserDisplay from "$lib/UserDisplay.svelte";
   import TableBlock from "./TableBlock.svelte";
 
-  type PropertyData = {
-    enabled: boolean;
-    order: number;
-  };
-
-  let properties: Record<string, PropertyData> = $state({
+  let properties: Record<string, { enabled: boolean; order: number }> = $state({
     id: { enabled: true, order: 0 },
     player: { enabled: true, order: 1 },
     uploadTime: { enabled: false, order: 0 },
@@ -60,6 +55,13 @@
   let columnCount = $derived(
     Object.values(properties).filter((prop) => prop.enabled).length,
   );
+
+  let drag: { dragging: boolean; elem: HTMLElement | null; id: string } =
+    $state({
+      dragging: false,
+      elem: null,
+      id: "",
+    });
 
   let runPromise: Promise<any[]> = $state(new Promise(() => {}));
   onMount(async () => {
