@@ -77,7 +77,7 @@
     drag.dragging = true;
     drag.id = id;
     drag.elem = document.getElementById(id);
-    drag.startX = e.clientX;
+    drag.startX = e.clientX - drag.elem!.getBoundingClientRect().left;
 
     window.addEventListener("pointermove", onDrag);
     window.addEventListener("pointerup", endDrag);
@@ -86,9 +86,30 @@
   function onDrag(e: PointerEvent) {
     if (!drag.dragging || !drag.elem) return;
 
-    const dx = e.clientX - drag.startX;
+    drag.elem.style.transform = "none";
+    const dx = e.clientX - drag.startX - drag.elem.getBoundingClientRect().left;
     drag.elem.style.transform = `translateX(${dx}px)`;
     drag.elem.style.zIndex = "10";
+    console.log(drag);
+
+    const headers = document.querySelectorAll("[data-col-header]");
+    for (const header of headers) {
+      const el = header as HTMLElement;
+      const rect = el.getBoundingClientRect();
+      if (e.clientX > rect.left && e.clientX < rect.right && el.id != drag.id) {
+        const prevLeft = drag.elem.getBoundingClientRect().left;
+
+        const temp = properties[drag.id].order;
+        properties[drag.id].order = properties[el.id].order;
+        properties[el.id].order = temp;
+
+        // requestAnimationFrame(() => {
+        //   const newLeft = drag.elem!.getBoundingClientRect().left;
+        //   drag.startX += newLeft - prevLeft;
+        // });
+        break;
+      }
+    }
   }
 
   function endDrag(_e: PointerEvent) {
@@ -142,15 +163,16 @@
       class="grid"
       style="grid-template-columns: repeat({columnCount}, auto);"
     >
-      {#snippet propHeader(name: string, order: number)}
+      {#snippet propHeader(name: string, id: string)}
         <div
           role="button"
           tabindex="-1"
-          onpointerdown={(e) => startDrag(e, name)}
+          onpointerdown={(e) => startDrag(e, id)}
           onkeydown={null}
-          id={name}
+          {id}
+          data-col-header
           class="items-center justify-center h-12 hover:bg-hover transition-colors cursor-grab flex"
-          style="order: {order}; grid-row: 1;"
+          style="order: {properties[id].order}; grid-row: 1;"
         >
           <h2 class="text-xl tracking-tight text-center font-bold">
             {name}
@@ -159,7 +181,7 @@
       {/snippet}
 
       {#if properties.id.enabled}
-        {@render propHeader("ID", properties.id.order)}
+        {@render propHeader("ID", "id")}
         {#each runs as run, idx}
           <TableBlock order={properties.id.order} {idx}>
             <a href={`/run/${run.id}`}>{run.id}</a>
@@ -168,7 +190,7 @@
       {/if}
 
       {#if properties.player.enabled}
-        {@render propHeader("Player", properties.player.order)}
+        {@render propHeader("Player", "player")}
         {#each runs as run, idx}
           <TableBlock order={properties.player.order} {idx}>
             <UserDisplay
@@ -184,7 +206,7 @@
       {/if}
 
       {#if properties.survivor.enabled}
-        {@render propHeader("Survivor", properties.survivor.order)}
+        {@render propHeader("Survivor", "survivor")}
         {#each runs as run, idx}
           <TableBlock order={properties.survivor.order} {idx}>
             <img
@@ -200,7 +222,7 @@
       {/if}
 
       {#if properties.ending.enabled}
-        {@render propHeader("Ending", 1)}
+        {@render propHeader("Ending", "ending")}
         {#each runs as run, idx}
           <TableBlock
             order={properties.ending.order}
@@ -220,7 +242,7 @@
       {/if}
 
       {#if properties.difficulty.enabled}
-        {@render propHeader("Difficulty", 1)}
+        {@render propHeader("Difficulty", "difficulty")}
         {#each runs as run, idx}
           <TableBlock order={properties.difficulty.order} {idx}>
             <img
@@ -236,7 +258,7 @@
       {/if}
 
       {#if properties.itemsCollected.enabled}
-        {@render propHeader("Items", 1)}
+        {@render propHeader("Items", "itemsCollected")}
         {#each runs as run, idx}
           <TableBlock order={properties.itemsCollected.order} {idx}>
             {run.items_collected}
@@ -244,7 +266,7 @@
         {/each}
       {/if}
       {#if properties.score.enabled}
-        {@render propHeader("Score", 1)}
+        {@render propHeader("Score", "score")}
         {#each runs as run, idx}
           <TableBlock order={properties.score.order} {idx}>
             {run.score}
