@@ -1,6 +1,7 @@
 <script lang="ts">
   import { page } from "$app/state";
   import {
+    ARTIFACTS,
     BODIES,
     DIFFICULTIES,
     ENDINGS,
@@ -55,6 +56,20 @@
             class="h-12 inline mr-2"
           />
         </div>
+        {#if run.artifacts.length > 0}
+          <div class="flex flex-row justify-between items-center p-2">
+            <span class="text-lg">Artifacts:</span>
+            <div class="flex flex-col flex-wrap-reverse max-h-16 min-w-0">
+              {#each run.artifacts as artifact}
+                <img
+                  src={`/artifacts/${ARTIFACTS[artifact].icon}`}
+                  alt={run.difficulty}
+                  class="h-8 inline mr-2"
+                />
+              {/each}
+            </div>
+          </div>
+        {/if}
         {#snippet score(label: string, value: string, points: string)}
           <div class="flex flex-row justify-between items-center p-2">
             <span>

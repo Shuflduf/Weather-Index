@@ -1,3 +1,4 @@
+import artifacts from "$lib/artifacts.json";
 import bodies from "$lib/bodies.json";
 import difficulties from "$lib/difficulties.json";
 import endings from "$lib/endings.json";
@@ -109,6 +110,12 @@ export type Tier = {
   name: string;
   sort: number;
 };
+export type Artifact = {
+  name: string;
+  nameToken: string;
+  displayName: string;
+  icon: string;
+};
 
 export const ITEMS = Object.fromEntries(items.map((item: Item) => [item.id, item]));
 export const BODIES = Object.fromEntries(bodies.map((body: Body) => [body.name, body]));
@@ -118,6 +125,9 @@ export const DIFFICULTIES = Object.fromEntries(
 );
 export const SCORING_TABLE = scoring_table as ScoringTable;
 export const TIERS = Object.fromEntries(tiers.map((tier: Tier) => [tier.name, tier]));
+export const ARTIFACTS = Object.fromEntries(
+  artifacts.map((artifact: Artifact) => [artifact.name, artifact]),
+);
 
 export function countRealItems(items: Record<string, number>): number {
   return Object.entries(items).filter(([id, _]) => !ITEMS[id].helper).reduce(
