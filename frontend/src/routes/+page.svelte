@@ -357,8 +357,6 @@
     const RIGHT_MOUSE_BUTTON = 2;
     if (e.button != RIGHT_MOUSE_BUTTON) return;
 
-    contextMenu.pos = [e.clientX, e.clientY];
-
     if (id == contextMenu.id) {
       contextMenu.popup.togglePopover();
     } else {
@@ -366,6 +364,7 @@
     }
 
     contextMenu.id = id;
+    contextMenu.pos = [e.clientX, e.clientY];
   }
 </script>
 
@@ -378,7 +377,7 @@
   <div class="flex flex-row gap-8">
     {#each Object.entries(propsByCategory) as [category, props]}
       <div class="w-40">
-        <h1 class="text-xl font-bold tracking-tighter">{category}</h1>
+        <h2 class="text-xl font-bold tracking-tighter">{category}</h2>
         {#each props as prop}
           <div class="flex flex-row justify-between">
             <span>{prop.name}</span>
@@ -395,11 +394,22 @@
   tabindex="-1"
   id="context-menu"
   popover
-  class="fixed bg-bg-secondary border text-primary p-2"
+  class="fixed bg-bg-secondary border text-primary p-2 w-32"
   style="left: {contextMenu.pos[0]}px; top: {contextMenu.pos[1]}px;"
   oncontextmenu={(e) => e.preventDefault()}
 >
-  sdjfklsdjkfls
+  {#if contextMenu.id}
+    <h2 class="text-xl font-bold tracking-tighter">
+      {properties[contextMenu.id].name}
+    </h2>
+    <div class="flex flex-row justify-between">
+      <span>Show</span>
+      <input
+        type="checkbox"
+        bind:checked={properties[contextMenu.id].enabled}
+      />
+    </div>
+  {/if}
 </div>
 
 <div class="w-full p-8 text-primary">
