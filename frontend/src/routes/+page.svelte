@@ -5,71 +5,187 @@
   import TableBlock from "./TableBlock.svelte";
   import ArtifactsDisplay from "$lib/ArtifactsDisplay.svelte";
 
-  let properties: Record<
-    string,
-    { enabled: boolean; order: number; name: string }
-  > = $state({
-    id: { enabled: true, order: 0, name: "ID" },
-    player: { enabled: true, order: 1, name: "Player" },
-    uploadTime: { enabled: false, order: 8, name: "Upload Time" },
+  type Property = {
+    enabled: boolean;
+    order: number;
+    name: string;
+    category: string;
+  };
+
+  let properties: Record<string, Property> = $state({
+    id: { enabled: true, order: 0, name: "ID", category: "Meta" },
+    player: { enabled: true, order: 1, name: "Player", category: "Meta" },
+    uploadTime: {
+      enabled: false,
+      order: 8,
+      name: "Upload Time",
+      category: "Meta",
+    },
 
     // run info
-    survivor: { enabled: true, order: 2, name: "Survivor" },
-    startTime: { enabled: false, order: 7, name: "Start Time" },
-    ending: { enabled: true, order: 3, name: "Ending" },
-    difficulty: { enabled: true, order: 4, name: "Difficulty" },
-    timeAlive: { enabled: false, order: 9, name: "Time Alive" },
-    artifacts: { enabled: false, order: 10, name: "Artifacts" },
-    stagesCompleted: { enabled: false, order: 0, name: "Stages Completed" },
-    score: { enabled: true, order: 6, name: "Score" },
+    survivor: { enabled: true, order: 2, name: "Survivor", category: "Run" },
+    startTime: {
+      enabled: false,
+      order: 7,
+      name: "Start Time",
+      category: "Run",
+    },
+    ending: { enabled: true, order: 3, name: "Ending", category: "Run" },
+    difficulty: {
+      enabled: true,
+      order: 4,
+      name: "Difficulty",
+      category: "Run",
+    },
+    timeAlive: {
+      enabled: false,
+      order: 9,
+      name: "Time Alive",
+      category: "Run",
+    },
+    artifacts: {
+      enabled: false,
+      order: 10,
+      name: "Artifacts",
+      category: "Run",
+    },
+    stagesCompleted: {
+      enabled: false,
+      order: 11,
+      name: "Stages Completed",
+      category: "Run",
+    },
+    score: { enabled: true, order: 6, name: "Score", category: "Run" },
 
     // items
-    itemsCollected: { enabled: true, order: 5, name: "Items" },
+    itemsCollected: {
+      enabled: true,
+      order: 5,
+      name: "Items",
+      category: "Pickups",
+    },
 
     // drones
-    dronesPurchased: { enabled: false, order: 0, name: "Drones" },
-    turretsPurchased: { enabled: false, order: 0, name: "Turrets" },
+    dronesPurchased: {
+      enabled: false,
+      order: 12,
+      name: "Drones",
+      category: "Pickups",
+    },
+    turretsPurchased: {
+      enabled: false,
+      order: 13,
+      name: "Turrets",
+      category: "Pickups",
+    },
 
     // combat
-    kills: { enabled: false, order: 0, name: "Kills" },
-    eliteKills: { enabled: false, order: 0, name: "Elite Kills" },
-    minionKills: { enabled: false, order: 0, name: "Minion Kills" },
-    deaths: { enabled: false, order: 0, name: "Deaths" },
+    kills: { enabled: false, order: 14, name: "Kills", category: "Combat" },
+    eliteKills: {
+      enabled: false,
+      order: 15,
+      name: "Elite Kills",
+      category: "Combat",
+    },
+    minionKills: {
+      enabled: false,
+      order: 16,
+      name: "Minion Kills",
+      category: "Combat",
+    },
+    deaths: { enabled: false, order: 17, name: "Deaths", category: "Combat" },
 
     // damage
-    damageDealt: { enabled: false, order: 0, name: "Damage Dealt" },
+    damageDealt: {
+      enabled: false,
+      order: 18,
+      name: "Damage Dealt",
+      category: "Combat",
+    },
     minionDamageDealt: {
       enabled: false,
-      order: 0,
+      order: 19,
       name: "Minion Damage Dealt",
+      category: "Combat",
     },
-    damageTaken: { enabled: false, order: 0, name: "Damage Taken" },
+    damageTaken: {
+      enabled: false,
+      order: 20,
+      name: "Damage Taken",
+      category: "Combat",
+    },
     highestDamageDealt: {
       enabled: false,
-      order: 0,
+      order: 21,
       name: "Highest Damage Dealt",
+      category: "Combat",
     },
 
     // healing
-    healingRecieved: { enabled: false, order: 0, name: "Healing Recieved" },
+    healingRecieved: {
+      enabled: false,
+      order: 22,
+      name: "Healing Recieved",
+      category: "Combat",
+    },
 
     // progression
-    highestLevel: { enabled: false, order: 0, name: "Highest Level" },
-    goldCollected: { enabled: false, order: 0, name: "Gold Collected" },
-    goldSpent: { enabled: false, order: 0, name: "Gold Spent" },
-    lunarCoinsSpent: { enabled: false, order: 0, name: "Lunar Coins Spent" },
-    purchases: { enabled: false, order: 0, name: "Purchases" },
-    bloodPurchases: { enabled: false, order: 0, name: "Blood Purchases" },
+    highestLevel: {
+      enabled: false,
+      order: 23,
+      name: "Highest Level",
+      category: "Progression",
+    },
+    goldCollected: {
+      enabled: false,
+      order: 24,
+      name: "Gold Collected",
+      category: "Progression",
+    },
+    goldSpent: {
+      enabled: false,
+      order: 25,
+      name: "Gold Spent",
+      category: "Progression",
+    },
+    lunarCoinsSpent: {
+      enabled: false,
+      order: 26,
+      name: "Lunar Coins Spent",
+      category: "Progression",
+    },
+    purchases: {
+      enabled: false,
+      order: 27,
+      name: "Purchases",
+      category: "Progression",
+    },
+    bloodPurchases: {
+      enabled: false,
+      order: 28,
+      name: "Blood Purchases",
+      category: "Progression",
+    },
 
     // movement
     distanceTraveledMetres: {
       enabled: false,
-      order: 0,
+      order: 29,
       name: "Distance Traveled",
+      category: "Movement",
     },
   });
   let columnCount = $derived(
     Object.values(properties).filter((prop) => prop.enabled).length,
+  );
+  let propsByCategory = $derived(
+    Object.values(properties).reduce(
+      (acc, prop) => {
+        (acc[prop.category] ??= []).push(prop);
+        return acc;
+      },
+      {} as Record<string, Property[]>,
+    ),
   );
 
   let drag: {
@@ -87,6 +203,7 @@
   let runPromise: Promise<any[]> = $state(new Promise(() => {}));
   onMount(async () => {
     runPromise = fetch("/api/runs").then((r) => r.json());
+    console.log(propsByCategory);
   });
 
   function startDrag(e: PointerEvent, id: string) {
@@ -195,14 +312,19 @@
 <div
   id="visible-properties"
   popover
-  class="fixed bg-bg-secondary border text-primary p-2 w-64"
+  class="fixed bg-bg-secondary border text-primary p-2"
   style="position-anchor: --visible-properties; position-area: bottom span-right;"
 >
-  <div>
-    {#each Object.values(properties) as prop}
-      <div class="flex flex-row justify-between">
-        <span>{prop.name}</span>
-        <input type="checkbox" bind:checked={prop.enabled} />
+  <div class="flex flex-row gap-8">
+    {#each Object.entries(propsByCategory) as [category, props]}
+      <div class="w-40">
+        <h1 class="text-xl font-bold tracking-tighter">{category}</h1>
+        {#each props as prop}
+          <div class="flex flex-row justify-between">
+            <span class="">{prop.name}</span>
+            <input type="checkbox" bind:checked={prop.enabled} />
+          </div>
+        {/each}
       </div>
     {/each}
   </div>
@@ -214,7 +336,7 @@
   {:then runs}
     <button
       popovertarget="visible-properties"
-      class=" cursor-pointer bg-default hover:bg-hover active:bg-active p-2 font-mono mb-4"
+      class=" cursor-pointer bg-default hover:bg-hover active:bg-active p-2 font-mono mb-4 border"
       style="anchor-name: --visible-properties;"
     >
       Visible Properties
