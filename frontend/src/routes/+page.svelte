@@ -12,6 +12,7 @@
   import TableBlock from "./TableBlock.svelte";
   import ArtifactsDisplay from "$lib/ArtifactsDisplay.svelte";
 
+  const LEFT_MOUSE_BUTTON = 0;
   const STORAGE_KEY = "table-properties";
 
   type Property = {
@@ -241,6 +242,7 @@
   });
 
   function startDrag(e: PointerEvent, id: string) {
+    if (e.button != LEFT_MOUSE_BUTTON) return;
     drag.dragging = true;
     drag.id = id;
     drag.elem = document.getElementById(id);
@@ -341,6 +343,30 @@
     window.removeEventListener("pointermove", onDrag);
     window.removeEventListener("pointerup", endDrag);
   }
+
+  let contextMenu: {
+    popup?: HTMLElement;
+    id: string;
+    pos: [number, number];
+  } = $state({ id: "", pos: [0.0, 0.0] });
+
+  function openContextMenu(e: MouseEvent, id: string) {
+    if (!contextMenu.popup)
+      contextMenu.popup = document.getElementById("context-menu")!;
+
+    const RIGHT_MOUSE_BUTTON = 2;
+    if (e.button != RIGHT_MOUSE_BUTTON) return;
+
+    contextMenu.pos = [e.clientX, e.clientY];
+
+    if (id == contextMenu.id) {
+      contextMenu.popup.togglePopover();
+    } else {
+      contextMenu.popup.showPopover();
+    }
+
+    contextMenu.id = id;
+  }
 </script>
 
 <div
@@ -355,13 +381,25 @@
         <h1 class="text-xl font-bold tracking-tighter">{category}</h1>
         {#each props as prop}
           <div class="flex flex-row justify-between">
-            <span class="">{prop.name}</span>
+            <span>{prop.name}</span>
             <input type="checkbox" bind:checked={prop.enabled} />
           </div>
         {/each}
       </div>
     {/each}
   </div>
+</div>
+
+<div
+  role="button"
+  tabindex="-1"
+  id="context-menu"
+  popover
+  class="fixed bg-bg-secondary border text-primary p-2"
+  style="left: {contextMenu.pos[0]}px; top: {contextMenu.pos[1]}px;"
+  oncontextmenu={(e) => e.preventDefault()}
+>
+  sdjfklsdjkfls
 </div>
 
 <div class="w-full p-8 text-primary">
@@ -386,8 +424,12 @@
         <div
           role="button"
           tabindex="-1"
-          onpointerdown={(e) => startDrag(e, id)}
+          onpointerdown={(e) => {
+            startDrag(e, id);
+            openContextMenu(e, id);
+          }}
           onkeydown={null}
+          oncontextmenu={(e) => e.preventDefault()}
           {id}
           data-col-header
           class="items-center justify-center h-12 active:bg-active hover:bg-hover transition-colors cursor-grab flex"
