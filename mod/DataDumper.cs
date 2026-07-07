@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 using BepInEx;
 using Newtonsoft.Json;
+using RiskOfOptions;
+using RiskOfOptions.Options;
 using UnityEngine;
 
 namespace WeatherIndex
@@ -11,6 +13,64 @@ namespace WeatherIndex
     class DataDumper
     {
         private static string pluginDir = Path.Combine(Paths.PluginPath, "WeatherIndex");
+
+        public static void Init()
+        {
+            ModSettingsManager.AddOption(
+                new GenericButtonOption(
+                    "Dump Items",
+                    "Debug",
+                    "Dumps all item data into the plugin folder",
+                    "Dump",
+                    DataDumper.DumpItems
+                )
+            );
+            ModSettingsManager.AddOption(
+                new GenericButtonOption(
+                    "Dump Bodies",
+                    "Debug",
+                    "Dumps all body data (survivors/enemies/etc) into the plugin folder",
+                    "Dump",
+                    DataDumper.DumpBodies
+                )
+            );
+            ModSettingsManager.AddOption(
+                new GenericButtonOption(
+                    "Dump Endings",
+                    "Debug",
+                    "Dumps all game endings into the plugin folder",
+                    "Dump",
+                    DataDumper.DumpEndings
+                )
+            );
+            ModSettingsManager.AddOption(
+                new GenericButtonOption(
+                    "Dump Difficulties",
+                    "Debug",
+                    "i frogot",
+                    "Dump",
+                    DataDumper.DumpDifficulties
+                )
+            );
+            ModSettingsManager.AddOption(
+                new GenericButtonOption(
+                    "Dump Item Tiers",
+                    "Debug",
+                    "🐸🚀",
+                    "Dump",
+                    DataDumper.DumpItemTiers
+                )
+            );
+            ModSettingsManager.AddOption(
+                new GenericButtonOption(
+                    "Dump Artifacts",
+                    "Debug",
+                    "artifacts",
+                    "Dump",
+                    DataDumper.DumpArtifacts
+                )
+            );
+        }
 
         public static void DumpItems()
         {

@@ -149,60 +149,7 @@ namespace WeatherIndex
                 )
             );
 
-            ModSettingsManager.AddOption(
-                new GenericButtonOption(
-                    "Dump Items",
-                    "Debug",
-                    "Dumps all item data into the plugin folder",
-                    "Dump",
-                    DataDumper.DumpItems
-                )
-            );
-            ModSettingsManager.AddOption(
-                new GenericButtonOption(
-                    "Dump Bodies",
-                    "Debug",
-                    "Dumps all body data (survivors/enemies/etc) into the plugin folder",
-                    "Dump",
-                    DataDumper.DumpBodies
-                )
-            );
-            ModSettingsManager.AddOption(
-                new GenericButtonOption(
-                    "Dump Endings",
-                    "Debug",
-                    "Dumps all game endings into the plugin folder",
-                    "Dump",
-                    DataDumper.DumpEndings
-                )
-            );
-            ModSettingsManager.AddOption(
-                new GenericButtonOption(
-                    "Dump Difficulties",
-                    "Debug",
-                    "i frogot",
-                    "Dump",
-                    DataDumper.DumpDifficulties
-                )
-            );
-            ModSettingsManager.AddOption(
-                new GenericButtonOption(
-                    "Dump Item Tiers",
-                    "Debug",
-                    "🐸🚀",
-                    "Dump",
-                    DataDumper.DumpItemTiers
-                )
-            );
-            ModSettingsManager.AddOption(
-                new GenericButtonOption(
-                    "Dump Artifacts",
-                    "Debug",
-                    "artifacts",
-                    "Dump",
-                    DataDumper.DumpArtifacts
-                )
-            );
+            DataDumper.Init();
         }
 
         private async void PostRunReport(string json)
