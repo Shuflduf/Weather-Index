@@ -235,10 +235,10 @@
       {} as Record<string, Property[]>,
     ),
   );
-  let sortProperty: { by: string; sort: SortMode } = {
+  let sortProperty: { by: string; sort: SortMode } = $state({
     by: "id",
     sort: "DESC",
-  };
+  });
 
   $effect(() => {
     if (!loaded) return;
@@ -263,10 +263,8 @@
   });
 
   let runPromise: Promise<any[]> = $state(new Promise(() => {}));
-  onMount(async () => {
-    runPromise = fetch("/api/runs?" + new URLSearchParams(sortProperty)).then(
-      (r) => r.json(),
-    );
+  onMount(() => {
+    fetchRuns();
 
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
@@ -283,6 +281,12 @@
     }
     loaded = true;
   });
+
+  function fetchRuns() {
+    runPromise = fetch("/api/runs?" + new URLSearchParams(sortProperty)).then(
+      (r) => r.json(),
+    );
+  }
 
   function startDrag(e: PointerEvent, id: string) {
     if (e.button != LEFT_MOUSE_BUTTON) return;
@@ -409,6 +413,17 @@
     contextMenu.id = id;
     contextMenu.pos = [e.clientX, e.clientY];
   }
+
+  function setSort(sort: SortMode) {
+    sortProperty.by = contextMenu.id;
+    sortProperty.sort = sort;
+
+    console.log(
+      sortProperty.by == contextMenu.id && sortProperty.sort == "DESC",
+    );
+
+    fetchRuns();
+  }
 </script>
 
 <div
@@ -452,6 +467,26 @@
         bind:checked={properties[contextMenu.id].enabled}
       />
     </div>
+    <button
+      class={`border w-full p-2 cursor-pointer transition-colors ${
+        sortProperty.by == contextMenu.id && sortProperty.sort == "ASC"
+          ? "bg-active"
+          : "bg-default hover:bg-hover "
+      }`}
+      onclick={() => setSort("ASC")}
+    >
+      Ascending
+    </button>
+    <button
+      class={`border w-full p-2 cursor-pointer transition-colors ${
+        sortProperty.by == contextMenu.id && sortProperty.sort == "DESC"
+          ? "bg-active"
+          : "bg-default hover:bg-hover "
+      }`}
+      onclick={() => setSort("DESC")}
+    >
+      Descending
+    </button>
   {/if}
 </div>
 

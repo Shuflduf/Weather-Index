@@ -56,6 +56,7 @@ pub async fn list(
     let sort_by = match params.by.as_ref() {
         "id" => run_report::Column::Id,
         "difficulty" => run_report::Column::Difficulty,
+        "survivor" => run_report::Column::Survivor,
         _ => Err(make_error(
             StatusCode::BAD_REQUEST,
             format!("{} is an invalid column name", params.by),
