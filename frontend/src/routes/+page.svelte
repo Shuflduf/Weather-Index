@@ -1,6 +1,13 @@
 <script lang="ts">
   import { onMount, tick } from "svelte";
-  import { BODIES, DIFFICULTIES, ENDINGS, type Item } from "$lib/RoR2";
+  import {
+    BODIES,
+    DIFFICULTIES,
+    ENDINGS,
+    formatBig,
+    formatSeconds,
+    type Item,
+  } from "$lib/RoR2";
   import UserDisplay from "$lib/UserDisplay.svelte";
   import TableBlock from "./TableBlock.svelte";
   import ArtifactsDisplay from "$lib/ArtifactsDisplay.svelte";
@@ -55,7 +62,7 @@
     stagesCompleted: {
       enabled: false,
       order: 11,
-      name: "Stages Completed",
+      name: "Stages",
       category: "Run",
     },
     score: { enabled: true, order: 6, name: "Score", category: "Run" },
@@ -145,33 +152,33 @@
       name: "Gold Collected",
       category: "Progression",
     },
-    goldSpent: {
-      enabled: false,
-      order: 25,
-      name: "Gold Spent",
-      category: "Progression",
-    },
-    lunarCoinsSpent: {
-      enabled: false,
-      order: 26,
-      name: "Lunar Coins Spent",
-      category: "Progression",
-    },
     purchases: {
       enabled: false,
-      order: 27,
+      order: 25,
       name: "Purchases",
+      category: "Progression",
+    },
+    goldPurchases: {
+      enabled: false,
+      order: 26,
+      name: "Gold Purchases",
       category: "Progression",
     },
     bloodPurchases: {
       enabled: false,
-      order: 28,
+      order: 27,
       name: "Blood Purchases",
+      category: "Progression",
+    },
+    lunarPurchases: {
+      enabled: false,
+      order: 28,
+      name: "Lunar Purchases",
       category: "Progression",
     },
 
     // movement
-    distanceTraveledMetres: {
+    distanceTraveled: {
       enabled: false,
       order: 29,
       name: "Distance Traveled",
@@ -230,9 +237,7 @@
         }
       }
     }
-    console.log(loaded);
     loaded = true;
-    console.log(loaded);
   });
 
   function startDrag(e: PointerEvent, id: string) {
@@ -394,6 +399,17 @@
         </div>
       {/snippet}
 
+      {#snippet basicCol(id: string, runId: string)}
+        {#if properties[id].enabled}
+          {@render propHeader(id)}
+          {#each runs as run, idx}
+            <TableBlock order={properties[id].order} {idx}>
+              <span>{formatBig(run[runId])}</span>
+            </TableBlock>
+          {/each}
+        {/if}
+      {/snippet}
+
       {#if properties.id.enabled}
         {@render propHeader("id")}
         {#each runs as run, idx}
@@ -402,7 +418,6 @@
           </TableBlock>
         {/each}
       {/if}
-
       {#if properties.player.enabled}
         {@render propHeader("player")}
         {#each runs as run, idx}
@@ -415,6 +430,19 @@
                 displayName: null,
               }}
             />
+          </TableBlock>
+        {/each}
+      {/if}
+      {#if properties.uploadTime.enabled}
+        {@render propHeader("uploadTime")}
+        {#each runs as run, idx}
+          <TableBlock order={properties.uploadTime.order} {idx}>
+            <span
+              title={new Date(run.upload_time).toString()}
+              class="text-sm text-secondary"
+            >
+              {new Date(run.upload_time).toLocaleString()}
+            </span>
           </TableBlock>
         {/each}
       {/if}
@@ -434,7 +462,19 @@
           </TableBlock>
         {/each}
       {/if}
-
+      {#if properties.startTime.enabled}
+        {@render propHeader("startTime")}
+        {#each runs as run, idx}
+          <TableBlock order={properties.startTime.order} {idx}>
+            <span
+              title={new Date(run.start_time).toString()}
+              class="text-sm text-secondary"
+            >
+              {new Date(run.start_time).toLocaleString()}
+            </span>
+          </TableBlock>
+        {/each}
+      {/if}
       {#if properties.ending.enabled}
         {@render propHeader("ending")}
         {#each runs as run, idx}
@@ -454,7 +494,6 @@
           </TableBlock>
         {/each}
       {/if}
-
       {#if properties.difficulty.enabled}
         {@render propHeader("difficulty")}
         {#each runs as run, idx}
@@ -470,12 +509,34 @@
           </TableBlock>
         {/each}
       {/if}
-
-      {#if properties.itemsCollected.enabled}
-        {@render propHeader("itemsCollected")}
+      {#if properties.timeAlive.enabled}
+        {@render propHeader("timeAlive")}
         {#each runs as run, idx}
-          <TableBlock order={properties.itemsCollected.order} {idx}>
-            {run.items_collected}
+          <TableBlock order={properties.timeAlive.order} {idx}>
+            <span class="">
+              {formatSeconds(run.time_alive_seconds)}
+            </span>
+          </TableBlock>
+        {/each}
+      {/if}
+      {#if properties.artifacts.enabled}
+        {@render propHeader("artifacts")}
+        {#each runs as run, idx}
+          <TableBlock order={properties.artifacts.order} {idx}>
+            <ArtifactsDisplay
+              artifacts={run.artifacts}
+              class="w-full overflow-x-auto flex-wrap"
+            />
+          </TableBlock>
+        {/each}
+      {/if}
+      {#if properties.stagesCompleted.enabled}
+        {@render propHeader("stagesCompleted")}
+        {#each runs as run, idx}
+          <TableBlock order={properties.stagesCompleted.order} {idx}>
+            <span class="">
+              {run.stages_completed}
+            </span>
           </TableBlock>
         {/each}
       {/if}
@@ -488,14 +549,55 @@
         {/each}
       {/if}
 
-      {#if properties.artifacts.enabled}
-        {@render propHeader("artifacts")}
+      {#if properties.itemsCollected.enabled}
+        {@render propHeader("itemsCollected")}
         {#each runs as run, idx}
-          <TableBlock order={properties.artifacts.order} {idx}>
-            <ArtifactsDisplay
-              artifacts={run.artifacts}
-              class="w-full overflow-x-auto flex-wrap"
-            />
+          <TableBlock order={properties.itemsCollected.order} {idx}>
+            {run.items_collected}
+          </TableBlock>
+        {/each}
+      {/if}
+      {#if properties.dronesPurchased.enabled}
+        {@render propHeader("dronesPurchased")}
+        {#each runs as run, idx}
+          <TableBlock order={properties.dronesPurchased.order} {idx}>
+            {run.drones_purchased}
+          </TableBlock>
+        {/each}
+      {/if}
+      {#if properties.turretsPurchased.enabled}
+        {@render propHeader("turretsPurchased")}
+        {#each runs as run, idx}
+          <TableBlock order={properties.turretsPurchased.order} {idx}>
+            {run.turrets_purchased}
+          </TableBlock>
+        {/each}
+      {/if}
+
+      {@render basicCol("kills", "kills")}
+      {@render basicCol("eliteKills", "elite_kills")}
+      {@render basicCol("minionKills", "minion_kills")}
+      {@render basicCol("deaths", "deaths")}
+      {@render basicCol("damageDealt", "damage_dealt")}
+      {@render basicCol("minionDamageDealt", "minion_damage_dealt")}
+      {@render basicCol("damageTaken", "damage_taken")}
+      {@render basicCol("highestDamageDealt", "highest_damage_dealt")}
+      {@render basicCol("healingRecieved", "healing_recieved")}
+
+      {@render basicCol("highestLevel", "highest_level")}
+      {@render basicCol("goldCollected", "gold_collected")}
+      {@render basicCol("purchases", "purchases")}
+      {@render basicCol("goldPurchases", "gold_purchases")}
+      {@render basicCol("bloodPurchases", "blood_purchases")}
+      {@render basicCol("lunarPurchases", "lunar_purchases")}
+
+      {#if properties.distanceTraveled.enabled}
+        {@render propHeader("distanceTraveled")}
+        {#each runs as run, idx}
+          <TableBlock order={properties.distanceTraveled.order} {idx}>
+            {formatBig(run.distance_traveled_metres)}
+
+            <span class="text-yellow-200 ml-1">metres</span>
           </TableBlock>
         {/each}
       {/if}

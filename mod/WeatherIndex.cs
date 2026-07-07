@@ -92,10 +92,10 @@ namespace WeatherIndex
                     // progression
                     highestLevel = stats.GetStatValueULong(StatDef.highestLevel),
                     goldCollected = stats.GetStatValueULong(StatDef.goldCollected),
-                    goldSpent = stats.GetStatValueULong(StatDef.totalGoldPurchases),
-                    lunarCoinsSpent = stats.GetStatValueULong(StatDef.totalLunarPurchases),
                     purchases = stats.GetStatValueULong(StatDef.totalPurchases),
+                    goldPurchases = stats.GetStatValueULong(StatDef.totalGoldPurchases),
                     bloodPurchases = stats.GetStatValueULong(StatDef.totalBloodPurchases),
+                    lunarPurchases = stats.GetStatValueULong(StatDef.totalLunarPurchases),
 
                     // movement
                     distanceTraveledMetres = (ulong)

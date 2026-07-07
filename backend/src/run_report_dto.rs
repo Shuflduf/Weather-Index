@@ -47,10 +47,10 @@ pub struct RunReportDTO {
     // progression
     pub highest_level: i32,
     pub gold_collected: i64,
-    pub gold_spent: i64,
-    pub lunar_coins_spent: i64,
     pub purchases: i32,
+    pub gold_purchases: i32,
     pub blood_purchases: i32,
+    pub lunar_purchases: i32,
 
     // movement
     pub distance_traveled_metres: i64,
@@ -90,10 +90,10 @@ impl TryFrom<RunReportDTO> for run_report::ActiveModel {
             healing_recieved: Set(dto.healing_recieved),
             highest_level: Set(dto.highest_level),
             gold_collected: Set(dto.gold_collected),
-            gold_spent: Set(dto.gold_spent),
-            lunar_coins_spent: Set(dto.lunar_coins_spent),
             purchases: Set(dto.purchases),
+            gold_purchases: Set(dto.gold_purchases),
             blood_purchases: Set(dto.blood_purchases),
+            lunar_purchases: Set(dto.lunar_purchases),
             distance_traveled_metres: Set(dto.distance_traveled_metres),
 
             ..Default::default()

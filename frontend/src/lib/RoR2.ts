@@ -49,10 +49,10 @@ export type RunReportWithUser = {
   // progression
   highest_level: number;
   gold_collected: number;
-  gold_spent: number;
-  lunar_coins_spent: number;
   purchases: number;
+  gold_purchases: number;
   blood_purchases: number;
+  lunar_purchases: number;
 
   // movement
   distance_traveled_metres: number;
@@ -173,7 +173,7 @@ function sortByCount(
 }
 
 export function formatSeconds(seconds: number): string {
-  const date = new Date();
+  const date = new Date(0);
   date.setSeconds(seconds);
   const result = date.toISOString().slice(11, 19);
   return result;

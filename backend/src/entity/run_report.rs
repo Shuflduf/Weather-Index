@@ -57,10 +57,11 @@ pub struct Model {
     // progression
     pub highest_level: i32,
     pub gold_collected: i64,
-    pub gold_spent: i64,
-    pub lunar_coins_spent: i64,
     pub purchases: i32,
+    pub gold_purchases: i32,
     pub blood_purchases: i32,
+    #[sea_orm(default_value = "0")]
+    pub lunar_purchases: i32,
 
     // movement
     pub distance_traveled_metres: i64,
