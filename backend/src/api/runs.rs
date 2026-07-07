@@ -5,7 +5,7 @@ use axum::{
     Json,
 };
 use reqwest::StatusCode;
-use sea_orm::{ColumnTrait, EntityTrait, Order, QueryFilter, QueryOrder};
+use sea_orm::{ColumnTrait, EntityTrait, IntoSimpleExpr, Order, QueryFilter, QueryOrder};
 use serde::{Deserialize, Serialize};
 
 use crate::{
@@ -55,8 +55,52 @@ pub async fn list(
     };
     let sort_by = match params.by.as_ref() {
         "id" => run_report::Column::Id,
-        "difficulty" => run_report::Column::Difficulty,
+        // "username" => user::Column::Username,
+        "uploadTime" => run_report::Column::UploadTime,
+
+        // run info
         "survivor" => run_report::Column::Survivor,
+        "startTime" => run_report::Column::StartTime,
+        "ending" => run_report::Column::Ending,
+        "difficulty" => run_report::Column::Difficulty,
+        "timeAliveSeconds" => run_report::Column::TimeAliveSeconds,
+        "artifacts" => run_report::Column::Artifacts,
+        "stagesCompleted" => run_report::Column::StagesCompleted,
+        "score" => run_report::Column::Score,
+
+        // items
+        "itemsCollected" => run_report::Column::ItemsCollected,
+
+        // drones
+        "dronesPurchased" => run_report::Column::DronesPurchased,
+        "turretsPurchased" => run_report::Column::TurretsPurchased,
+
+        // combat
+        "kills" => run_report::Column::Kills,
+        "eliteKills" => run_report::Column::EliteKills,
+        "minionKills" => run_report::Column::MinionKills,
+        "deaths" => run_report::Column::Deaths,
+
+        // damage
+        "damageDealt" => run_report::Column::DamageDealt,
+        "minionDamageDealt" => run_report::Column::MinionDamageDealt,
+        "damageTaken" => run_report::Column::DamageTaken,
+        "highestDamageDealt" => run_report::Column::HighestDamageDealt,
+
+        // healing
+        "healingRecieved" => run_report::Column::HealingRecieved,
+
+        // progression
+        "highestLevel" => run_report::Column::HighestLevel,
+        "goldCollected" => run_report::Column::GoldCollected,
+        "purchases" => run_report::Column::Purchases,
+        "goldPurchases" => run_report::Column::GoldPurchases,
+        "bloodPurchases" => run_report::Column::BloodPurchases,
+        "lunarPurchases" => run_report::Column::LunarPurchases,
+
+        // movement
+        "distanceTraveled" => run_report::Column::DistanceTraveledMetres,
+
         _ => Err(make_error(
             StatusCode::BAD_REQUEST,
             format!("{} is an invalid column name", params.by),
