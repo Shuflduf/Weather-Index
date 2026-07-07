@@ -5,53 +5,68 @@
   import TableBlock from "./TableBlock.svelte";
   import ArtifactsDisplay from "$lib/ArtifactsDisplay.svelte";
 
-  let properties: Record<string, { enabled: boolean; order: number }> = $state({
-    id: { enabled: true, order: 0 },
-    player: { enabled: true, order: 1 },
-    uploadTime: { enabled: false, order: 8 },
+  let properties: Record<
+    string,
+    { enabled: boolean; order: number; name: string }
+  > = $state({
+    id: { enabled: true, order: 0, name: "ID" },
+    player: { enabled: true, order: 1, name: "Player" },
+    uploadTime: { enabled: false, order: 8, name: "Upload Time" },
 
     // run info
-    survivor: { enabled: true, order: 2 },
-    startTime: { enabled: false, order: 7 },
-    ending: { enabled: true, order: 3 },
-    difficulty: { enabled: true, order: 4 },
-    timeAlive: { enabled: false, order: 9 },
-    artifacts: { enabled: false, order: 10 },
-    stagesCompleted: { enabled: false, order: 0 },
-    score: { enabled: true, order: 6 },
+    survivor: { enabled: true, order: 2, name: "Survivor" },
+    startTime: { enabled: false, order: 7, name: "Start Time" },
+    ending: { enabled: true, order: 3, name: "Ending" },
+    difficulty: { enabled: true, order: 4, name: "Difficulty" },
+    timeAlive: { enabled: false, order: 9, name: "Time Alive" },
+    artifacts: { enabled: false, order: 10, name: "Artifacts" },
+    stagesCompleted: { enabled: false, order: 0, name: "Stages Completed" },
+    score: { enabled: true, order: 6, name: "Score" },
 
     // items
-    itemsCollected: { enabled: true, order: 5 },
+    itemsCollected: { enabled: true, order: 5, name: "Items" },
 
     // drones
-    dronesPurchased: { enabled: false, order: 0 },
-    turretsPurchased: { enabled: false, order: 0 },
+    dronesPurchased: { enabled: false, order: 0, name: "Drones" },
+    turretsPurchased: { enabled: false, order: 0, name: "Turrets" },
 
     // combat
-    kills: { enabled: false, order: 0 },
-    eliteKills: { enabled: false, order: 0 },
-    minionKills: { enabled: false, order: 0 },
-    deaths: { enabled: false, order: 0 },
+    kills: { enabled: false, order: 0, name: "Kills" },
+    eliteKills: { enabled: false, order: 0, name: "Elite Kills" },
+    minionKills: { enabled: false, order: 0, name: "Minion Kills" },
+    deaths: { enabled: false, order: 0, name: "Deaths" },
 
     // damage
-    damageDealt: { enabled: false, order: 0 },
-    minionDamageDealt: { enabled: false, order: 0 },
-    damageTaken: { enabled: false, order: 0 },
-    highestDamageDealt: { enabled: false, order: 0 },
+    damageDealt: { enabled: false, order: 0, name: "Damage Dealt" },
+    minionDamageDealt: {
+      enabled: false,
+      order: 0,
+      name: "Minion Damage Dealt",
+    },
+    damageTaken: { enabled: false, order: 0, name: "Damage Taken" },
+    highestDamageDealt: {
+      enabled: false,
+      order: 0,
+      name: "Highest Damage Dealt",
+    },
 
     // healing
-    healingRecieved: { enabled: false, order: 0 },
+    healingRecieved: { enabled: false, order: 0, name: "Healing Recieved" },
 
     // progression
-    highestLevel: { enabled: false, order: 0 },
-    goldCollected: { enabled: false, order: 0 },
-    goldSpent: { enabled: false, order: 0 },
-    lunarCoinsSpent: { enabled: false, order: 0 },
-    purchases: { enabled: false, order: 0 },
-    bloodPurchases: { enabled: false, order: 0 },
+    highestLevel: { enabled: false, order: 0, name: "Highest Level" },
+    goldCollected: { enabled: false, order: 0, name: "Gold Collected" },
+    goldSpent: { enabled: false, order: 0, name: "Gold Spent" },
+    lunarCoinsSpent: { enabled: false, order: 0, name: "Lunar Coins Spent" },
+    purchases: { enabled: false, order: 0, name: "Purchases" },
+    bloodPurchases: { enabled: false, order: 0, name: "Blood Purchases" },
 
     // movement
-    distanceTraveledMetres: { enabled: false, order: 0 },
+    distanceTraveledMetres: {
+      enabled: false,
+      order: 0,
+      name: "Distance Traveled",
+    },
   });
   let columnCount = $derived(
     Object.values(properties).filter((prop) => prop.enabled).length,
@@ -95,7 +110,6 @@
     const elemCenter = normalCenter + dx;
     drag.elem.style.transform = `translateX(${dx}px)`;
     drag.elem.style.zIndex = "10";
-    console.log(drag);
 
     const headers = [
       ...document.querySelectorAll("[data-col-header]"),
@@ -184,24 +198,13 @@
   class="fixed bg-bg-secondary border text-primary p-2 w-64"
   style="position-anchor: --visible-properties; position-area: bottom span-right;"
 >
-  {#snippet visibleProperty(name: string, id: string)}
-    <div class="flex flex-row justify-between">
-      <span>{name}</span>
-      <input type="checkbox" bind:checked={properties[id].enabled} />
-    </div>
-  {/snippet}
   <div>
-    {@render visibleProperty("ID", "id")}
-    {@render visibleProperty("Player", "player")}
-    {@render visibleProperty("Survivor", "survivor")}
-    {@render visibleProperty("Ending", "ending")}
-    {@render visibleProperty("Difficulty", "difficulty")}
-    {@render visibleProperty("Items", "itemsCollected")}
-    {@render visibleProperty("Score", "score")}
-    {@render visibleProperty("Start Time", "startTime")}
-    {@render visibleProperty("Upload Time", "uploadTime")}
-    {@render visibleProperty("Time Alive", "timeAlive")}
-    {@render visibleProperty("Artifacts", "artifacts")}
+    {#each Object.values(properties) as prop}
+      <div class="flex flex-row justify-between">
+        <span>{prop.name}</span>
+        <input type="checkbox" bind:checked={prop.enabled} />
+      </div>
+    {/each}
   </div>
 </div>
 
@@ -223,7 +226,7 @@
         ? 'none'
         : ''};"
     >
-      {#snippet propHeader(name: string, id: string)}
+      {#snippet propHeader(id: string)}
         <div
           role="button"
           tabindex="-1"
@@ -235,13 +238,13 @@
           style="order: {properties[id].order}; grid-row: 1;"
         >
           <h2 class="text-xl tracking-tight text-center font-bold">
-            {name}
+            {properties[id].name}
           </h2>
         </div>
       {/snippet}
 
       {#if properties.id.enabled}
-        {@render propHeader("ID", "id")}
+        {@render propHeader("id")}
         {#each runs as run, idx}
           <TableBlock order={properties.id.order} {idx}>
             <a href={`/run/${run.id}`}>{run.id}</a>
@@ -250,7 +253,7 @@
       {/if}
 
       {#if properties.player.enabled}
-        {@render propHeader("Player", "player")}
+        {@render propHeader("player")}
         {#each runs as run, idx}
           <TableBlock order={properties.player.order} {idx}>
             <UserDisplay
@@ -266,7 +269,7 @@
       {/if}
 
       {#if properties.survivor.enabled}
-        {@render propHeader("Survivor", "survivor")}
+        {@render propHeader("survivor")}
         {#each runs as run, idx}
           <TableBlock order={properties.survivor.order} {idx}>
             <img
@@ -282,7 +285,7 @@
       {/if}
 
       {#if properties.ending.enabled}
-        {@render propHeader("Ending", "ending")}
+        {@render propHeader("ending")}
         {#each runs as run, idx}
           <TableBlock
             order={properties.ending.order}
@@ -302,7 +305,7 @@
       {/if}
 
       {#if properties.difficulty.enabled}
-        {@render propHeader("Difficulty", "difficulty")}
+        {@render propHeader("difficulty")}
         {#each runs as run, idx}
           <TableBlock order={properties.difficulty.order} {idx}>
             <img
@@ -318,7 +321,7 @@
       {/if}
 
       {#if properties.itemsCollected.enabled}
-        {@render propHeader("Items", "itemsCollected")}
+        {@render propHeader("itemsCollected")}
         {#each runs as run, idx}
           <TableBlock order={properties.itemsCollected.order} {idx}>
             {run.items_collected}
@@ -326,7 +329,7 @@
         {/each}
       {/if}
       {#if properties.score.enabled}
-        {@render propHeader("Score", "score")}
+        {@render propHeader("score")}
         {#each runs as run, idx}
           <TableBlock order={properties.score.order} {idx}>
             {run.score}
@@ -335,7 +338,7 @@
       {/if}
 
       {#if properties.artifacts.enabled}
-        {@render propHeader("Artifacts", "artifacts")}
+        {@render propHeader("artifacts")}
         {#each runs as run, idx}
           <TableBlock order={properties.artifacts.order} {idx}>
             <ArtifactsDisplay
