@@ -3,19 +3,20 @@
   import { BODIES, DIFFICULTIES, ENDINGS, type Item } from "$lib/RoR2";
   import UserDisplay from "$lib/UserDisplay.svelte";
   import TableBlock from "./TableBlock.svelte";
+  import ArtifactsDisplay from "$lib/ArtifactsDisplay.svelte";
 
   let properties: Record<string, { enabled: boolean; order: number }> = $state({
     id: { enabled: true, order: 0 },
     player: { enabled: true, order: 1 },
-    uploadTime: { enabled: false, order: 0 },
+    uploadTime: { enabled: false, order: 8 },
 
     // run info
     survivor: { enabled: true, order: 2 },
-    startTime: { enabled: false, order: 0 },
+    startTime: { enabled: false, order: 7 },
     ending: { enabled: true, order: 3 },
     difficulty: { enabled: true, order: 4 },
-    timeAlive: { enabled: false, order: 0 },
-    artifacts: { enabled: false, order: 0 },
+    timeAlive: { enabled: false, order: 9 },
+    artifacts: { enabled: false, order: 10 },
     stagesCompleted: { enabled: false, order: 0 },
     score: { enabled: true, order: 6 },
 
@@ -197,6 +198,10 @@
     {@render visibleProperty("Difficulty", "difficulty")}
     {@render visibleProperty("Items", "itemsCollected")}
     {@render visibleProperty("Score", "score")}
+    {@render visibleProperty("Start Time", "startTime")}
+    {@render visibleProperty("Upload Time", "uploadTime")}
+    {@render visibleProperty("Time Alive", "timeAlive")}
+    {@render visibleProperty("Artifacts", "artifacts")}
   </div>
 </div>
 
@@ -226,7 +231,7 @@
           onkeydown={null}
           {id}
           data-col-header
-          class="items-center justify-center h-12 hover:bg-hover transition-colors cursor-grab flex"
+          class="items-center justify-center h-12 active:bg-active hover:bg-hover transition-colors cursor-grab flex"
           style="order: {properties[id].order}; grid-row: 1;"
         >
           <h2 class="text-xl tracking-tight text-center font-bold">
@@ -325,6 +330,15 @@
         {#each runs as run, idx}
           <TableBlock order={properties.score.order} {idx}>
             {run.score}
+          </TableBlock>
+        {/each}
+      {/if}
+
+      {#if properties.artifacts.enabled}
+        {@render propHeader("Artifacts", "artifacts")}
+        {#each runs as run, idx}
+          <TableBlock order={properties.artifacts.order} {idx}>
+            <ArtifactsDisplay artifacts={run.artifacts} />
           </TableBlock>
         {/each}
       {/if}
