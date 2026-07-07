@@ -45,9 +45,6 @@ pub async fn list(
     Query(params): Query<ListParams>,
 ) -> Result<Json<Vec<RunReportWithUser>>, WIError> {
     println!("{params:?}");
-    let query = RunReport::find();
-    // let reports = RunReport::find()
-    //     .order_by_id_desc()
     let order = match params.sort.as_ref() {
         "DESC" => Order::Desc,
         "ASC" => Order::Asc,
@@ -56,22 +53,27 @@ pub async fn list(
             "field `order` should be either `DESC` or `ASC`".into(),
         ))?,
     };
-    let reports = match params.by.as_ref() {
-        "id" => query.order_by(run_report::Column::Id, order),
+    let sort_by = match params.by.as_ref() {
+        "id" => run_report::Column::Id,
+        "difficulty" => run_report::Column::Difficulty,
         _ => Err(make_error(
             StatusCode::BAD_REQUEST,
             format!("{} is an invalid column name", params.by),
+            // TODO: show actual column names to sort by
         ))?,
-    }
-    .find_also_related(user::Entity)
-    .all(&state.db)
-    .await
-    .map_err(|e| {
-        make_error(
-            StatusCode::INTERNAL_SERVER_ERROR,
-            format!("Failed to query runs: {e}"),
-        )
-    })?;
+    };
+
+    let reports = RunReport::find()
+        .order_by(sort_by, order)
+        .find_also_related(user::Entity)
+        .all(&state.db)
+        .await
+        .map_err(|e| {
+            make_error(
+                StatusCode::INTERNAL_SERVER_ERROR,
+                format!("Failed to query runs: {e}"),
+            )
+        })?;
 
     let results = reports
         .into_iter()

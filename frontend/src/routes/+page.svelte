@@ -264,7 +264,9 @@
 
   let runPromise: Promise<any[]> = $state(new Promise(() => {}));
   onMount(async () => {
-    runPromise = fetch("/api/runs").then((r) => r.json());
+    runPromise = fetch("/api/runs?" + new URLSearchParams(sortProperty)).then(
+      (r) => r.json(),
+    );
 
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
