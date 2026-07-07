@@ -53,6 +53,18 @@ const SURVIVORS: [&str; 18] = [
     "DrifterBody",
 ];
 
+const ENDINGS: [&str; 9] = [
+    "StandardLoss",
+    "EscapeSequenceFailed",
+    "PrismaticTrialEnding",
+    "VoidEnding",
+    "DecompileEnding",
+    "RebirthEndingDef",
+    "ObliterationEnding",
+    "LimboEnding",
+    "MainEnding",
+];
+
 #[derive(Serialize)]
 pub struct RunReportWithUser {
     #[serde(flatten)]
@@ -108,7 +120,7 @@ pub async fn list(
             to_order(&params.sort, &SURVIVORS),
         ),
         "startTime" => (run_report::Column::StartTime, order),
-        "ending" => (run_report::Column::Ending, order),
+        "ending" => (run_report::Column::Ending, to_order(&params.sort, &ENDINGS)),
         "difficulty" => (
             run_report::Column::Difficulty,
             to_order(&params.sort, &DIFFICULTIES),
