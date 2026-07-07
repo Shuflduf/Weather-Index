@@ -17,6 +17,42 @@ use crate::{
     WIState,
 };
 
+// TODO: make not hardcoded
+const DIFFICULTIES: [&str; 11] = [
+    "DIFFICULTY_EASY_NAME",
+    "DIFFICULTY_NORMAL_NAME",
+    "DIFFICULTY_HARD_NAME",
+    "ECLIPSE_1_NAME",
+    "ECLIPSE_2_NAME",
+    "ECLIPSE_3_NAME",
+    "ECLIPSE_4_NAME",
+    "ECLIPSE_5_NAME",
+    "ECLIPSE_6_NAME",
+    "ECLIPSE_7_NAME",
+    "ECLIPSE_8_NAME",
+];
+
+const SURVIVORS: [&str; 18] = [
+    "CommandoBody",
+    "HuntressBody",
+    "BanditBody",
+    "ToolbotBody",
+    "EngineerBody",
+    "ArtificerBody",
+    "MercBody",
+    "TreebotBody",
+    "LoaderBody",
+    "CrocoBody",
+    "CaptainBody",
+    "RailgunnerBody",
+    "VoidSurvivorBody",
+    "SeekerBody",
+    "FalseSonBody",
+    "ChefBody",
+    "DroneTechBody",
+    "DrifterBody",
+];
+
 #[derive(Serialize)]
 pub struct RunReportWithUser {
     #[serde(flatten)]
@@ -40,25 +76,12 @@ fn default_sort() -> String {
     "DESC".to_string()
 }
 
-fn difficulty_order(sort: &str) -> Order {
-    // TODO: make not hardcoded
-    let mut difficulties = vec![
-        "DIFFICULTY_EASY_NAME",
-        "DIFFICULTY_NORMAL_NAME",
-        "DIFFICULTY_HARD_NAME",
-        "ECLIPSE_1_NAME",
-        "ECLIPSE_2_NAME",
-        "ECLIPSE_3_NAME",
-        "ECLIPSE_4_NAME",
-        "ECLIPSE_5_NAME",
-        "ECLIPSE_6_NAME",
-        "ECLIPSE_7_NAME",
-        "ECLIPSE_8_NAME",
-    ];
+fn to_order(sort: &str, list: &[&str]) -> Order {
+    let mut list: Vec<sea_orm::Value> = list.iter().map(|s| (*s).into()).collect();
     if sort == "DESC" {
-        difficulties.reverse();
+        list.reverse();
     }
-    Order::Field(Values(difficulties.iter().map(|s| (*s).into()).collect()))
+    Order::Field(Values(list))
 }
 
 pub async fn list(
@@ -80,12 +103,15 @@ pub async fn list(
         "uploadTime" => (run_report::Column::UploadTime, order),
 
         // run info
-        "survivor" => (run_report::Column::Survivor, order),
+        "survivor" => (
+            run_report::Column::Survivor,
+            to_order(&params.sort, &SURVIVORS),
+        ),
         "startTime" => (run_report::Column::StartTime, order),
         "ending" => (run_report::Column::Ending, order),
         "difficulty" => (
             run_report::Column::Difficulty,
-            difficulty_order(&params.sort),
+            to_order(&params.sort, &DIFFICULTIES),
         ),
         "timeAliveSeconds" => (run_report::Column::TimeAliveSeconds, order),
         "artifacts" => (run_report::Column::Artifacts, order),
