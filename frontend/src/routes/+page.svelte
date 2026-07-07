@@ -338,7 +338,10 @@
         {@render propHeader("Artifacts", "artifacts")}
         {#each runs as run, idx}
           <TableBlock order={properties.artifacts.order} {idx}>
-            <ArtifactsDisplay artifacts={run.artifacts} />
+            <ArtifactsDisplay
+              artifacts={run.artifacts}
+              class="w-full overflow-x-auto flex-wrap"
+            />
           </TableBlock>
         {/each}
       {/if}

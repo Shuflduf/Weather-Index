@@ -1,10 +1,13 @@
 <script lang="ts">
   import { ARTIFACTS } from "$lib/RoR2";
 
-  let { artifacts }: { artifacts: string[] } = $props();
+  let {
+    artifacts,
+    class: className = "",
+  }: { artifacts: string[]; class: string } = $props();
 </script>
 
-<div class="flex flex-col flex-wrap max-h-16 overflow-x-auto w-full">
+<div class="flex flex-col max-h-16 {className}">
   {#each artifacts as artifact}
     <img
       src={`/artifacts/${ARTIFACTS[artifact].icon}`}
