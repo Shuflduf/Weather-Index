@@ -5,6 +5,8 @@
   import TableBlock from "./TableBlock.svelte";
   import ArtifactsDisplay from "$lib/ArtifactsDisplay.svelte";
 
+  const STORAGE_KEY = "table-properties";
+
   type Property = {
     enabled: boolean;
     order: number;
@@ -12,6 +14,7 @@
     category: string;
   };
 
+  let loaded = $state(false);
   let properties: Record<string, Property> = $state({
     id: { enabled: true, order: 0, name: "ID", category: "Meta" },
     player: { enabled: true, order: 1, name: "Player", category: "Meta" },
@@ -188,6 +191,16 @@
     ),
   );
 
+  $effect(() => {
+    if (!loaded) return;
+
+    const toSave: Record<string, { enabled: boolean; order: number }> = {};
+    for (const [key, prop] of Object.entries(properties)) {
+      toSave[key] = { order: prop.order, enabled: prop.enabled };
+    }
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
+  });
+
   let drag: {
     dragging: boolean;
     elem: HTMLElement | null;
@@ -203,7 +216,23 @@
   let runPromise: Promise<any[]> = $state(new Promise(() => {}));
   onMount(async () => {
     runPromise = fetch("/api/runs").then((r) => r.json());
-    console.log(propsByCategory);
+
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      for (const [key, prop] of Object.entries(parsed) as [
+        string,
+        { order: number; enabled: boolean },
+      ][]) {
+        if (properties[key]) {
+          properties[key].enabled = prop.enabled;
+          properties[key].order = prop.order;
+        }
+      }
+    }
+    console.log(loaded);
+    loaded = true;
+    console.log(loaded);
   });
 
   function startDrag(e: PointerEvent, id: string) {
@@ -336,7 +365,7 @@
   {:then runs}
     <button
       popovertarget="visible-properties"
-      class=" cursor-pointer bg-default hover:bg-hover active:bg-active p-2 font-mono mb-4 border"
+      class="cursor-pointer bg-default hover:bg-hover active:bg-active p-2 font-mono mb-4 border"
       style="anchor-name: --visible-properties;"
     >
       Visible Properties
