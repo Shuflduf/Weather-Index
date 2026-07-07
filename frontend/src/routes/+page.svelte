@@ -15,6 +15,8 @@
   const LEFT_MOUSE_BUTTON = 0;
   const STORAGE_KEY = "table-properties";
 
+  type SortMode = "ASC" | "DESC";
+
   type Property = {
     enabled: boolean;
     order: number;
@@ -24,8 +26,18 @@
 
   let loaded = $state(false);
   let properties: Record<string, Property> = $state({
-    id: { enabled: true, order: 0, name: "ID", category: "Meta" },
-    player: { enabled: true, order: 1, name: "Player", category: "Meta" },
+    id: {
+      enabled: true,
+      order: 0,
+      name: "ID",
+      category: "Meta",
+    },
+    player: {
+      enabled: true,
+      order: 1,
+      name: "Player",
+      category: "Meta",
+    },
     uploadTime: {
       enabled: false,
       order: 8,
@@ -34,14 +46,24 @@
     },
 
     // run info
-    survivor: { enabled: true, order: 2, name: "Survivor", category: "Run" },
+    survivor: {
+      enabled: true,
+      order: 2,
+      name: "Survivor",
+      category: "Run",
+    },
     startTime: {
       enabled: false,
       order: 7,
       name: "Start Time",
       category: "Run",
     },
-    ending: { enabled: true, order: 3, name: "Ending", category: "Run" },
+    ending: {
+      enabled: true,
+      order: 3,
+      name: "Ending",
+      category: "Run",
+    },
     difficulty: {
       enabled: true,
       order: 4,
@@ -66,7 +88,12 @@
       name: "Stages",
       category: "Run",
     },
-    score: { enabled: true, order: 6, name: "Score", category: "Run" },
+    score: {
+      enabled: true,
+      order: 6,
+      name: "Score",
+      category: "Run",
+    },
 
     // items
     itemsCollected: {
@@ -91,7 +118,12 @@
     },
 
     // combat
-    kills: { enabled: false, order: 14, name: "Kills", category: "Combat" },
+    kills: {
+      enabled: false,
+      order: 14,
+      name: "Kills",
+      category: "Combat",
+    },
     eliteKills: {
       enabled: false,
       order: 15,
@@ -104,7 +136,12 @@
       name: "Minion Kills",
       category: "Combat",
     },
-    deaths: { enabled: false, order: 17, name: "Deaths", category: "Combat" },
+    deaths: {
+      enabled: false,
+      order: 17,
+      name: "Deaths",
+      category: "Combat",
+    },
 
     // damage
     damageDealt: {
@@ -198,6 +235,10 @@
       {} as Record<string, Property[]>,
     ),
   );
+  let sortProperty: { by: string; sort: SortMode } = {
+    by: "id",
+    sort: "DESC",
+  };
 
   $effect(() => {
     if (!loaded) return;
