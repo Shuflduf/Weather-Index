@@ -530,49 +530,12 @@
           </TableBlock>
         {/each}
       {/if}
-      {#if properties.stagesCompleted.enabled}
-        {@render propHeader("stagesCompleted")}
-        {#each runs as run, idx}
-          <TableBlock order={properties.stagesCompleted.order} {idx}>
-            <span class="">
-              {run.stages_completed}
-            </span>
-          </TableBlock>
-        {/each}
-      {/if}
-      {#if properties.score.enabled}
-        {@render propHeader("score")}
-        {#each runs as run, idx}
-          <TableBlock order={properties.score.order} {idx}>
-            {run.score}
-          </TableBlock>
-        {/each}
-      {/if}
+      {@render basicCol("stagesCompleted", "stages_completed")}
+      {@render basicCol("score", "score")}
 
-      {#if properties.itemsCollected.enabled}
-        {@render propHeader("itemsCollected")}
-        {#each runs as run, idx}
-          <TableBlock order={properties.itemsCollected.order} {idx}>
-            {run.items_collected}
-          </TableBlock>
-        {/each}
-      {/if}
-      {#if properties.dronesPurchased.enabled}
-        {@render propHeader("dronesPurchased")}
-        {#each runs as run, idx}
-          <TableBlock order={properties.dronesPurchased.order} {idx}>
-            {run.drones_purchased}
-          </TableBlock>
-        {/each}
-      {/if}
-      {#if properties.turretsPurchased.enabled}
-        {@render propHeader("turretsPurchased")}
-        {#each runs as run, idx}
-          <TableBlock order={properties.turretsPurchased.order} {idx}>
-            {run.turrets_purchased}
-          </TableBlock>
-        {/each}
-      {/if}
+      {@render basicCol("itemsCollected", "items_collected")}
+      {@render basicCol("dronesPurchased", "drones_purchased")}
+      {@render basicCol("turretsPurchased", "turrets_purchased")}
 
       {@render basicCol("kills", "kills")}
       {@render basicCol("eliteKills", "elite_kills")}
