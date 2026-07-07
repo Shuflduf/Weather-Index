@@ -5,7 +5,7 @@ use axum::{
     Json,
 };
 use reqwest::StatusCode;
-use sea_orm::{ColumnTrait, EntityTrait, IntoSimpleExpr, Order, QueryFilter, QueryOrder};
+use sea_orm::{ColumnTrait, EntityTrait, IntoSimpleExpr, Order, QueryFilter, QueryOrder, Values};
 use serde::{Deserialize, Serialize};
 
 use crate::{
@@ -40,6 +40,27 @@ fn default_sort() -> String {
     "DESC".to_string()
 }
 
+fn difficulty_order(sort: &str) -> Order {
+    // TODO: make not hardcoded
+    let mut difficulties = vec![
+        "DIFFICULTY_EASY_NAME",
+        "DIFFICULTY_NORMAL_NAME",
+        "DIFFICULTY_HARD_NAME",
+        "ECLIPSE_1_NAME",
+        "ECLIPSE_2_NAME",
+        "ECLIPSE_3_NAME",
+        "ECLIPSE_4_NAME",
+        "ECLIPSE_5_NAME",
+        "ECLIPSE_6_NAME",
+        "ECLIPSE_7_NAME",
+        "ECLIPSE_8_NAME",
+    ];
+    if sort == "DESC" {
+        difficulties.reverse();
+    }
+    Order::Field(Values(difficulties.iter().map(|s| (*s).into()).collect()))
+}
+
 pub async fn list(
     State(state): State<Arc<WIState>>,
     Query(params): Query<ListParams>,
@@ -53,53 +74,56 @@ pub async fn list(
             "field `order` should be either `DESC` or `ASC`".into(),
         ))?,
     };
-    let sort_by = match params.by.as_ref() {
-        "id" => run_report::Column::Id,
+    let (sort_by, order) = match params.by.as_ref() {
+        "id" => (run_report::Column::Id, order),
         // "username" => user::Column::Username,
-        "uploadTime" => run_report::Column::UploadTime,
+        "uploadTime" => (run_report::Column::UploadTime, order),
 
         // run info
-        "survivor" => run_report::Column::Survivor,
-        "startTime" => run_report::Column::StartTime,
-        "ending" => run_report::Column::Ending,
-        "difficulty" => run_report::Column::Difficulty,
-        "timeAliveSeconds" => run_report::Column::TimeAliveSeconds,
-        "artifacts" => run_report::Column::Artifacts,
-        "stagesCompleted" => run_report::Column::StagesCompleted,
-        "score" => run_report::Column::Score,
+        "survivor" => (run_report::Column::Survivor, order),
+        "startTime" => (run_report::Column::StartTime, order),
+        "ending" => (run_report::Column::Ending, order),
+        "difficulty" => (
+            run_report::Column::Difficulty,
+            difficulty_order(&params.sort),
+        ),
+        "timeAliveSeconds" => (run_report::Column::TimeAliveSeconds, order),
+        "artifacts" => (run_report::Column::Artifacts, order),
+        "stagesCompleted" => (run_report::Column::StagesCompleted, order),
+        "score" => (run_report::Column::Score, order),
 
         // items
-        "itemsCollected" => run_report::Column::ItemsCollected,
+        "itemsCollected" => (run_report::Column::ItemsCollected, order),
 
         // drones
-        "dronesPurchased" => run_report::Column::DronesPurchased,
-        "turretsPurchased" => run_report::Column::TurretsPurchased,
+        "dronesPurchased" => (run_report::Column::DronesPurchased, order),
+        "turretsPurchased" => (run_report::Column::TurretsPurchased, order),
 
         // combat
-        "kills" => run_report::Column::Kills,
-        "eliteKills" => run_report::Column::EliteKills,
-        "minionKills" => run_report::Column::MinionKills,
-        "deaths" => run_report::Column::Deaths,
+        "kills" => (run_report::Column::Kills, order),
+        "eliteKills" => (run_report::Column::EliteKills, order),
+        "minionKills" => (run_report::Column::MinionKills, order),
+        "deaths" => (run_report::Column::Deaths, order),
 
         // damage
-        "damageDealt" => run_report::Column::DamageDealt,
-        "minionDamageDealt" => run_report::Column::MinionDamageDealt,
-        "damageTaken" => run_report::Column::DamageTaken,
-        "highestDamageDealt" => run_report::Column::HighestDamageDealt,
+        "damageDealt" => (run_report::Column::DamageDealt, order),
+        "minionDamageDealt" => (run_report::Column::MinionDamageDealt, order),
+        "damageTaken" => (run_report::Column::DamageTaken, order),
+        "highestDamageDealt" => (run_report::Column::HighestDamageDealt, order),
 
         // healing
-        "healingRecieved" => run_report::Column::HealingRecieved,
+        "healingRecieved" => (run_report::Column::HealingRecieved, order),
 
         // progression
-        "highestLevel" => run_report::Column::HighestLevel,
-        "goldCollected" => run_report::Column::GoldCollected,
-        "purchases" => run_report::Column::Purchases,
-        "goldPurchases" => run_report::Column::GoldPurchases,
-        "bloodPurchases" => run_report::Column::BloodPurchases,
-        "lunarPurchases" => run_report::Column::LunarPurchases,
+        "highestLevel" => (run_report::Column::HighestLevel, order),
+        "goldCollected" => (run_report::Column::GoldCollected, order),
+        "purchases" => (run_report::Column::Purchases, order),
+        "goldPurchases" => (run_report::Column::GoldPurchases, order),
+        "bloodPurchases" => (run_report::Column::BloodPurchases, order),
+        "lunarPurchases" => (run_report::Column::LunarPurchases, order),
 
         // movement
-        "distanceTraveled" => run_report::Column::DistanceTraveledMetres,
+        "distanceTraveled" => (run_report::Column::DistanceTraveledMetres, order),
 
         _ => Err(make_error(
             StatusCode::BAD_REQUEST,
