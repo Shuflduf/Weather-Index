@@ -27,6 +27,9 @@ pub struct Model {
     pub created_at: DateTimeUtc,
     #[sea_orm(default_expr = "Expr::current_timestamp()")]
     pub updated_at: DateTimeUtc,
+
+    pub about_me: Option<String>,
+    pub region: Option<String>,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]

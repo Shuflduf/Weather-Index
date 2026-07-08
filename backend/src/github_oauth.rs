@@ -192,6 +192,8 @@ pub async fn handle_callback(
                 metadata: Set(json!({})),
                 created_at: Set(now),
                 updated_at: Set(now),
+                about_me: Set(None),
+                region: Set(None),
             }
             .insert(&state.db)
             .await

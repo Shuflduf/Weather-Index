@@ -115,7 +115,7 @@ pub async fn list(
     };
     let (sort_by, order) = match params.by.as_ref() {
         "id" => (run_report::Column::Id.into_simple_expr(), order),
-        "username" => (Expr::col((user::Entity, user::Column::Username)), order),
+        "player" => (Expr::col((user::Entity, user::Column::Username)), order),
         "uploadTime" => (run_report::Column::UploadTime.into_simple_expr(), order),
 
         // run info

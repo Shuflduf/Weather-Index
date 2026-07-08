@@ -7,7 +7,7 @@ repository = "https://github.com/Shuflduf/Weather-Index"
 description = "Weather Index backend API"
 
 [dependencies]
-axum = "0.8.9"
+axum = { version = "0.8.9", features = ["macros"] }
 better-auth-core = "0.10.0"
 chrono = "0.4"
 dotenvy = "0.15"
