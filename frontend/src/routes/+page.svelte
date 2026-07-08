@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ArrowUpNarrowWide, ArrowDownNarrowWide } from "@lucide/svelte";
+  import { ArrowUpWideNarrow, ArrowDownWideNarrow } from "@lucide/svelte";
   import { onMount, tick } from "svelte";
   import {
     BODIES,
@@ -483,10 +483,10 @@
         onclick={() => setSort(sort)}
       >
         {#if sort == "ASC"}
-          <ArrowUpNarrowWide />
+          <ArrowUpWideNarrow />
           <span>Ascending</span>
         {:else}
-          <ArrowDownNarrowWide />
+          <ArrowDownWideNarrow />
           <span>Descending</span>
         {/if}
       </button>
@@ -497,9 +497,7 @@
 </div>
 
 <div class="w-full p-8 text-primary">
-  {#await runPromise}
-    <span>loading</span>
-  {:then runs}
+  <div class="flex flex-row gap-4">
     <button
       popovertarget="visible-properties"
       class="cursor-pointer bg-default hover:bg-hover active:bg-active p-2 font-mono mb-4 border"
@@ -507,7 +505,20 @@
     >
       Visible Properties
     </button>
-
+    <span class="font-mono p-2 text-secondary flex flex-row gap-2">
+      <span>
+        Sorting By: {properties[sortProperty.by].name}
+      </span>
+      {#if sortProperty.sort == "ASC"}
+        <ArrowUpWideNarrow />
+      {:else}
+        <ArrowDownWideNarrow />
+      {/if}
+    </span>
+  </div>
+  {#await runPromise}
+    <span>loading</span>
+  {:then runs}
     <div
       class="grid"
       style="grid-template-columns: repeat({columnCount}, auto); user-select: {drag.dragging
