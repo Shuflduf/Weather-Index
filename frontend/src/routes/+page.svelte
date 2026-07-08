@@ -14,7 +14,8 @@
   import ArtifactsDisplay from "$lib/ArtifactsDisplay.svelte";
 
   const LEFT_MOUSE_BUTTON = 0;
-  const STORAGE_KEY = "table-properties";
+  const TABLE_STORAGE_KEY = "table-properties";
+  const SORT_STORAGE_KEY = "sort-property";
 
   type SortMode = "ASC" | "DESC";
 
@@ -248,7 +249,7 @@
     for (const [key, prop] of Object.entries(properties)) {
       toSave[key] = { order: prop.order, enabled: prop.enabled };
     }
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
+    localStorage.setItem(TABLE_STORAGE_KEY, JSON.stringify(toSave));
   });
 
   let drag: {
@@ -265,9 +266,15 @@
 
   let runPromise: Promise<any[]> = $state(new Promise(() => {}));
   onMount(() => {
+    const savedSort = localStorage.getItem(SORT_STORAGE_KEY);
+    if (savedSort) {
+      const parsed = JSON.parse(savedSort);
+      sortProperty = parsed;
+    }
+
     fetchRuns();
 
-    const saved = localStorage.getItem(STORAGE_KEY);
+    const saved = localStorage.getItem(TABLE_STORAGE_KEY);
     if (saved) {
       const parsed = JSON.parse(saved);
       for (const [key, prop] of Object.entries(parsed) as [
@@ -419,9 +426,7 @@
     sortProperty.by = contextMenu.id;
     sortProperty.sort = sort;
 
-    console.log(
-      sortProperty.by == contextMenu.id && sortProperty.sort == "DESC",
-    );
+    localStorage.setItem(SORT_STORAGE_KEY, JSON.stringify(sortProperty));
 
     fetchRuns();
   }
