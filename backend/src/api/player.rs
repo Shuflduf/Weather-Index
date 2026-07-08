@@ -1,12 +1,11 @@
 use std::sync::Arc;
 
 use axum::{
-    debug_handler,
     extract::{Path, State},
     Json,
 };
 use reqwest::StatusCode;
-use sea_orm::{ColumnTrait, Condition, EntityTrait, ExprTrait, QueryFilter};
+use sea_orm::{ColumnTrait, EntityTrait, QueryFilter};
 use serde::Serialize;
 
 use crate::{
@@ -38,7 +37,6 @@ impl From<user::Model> for PlayerInfo {
     }
 }
 
-#[debug_handler]
 pub async fn get(
     State(state): State<Arc<WIState>>,
     Path(username): Path<String>,

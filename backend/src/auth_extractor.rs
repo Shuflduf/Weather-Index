@@ -11,7 +11,7 @@ use crate::{
 #[derive(Debug)]
 pub struct AuthenticatedUser {
     pub user_id: String,
-    pub session_id: String,
+    pub _session_id: String,
 }
 
 impl<S> FromRequestParts<S> for AuthenticatedUser
@@ -50,7 +50,7 @@ where
 
         Ok(Self {
             user_id: session.user_id,
-            session_id: session.id,
+            _session_id: session.id,
         })
     }
 }
