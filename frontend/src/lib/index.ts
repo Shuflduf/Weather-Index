@@ -7,3 +7,12 @@ export type Property = {
   name: string;
   category: string;
 };
+
+export type PlayerInfo = {
+  id: string;
+  image?: string;
+  username?: string;
+  display_username?: string;
+  about_me?: string;
+  region?: string;
+};

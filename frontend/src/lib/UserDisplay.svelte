@@ -11,7 +11,7 @@
 <div
   class="inline-flex flex-row justify-center items-center gap-2 w-max {className}"
 >
-  <img src={user.image} alt="profile" class="h-full rounded-full" />
+  <img src={user.image} alt="profile" class="h-full border" />
   <span class="text-primary text-lg">
     {user.displayName ?? user.username}
   </span>
