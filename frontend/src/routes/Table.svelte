@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Property, SortMode } from "$lib";
+  import type { Property } from "$lib";
   import {
     BODIES,
     DIFFICULTIES,
@@ -176,9 +176,9 @@
   {#snippet basicCol(id: string, runId: string)}
     {#if properties[id].enabled}
       {@render propHeader(id)}
-      {#each runs as run, idx}
+      {#each runs as run, idx (run.id)}
         <TableBlock order={properties[id].order} {idx}>
-          <span>{formatBig(run[runId])}</span>
+          <span>{formatBig((run as Record<string, any>)[runId])}</span>
         </TableBlock>
       {/each}
     {/if}
@@ -186,7 +186,7 @@
 
   {#if properties.id.enabled}
     {@render propHeader("id")}
-    {#each runs as run, idx}
+    {#each runs as run, idx (run.id)}
       <TableBlock order={properties.id.order} {idx}>
         <a
           href={`/run/${run.id}`}
@@ -200,7 +200,7 @@
   {/if}
   {#if properties.player.enabled}
     {@render propHeader("player")}
-    {#each runs as run, idx}
+    {#each runs as run, idx (run.id)}
       <TableBlock order={properties.player.order} {idx}>
         <UserDisplay
           class="h-12"
@@ -215,7 +215,7 @@
   {/if}
   {#if properties.uploadTime.enabled}
     {@render propHeader("uploadTime")}
-    {#each runs as run, idx}
+    {#each runs as run, idx (run.id)}
       <TableBlock order={properties.uploadTime.order} {idx}>
         <span
           title={new Date(run.upload_time).toString()}
@@ -229,7 +229,7 @@
 
   {#if properties.survivor.enabled}
     {@render propHeader("survivor")}
-    {#each runs as run, idx}
+    {#each runs as run, idx (run.id)}
       <TableBlock order={properties.survivor.order} {idx}>
         <img
           src={`/bodies/${BODIES[run.survivor].icon}`}
@@ -244,7 +244,7 @@
   {/if}
   {#if properties.startTime.enabled}
     {@render propHeader("startTime")}
-    {#each runs as run, idx}
+    {#each runs as run, idx (run.id)}
       <TableBlock order={properties.startTime.order} {idx}>
         <span
           title={new Date(run.start_time).toString()}
@@ -257,7 +257,7 @@
   {/if}
   {#if properties.ending.enabled}
     {@render propHeader("ending")}
-    {#each runs as run, idx}
+    {#each runs as run, idx (run.id)}
       <TableBlock
         order={properties.ending.order}
         {idx}
@@ -276,7 +276,7 @@
   {/if}
   {#if properties.difficulty.enabled}
     {@render propHeader("difficulty")}
-    {#each runs as run, idx}
+    {#each runs as run, idx (run.id)}
       <TableBlock order={properties.difficulty.order} {idx}>
         <img
           src={`/difficulties/${DIFFICULTIES[run.difficulty].icon}`}
@@ -291,7 +291,7 @@
   {/if}
   {#if properties.timeAlive.enabled}
     {@render propHeader("timeAlive")}
-    {#each runs as run, idx}
+    {#each runs as run, idx (run.id)}
       <TableBlock order={properties.timeAlive.order} {idx}>
         <span class="">
           {formatSeconds(run.time_alive_seconds)}
@@ -301,7 +301,7 @@
   {/if}
   {#if properties.artifacts.enabled}
     {@render propHeader("artifacts")}
-    {#each runs as run, idx}
+    {#each runs as run, idx (run.id)}
       <TableBlock order={properties.artifacts.order} {idx}>
         <ArtifactsDisplay
           artifacts={run.artifacts}
@@ -336,7 +336,7 @@
 
   {#if properties.distanceTraveled.enabled}
     {@render propHeader("distanceTraveled")}
-    {#each runs as run, idx}
+    {#each runs as run, idx (run.id)}
       <TableBlock order={properties.distanceTraveled.order} {idx}>
         {formatBig(run.distance_traveled_metres)}
 

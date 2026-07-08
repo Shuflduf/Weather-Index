@@ -2,7 +2,6 @@
   import { page } from "$app/state";
   import ArtifactsDisplay from "$lib/ArtifactsDisplay.svelte";
   import {
-    ARTIFACTS,
     BODIES,
     DIFFICULTIES,
     ENDINGS,
@@ -169,7 +168,7 @@
         </div>
         <h1 class="text-2xl text-center">Items Collected</h1>
         <ul class="flex flex-row flex-wrap mt-4">
-          {#each sortItems(run.items) as [itemId, itemCount]}
+          {#each sortItems(run.items) as [itemId, itemCount] (itemId)}
             {@const item = ITEMS[Number(itemId)]}
             {#if !item.helper}
               <li class="relative">

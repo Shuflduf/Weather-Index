@@ -8,7 +8,7 @@
 </script>
 
 <div class="flex flex-col max-h-16 {className}">
-  {#each artifacts as artifact}
+  {#each artifacts as artifact (artifact)}
     <img
       src={`/artifacts/${ARTIFACTS[artifact].icon}`}
       alt={ARTIFACTS[artifact].displayName}

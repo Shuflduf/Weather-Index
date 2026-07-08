@@ -1,22 +1,6 @@
 <script lang="ts">
-  import {
-    ArrowUpWideNarrow,
-    ArrowDownWideNarrow,
-    Link,
-    ExternalLink,
-  } from "@lucide/svelte";
-  import { onMount, tick } from "svelte";
-  import {
-    BODIES,
-    DIFFICULTIES,
-    ENDINGS,
-    formatBig,
-    formatSeconds,
-    type Item,
-  } from "$lib/RoR2";
-  import UserDisplay from "$lib/UserDisplay.svelte";
-  import TableBlock from "./TableBlock.svelte";
-  import ArtifactsDisplay from "$lib/ArtifactsDisplay.svelte";
+  import { ArrowUpWideNarrow, ArrowDownWideNarrow } from "@lucide/svelte";
+  import { onMount } from "svelte";
   import Table from "./Table.svelte";
   import type { Property, SortMode } from "$lib";
   import ContextMenu from "./ContextMenu.svelte";
@@ -237,7 +221,7 @@
     by: "id",
     sort: "DESC",
   });
-  let contextMenu: any;
+  let contextMenu: any = $state();
 
   $effect(() => {
     if (!loaded) return;
@@ -305,10 +289,10 @@
   style="position-anchor: --visible-properties; position-area: bottom span-right;"
 >
   <div class="flex flex-row gap-8">
-    {#each Object.entries(propsByCategory) as [category, props]}
+    {#each Object.entries(propsByCategory) as [category, props] (category)}
       <div class="w-40">
         <h2 class="text-xl font-bold tracking-tighter">{category}</h2>
-        {#each props as prop}
+        {#each props as prop (prop.name)}
           <div class="flex flex-row justify-between">
             <span>{prop.name}</span>
             <input type="checkbox" bind:checked={prop.enabled} />
