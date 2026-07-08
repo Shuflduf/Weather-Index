@@ -27,6 +27,8 @@
   --color-default-border: #2e2e2e;
   --color-hover-border: #3d3d3d;
   --color-active-border: #828282;
+
+  --color-checked: #0091ff;
 }
 
 @layer base {
@@ -35,6 +37,9 @@
   ::after {
     @apply dark:border-default-border;
   }
+  /* input[type="checkbox"] { */
+  /* @apply; */
+  /* } */
 }
 
 html {

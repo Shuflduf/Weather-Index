@@ -1,5 +1,9 @@
 <script lang="ts">
-  import { ArrowUpWideNarrow, ArrowDownWideNarrow } from "@lucide/svelte";
+  import {
+    ArrowUpWideNarrow,
+    ArrowDownWideNarrow,
+    Check,
+  } from "@lucide/svelte";
   import { onMount } from "svelte";
   import Table from "./Table.svelte";
   import type { Property, SortMode } from "$lib";
@@ -290,12 +294,20 @@
 >
   <div class="flex flex-row gap-8">
     {#each Object.entries(propsByCategory) as [category, props] (category)}
-      <div class="w-40">
+      <div class="w-40 flex flex-col gap-1">
         <h2 class="text-xl font-bold tracking-tighter">{category}</h2>
         {#each props as prop (prop.name)}
-          <div class="flex flex-row justify-between">
+          <div class="flex flex-row justify-between relative items-center">
             <span>{prop.name}</span>
-            <input type="checkbox" bind:checked={prop.enabled} />
+            <input
+              type="checkbox"
+              bind:checked={prop.enabled}
+              class="bg-primary cursor-pointer appearance-none w-4 h-4 checked:bg-checked"
+            />
+            <Check
+              class="absolute right-0 w-4 h-4 pointer-events-none"
+              strokeWidth="2"
+            />
           </div>
         {/each}
       </div>
