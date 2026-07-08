@@ -30,13 +30,13 @@
   let properties: Record<string, Property> = $state({
     id: {
       enabled: true,
-      order: 0,
+      order: 4,
       name: "ID",
       category: "Meta",
     },
     player: {
       enabled: true,
-      order: 1,
+      order: 3,
       name: "Player",
       category: "Meta",
     },
@@ -50,7 +50,7 @@
     // run info
     survivor: {
       enabled: true,
-      order: 2,
+      order: 1,
       name: "Survivor",
       category: "Run",
     },
@@ -62,13 +62,13 @@
     },
     ending: {
       enabled: true,
-      order: 3,
+      order: 0,
       name: "Ending",
       category: "Run",
     },
     difficulty: {
       enabled: true,
-      order: 4,
+      order: 2,
       name: "Difficulty",
       category: "Run",
     },
@@ -91,7 +91,7 @@
       category: "Run",
     },
     score: {
-      enabled: true,
+      enabled: false,
       order: 6,
       name: "Score",
       category: "Run",
@@ -99,7 +99,7 @@
 
     // items
     itemsCollected: {
-      enabled: true,
+      enabled: false,
       order: 5,
       name: "Items",
       category: "Pickups",
@@ -225,6 +225,7 @@
       category: "Movement",
     },
   });
+  let defaultProperties: Record<string, Property> = {};
   let columnCount = $derived(
     Object.values(properties).filter((prop) => prop.enabled).length,
   );
@@ -266,6 +267,7 @@
 
   let runPromise: Promise<any[]> = $state(new Promise(() => {}));
   onMount(() => {
+    defaultProperties = $state.snapshot(properties);
     const savedSort = localStorage.getItem(SORT_STORAGE_KEY);
     if (savedSort) {
       const parsed = JSON.parse(savedSort);
@@ -430,6 +432,11 @@
 
     fetchRuns();
   }
+
+  function resetProperties() {
+    console.log("shit");
+    properties = structuredClone(defaultProperties);
+  }
 </script>
 
 <div
@@ -451,6 +458,12 @@
       </div>
     {/each}
   </div>
+  <button
+    class="p-2 bg-default hover:bg-hover active:bg-active cursor-pointer font-mono transition-colors"
+    onclick={resetProperties}
+  >
+    Reset
+  </button>
 </div>
 
 <div
