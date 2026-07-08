@@ -1,5 +1,10 @@
 <script lang="ts">
-  import { ArrowUpWideNarrow, ArrowDownWideNarrow } from "@lucide/svelte";
+  import {
+    ArrowUpWideNarrow,
+    ArrowDownWideNarrow,
+    Link,
+    ExternalLink,
+  } from "@lucide/svelte";
   import { onMount, tick } from "svelte";
   import {
     BODIES,
@@ -574,7 +579,13 @@
         {@render propHeader("id")}
         {#each runs as run, idx}
           <TableBlock order={properties.id.order} {idx}>
-            <a href={`/run/${run.id}`}>{run.id}</a>
+            <a
+              href={`/run/${run.id}`}
+              class="flex flex-row gap-2 underline text-lg"
+            >
+              {run.id}
+              <ExternalLink />
+            </a>
           </TableBlock>
         {/each}
       {/if}
