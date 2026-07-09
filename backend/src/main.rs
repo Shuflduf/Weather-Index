@@ -30,6 +30,7 @@ mod db;
 mod entity;
 mod error;
 mod github_oauth;
+mod ror2;
 mod run_report_dto;
 mod scoring_table;
 

@@ -1,10 +1,12 @@
 <script lang="ts">
   import { page } from "$app/state";
-  import type { PlayerInfo } from "$lib";
+  import type { PlayerInfoExtra } from "$lib";
 
   import { onMount } from "svelte";
 
-  let playerInfoPromise: Promise<PlayerInfo> = $state(new Promise(() => {}));
+  let playerInfoPromise: Promise<PlayerInfoExtra> = $state(
+    new Promise(() => {}),
+  );
   let regionPromise: Promise<any> = $state(new Promise(() => {}));
 
   onMount(() => {
@@ -49,9 +51,6 @@
           {/if}
         </h2>
         <h3 class="text-secondary text-xl">@{playerInfo.username}</h3>
-        {#if playerInfo.region}
-
-        {/if}
         <h2 class="mt-4 text-2xl tracking-tighter">About Me</h2>
         {#if playerInfo.about_me}
           {playerInfo.about_me}
@@ -60,6 +59,7 @@
         {/if}
       </div>
     </div>
+    {playerInfo.favourite_survivor}
     {JSON.stringify(playerInfo)}
   {/await}
 </div>

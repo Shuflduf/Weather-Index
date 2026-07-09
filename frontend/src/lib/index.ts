@@ -8,11 +8,15 @@ export type Property = {
   category: string;
 };
 
-export type PlayerInfo = {
+export type PlayerInfoExtra = {
   id: string;
   image?: string;
   username?: string;
   display_username?: string;
   about_me?: string;
   region?: string;
+  run_count: number;
+  win_count: number;
+  favourite_survivor?: string;
+  favourite_ending?: string;
 };

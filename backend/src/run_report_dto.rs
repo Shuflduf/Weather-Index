@@ -6,7 +6,7 @@ use serde::Deserialize;
 
 use crate::{
     entity::run_report::{self},
-    scoring_table::ScoringTable,
+    ror2,
 };
 
 #[derive(Deserialize, Debug, Clone)]
@@ -102,7 +102,7 @@ impl TryFrom<RunReportDTO> for run_report::ActiveModel {
 }
 
 fn total_run_score(dto: &RunReportDTO) -> i64 {
-    let s = ScoringTable::new();
+    let s = ror2::scoring_table();
     let score = dto.time_alive_seconds as f32 * s.time_alive_seconds
         + dto.kills as f32 * s.kills
         + dto.minion_kills as f32 * s.minion_kills
