@@ -13,6 +13,8 @@
   import UserDisplay from "$lib/UserDisplay.svelte";
   import ArtifactsDisplay from "$lib/ArtifactsDisplay.svelte";
   import { tick } from "svelte";
+  import TableSurvivor from "$lib/TableSurvivor.svelte";
+  import TableDifficulty from "$lib/TableDifficulty.svelte";
 
   const LEFT_MOUSE_BUTTON = 0;
 
@@ -231,14 +233,7 @@
     {@render propHeader("survivor")}
     {#each runs as run, idx (run.id)}
       <TableBlock order={properties.survivor.order} {idx}>
-        <img
-          src={`/bodies/${BODIES[run.survivor].icon}`}
-          alt={BODIES[run.survivor].displayName}
-          class="h-12 inline mr-2"
-        />
-        <span class="text-lg">
-          {BODIES[run.survivor].displayName}
-        </span>
+        <TableSurvivor survivor={run.survivor} />
       </TableBlock>
     {/each}
   {/if}
@@ -278,14 +273,7 @@
     {@render propHeader("difficulty")}
     {#each runs as run, idx (run.id)}
       <TableBlock order={properties.difficulty.order} {idx}>
-        <img
-          src={`/difficulties/${DIFFICULTIES[run.difficulty].icon}`}
-          alt={run.difficulty}
-          class="h-12 inline mr-2"
-        />
-        <span class="text-lg">
-          {DIFFICULTIES[run.difficulty].displayName}
-        </span>
+        <TableDifficulty difficulty={run.difficulty} />
       </TableBlock>
     {/each}
   {/if}

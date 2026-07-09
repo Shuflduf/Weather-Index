@@ -18,5 +18,5 @@ export type PlayerInfoExtra = {
   run_count: number;
   win_count: number;
   favourite_survivor?: string;
-  favourite_ending?: string;
+  favourite_difficulty?: string;
 };
