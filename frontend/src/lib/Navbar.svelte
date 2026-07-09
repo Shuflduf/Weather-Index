@@ -27,15 +27,47 @@
 </script>
 
 <div
+  class="bg-bg-secondary text-primary"
+  popover
+  id="user-menu"
+  style="position-anchor: --user-menu; position-area: bottom span-left;"
+>
+  {#snippet item(href: string, text: string)}
+    <a
+      {href}
+      class="bg-default hover:bg-hover active:bg-active p-2 block border"
+    >
+      {text}
+    </a>
+  {/snippet}
+  {#if user}
+    {@render item("/player/{user.username}", "Open Profile")}
+  {/if}
+  {@render item("/settings", "Settings")}
+  {@render item("/sign-out", "Sign Out")}
+</div>
+
+<div
   class="bg-bg-secondary flex flex-row items-center border justify-between h-18"
 >
   <a class="text-primary text-2xl font-bold tracking-tighter pl-4" href="/">
     Weather Index
   </a>
   {#if user}
-    <div class="h-full border-l px-4 flex items-center">
-      <UserDisplay class="h-14" {user} />
-    </div>
+    <button
+      class="h-full border-l px-4 flex items-center cursor-pointer transition-colors bg-bg-secondary hover:bg-hover active:bg-active"
+      popovertarget="user-menu"
+      style="anchor-name: --user-menu;"
+    >
+      <div
+        class="inline-flex flex-row justify-center items-center gap-2 w-max h-14"
+      >
+        <img src={user.image} alt="profile" class="h-full border" />
+        <span class="text-primary text-lg">
+          {user.displayName ?? user.username}
+        </span>
+      </div>
+    </button>
   {:else}
     <button
       class={`flex bg-bg-secondary hover:bg-default flex-row gap-2 text-xl border-l px-4 h-full text-primary transition justify-center items-center ${user == false ? "cursor-pointer" : "cursor-not-allowed"}`}
