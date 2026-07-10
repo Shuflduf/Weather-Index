@@ -40,7 +40,7 @@ pub const ORDERED_SURVIVORS: [&str; 18] = [
     "BanditBody",
     "ToolbotBody",
     "EngineerBody",
-    "ArtificerBody",
+    "MageBody",
     "MercBody",
     "TreebotBody",
     "LoaderBody",

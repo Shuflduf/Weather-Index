@@ -1,6 +1,8 @@
 <script lang="ts">
   import { BODIES } from "$lib/RoR2";
+  import { onMount } from "svelte";
   let { survivor }: { survivor: string } = $props();
+  onMount(() => console.log(survivor));
 </script>
 
 <img
