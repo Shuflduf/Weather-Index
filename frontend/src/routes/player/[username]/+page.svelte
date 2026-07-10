@@ -1,5 +1,6 @@
 <script lang="ts">
   import { page } from "$app/state";
+  import PFP from "$lib/PFP.svelte";
   import type { PlayerInfoExtra } from "$lib";
   import { BODIES } from "$lib/RoR2";
   import TableDifficulty from "$lib/TableDifficulty.svelte";
@@ -36,13 +37,7 @@
     {#if !("error" in playerInfo)}
       <div class="flex flex-row justify-between">
         <div class="flex flex-row gap-4">
-          {#if playerInfo.image}
-            <img
-              src={playerInfo.image}
-              alt={playerInfo.username}
-              class="h-80 border"
-            />
-          {/if}
+          <PFP src={playerInfo.image} class="h-60 border" />
           <div>
             <h2 class="text-4xl tracking-tighter">
               {#if regionPromise}

@@ -2,6 +2,7 @@
   import { SiGithub } from "@icons-pack/svelte-simple-icons";
   import { onMount } from "svelte";
   import UserDisplay from "./UserDisplay.svelte";
+  import PFP from "./PFP.svelte";
 
   let user: any = $state(null);
 
@@ -63,7 +64,7 @@
       <div
         class="inline-flex flex-row justify-center items-center gap-2 w-max h-14"
       >
-        <img src={user.image} alt="profile" class="h-full border" />
+        <PFP src={user.image} class="h-full border" />
         <span class="text-primary text-lg">
           {user.display_username ?? user.username}
         </span>
