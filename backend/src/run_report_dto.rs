@@ -1,58 +1,91 @@
 use std::error::Error;
 
 use chrono::{DateTime, Utc};
+use fake::{Dummy, Fake, Faker};
 use sea_orm::ActiveValue::Set;
 use serde::Deserialize;
 
 use crate::{
+    api::runs::{ORDERED_DIFFICULTIES, ORDERED_SURVIVORS},
     entity::run_report::{self},
-    ror2,
+    ror2::{self, endings},
 };
 
-#[derive(Deserialize, Debug, Clone)]
+#[derive(Deserialize, Debug, Clone, Dummy)]
 #[serde(rename_all = "camelCase")]
 pub struct RunReportDTO {
+    #[dummy(
+        expr = "ORDERED_SURVIVORS[Faker.fake::<usize>() % ORDERED_SURVIVORS.len()].to_string()"
+    )]
     pub survivor: String,
+    #[dummy(expr = "endings()[Faker.fake::<usize>() % endings().len()].name.clone()")]
     pub ending: String,
+    #[dummy(expr = "chrono::Utc::now().to_rfc3339()")]
     pub start_time: String,
+    #[dummy(
+        expr = "ORDERED_DIFFICULTIES[Faker.fake::<usize>() % ORDERED_DIFFICULTIES.len()].to_string()"
+    )]
     pub difficulty: String,
+    #[dummy(faker = "1..1000i64")]
     pub time_alive_seconds: i64,
+    #[dummy(expr = "vec![]")]
     pub artifacts: Vec<String>,
+    #[dummy(faker = "1..1000i16")]
     pub stages_completed: i16,
 
     // items
+    #[dummy(expr = "serde_json::json!({})")]
     pub items: serde_json::Value,
+    #[dummy(faker = "1..1000i32")]
     pub items_collected: i32,
 
     //
     // drones
+    #[dummy(faker = "1..1000i16")]
     pub drones_purchased: i16,
+    #[dummy(faker = "1..1000i16")]
     pub turrets_purchased: i16,
 
     // combat
+    #[dummy(faker = "1..1000i32")]
     pub kills: i32,
+    #[dummy(faker = "1..1000i32")]
     pub elite_kills: i32,
+    #[dummy(faker = "1..1000i32")]
     pub minion_kills: i32,
+    #[dummy(faker = "1..1000i32")]
     pub deaths: i32,
 
     // damage
+    #[dummy(faker = "1..1000i64")]
     pub damage_dealt: i64,
+    #[dummy(faker = "1..1000i64")]
     pub minion_damage_dealt: i64,
+    #[dummy(faker = "1..1000i64")]
     pub damage_taken: i64,
+    #[dummy(faker = "1..1000i64")]
     pub highest_damage_dealt: i64,
 
     // healing
+    #[dummy(faker = "1..1000i64")]
     pub healing_recieved: i64,
 
     // progression
+    #[dummy(faker = "1..1000i32")]
     pub highest_level: i32,
+    #[dummy(faker = "1..1000i64")]
     pub gold_collected: i64,
+    #[dummy(faker = "1..1000i32")]
     pub purchases: i32,
+    #[dummy(faker = "1..1000i32")]
     pub gold_purchases: i32,
+    #[dummy(faker = "1..1000i32")]
     pub blood_purchases: i32,
+    #[dummy(faker = "1..1000i32")]
     pub lunar_purchases: i32,
 
     // movement
+    #[dummy(faker = "1..1000i64")]
     pub distance_traveled_metres: i64,
 }
 

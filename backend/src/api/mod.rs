@@ -8,7 +8,7 @@ use axum::{
 use crate::WIState;
 
 mod player;
-mod runs;
+pub(crate) mod runs;
 
 pub fn router() -> Router<Arc<WIState>> {
     Router::new()

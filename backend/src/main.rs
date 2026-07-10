@@ -10,34 +10,22 @@ use better_auth::{
         oauth::OAuthProvider, AccountManagementPlugin, DeviceAuthorizationConfig,
         DeviceAuthorizationPlugin, OAuthPlugin, SessionManagementPlugin,
     },
-    AuthBuilder, AuthConfig, AxumIntegration, BetterAuth, CsrfConfig,
+    AuthBuilder, AuthConfig, AxumIntegration, CsrfConfig,
 };
 use reqwest::StatusCode;
-use sea_orm::{ActiveModelTrait, ActiveValue::Set, DatabaseConnection};
+use sea_orm::{ActiveModelTrait, ActiveValue::Set};
 
-use crate::{
+use weather_index::{
+    api,
     auth_entities::AppAdapter,
     auth_extractor::AuthenticatedUser,
+    db,
     entity::run_report,
     error::{make_error, WIError},
+    github_oauth,
     run_report_dto::RunReportDTO,
+    WIState,
 };
-
-mod api;
-mod auth_entities;
-mod auth_extractor;
-mod db;
-mod entity;
-mod error;
-mod github_oauth;
-mod ror2;
-mod run_report_dto;
-mod scoring_table;
-
-struct WIState {
-    db: DatabaseConnection,
-    auth: Arc<BetterAuth<AppAdapter>>,
-}
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
@@ -50,14 +38,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     let db = db::init_db().await.expect("Failed to initialize database");
     let pg_pool = db.get_postgres_connection_pool();
-
-    // for table in &["sessions", "users", "accounts", "verifications"] {
-    //     sqlx::query(&format!(
-    //         "ALTER TABLE {table} ALTER COLUMN updated_at SET DEFAULT NOW()"
-    //     ))
-    //     .execute(pg_pool)
-    //     .await?;
-    // }
 
     let adapter = AppAdapter::from_pool(pg_pool.clone());
 

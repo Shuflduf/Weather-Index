@@ -7,7 +7,7 @@ use axum::{
 };
 use reqwest::StatusCode;
 use sea_orm::{
-    dynamic::Model, register_entity, ActiveValue::Set, ColumnTrait, EntityTrait, QueryFilter,
+    ActiveValue::Set, ColumnTrait, EntityTrait, QueryFilter,
 };
 use serde::{Deserialize, Serialize};
 
@@ -81,7 +81,7 @@ pub async fn get(
                 format!("Failed to query users: {e}"),
             )
         })?;
-    let run_count = runs.iter().count() as i32;
+    let run_count = runs.len() as i32;
     let win_count = runs
         .iter()
         .filter(|run| {

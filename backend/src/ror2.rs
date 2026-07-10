@@ -1,4 +1,4 @@
-use std::{path::PathBuf, sync::OnceLock};
+use std::sync::OnceLock;
 
 use serde::Deserialize;
 
@@ -7,6 +7,7 @@ static SCORING: OnceLock<ScoringTable> = OnceLock::new();
 static TIERS: OnceLock<Vec<Tier>> = OnceLock::new();
 static ENDINGS: OnceLock<Vec<Ending>> = OnceLock::new();
 
+#[allow(dead_code)]
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Item {
@@ -19,6 +20,7 @@ pub struct Item {
     icon: String,
 }
 
+#[allow(dead_code)]
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Tier {

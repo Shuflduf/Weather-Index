@@ -20,7 +20,7 @@ use crate::{
 };
 
 // TODO: make not hardcoded
-const DIFFICULTIES: [&str; 11] = [
+pub const ORDERED_DIFFICULTIES: [&str; 11] = [
     "DIFFICULTY_EASY_NAME",
     "DIFFICULTY_NORMAL_NAME",
     "DIFFICULTY_HARD_NAME",
@@ -34,7 +34,7 @@ const DIFFICULTIES: [&str; 11] = [
     "ECLIPSE_8_NAME",
 ];
 
-const SURVIVORS: [&str; 18] = [
+pub const ORDERED_SURVIVORS: [&str; 18] = [
     "CommandoBody",
     "HuntressBody",
     "BanditBody",
@@ -121,7 +121,7 @@ pub async fn list(
         // run info
         "survivor" => (
             run_report::Column::Survivor.into_simple_expr(),
-            to_order(&params.sort, &SURVIVORS),
+            to_order(&params.sort, &ORDERED_SURVIVORS),
         ),
         "startTime" => (run_report::Column::StartTime.into_simple_expr(), order),
         "ending" => (
@@ -130,7 +130,7 @@ pub async fn list(
         ),
         "difficulty" => (
             run_report::Column::Difficulty.into_simple_expr(),
-            to_order(&params.sort, &DIFFICULTIES),
+            to_order(&params.sort, &ORDERED_DIFFICULTIES),
         ),
         "timeAliveSeconds" => (
             run_report::Column::TimeAliveSeconds.into_simple_expr(),
