@@ -3,7 +3,7 @@
     user,
     class: className,
   }: {
-    user: { displayName: string | null; username: string; image: string };
+    user: { display_username: string | null; username: string; image: string };
     class: string | undefined;
   } = $props();
 </script>
@@ -13,6 +13,6 @@
 >
   <img src={user.image} alt="profile" class="h-full border" />
   <a class="text-primary text-lg" href="/player/{user.username}">
-    {user.displayName ?? user.username}
+    {user.display_username ?? user.username}
   </a>
 </div>

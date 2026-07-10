@@ -101,6 +101,7 @@
         <textarea
           name="aboutMe"
           id="profile_about_me"
+          value={user.about_me}
           class="w-60 bg-default border p-2 outline-none"></textarea>
       {/if}
     </FormEntry>

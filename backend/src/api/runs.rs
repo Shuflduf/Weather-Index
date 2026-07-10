@@ -6,8 +6,7 @@ use axum::{
 };
 use reqwest::StatusCode;
 use sea_orm::{
-    prelude::Expr,
-    ColumnTrait, EntityTrait, IntoSimpleExpr, Order, QueryFilter, QueryOrder, Values,
+    prelude::Expr, ColumnTrait, EntityTrait, IntoSimpleExpr, Order, QueryFilter, QueryOrder, Values,
 };
 use serde::{Deserialize, Serialize};
 
@@ -74,6 +73,7 @@ pub struct RunReportWithUser {
     report: run_report::Model,
     user_image: Option<String>,
     user_username: Option<String>,
+    user_display_username: Option<String>,
 }
 
 #[derive(Deserialize, Debug)]
@@ -217,6 +217,7 @@ pub async fn list(
         .map(|(report, user)| RunReportWithUser {
             report,
             user_username: user.as_ref().and_then(|u| u.username.clone()),
+            user_display_username: user.as_ref().and_then(|u| u.display_username.clone()),
             user_image: user.as_ref().and_then(|u| u.image.clone()),
         })
         .collect();
@@ -243,6 +244,7 @@ pub async fn get(
     let result = RunReportWithUser {
         report,
         user_username: user.as_ref().and_then(|u| u.username.clone()),
+        user_display_username: user.as_ref().and_then(|u| u.display_username.clone()),
         user_image: user.as_ref().and_then(|u| u.image.clone()),
     };
     Ok(Json(result))

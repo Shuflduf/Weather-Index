@@ -34,6 +34,7 @@
 >
   {#snippet item(href: string, text: string)}
     <a
+      data-sveltekit-reload
       {href}
       class="bg-default hover:bg-hover active:bg-active p-2 block border"
     >
@@ -64,7 +65,7 @@
       >
         <img src={user.image} alt="profile" class="h-full border" />
         <span class="text-primary text-lg">
-          {user.displayName ?? user.username}
+          {user.display_username ?? user.username}
         </span>
       </div>
     </button>

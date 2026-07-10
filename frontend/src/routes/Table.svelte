@@ -209,7 +209,7 @@
           user={{
             username: run.user_username,
             image: run.user_image,
-            displayName: null,
+            display_username: run.user_display_username,
           }}
         />
       </TableBlock>
