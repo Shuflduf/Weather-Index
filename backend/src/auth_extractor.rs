@@ -25,11 +25,24 @@ where
         parts: &mut axum::http::request::Parts,
         state: &S,
     ) -> Result<Self, Self::Rejection> {
+        println!("{:#?}", parts.headers);
         let token = parts
             .headers
             .get("Authorization")
             .and_then(|v| v.to_str().ok())
             .and_then(|v| v.strip_prefix("Bearer "))
+            .or_else(|| {
+                parts
+                    .headers
+                    .get("cookie")
+                    .and_then(|v| v.to_str().ok())
+                    .and_then(|v| {
+                        v.split(";")
+                            .map(|c| c.trim())
+                            .find(|c| c.starts_with("better-auth.session-token="))
+                            .and_then(|c| c.strip_prefix("better-auth.session-token="))
+                    })
+            })
             .ok_or_else(|| make_error(StatusCode::UNAUTHORIZED, "Missing token".into()))?;
 
         let state = Arc::<WIState>::from_ref(state);
