@@ -14,4 +14,4 @@
   });
 </script>
 
-<span class="text-3xl text-primary p-4 block">{status}</span>
+<span class="text-3xl block">{status}</span>

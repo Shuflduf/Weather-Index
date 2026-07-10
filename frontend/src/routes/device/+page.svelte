@@ -42,18 +42,16 @@
   }
 </script>
 
-<div class="text-primary">
-  {status}
-  <button
-    class="bg-default active:bg-active transition p-2 cursor-pointer hover:bg-hover border"
-    onclick={approve}
-  >
-    AGREE
-  </button>
-  <button
-    class="bg-default active:bg-active transition p-2 cursor-pointer hover:bg-hover border"
-    onclick={deny}
-  >
-    Cancel
-  </button>
-</div>
+{status}
+<button
+  class="bg-default active:bg-active transition p-2 cursor-pointer hover:bg-hover border"
+  onclick={approve}
+>
+  AGREE
+</button>
+<button
+  class="bg-default active:bg-active transition p-2 cursor-pointer hover:bg-hover border"
+  onclick={deny}
+>
+  Cancel
+</button>

@@ -321,29 +321,27 @@
   </button>
 </div>
 
-<div class="w-full p-8 text-primary">
-  <div class="flex flex-row gap-4">
-    <button
-      popovertarget="visible-properties"
-      class="cursor-pointer bg-default hover:bg-hover active:bg-active p-2 font-mono mb-4 border"
-      style="anchor-name: --visible-properties;"
-    >
-      Visible Properties
-    </button>
-    <span class="font-mono p-2 text-secondary flex flex-row gap-2">
-      <span>
-        Sorting By: {properties[sortProperty.by].name}
-      </span>
-      {#if sortProperty.sort == "ASC"}
-        <ArrowUpWideNarrow />
-      {:else}
-        <ArrowDownWideNarrow />
-      {/if}
+<div class="flex flex-row gap-4">
+  <button
+    popovertarget="visible-properties"
+    class="cursor-pointer bg-default hover:bg-hover active:bg-active p-2 font-mono mb-4 border"
+    style="anchor-name: --visible-properties;"
+  >
+    Visible Properties
+  </button>
+  <span class="font-mono p-2 text-secondary flex flex-row gap-2">
+    <span>
+      Sorting By: {properties[sortProperty.by].name}
     </span>
-  </div>
-  {#await runPromise}
-    <span>loading</span>
-  {:then runs}
-    <Table {properties} {runs} openContextMenu={contextMenu.open} />
-  {/await}
+    {#if sortProperty.sort == "ASC"}
+      <ArrowUpWideNarrow />
+    {:else}
+      <ArrowDownWideNarrow />
+    {/if}
+  </span>
 </div>
+{#await runPromise}
+  <span>loading</span>
+{:then runs}
+  <Table {properties} {runs} openContextMenu={contextMenu.open} />
+{/await}
