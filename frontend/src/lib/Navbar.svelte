@@ -41,7 +41,7 @@
     </a>
   {/snippet}
   {#if user}
-    {@render item("/player/{user.username}", "Open Profile")}
+    {@render item(`/player/${user.username}`, "Open Profile")}
   {/if}
   {@render item("/settings", "Settings")}
   {@render item("/sign-out", "Sign Out")}

@@ -14,6 +14,7 @@ pub struct Model {
     #[auth(default = "false")]
     pub email_verified: bool,
     pub image: Option<String>,
+    #[sea_orm(unique)]
     pub username: Option<String>,
     pub display_username: Option<String>,
     #[auth(default = "false")]

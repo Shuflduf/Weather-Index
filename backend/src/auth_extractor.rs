@@ -28,20 +28,20 @@ where
         println!("{:#?}", parts.headers);
         let token = parts
             .headers
-            .get("Authorization")
+            .get("cookie")
             .and_then(|v| v.to_str().ok())
-            .and_then(|v| v.strip_prefix("Bearer "))
+            .and_then(|v| {
+                v.split(";")
+                    .map(|c| c.trim())
+                    .find(|c| c.starts_with("better-auth.session-token="))
+                    .and_then(|c| c.strip_prefix("better-auth.session-token="))
+            })
             .or_else(|| {
                 parts
                     .headers
-                    .get("cookie")
+                    .get("Authorization")
                     .and_then(|v| v.to_str().ok())
-                    .and_then(|v| {
-                        v.split(";")
-                            .map(|c| c.trim())
-                            .find(|c| c.starts_with("better-auth.session-token="))
-                            .and_then(|c| c.strip_prefix("better-auth.session-token="))
-                    })
+                    .and_then(|v| v.strip_prefix("Bearer "))
             })
             .ok_or_else(|| make_error(StatusCode::UNAUTHORIZED, "Missing token".into()))?;
 

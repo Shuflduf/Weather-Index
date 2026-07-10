@@ -1,6 +1,9 @@
 use std::sync::Arc;
 
-use axum::{routing::get, Router};
+use axum::{
+    routing::{get, post},
+    Router,
+};
 
 use crate::WIState;
 
@@ -12,4 +15,5 @@ pub fn router() -> Router<Arc<WIState>> {
         .route("/runs", get(runs::list))
         .route("/runs/{id}", get(runs::get))
         .route("/player/{username}", get(player::get))
+        .route("/player", post(player::update))
 }

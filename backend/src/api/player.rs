@@ -2,15 +2,19 @@ use std::{collections::HashMap, sync::Arc};
 
 use axum::{
     extract::{Path, State},
-    Json,
+    response::Redirect,
+    Form, Json,
 };
 use reqwest::StatusCode;
-use sea_orm::{ColumnTrait, EntityTrait, QueryFilter};
-use serde::Serialize;
+use sea_orm::{
+    dynamic::Model, register_entity, ActiveValue::Set, ColumnTrait, EntityTrait, QueryFilter,
+};
+use serde::{Deserialize, Serialize};
 
 use crate::{
+    auth_extractor::AuthenticatedUser,
     entity::{run_report, user},
-    error::{make_error, WIError},
+    error::{db_error, make_error, WIError},
     ror2, WIState,
 };
 
@@ -118,4 +122,43 @@ fn most_frequent(items: &[String]) -> Option<String> {
         .iter()
         .max_by_key(|(_, count)| *count)
         .map(|(item, _)| item.clone())
+}
+
+#[derive(Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct UpdatePlayer {
+    image: Option<String>,
+    username: Option<String>,
+    display_username: Option<String>,
+    about_me: Option<String>,
+    region: Option<String>,
+}
+
+pub async fn update(
+    current_user: AuthenticatedUser,
+    State(state): State<Arc<WIState>>,
+    Form(payload): Form<UpdatePlayer>,
+) -> Result<Redirect, WIError> {
+    let new_user = user::ActiveModel {
+        id: Set(current_user.user_id),
+        username: Set(payload.username),
+        display_username: Set(payload.display_username),
+        image: Set(payload.image),
+        region: Set(payload.region),
+        about_me: Set(payload.about_me),
+        ..Default::default()
+    };
+    user::Entity::update(new_user)
+        .validate()
+        .map_err(|e| {
+            make_error(
+                StatusCode::BAD_REQUEST,
+                format!("Could not validate data: {e}"),
+            )
+        })?
+        .exec(&state.db)
+        .await
+        .map_err(db_error)?;
+
+    Ok(Redirect::to("/settings"))
 }
