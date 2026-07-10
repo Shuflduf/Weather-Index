@@ -68,6 +68,7 @@ const ENDINGS: [&str; 9] = [
 ];
 
 #[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct RunReportWithUser {
     #[serde(flatten)]
     report: run_report::Model,

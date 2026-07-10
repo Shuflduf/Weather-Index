@@ -207,9 +207,9 @@
         <UserDisplay
           class="h-12"
           user={{
-            username: run.user_username,
-            image: run.user_image,
-            display_username: run.user_display_username,
+            username: run.userUsername,
+            image: run.userImage,
+            displayUsername: run.userDisplayUsername,
           }}
         />
       </TableBlock>
@@ -220,10 +220,10 @@
     {#each runs as run, idx (run.id)}
       <TableBlock order={properties.uploadTime.order} {idx}>
         <span
-          title={new Date(run.upload_time).toString()}
+          title={new Date(run.uploadTime).toString()}
           class="text-sm text-secondary"
         >
-          {new Date(run.upload_time).toLocaleString()}
+          {new Date(run.uploadTime).toLocaleString()}
         </span>
       </TableBlock>
     {/each}
@@ -242,10 +242,10 @@
     {#each runs as run, idx (run.id)}
       <TableBlock order={properties.startTime.order} {idx}>
         <span
-          title={new Date(run.start_time).toString()}
+          title={new Date(run.startTime).toString()}
           class="text-sm text-secondary"
         >
-          {new Date(run.start_time).toLocaleString()}
+          {new Date(run.startTime).toLocaleString()}
         </span>
       </TableBlock>
     {/each}
@@ -282,7 +282,7 @@
     {#each runs as run, idx (run.id)}
       <TableBlock order={properties.timeAlive.order} {idx}>
         <span class="">
-          {formatSeconds(run.time_alive_seconds)}
+          {formatSeconds(run.timeAliveSeconds)}
         </span>
       </TableBlock>
     {/each}
@@ -298,35 +298,35 @@
       </TableBlock>
     {/each}
   {/if}
-  {@render basicCol("stagesCompleted", "stages_completed")}
+  {@render basicCol("stagesCompleted", "stagesCompleted")}
   {@render basicCol("score", "score")}
 
-  {@render basicCol("itemsCollected", "items_collected")}
-  {@render basicCol("dronesPurchased", "drones_purchased")}
-  {@render basicCol("turretsPurchased", "turrets_purchased")}
+  {@render basicCol("itemsCollected", "itemsCollected")}
+  {@render basicCol("dronesPurchased", "dronesPurchased")}
+  {@render basicCol("turretsPurchased", "turretsPurchased")}
 
   {@render basicCol("kills", "kills")}
-  {@render basicCol("eliteKills", "elite_kills")}
-  {@render basicCol("minionKills", "minion_kills")}
+  {@render basicCol("eliteKills", "eliteKills")}
+  {@render basicCol("minionKills", "minionKills")}
   {@render basicCol("deaths", "deaths")}
-  {@render basicCol("damageDealt", "damage_dealt")}
-  {@render basicCol("minionDamageDealt", "minion_damage_dealt")}
-  {@render basicCol("damageTaken", "damage_taken")}
-  {@render basicCol("highestDamageDealt", "highest_damage_dealt")}
-  {@render basicCol("healingRecieved", "healing_recieved")}
+  {@render basicCol("damageDealt", "damageDealt")}
+  {@render basicCol("minionDamageDealt", "minionDamageDealt")}
+  {@render basicCol("damageTaken", "damageTaken")}
+  {@render basicCol("highestDamageDealt", "highestDamageDealt")}
+  {@render basicCol("healingRecieved", "healingRecieved")}
 
-  {@render basicCol("highestLevel", "highest_level")}
-  {@render basicCol("goldCollected", "gold_collected")}
+  {@render basicCol("highestLevel", "highestLevel")}
+  {@render basicCol("goldCollected", "goldCollected")}
   {@render basicCol("purchases", "purchases")}
-  {@render basicCol("goldPurchases", "gold_purchases")}
-  {@render basicCol("bloodPurchases", "blood_purchases")}
-  {@render basicCol("lunarPurchases", "lunar_purchases")}
+  {@render basicCol("goldPurchases", "goldPurchases")}
+  {@render basicCol("bloodPurchases", "bloodPurchases")}
+  {@render basicCol("lunarPurchases", "lunarPurchases")}
 
   {#if properties.distanceTraveled.enabled}
     {@render propHeader("distanceTraveled")}
     {#each runs as run, idx (run.id)}
       <TableBlock order={properties.distanceTraveled.order} {idx}>
-        {formatBig(run.distance_traveled_metres)}
+        {formatBig(run.distanceTraveledMetres)}
 
         <span class="text-yellow-200 ml-1">metres</span>
       </TableBlock>

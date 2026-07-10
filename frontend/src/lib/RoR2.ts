@@ -1,61 +1,62 @@
-import artifacts from "$lib/artifacts.json";
-import bodies from "$lib/bodies.json";
-import difficulties from "$lib/difficulties.json";
-import endings from "$lib/endings.json";
-import items from "$lib/items.json";
-import scoring_table from "$lib/scoring.json";
-import tiers from "$lib/tiers.json";
+import artifacts from "../../../data/artifacts.json";
+import bodies from "../../../data/bodies.json";
+import difficulties from "../../../data/difficulties.json";
+import endings from "../../../data/endings.json";
+import items from "../../../data/items.json";
+import scoring_table from "../../../data/scoring.json";
+import tiers from "../../../data/tiers.json";
 
 export type RunReportWithUser = {
-  user_image: string;
-  user_username: string;
+  userImage: string;
+  userUsername: string;
+  userDisplayUsername: string;
   id: number;
-  user_id: string;
-  upload_time: Date;
+  userId: string;
+  uploadTime: Date;
 
   // run info
   survivor: string;
-  start_time: Date;
+  startTime: Date;
   ending: string;
   difficulty: string;
-  time_alive_seconds: number;
+  timeAliveSeconds: number;
   artifacts: string[];
-  stages_completed: number;
+  stagesCompleted: number;
   score: number;
 
   // items
   items: Record<string, number>;
-  items_collected: number;
+  itemsCollected: number;
 
   // drones
-  drones_purchased: number;
-  turrets_purchased: number;
+  dronesPurchased: number;
+  turretsPurchased: number;
 
   // combat
   kills: number;
-  elite_kills: number;
-  minion_kills: number;
+  eliteKills: number;
+  minionKills: number;
   deaths: number;
 
   // damage
-  damage_dealt: number;
-  minion_damage_dealt: number;
-  damage_taken: number;
-  highest_damage_dealt: number;
+  damageDealt: number;
+  minionDamageDealt: number;
+  damageTaken: number;
+  highestDamageDealt: number;
 
   // healing
-  healing_recieved: number;
+  healingRecieved: number;
 
   // progression
-  highest_level: number;
-  gold_collected: number;
+  highestLevel: number;
+  goldCollected: number;
   purchases: number;
-  gold_purchases: number;
-  blood_purchases: number;
-  lunar_purchases: number;
+  goldPurchases: number;
+  bloodPurchases: number;
+  lunarPurchases: number;
 
   // movement
-  distance_traveled_metres: number;
+  distanceTraveledMetres: number;
 };
 
 export type Item = {
@@ -173,6 +174,7 @@ function sortByCount(
 }
 
 export function formatSeconds(seconds: number): string {
+  console.log(seconds);
   const date = new Date(0);
   date.setSeconds(seconds);
   const result = date.toISOString().slice(11, 19);

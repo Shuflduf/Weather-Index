@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel, Deserialize, Serialize)]
 #[sea_orm(table_name = "run_reports")]
+#[serde(rename_all = "camelCase")]
 pub struct Model {
     #[serde(default)]
     #[sea_orm(primary_key)]

@@ -83,8 +83,8 @@
         {/snippet}
         {@render score(
           "Time Alive",
-          formatSeconds(run.time_alive_seconds),
-          formatBig(run.time_alive_seconds * SCORING_TABLE.timeAliveSeconds),
+          formatSeconds(run.timeAliveSeconds),
+          formatBig(run.timeAliveSeconds * SCORING_TABLE.timeAliveSeconds),
         )}
         {@render score(
           "Kills",
@@ -93,47 +93,45 @@
         )}
         {@render score(
           "Minion Kills",
-          formatBig(run.minion_kills),
-          formatBig(run.minion_kills * SCORING_TABLE.minionKills),
+          formatBig(run.minionKills),
+          formatBig(run.minionKills * SCORING_TABLE.minionKills),
         )}
         {@render score("Deaths", formatBig(run.deaths), "0")}
         {@render score(
           "Damage Dealt",
-          formatBig(run.damage_dealt),
-          formatBig(run.damage_dealt * SCORING_TABLE.damageDealt),
+          formatBig(run.damageDealt),
+          formatBig(run.damageDealt * SCORING_TABLE.damageDealt),
         )}
         {@render score(
           "Minion Damage Dealt",
-          formatBig(run.minion_damage_dealt),
-          formatBig(run.minion_damage_dealt * SCORING_TABLE.minionDamageDealt),
+          formatBig(run.minionDamageDealt),
+          formatBig(run.minionDamageDealt * SCORING_TABLE.minionDamageDealt),
         )}
         {@render score(
           "Most Damage Dealt",
-          formatBig(run.highest_damage_dealt),
-          formatBig(
-            run.highest_damage_dealt * SCORING_TABLE.highestDamageDealt,
-          ),
+          formatBig(run.highestDamageDealt),
+          formatBig(run.highestDamageDealt * SCORING_TABLE.highestDamageDealt),
         )}
-        {@render score("Damage Taken", formatBig(run.damage_taken), "0")}
+        {@render score("Damage Taken", formatBig(run.damageTaken), "0")}
         {@render score(
           "Highest Level",
-          formatBig(run.highest_level),
-          formatBig(run.highest_level * SCORING_TABLE.highestLevel),
+          formatBig(run.highestLevel),
+          formatBig(run.highestLevel * SCORING_TABLE.highestLevel),
         )}
         {@render score(
           "Gold Collected",
-          formatBig(run.gold_collected),
-          formatBig(run.gold_collected * SCORING_TABLE.goldCollected),
+          formatBig(run.goldCollected),
+          formatBig(run.goldCollected * SCORING_TABLE.goldCollected),
         )}
         {@render score(
           "Items Collected",
-          formatBig(run.items_collected),
-          formatBig(run.items_collected * SCORING_TABLE.itemsCollected),
+          formatBig(run.itemsCollected),
+          formatBig(run.itemsCollected * SCORING_TABLE.itemsCollected),
         )}
         {@render score(
           "Stages Completed",
-          formatBig(run.stages_completed),
-          formatBig(run.stages_completed * SCORING_TABLE.stagesCompleted),
+          formatBig(run.stagesCompleted),
+          formatBig(run.stagesCompleted * SCORING_TABLE.stagesCompleted),
         )}
         {@render score(
           "Purchases",
@@ -196,23 +194,29 @@
             <UserDisplay
               class="h-12"
               user={{
-                displayName: null,
-                image: run.user_image,
-                username: run.user_username,
+                displayUsername: run.userDisplayUsername,
+                image: run.userImage,
+                username: run.userUsername,
               }}
             />
           </span>
         </div>
         <div class="flex flex-row justify-between items-center p-2">
           <span>Started:</span>
-          <span class="text-yellow-200">
-            {new Date(run.start_time).toLocaleString()}
+          <span
+            class="text-yellow-200"
+            title={new Date(run.startTime).toString()}
+          >
+            {new Date(run.startTime).toLocaleString()}
           </span>
         </div>
         <div class="flex flex-row justify-between items-center p-2">
           <span>Uploaded:</span>
-          <span class="text-yellow-200">
-            {new Date(run.upload_time).toLocaleString()}
+          <span
+            class="text-yellow-200"
+            title={new Date(run.uploadTime).toString()}
+          >
+            {new Date(run.uploadTime).toLocaleString()}
           </span>
         </div>
       </div>

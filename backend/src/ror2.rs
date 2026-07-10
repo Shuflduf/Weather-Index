@@ -1,4 +1,4 @@
-use std::sync::OnceLock;
+use std::{path::PathBuf, sync::OnceLock};
 
 use serde::Deserialize;
 
@@ -56,17 +56,17 @@ pub struct ScoringTable {
 }
 
 pub fn items() -> &'static Vec<Item> {
-    ITEMS.get_or_init(|| serde_json::from_str(include_str!("data/items.json")).unwrap())
+    ITEMS.get_or_init(|| serde_json::from_str(include_str!("../../data/items.json")).unwrap())
 }
 
 pub fn scoring_table() -> &'static ScoringTable {
-    SCORING.get_or_init(|| serde_json::from_str(include_str!("data/scoring.json")).unwrap())
+    SCORING.get_or_init(|| serde_json::from_str(include_str!("../../data/items.json")).unwrap())
 }
 
 pub fn tiers() -> &'static Vec<Tier> {
-    TIERS.get_or_init(|| serde_json::from_str(include_str!("data/tiers.json")).unwrap())
+    TIERS.get_or_init(|| serde_json::from_str(include_str!("../../data/items.json")).unwrap())
 }
 
 pub fn endings() -> &'static Vec<Ending> {
-    ENDINGS.get_or_init(|| serde_json::from_str(include_str!("data/endings.json")).unwrap())
+    ENDINGS.get_or_init(|| serde_json::from_str(include_str!("../../data/items.json")).unwrap())
 }
