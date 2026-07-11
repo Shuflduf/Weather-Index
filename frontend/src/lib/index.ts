@@ -6,6 +6,7 @@ export type Property = {
   order: number;
   name: string;
   category: string;
+  filter: string[];
 };
 
 export type PlayerInfoExtra = {

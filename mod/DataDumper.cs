@@ -135,12 +135,15 @@ namespace WeatherIndex
                     filename = $"{bodyPrefab.name}.png";
                     writeTexture(Path.Combine(outputDir, filename), tex);
                 }
-
+                var survivor =
+                    RoR2.SurvivorCatalog.GetSurvivorIndexFromBodyIndex(body.bodyIndex)
+                    != RoR2.SurvivorIndex.None;
                 bodies.Add(
                     new
                     {
                         name = body.name,
                         nameToken = body.baseNameToken,
+                        survivor = survivor,
                         displayName = RoR2.Language.GetString(body.baseNameToken),
                         icon = filename,
                     }

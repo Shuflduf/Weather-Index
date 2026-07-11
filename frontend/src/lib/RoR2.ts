@@ -141,6 +141,27 @@ export const ARTIFACTS = Object.fromEntries(
   artifacts.map((artifact: Artifact) => [artifact.name, artifact]),
 );
 
+export const ORDERED_SURVIVORS = [
+  "CommandoBody",
+  "HuntressBody",
+  "BanditBody",
+  "ToolbotBody",
+  "EngiBody",
+  "MageBody",
+  "MercBody",
+  "TreebotBody",
+  "LoaderBody",
+  "CrocoBody",
+  "CaptainBody",
+  "RailgunnerBody",
+  "VoidSurvivorBody",
+  "SeekerBody",
+  "FalseSonBody",
+  "ChefBody",
+  "DroneTechBody",
+  "DrifterBody",
+];
+
 export function countRealItems(items: Record<string, number>): number {
   return Object.entries(items)
     .filter(([id, _]) => !ITEMS[id].helper)
@@ -163,7 +184,6 @@ function sortByTier(
   [id_1, _count_1]: [number, number],
   [id_2, _count_2]: [number, number],
 ): number {
-  console.log(id_2);
   return TIERS[ITEMS[id_2].tier!].sort - TIERS[ITEMS[id_1].tier!].sort;
 }
 function sortByCount(
@@ -174,7 +194,6 @@ function sortByCount(
 }
 
 export function formatSeconds(seconds: number): string {
-  console.log(seconds);
   const date = new Date(0);
   date.setSeconds(seconds);
   const result = date.toISOString().slice(11, 19);

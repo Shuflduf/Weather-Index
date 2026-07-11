@@ -1,15 +1,22 @@
 <script lang="ts">
   import type { Property, SortMode } from "$lib";
-  import { ArrowDownWideNarrow, ArrowUpWideNarrow } from "@lucide/svelte";
+  import { BODIES, ORDERED_SURVIVORS } from "$lib/RoR2";
+  import {
+    ArrowDownWideNarrow,
+    ArrowUpWideNarrow,
+    Check,
+  } from "@lucide/svelte";
 
   let {
     properties,
     sortProperty,
     setSort,
+    setFilter,
   }: {
     properties: Record<string, Property>;
     sortProperty: { by: string; sort: SortMode };
     setSort: (sort: SortMode, by: string) => void;
+    setFilter: (prop: string, filter: string[]) => void;
   } = $props();
 
   let contextMenu: {
@@ -17,6 +24,15 @@
     id: string;
     pos: [number, number];
   } = $state({ id: "", pos: [0.0, 0.0] });
+
+  let survivorChecked: Record<string, boolean> = $state({});
+
+  $effect(() => {
+    const checked = Object.entries(survivorChecked)
+      .filter(([_, checked]) => checked)
+      .map(([name, _]) => name);
+    setFilter("survivor", checked);
+  });
 
   export function open(e: MouseEvent, id: string) {
     if (!contextMenu.popup)
@@ -33,6 +49,15 @@
 
     contextMenu.id = id;
     contextMenu.pos = [e.clientX, e.clientY];
+
+    if (id == "survivor" && Object.keys(survivorChecked).length == 0) {
+      survivorChecked = Object.fromEntries(
+        ORDERED_SURVIVORS.map((s) => [
+          s,
+          properties.survivor.filter.includes(s),
+        ]),
+      );
+    }
   }
 </script>
 
@@ -76,5 +101,29 @@
     {/snippet}
     {@render sortButton("ASC")}
     {@render sortButton("DESC")}
+
+    {#if contextMenu.id == "survivor"}
+      <div class="mt-2">
+        {#each ORDERED_SURVIVORS as survivor}
+          <div class="flex flex-row items-center gap-2 relative">
+            <input
+              type="checkbox"
+              class="aspect-square"
+              bind:checked={survivorChecked[survivor]}
+            />
+            <Check
+              class="absolute left-0 w-4 h-4 pointer-events-none"
+              strokeWidth="2"
+            />
+            <img
+              src="/bodies/{BODIES[survivor].icon}"
+              alt="survivor"
+              class="h-4"
+            />
+            {BODIES[survivor].displayName}
+          </div>
+        {/each}
+      </div>
+    {/if}
   {/if}
 </div>

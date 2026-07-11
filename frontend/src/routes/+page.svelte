@@ -19,18 +19,21 @@
       order: 4,
       name: "ID",
       category: "Meta",
+      filter: [],
     },
     player: {
       enabled: true,
       order: 3,
       name: "Player",
       category: "Meta",
+      filter: [],
     },
     uploadTime: {
       enabled: false,
       order: 8,
       name: "Upload Time",
       category: "Meta",
+      filter: [],
     },
 
     // run info
@@ -39,48 +42,56 @@
       order: 1,
       name: "Survivor",
       category: "Run",
+      filter: [],
     },
     startTime: {
       enabled: false,
       order: 7,
       name: "Start Time",
       category: "Run",
+      filter: [],
     },
     ending: {
       enabled: true,
       order: 0,
       name: "Ending",
       category: "Run",
+      filter: [],
     },
     difficulty: {
       enabled: true,
       order: 2,
       name: "Difficulty",
       category: "Run",
+      filter: [],
     },
     timeAlive: {
       enabled: false,
       order: 9,
       name: "Time Alive",
       category: "Run",
+      filter: [],
     },
     artifacts: {
       enabled: false,
       order: 10,
       name: "Artifacts",
       category: "Run",
+      filter: [],
     },
     stagesCompleted: {
       enabled: false,
       order: 11,
       name: "Stages",
       category: "Run",
+      filter: [],
     },
     score: {
       enabled: false,
       order: 6,
       name: "Score",
       category: "Run",
+      filter: [],
     },
 
     // items
@@ -89,6 +100,7 @@
       order: 5,
       name: "Items",
       category: "Pickups",
+      filter: [],
     },
 
     // drones
@@ -97,12 +109,14 @@
       order: 12,
       name: "Drones",
       category: "Pickups",
+      filter: [],
     },
     turretsPurchased: {
       enabled: false,
       order: 13,
       name: "Turrets",
       category: "Pickups",
+      filter: [],
     },
 
     // combat
@@ -111,24 +125,28 @@
       order: 14,
       name: "Kills",
       category: "Combat",
+      filter: [],
     },
     eliteKills: {
       enabled: false,
       order: 15,
       name: "Elite Kills",
       category: "Combat",
+      filter: [],
     },
     minionKills: {
       enabled: false,
       order: 16,
       name: "Minion Kills",
       category: "Combat",
+      filter: [],
     },
     deaths: {
       enabled: false,
       order: 17,
       name: "Deaths",
       category: "Combat",
+      filter: [],
     },
 
     // damage
@@ -137,24 +155,28 @@
       order: 18,
       name: "Damage Dealt",
       category: "Combat",
+      filter: [],
     },
     minionDamageDealt: {
       enabled: false,
       order: 19,
       name: "Minion Damage Dealt",
       category: "Combat",
+      filter: [],
     },
     damageTaken: {
       enabled: false,
       order: 20,
       name: "Damage Taken",
       category: "Combat",
+      filter: [],
     },
     highestDamageDealt: {
       enabled: false,
       order: 21,
       name: "Highest Damage Dealt",
       category: "Combat",
+      filter: [],
     },
 
     // healing
@@ -163,6 +185,7 @@
       order: 22,
       name: "Healing Recieved",
       category: "Combat",
+      filter: [],
     },
 
     // progression
@@ -171,36 +194,42 @@
       order: 23,
       name: "Highest Level",
       category: "Progression",
+      filter: [],
     },
     goldCollected: {
       enabled: false,
       order: 24,
       name: "Gold Collected",
       category: "Progression",
+      filter: [],
     },
     purchases: {
       enabled: false,
       order: 25,
       name: "Purchases",
       category: "Progression",
+      filter: [],
     },
     goldPurchases: {
       enabled: false,
       order: 26,
       name: "Gold Purchases",
       category: "Progression",
+      filter: [],
     },
     bloodPurchases: {
       enabled: false,
       order: 27,
       name: "Blood Purchases",
       category: "Progression",
+      filter: [],
     },
     lunarPurchases: {
       enabled: false,
       order: 28,
       name: "Lunar Purchases",
       category: "Progression",
+      filter: [],
     },
 
     // movement
@@ -209,6 +238,7 @@
       order: 29,
       name: "Distance Traveled",
       category: "Movement",
+      filter: [],
     },
   });
   let defaultProperties: Record<string, Property> = {};
@@ -230,9 +260,16 @@
   $effect(() => {
     if (!loaded) return;
 
-    const toSave: Record<string, { enabled: boolean; order: number }> = {};
+    const toSave: Record<
+      string,
+      { enabled: boolean; order: number; filter: string[] }
+    > = {};
     for (const [key, prop] of Object.entries(properties)) {
-      toSave[key] = { order: prop.order, enabled: prop.enabled };
+      toSave[key] = {
+        order: prop.order,
+        enabled: prop.enabled,
+        filter: prop.filter,
+      };
     }
     localStorage.setItem(TABLE_STORAGE_KEY, JSON.stringify(toSave));
   });
@@ -253,11 +290,12 @@
       const parsed = JSON.parse(saved);
       for (const [key, prop] of Object.entries(parsed) as [
         string,
-        { order: number; enabled: boolean },
+        { order: number; enabled: boolean; filter: string[] },
       ][]) {
         if (properties[key]) {
           properties[key].enabled = prop.enabled;
           properties[key].order = prop.order;
+          properties[key].filter = prop.filter;
         }
       }
     }
@@ -279,12 +317,22 @@
     fetchRuns();
   }
 
+  function setFilter(prop: string, filter: string[]) {
+    properties[prop].filter = filter;
+  }
+
   function resetProperties() {
     properties = structuredClone(defaultProperties);
   }
 </script>
 
-<ContextMenu bind:this={contextMenu} {properties} {sortProperty} {setSort} />
+<ContextMenu
+  bind:this={contextMenu}
+  {properties}
+  {sortProperty}
+  {setSort}
+  {setFilter}
+/>
 
 <div
   id="visible-properties"
@@ -299,11 +347,7 @@
         {#each props as prop (prop.name)}
           <div class="flex flex-row justify-between relative items-center">
             <span>{prop.name}</span>
-            <input
-              type="checkbox"
-              bind:checked={prop.enabled}
-              class="bg-primary cursor-pointer appearance-none w-4 h-4 checked:bg-checked"
-            />
+            <input type="checkbox" bind:checked={prop.enabled} class="" />
             <Check
               class="absolute right-0 w-4 h-4 pointer-events-none"
               strokeWidth="2"
