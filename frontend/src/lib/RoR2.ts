@@ -141,7 +141,7 @@ export const ARTIFACTS = Object.fromEntries(
   artifacts.map((artifact: Artifact) => [artifact.name, artifact]),
 );
 
-export const ORDERED_SURVIVORS = [
+export const ORDERED_SURVIVORS: string[] = [
   "CommandoBody",
   "HuntressBody",
   "BanditBody",
@@ -160,6 +160,20 @@ export const ORDERED_SURVIVORS = [
   "ChefBody",
   "DroneTechBody",
   "DrifterBody",
+];
+
+export const ORDERED_DIFFICULTIES: string[] = [
+  "DIFFICULTY_EASY_NAME",
+  "DIFFICULTY_NORMAL_NAME",
+  "DIFFICULTY_HARD_NAME",
+  "ECLIPSE_1_NAME",
+  "ECLIPSE_2_NAME",
+  "ECLIPSE_3_NAME",
+  "ECLIPSE_4_NAME",
+  "ECLIPSE_5_NAME",
+  "ECLIPSE_6_NAME",
+  "ECLIPSE_7_NAME",
+  "ECLIPSE_8_NAME",
 ];
 
 export function countRealItems(items: Record<string, number>): number {

@@ -211,8 +211,15 @@ pub async fn list(
     };
 
     let mut condition = Condition::all();
-    if filters.contains_key("survivor") {
-        condition = condition.add(run_report::Column::Survivor.is_in(filters["survivor"].clone()))
+    for filter in [
+        filters
+            .get("difficulty")
+            .map(|f| run_report::Column::Difficulty.is_in(f)),
+        filters
+            .get("survivor")
+            .map(|f| run_report::Column::Survivor.is_in(f)),
+    ] {
+        condition = condition.add_option(filter);
     }
     let reports = RunReport::find()
         .order_by(sort_by, order)

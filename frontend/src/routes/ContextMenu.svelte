@@ -1,6 +1,11 @@
 <script lang="ts">
   import type { Property, SortMode } from "$lib";
-  import { BODIES, ORDERED_SURVIVORS } from "$lib/RoR2";
+  import {
+    BODIES,
+    DIFFICULTIES,
+    ORDERED_DIFFICULTIES,
+    ORDERED_SURVIVORS,
+  } from "$lib/RoR2";
   import {
     ArrowDownWideNarrow,
     ArrowUpWideNarrow,
@@ -26,6 +31,7 @@
   } = $state({ id: "", pos: [0.0, 0.0] });
 
   let survivorChecked: Record<string, boolean> = $state({});
+  let difficultyChecked: Record<string, boolean> = $state({});
 
   // $effect(() => {
   // });
@@ -124,6 +130,36 @@
               class="h-4"
             />
             {BODIES[survivor].displayName}
+          </div>
+        {/each}
+      </div>
+    {/if}
+    {#if contextMenu.id == "difficulty"}
+      <div class="mt-2">
+        {#each ORDERED_DIFFICULTIES as difficulty}
+          <div class="flex flex-row items-center gap-2 relative">
+            <input
+              type="checkbox"
+              class="aspect-square"
+              checked={difficultyChecked[difficulty]}
+              onchange={(e) => {
+                difficultyChecked[difficulty] = e.currentTarget.checked;
+                const checked = Object.entries(difficultyChecked)
+                  .filter(([_, checked]) => checked)
+                  .map(([name, _]) => name);
+                setFilter("difficulty", checked);
+              }}
+            />
+            <Check
+              class="absolute left-0 w-4 h-4 pointer-events-none"
+              strokeWidth="2"
+            />
+            <img
+              src="/difficulties/{DIFFICULTIES[difficulty].icon}"
+              alt="difficulty"
+              class="h-4"
+            />
+            {DIFFICULTIES[difficulty].displayName}
           </div>
         {/each}
       </div>
