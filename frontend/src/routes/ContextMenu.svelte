@@ -246,7 +246,6 @@
           <input
             type="number"
             min="0"
-            placeholder="0"
             value={properties[prop].filter.length != 0
               ? properties[prop].filter[0].slice(1)
               : 0}
@@ -254,9 +253,6 @@
             onchange={(e) => {
               const value = Math.abs(Math.floor(Number(e.currentTarget.value)));
               e.currentTarget.value = value.toString();
-              if (value == 0) {
-                e.currentTarget.value = "";
-              }
               if (properties[prop].filter.length == 0) {
                 setFilter(prop, [`>${value}`]);
                 return;

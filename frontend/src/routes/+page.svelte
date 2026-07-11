@@ -3,11 +3,14 @@
     ArrowUpWideNarrow,
     ArrowDownWideNarrow,
     Check,
+    ChevronLeft,
+    ChevronRight,
   } from "@lucide/svelte";
   import { onMount } from "svelte";
   import Table from "./Table.svelte";
   import type { Property, SortMode } from "$lib";
   import ContextMenu from "./ContextMenu.svelte";
+  import { formatBig } from "$lib/RoR2";
 
   const TABLE_STORAGE_KEY = "table-properties";
   const SORT_STORAGE_KEY = "sort-property";
@@ -396,6 +399,33 @@
       <ArrowDownWideNarrow />
     {/if}
   </span>
+
+  {#each Object.entries(properties) as [key, prop]}
+    {#if prop.filter.length > 0}
+      <button
+        onclick={() => {
+          prop.filter = [];
+          fetchRuns();
+        }}
+        class="p-2 bg-default hover:bg-hover active:bg-active h-min border cursor-pointer flex flex-row gap-2 items-center font-mono"
+        title="Click to remove filter"
+      >
+        <span class="font-bold text-lg">
+          {prop.name}
+        </span>
+        {#if prop.filter[0].startsWith("<")}
+          <ChevronLeft />
+        {:else if prop.filter[0].startsWith(">")}
+          <ChevronRight />
+        {/if}
+        {#if prop.filter[0].startsWith("<") || prop.filter[0].startsWith(">")}
+          <span>
+            {formatBig(Number(prop.filter[0].slice(1)))}
+          </span>
+        {/if}
+      </button>
+    {/if}
+  {/each}
 </div>
 {#await runPromise}
   <span>loading</span>
