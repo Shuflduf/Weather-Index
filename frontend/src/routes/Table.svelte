@@ -175,11 +175,11 @@
     </div>
   {/snippet}
 
-  {#snippet basicCol(id: string, runId: string)}
-    {#if properties[id].enabled}
-      {@render propHeader(id)}
+  {#snippet basicCol(prop: string, runId: string)}
+    {#if properties[prop].enabled}
+      {@render propHeader(prop)}
       {#each runs as run, idx (run.id)}
-        <TableBlock order={properties[id].order} {idx}>
+        <TableBlock order={properties[prop].order} {idx}>
           <span>{formatBig((run as Record<string, any>)[runId])}</span>
         </TableBlock>
       {/each}

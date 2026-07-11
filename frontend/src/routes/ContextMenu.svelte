@@ -39,6 +39,7 @@
   let endingChecked: Record<string, boolean> = $state({});
 
   export function open(e: MouseEvent, id: string) {
+    console.log(id);
     if (!contextMenu.popup)
       contextMenu.popup = document.getElementById("context-menu")!;
 
@@ -246,7 +247,9 @@
             type="number"
             min="0"
             placeholder="0"
-            value={properties[prop].filter[0].slice(1)}
+            value={properties[prop].filter.length != 0
+              ? properties[prop].filter[0].slice(1)
+              : 0}
             class="p-2 border bg-default hover:bg-hover active:bg-active outline-none font-mono w-full transition-colors text-xs"
             onchange={(e) => {
               const value = Math.abs(Math.floor(Number(e.currentTarget.value)));
@@ -266,5 +269,27 @@
     {/snippet}
 
     {@render numberFilter("id")}
+    {@render numberFilter("timeAliveSeconds")}
+    {@render numberFilter("stagesCompleted")}
+    {@render numberFilter("score")}
+    {@render numberFilter("itemsCollected")}
+    {@render numberFilter("dronesPurchased")}
+    {@render numberFilter("turretsPurchased")}
+    {@render numberFilter("kills")}
+    {@render numberFilter("eliteKills")}
+    {@render numberFilter("minionKills")}
+    {@render numberFilter("deaths")}
+    {@render numberFilter("damageDealt")}
+    {@render numberFilter("minionDamageDealt")}
+    {@render numberFilter("damageTaken")}
+    {@render numberFilter("highestDamageDealt")}
+    {@render numberFilter("healingRecieved")}
+    {@render numberFilter("highestLevel")}
+    {@render numberFilter("goldCollected")}
+    {@render numberFilter("purchases")}
+    {@render numberFilter("goldPurchases")}
+    {@render numberFilter("bloodPurchases")}
+    {@render numberFilter("lunarPurchases")}
+    {@render numberFilter("distanceTraveledMetres")}
   {/if}
 </div>

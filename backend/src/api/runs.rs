@@ -211,6 +211,54 @@ pub async fn list(
     };
 
     let mut condition = Condition::all();
+    let numerical_conditions = [
+        ("id", run_report::Column::Id),
+        //
+        ("timeAliveSeconds", run_report::Column::TimeAliveSeconds),
+        ("stagesCompleted", run_report::Column::StagesCompleted),
+        ("score", run_report::Column::Score),
+        //
+        ("itemsCollected", run_report::Column::ItemsCollected),
+        //
+        ("dronesPurchased", run_report::Column::DronesPurchased),
+        ("turretsPurchased", run_report::Column::TurretsPurchased),
+        //
+        ("kills", run_report::Column::Kills),
+        ("eliteKills", run_report::Column::EliteKills),
+        ("minionKills", run_report::Column::MinionKills),
+        ("deaths", run_report::Column::Deaths),
+        //
+        ("damageDealt", run_report::Column::DamageDealt),
+        ("minionDamageDealt", run_report::Column::MinionDamageDealt),
+        ("damageTaken", run_report::Column::DamageTaken),
+        ("highestDamageDealt", run_report::Column::HighestDamageDealt),
+        //
+        ("healingRecieved", run_report::Column::HealingRecieved),
+        //
+        ("highestLevel", run_report::Column::HighestLevel),
+        ("goldCollected", run_report::Column::GoldCollected),
+        ("purchases", run_report::Column::Purchases),
+        ("goldPurchases", run_report::Column::GoldPurchases),
+        ("bloodPurchases", run_report::Column::BloodPurchases),
+        ("lunarPurchases", run_report::Column::LunarPurchases),
+        //
+        (
+            "distanceTraveledMetres",
+            run_report::Column::DistanceTraveledMetres,
+        ),
+    ]
+    .map(|(name, col)| {
+        filters.get(name).and_then(|f| f.first()).and_then(|f| {
+            let (sign, rest) = f.split_at(1);
+            let value = rest.parse::<i64>().ok()?;
+            Some(match sign {
+                ">" => col.gt(value),
+                "<" => col.lt(value),
+                _ => return None,
+            })
+        })
+    });
+
     for filter in [
         filters
             .get("difficulty")
@@ -221,16 +269,10 @@ pub async fn list(
         filters
             .get("ending")
             .map(|f| run_report::Column::Ending.is_in(f)),
-        filters.get("id").and_then(|f| f.first()).and_then(|f| {
-            let (sign, rest) = f.split_at(1);
-            let value = rest.parse::<i64>().ok()?;
-            Some(match sign {
-                ">" => run_report::Column::Id.gt(value),
-                "<" => run_report::Column::Id.lt(value),
-                _ => return None,
-            })
-        }),
-    ] {
+    ]
+    .into_iter()
+    .chain(numerical_conditions)
+    {
         condition = condition.add_option(filter);
     }
     println!("{condition:#?}");
