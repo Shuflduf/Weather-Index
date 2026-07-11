@@ -3,7 +3,9 @@
   import {
     BODIES,
     DIFFICULTIES,
+    ENDINGS,
     ORDERED_DIFFICULTIES,
+    ORDERED_ENDINGS,
     ORDERED_SURVIVORS,
   } from "$lib/RoR2";
   import {
@@ -32,9 +34,7 @@
 
   let survivorChecked: Record<string, boolean> = $state({});
   let difficultyChecked: Record<string, boolean> = $state({});
-
-  // $effect(() => {
-  // });
+  let endingChecked: Record<string, boolean> = $state({});
 
   export function open(e: MouseEvent, id: string) {
     if (!contextMenu.popup)
@@ -81,6 +81,10 @@
       <input
         type="checkbox"
         bind:checked={properties[contextMenu.id].enabled}
+      />
+      <Check
+        class="absolute right-2 w-4 h-4 pointer-events-none"
+        strokeWidth="2"
       />
     </div>
     {#snippet sortButton(sort: SortMode)}
@@ -134,6 +138,7 @@
         {/each}
       </div>
     {/if}
+
     {#if contextMenu.id == "difficulty"}
       <div class="mt-2">
         {#each ORDERED_DIFFICULTIES as difficulty}
@@ -160,6 +165,39 @@
               class="h-4"
             />
             {DIFFICULTIES[difficulty].displayName}
+          </div>
+        {/each}
+      </div>
+    {/if}
+    {#if contextMenu.id == "ending"}
+      <div class="mt-2">
+        {#each ORDERED_ENDINGS as ending}
+          <div
+            class="flex flex-row items-center gap-2 relative p-2 border"
+            style="background-color: {ENDINGS[ending].colorBg};"
+          >
+            <input
+              type="checkbox"
+              class="aspect-square"
+              checked={endingChecked[ending]}
+              onchange={(e) => {
+                endingChecked[ending] = e.currentTarget.checked;
+                const checked = Object.entries(endingChecked)
+                  .filter(([_, checked]) => checked)
+                  .map(([name, _]) => name);
+                setFilter("ending", checked);
+              }}
+            />
+            <Check
+              class="absolute left-2 w-4 h-4 pointer-events-none"
+              strokeWidth="2"
+            />
+            <img
+              src="/endings/{ENDINGS[ending].icon}"
+              alt="ending"
+              class="h-4"
+            />
+            {ENDINGS[ending].displayName}
           </div>
         {/each}
       </div>

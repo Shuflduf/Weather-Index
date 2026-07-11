@@ -38,7 +38,7 @@
     @apply dark:border-default-border;
   }
   input[type="checkbox"] {
-    @apply bg-primary cursor-pointer appearance-none w-4 h-4 checked:bg-checked;
+    @apply bg-primary cursor-pointer appearance-none w-4 h-4 checked:bg-checked border;
   }
 }
 

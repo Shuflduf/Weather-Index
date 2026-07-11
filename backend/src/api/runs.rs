@@ -56,7 +56,7 @@ pub const ORDERED_SURVIVORS: [&str; 18] = [
     "DrifterBody",
 ];
 
-const ENDINGS: [&str; 9] = [
+const ORDERED_ENDINGS: [&str; 9] = [
     "StandardLoss",
     "EscapeSequenceFailed",
     "PrismaticTrialEnding",
@@ -135,7 +135,7 @@ pub async fn list(
         "startTime" => (run_report::Column::StartTime.into_simple_expr(), order),
         "ending" => (
             run_report::Column::Ending.into_simple_expr(),
-            to_order(&params.sort, &ENDINGS),
+            to_order(&params.sort, &ORDERED_ENDINGS),
         ),
         "difficulty" => (
             run_report::Column::Difficulty.into_simple_expr(),
@@ -218,6 +218,9 @@ pub async fn list(
         filters
             .get("survivor")
             .map(|f| run_report::Column::Survivor.is_in(f)),
+        filters
+            .get("ending")
+            .map(|f| run_report::Column::Ending.is_in(f)),
     ] {
         condition = condition.add_option(filter);
     }

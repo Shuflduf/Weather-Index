@@ -53,7 +53,7 @@
     "name": "PrismaticTrialEnding",
     "nameToken": "GAME_RESULT_WON",
     "endingMessage": "Victory!",
-    "displayName": "PrismaticTrialEnding",
+    "displayName": "Prismatic Trial",
     "isWin": true,
     "icon": "PrismaticTrialEnding.png",
     "colorFg": "#B0DD80",

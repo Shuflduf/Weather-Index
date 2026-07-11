@@ -176,6 +176,18 @@ export const ORDERED_DIFFICULTIES: string[] = [
   "ECLIPSE_8_NAME",
 ];
 
+export const ORDERED_ENDINGS: string[] = [
+  "StandardLoss",
+  "EscapeSequenceFailed",
+  "PrismaticTrialEnding",
+  "VoidEnding",
+  "DecompileEnding",
+  "RebirthEndingDef",
+  "ObliterationEnding",
+  "LimboEnding",
+  "MainEnding",
+];
+
 export function countRealItems(items: Record<string, number>): number {
   return Object.entries(items)
     .filter(([id, _]) => !ITEMS[id].helper)
