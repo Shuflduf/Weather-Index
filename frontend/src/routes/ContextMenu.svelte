@@ -254,6 +254,9 @@
             onchange={(e) => {
               const value = Math.abs(Math.floor(Number(e.currentTarget.value)));
               e.currentTarget.value = value.toString();
+              if (value == 0) {
+                e.currentTarget.value = "";
+              }
               if (properties[prop].filter.length == 0) {
                 setFilter(prop, [`>${value}`]);
                 return;
