@@ -141,7 +141,7 @@ pub async fn list(
             run_report::Column::Difficulty.into_simple_expr(),
             to_order(&params.sort, &ORDERED_DIFFICULTIES),
         ),
-        "timeAliveSeconds" => (
+        "timeAlive" => (
             run_report::Column::TimeAliveSeconds.into_simple_expr(),
             order,
         ),
@@ -214,7 +214,7 @@ pub async fn list(
     let numerical_conditions = [
         ("id", run_report::Column::Id),
         //
-        ("timeAliveSeconds", run_report::Column::TimeAliveSeconds),
+        ("timeAlive", run_report::Column::TimeAliveSeconds),
         ("stagesCompleted", run_report::Column::StagesCompleted),
         ("score", run_report::Column::Score),
         //

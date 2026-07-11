@@ -268,7 +268,7 @@
     {/snippet}
 
     {@render numberFilter("id")}
-    {@render numberFilter("timeAliveSeconds")}
+    {@render numberFilter("timeAlive")}
     {@render numberFilter("stagesCompleted")}
     {@render numberFilter("score")}
     {@render numberFilter("itemsCollected")}
