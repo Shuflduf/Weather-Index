@@ -27,12 +27,8 @@
 
   let survivorChecked: Record<string, boolean> = $state({});
 
-  $effect(() => {
-    const checked = Object.entries(survivorChecked)
-      .filter(([_, checked]) => checked)
-      .map(([name, _]) => name);
-    setFilter("survivor", checked);
-  });
+  // $effect(() => {
+  // });
 
   export function open(e: MouseEvent, id: string) {
     if (!contextMenu.popup)
@@ -109,7 +105,14 @@
             <input
               type="checkbox"
               class="aspect-square"
-              bind:checked={survivorChecked[survivor]}
+              checked={survivorChecked[survivor]}
+              onchange={(e) => {
+                survivorChecked[survivor] = e.currentTarget.checked;
+                const checked = Object.entries(survivorChecked)
+                  .filter(([_, checked]) => checked)
+                  .map(([name, _]) => name);
+                setFilter("survivor", checked);
+              }}
             />
             <Check
               class="absolute left-0 w-4 h-4 pointer-events-none"

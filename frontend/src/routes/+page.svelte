@@ -283,8 +283,6 @@
       sortProperty = parsed;
     }
 
-    fetchRuns();
-
     const saved = localStorage.getItem(TABLE_STORAGE_KEY);
     if (saved) {
       const parsed = JSON.parse(saved);
@@ -299,13 +297,26 @@
         }
       }
     }
+
+    fetchRuns();
     loaded = true;
   });
 
   function fetchRuns() {
-    runPromise = fetch("/api/runs?" + new URLSearchParams(sortProperty)).then(
-      (r) => r.json(),
+    const filters = Object.fromEntries(
+      Object.entries(properties)
+        .filter(([_, data]) => {
+          return data.filter && data.filter.length > 0;
+        })
+        .map(([prop, data]) => [prop, data.filter]),
     );
+    runPromise = fetch(
+      "/api/runs?" +
+        new URLSearchParams({
+          filters: JSON.stringify(filters),
+          ...sortProperty,
+        }),
+    ).then((r) => r.json());
   }
 
   function setSort(sort: SortMode, by: string) {
@@ -319,6 +330,8 @@
 
   function setFilter(prop: string, filter: string[]) {
     properties[prop].filter = filter;
+
+    fetchRuns();
   }
 
   function resetProperties() {

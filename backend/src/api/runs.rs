@@ -1,4 +1,4 @@
-use std::sync::Arc;
+use std::{collections::HashMap, sync::Arc};
 
 use axum::{
     extract::{Path, Query, State},
@@ -6,7 +6,8 @@ use axum::{
 };
 use reqwest::StatusCode;
 use sea_orm::{
-    prelude::Expr, ColumnTrait, EntityTrait, IntoSimpleExpr, Order, QueryFilter, QueryOrder, Values,
+    prelude::Expr, ColumnTrait, Condition, EntityTrait, IntoSimpleExpr, Order, QueryFilter,
+    QueryOrder, Values,
 };
 use serde::{Deserialize, Serialize};
 
@@ -83,6 +84,7 @@ pub struct ListParams {
     by: String,
     #[serde(default = "default_sort")]
     sort: String,
+    filters: Option<String>,
 }
 
 fn default_sort_by() -> String {
@@ -104,7 +106,14 @@ pub async fn list(
     State(state): State<Arc<WIState>>,
     Query(params): Query<ListParams>,
 ) -> Result<Json<Vec<RunReportWithUser>>, WIError> {
-    println!("{params:?}");
+    let filters: HashMap<String, Vec<String>> = params
+        .filters
+        .as_deref()
+        .map(serde_json::from_str)
+        .transpose()
+        .map_err(|e| make_error(StatusCode::BAD_REQUEST, format!("Invalid filter json: {e}")))?
+        .unwrap_or_default();
+    println!("{:?}", filters);
     let order = match params.sort.as_ref() {
         "DESC" => Order::Desc,
         "ASC" => Order::Asc,
@@ -201,8 +210,13 @@ pub async fn list(
         ))?,
     };
 
+    let mut condition = Condition::all();
+    if filters.contains_key("survivor") {
+        condition = condition.add(run_report::Column::Survivor.is_in(filters["survivor"].clone()))
+    }
     let reports = RunReport::find()
         .order_by(sort_by, order)
+        .filter(condition)
         .find_also_related(user::Entity)
         .all(&state.db)
         .await
