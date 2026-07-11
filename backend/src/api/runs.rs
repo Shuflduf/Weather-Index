@@ -221,9 +221,19 @@ pub async fn list(
         filters
             .get("ending")
             .map(|f| run_report::Column::Ending.is_in(f)),
+        filters.get("id").and_then(|f| f.first()).and_then(|f| {
+            let (sign, rest) = f.split_at(1);
+            let value = rest.parse::<i64>().ok()?;
+            Some(match sign {
+                ">" => run_report::Column::Id.gt(value),
+                "<" => run_report::Column::Id.lt(value),
+                _ => return None,
+            })
+        }),
     ] {
         condition = condition.add_option(filter);
     }
+    println!("{condition:#?}");
     let reports = RunReport::find()
         .order_by(sort_by, order)
         .filter(condition)

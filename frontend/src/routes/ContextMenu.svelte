@@ -12,6 +12,8 @@
     ArrowDownWideNarrow,
     ArrowUpWideNarrow,
     Check,
+    ChevronLeft,
+    ChevronRight,
   } from "@lucide/svelte";
 
   let {
@@ -59,6 +61,25 @@
           properties.survivor.filter.includes(s),
         ]),
       );
+    }
+  }
+
+  function swapSign(prop: string) {
+    const p = properties[prop];
+    if (p.filter.length == 0) {
+      setFilter(prop, ["<0"]);
+      return;
+    }
+
+    const filter = p.filter[0];
+    if (filter.startsWith("<")) {
+      const value = filter.slice(1);
+      setFilter(prop, [`>${value}`]);
+
+      return;
+    } else if (filter.startsWith(">")) {
+      const value = filter.slice(1);
+      setFilter(prop, [`<${value}`]);
     }
   }
 </script>
@@ -202,5 +223,48 @@
         {/each}
       </div>
     {/if}
+
+    {#snippet numberFilter(prop: string)}
+      {#if contextMenu.id == prop}
+        <div class="mt-2 flex flex-row w-full">
+          <!--
+          <span class="h-full block p-2 font-bold">
+            {properties[prop].name}
+          </span>
+          -->
+          <button
+            onclick={() => swapSign(prop)}
+            class="p-2 cursor-pointer border bg-default hover:bg-hover active:bg-hover transition-colors"
+          >
+            {#if properties[prop].filter.length == 0 || properties[prop].filter[0].startsWith(">")}
+              <ChevronRight />
+            {:else}
+              <ChevronLeft />
+            {/if}
+          </button>
+          <input
+            type="number"
+            min="0"
+            placeholder="0"
+            value={properties[prop].filter[0].slice(1)}
+            class="p-2 border bg-default hover:bg-hover active:bg-active outline-none font-mono w-full transition-colors text-xs"
+            onchange={(e) => {
+              const value = Math.abs(Math.floor(Number(e.currentTarget.value)));
+              e.currentTarget.value = value.toString();
+              if (properties[prop].filter.length == 0) {
+                setFilter(prop, [`>${value}`]);
+                return;
+              }
+
+              const sign = properties[prop].filter[0].slice(0, 1);
+              console.log(sign);
+              setFilter(prop, [`${sign}${value}`]);
+            }}
+          />
+        </div>
+      {/if}
+    {/snippet}
+
+    {@render numberFilter("id")}
   {/if}
 </div>

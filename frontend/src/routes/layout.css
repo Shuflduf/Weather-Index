@@ -37,8 +37,19 @@
   ::after {
     @apply dark:border-default-border;
   }
+
   input[type="checkbox"] {
     @apply bg-primary cursor-pointer appearance-none w-4 h-4 checked:bg-checked border;
+  }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
   }
 }
 
