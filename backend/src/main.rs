@@ -22,10 +22,9 @@ use weather_index::{
     api,
     auth_entities::AppAdapter,
     auth_extractor::AuthenticatedUser,
-    db, discord_oauth,
+    db,
     entity::run_report,
     error::{make_error, WIError},
-    github_oauth,
     run_report_dto::RunReportDTO,
     WIState,
 };
