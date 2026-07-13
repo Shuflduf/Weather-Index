@@ -25,7 +25,6 @@ where
         parts: &mut axum::http::request::Parts,
         state: &S,
     ) -> Result<Self, Self::Rejection> {
-        println!("{:#?}", parts.headers);
         let token = parts
             .headers
             .get("cookie")

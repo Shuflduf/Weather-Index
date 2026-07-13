@@ -90,7 +90,6 @@ async fn insert_new_run(
     State(state): State<Arc<WIState>>,
     Json(payload): Json<RunReportDTO>,
 ) -> Result<Json<&'static str>, WIError> {
-    println!("{user:?}");
     let mut game_run: run_report::ActiveModel =
         payload.try_into().map_err(|e: Box<dyn Error>| {
             make_error(StatusCode::BAD_REQUEST, format!("Failed to parse: {e}"))

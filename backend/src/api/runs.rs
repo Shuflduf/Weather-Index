@@ -6,8 +6,8 @@ use axum::{
 };
 use reqwest::StatusCode;
 use sea_orm::{
-    prelude::Expr, ColumnTrait, Condition, EntityTrait, IntoSimpleExpr, Order, QueryFilter,
-    QueryOrder, Values,
+    debug_print, prelude::Expr, ColumnTrait, Condition, EntityTrait, IntoSimpleExpr, Order,
+    QueryFilter, QueryOrder, Values,
 };
 use serde::{Deserialize, Serialize};
 
@@ -113,7 +113,7 @@ pub async fn list(
         .transpose()
         .map_err(|e| make_error(StatusCode::BAD_REQUEST, format!("Invalid filter json: {e}")))?
         .unwrap_or_default();
-    println!("{:?}", filters);
+    // println!("{:?}", filters);
     let order = match params.sort.as_ref() {
         "DESC" => Order::Desc,
         "ASC" => Order::Asc,
@@ -258,6 +258,21 @@ pub async fn list(
             })
         })
     });
+    let time_conditions = [
+        ("startTime", run_report::Column::StartTime),
+        ("uploadTime", run_report::Column::UploadTime),
+    ]
+    .map(|(name, col)| {
+        filters.get(name).and_then(|f| f.first()).and_then(|f| {
+            let (sign, rest) = f.split_at(1);
+            let value = chrono::NaiveDateTime::parse_from_str(rest, "%Y-%m-%dT%H:%M").ok()?;
+            Some(match sign {
+                ">" => col.gt(value),
+                "<" => col.lt(value),
+                _ => return None,
+            })
+        })
+    });
 
     for filter in [
         filters
@@ -272,10 +287,10 @@ pub async fn list(
     ]
     .into_iter()
     .chain(numerical_conditions)
+    .chain(time_conditions)
     {
         condition = condition.add_option(filter);
     }
-    println!("{condition:#?}");
     let reports = RunReport::find()
         .order_by(sort_by, order)
         .filter(condition)

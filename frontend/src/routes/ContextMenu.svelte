@@ -267,6 +267,50 @@
       {/if}
     {/snippet}
 
+    {#snippet timeFilter(prop: string)}
+      {#if contextMenu.id == prop}
+        <div class="mt-2 w-full">
+          <button
+            onclick={() => swapSign(prop)}
+            class="p-2 cursor-pointer border bg-default hover:bg-hover active:bg-hover transition-colors w-full flex justify-center"
+          >
+            {#if properties[prop].filter.length == 0 || properties[prop].filter[0].startsWith(">")}
+              <ChevronRight />
+            {:else}
+              <ChevronLeft />
+            {/if}
+          </button>
+          <input
+            type="datetime-local"
+            class="w-full text-xs"
+            value={properties[prop].filter.length != 0
+              ? properties[prop].filter[0].slice(1)
+              : "0001-01-01T00:00"}
+            onchange={(e) => {
+              const oldValue =
+                properties[prop].filter.length > 0
+                  ? properties[prop].filter[0].slice(1)
+                  : "0001-01-01T00:00";
+
+              const value = e.currentTarget.value;
+              if (value == "") {
+                e.currentTarget.value = oldValue;
+              }
+              console.log(value);
+              if (properties[prop].filter.length == 0) {
+                setFilter(prop, [`>${value}`]);
+                return;
+              }
+
+              const sign = properties[prop].filter[0].slice(0, 1);
+              console.log(sign);
+              setFilter(prop, [`${sign}${value}`]);
+            }}
+          />
+        </div>
+      {/if}
+    {/snippet}
+
     {@render numberFilter("id")}
     {@render numberFilter("timeAlive")}
     {@render numberFilter("stagesCompleted")}
@@ -290,5 +334,8 @@
     {@render numberFilter("bloodPurchases")}
     {@render numberFilter("lunarPurchases")}
     {@render numberFilter("distanceTraveledMetres")}
+
+    {@render timeFilter("startTime")}
+    {@render timeFilter("uploadTime")}
   {/if}
 </div>
