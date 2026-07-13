@@ -169,7 +169,9 @@
       class="items-center justify-center h-12 active:bg-active hover:bg-hover transition-colors cursor-grab flex"
       style="order: {properties[id].order}; grid-row: 1;"
     >
-      <h2 class="text-xl tracking-tight text-center font-bold">
+      <h2
+        class="text-xl tracking-tight text-center font-bold px-2 relative z-2"
+      >
         {properties[id].name}
       </h2>
     </div>

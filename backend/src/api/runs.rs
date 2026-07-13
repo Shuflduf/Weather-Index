@@ -6,8 +6,8 @@ use axum::{
 };
 use reqwest::StatusCode;
 use sea_orm::{
-    debug_print, prelude::Expr, ColumnTrait, Condition, EntityTrait, IntoSimpleExpr, Order,
-    QueryFilter, QueryOrder, Values,
+    prelude::Expr, ColumnTrait, Condition, EntityTrait, IntoSimpleExpr, Order, QueryFilter,
+    QueryOrder, Values,
 };
 use serde::{Deserialize, Serialize};
 
