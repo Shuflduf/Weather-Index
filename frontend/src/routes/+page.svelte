@@ -47,6 +47,7 @@
     $state("NOT LOADING");
   let runs: RunReportWithUser[] = $state([]);
   let pageNumber: number = $state(0);
+  let totalRuns: number = $state(0);
 
   $effect(() => {
     if (!loaded) return;
@@ -110,6 +111,7 @@
   function resetTable() {
     runs = [];
     pageNumber = 0;
+    totalRuns = 0;
     fetchRuns();
   }
 
@@ -131,9 +133,10 @@
         }),
     )
       .then((r) => r.json())
-      .then((j) => {
-        if (j.length != 0) {
-          runs = runs.concat(j);
+      .then((j: { total: number; runs: RunReportWithUser[] }) => {
+        if (j.runs.length != 0) {
+          runs = runs.concat(j.runs);
+          totalRuns = j.total;
           loadingStatus = "NOT LOADING";
         } else {
           loadingStatus = "END OF RUNS";
@@ -158,6 +161,8 @@
 
   function resetProperties() {
     properties = structuredClone(defaultProperties);
+
+    resetTable();
   }
 </script>
 
@@ -200,7 +205,7 @@
   </button>
 </div>
 
-<div class="flex flex-row gap-4 flex-wrap gap-y-2 mb-4">
+<div class="flex flex-row gap-4 flex-wrap gap-y-2 mb-4 items-center">
   <button
     popovertarget="visible-properties"
     class="cursor-pointer bg-default hover:bg-hover active:bg-active p-2 font-mono border"
@@ -208,7 +213,7 @@
   >
     Visible Properties
   </button>
-  <span class="font-mono p-2 text-secondary flex flex-row gap-2">
+  <span class="font-mono p-2 text-secondary flex flex-row gap-2 h-min">
     <span>
       Sorting By: {properties[sortProperty.by].name}
     </span>
@@ -224,7 +229,7 @@
       <button
         onclick={() => {
           prop.filter = [];
-          fetchRuns();
+          resetTable();
         }}
         class="p-2 bg-default hover:bg-hover active:bg-active border cursor-pointer flex flex-row gap-2 items-center font-mono"
         title="Click to remove filter"
@@ -301,19 +306,31 @@
   {/each}
 </div>
 
+<div class="text-secondary text-right">
+  Showing
+  <span class="font-mono bg-default p-1">
+    {runs.length}
+  </span>
+  out of
+  <span class="font-mono bg-default p-1">
+    {totalRuns}
+  </span>
+  total runs
+</div>
+
 <Table {properties} {runs} openContextMenu={contextMenu?.open} />
 
 {#if loadingStatus == "LOADING"}
-  <div class="flex flex-row justify-center gap-4 italic mt-4">
+  <div class="flex flex-row justify-center gap-4 italic mt-4 text-secondary">
     <div class="animate-spin w-min">
       <LoaderCircle />
     </div>
     Loading more runs!
   </div>
 {:else if loadingStatus == "NOT LOADING"}
-  <div class="p-2 bg-red-500" use:observeLoadMore></div>
+  <div class="p-2" use:observeLoadMore></div>
 {:else if loadingStatus == "END OF RUNS"}
-  <div class="flex flex-row justify-center gap-4 italic mt-4">
+  <div class="flex flex-row justify-center gap-4 italic mt-4 text-secondary">
     No more runs!
   </div>
 {/if}

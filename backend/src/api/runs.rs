@@ -16,7 +16,7 @@ use crate::{
         run_report::{self, Entity as RunReport},
         user,
     },
-    error::{make_error, WIError},
+    error::{db_error, make_error, WIError},
     WIState,
 };
 
@@ -89,6 +89,12 @@ pub struct ListParams {
     filters: Option<String>,
 }
 
+#[derive(Serialize)]
+pub struct ListReturn {
+    total: u64,
+    runs: Vec<RunReportWithUser>,
+}
+
 fn default_sort_by() -> String {
     "id".to_string()
 }
@@ -107,7 +113,7 @@ fn to_order(sort: &str, list: &[&str]) -> Order {
 pub async fn list(
     State(state): State<Arc<WIState>>,
     Query(params): Query<ListParams>,
-) -> Result<Json<Vec<RunReportWithUser>>, WIError> {
+) -> Result<Json<ListReturn>, WIError> {
     let filters: HashMap<String, Vec<String>> = params
         .filters
         .as_deref()
@@ -322,7 +328,10 @@ pub async fn list(
             user_image: user.as_ref().and_then(|u| u.image.clone()),
         })
         .collect();
-    Ok(Json(results))
+    Ok(Json(ListReturn {
+        total: report_pages.num_items().await.map_err(db_error)?,
+        runs: results,
+    }))
 }
 
 pub async fn get(
