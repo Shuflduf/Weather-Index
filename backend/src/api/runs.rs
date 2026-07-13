@@ -6,8 +6,8 @@ use axum::{
 };
 use reqwest::StatusCode;
 use sea_orm::{
-    prelude::Expr, ColumnTrait, Condition, EntityTrait, IntoSimpleExpr, Order, QueryFilter,
-    QueryOrder, Values,
+    prelude::Expr, ColumnTrait, Condition, EntityTrait, IntoSimpleExpr, Order, PaginatorTrait,
+    QueryFilter, QueryOrder, Values,
 };
 use serde::{Deserialize, Serialize};
 
@@ -84,6 +84,8 @@ pub struct ListParams {
     by: String,
     #[serde(default = "default_sort")]
     sort: String,
+    #[serde(default)]
+    page: u64,
     filters: Option<String>,
 }
 
@@ -113,7 +115,7 @@ pub async fn list(
         .transpose()
         .map_err(|e| make_error(StatusCode::BAD_REQUEST, format!("Invalid filter json: {e}")))?
         .unwrap_or_default();
-    // println!("{:?}", filters);
+    // println!("{:?}", params.page);
     let order = match params.sort.as_ref() {
         "DESC" => Order::Desc,
         "ASC" => Order::Asc,
@@ -299,18 +301,17 @@ pub async fn list(
     {
         condition = condition.add_option(filter);
     }
-    let reports = RunReport::find()
+    let report_pages = RunReport::find()
         .order_by(sort_by, order)
         .filter(condition)
         .find_also_related(user::Entity)
-        .all(&state.db)
-        .await
-        .map_err(|e| {
-            make_error(
-                StatusCode::INTERNAL_SERVER_ERROR,
-                format!("Failed to query runs: {e}"),
-            )
-        })?;
+        .paginate(&state.db, 10);
+    let reports = report_pages.fetch_page(params.page).await.map_err(|e| {
+        make_error(
+            StatusCode::INTERNAL_SERVER_ERROR,
+            format!("Failed to query runs: {e}"),
+        )
+    })?;
 
     let results = reports
         .into_iter()

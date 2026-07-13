@@ -5,14 +5,19 @@
     Check,
     ChevronLeft,
     ChevronRight,
-    Equal,
   } from "@lucide/svelte";
   import { defaultProperties } from "$lib/properties";
-  import { onMount } from "svelte";
+  import { onDestroy, onMount } from "svelte";
   import Table from "./Table.svelte";
   import type { Property, SortMode } from "$lib";
   import ContextMenu from "./ContextMenu.svelte";
-  import { BODIES, DIFFICULTIES, ENDINGS, formatBig } from "$lib/RoR2";
+  import {
+    BODIES,
+    DIFFICULTIES,
+    ENDINGS,
+    formatBig,
+    type RunReportWithUser,
+  } from "$lib/RoR2";
 
   const TABLE_STORAGE_KEY = "table-properties";
   const SORT_STORAGE_KEY = "sort-property";
@@ -35,6 +40,10 @@
     sort: "DESC",
   });
   let contextMenu: any = $state();
+  let loadMoreObserver: IntersectionObserver;
+  let runPromise: Promise<any> | null = $state(null);
+  let runs: RunReportWithUser[] = $state([]);
+  let pageNumber: number = $state(0);
 
   $effect(() => {
     if (!loaded) return;
@@ -53,8 +62,12 @@
     localStorage.setItem(TABLE_STORAGE_KEY, JSON.stringify(toSave));
   });
 
-  let runPromise: Promise<any[]> = $state(new Promise(() => {}));
   onMount(() => {
+    // const observer = new IntersectionObserver((entries) => {
+    //   console.log(entries[0].isIntersecting);
+    // });
+    // observer.observe(document.getElementById("load-more")!);
+
     const savedSort = localStorage.getItem(SORT_STORAGE_KEY);
     if (savedSort) {
       const parsed = JSON.parse(savedSort);
@@ -80,6 +93,28 @@
     loaded = true;
   });
 
+  function observeLoadMore(node: HTMLElement) {
+    console.log(node);
+    loadMoreObserver = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && runPromise == null) {
+        pageNumber += 1;
+        fetchRuns();
+      }
+    });
+    loadMoreObserver.observe(node);
+    return {
+      destroy() {
+        loadMoreObserver.disconnect();
+      },
+    };
+  }
+
+  function resetTable() {
+    runs = [];
+    pageNumber = 0;
+    fetchRuns();
+  }
+
   function fetchRuns() {
     const filters = Object.fromEntries(
       Object.entries(properties)
@@ -92,9 +127,17 @@
       "/api/runs?" +
         new URLSearchParams({
           filters: JSON.stringify(filters),
+          page: pageNumber.toFixed(0),
           ...sortProperty,
         }),
-    ).then((r) => r.json());
+    )
+      .then((r) => r.json())
+      .then((j) => {
+        if (j.length != 0) {
+          runs = runs.concat(j);
+          runPromise = null;
+        }
+      });
   }
 
   function setSort(sort: SortMode, by: string) {
@@ -103,13 +146,13 @@
 
     localStorage.setItem(SORT_STORAGE_KEY, JSON.stringify(sortProperty));
 
-    fetchRuns();
+    resetTable();
   }
 
   function setFilter(prop: string, filter: string[]) {
     properties[prop].filter = filter;
 
-    fetchRuns();
+    resetTable();
   }
 
   function resetProperties() {
@@ -256,8 +299,11 @@
     {/if}
   {/each}
 </div>
+
+<Table {properties} {runs} openContextMenu={contextMenu?.open} />
+
 {#await runPromise}
   <span>loading</span>
-{:then runs}
-  <Table {properties} {runs} openContextMenu={contextMenu.open} />
+{:then}
+  <div class="p-2" use:observeLoadMore></div>
 {/await}

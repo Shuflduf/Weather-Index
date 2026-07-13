@@ -1,8 +1,6 @@
 <script lang="ts">
   import type { Property } from "$lib";
   import {
-    BODIES,
-    DIFFICULTIES,
     ENDINGS,
     formatBig,
     formatSeconds,
