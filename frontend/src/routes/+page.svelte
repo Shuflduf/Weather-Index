@@ -5,13 +5,14 @@
     Check,
     ChevronLeft,
     ChevronRight,
+    Equal,
   } from "@lucide/svelte";
   import { defaultProperties } from "$lib/properties";
   import { onMount } from "svelte";
   import Table from "./Table.svelte";
   import type { Property, SortMode } from "$lib";
   import ContextMenu from "./ContextMenu.svelte";
-  import { formatBig } from "$lib/RoR2";
+  import { BODIES, DIFFICULTIES, ENDINGS, formatBig } from "$lib/RoR2";
 
   const TABLE_STORAGE_KEY = "table-properties";
   const SORT_STORAGE_KEY = "sort-property";
@@ -155,10 +156,10 @@
   </button>
 </div>
 
-<div class="flex flex-row gap-4">
+<div class="flex flex-row gap-4 flex-wrap gap-y-2 mb-4">
   <button
     popovertarget="visible-properties"
-    class="cursor-pointer bg-default hover:bg-hover active:bg-active p-2 font-mono mb-4 border"
+    class="cursor-pointer bg-default hover:bg-hover active:bg-active p-2 font-mono border"
     style="anchor-name: --visible-properties;"
   >
     Visible Properties
@@ -181,7 +182,7 @@
           prop.filter = [];
           fetchRuns();
         }}
-        class="p-2 bg-default hover:bg-hover active:bg-active h-min border cursor-pointer flex flex-row gap-2 items-center font-mono"
+        class="p-2 bg-default hover:bg-hover active:bg-active border cursor-pointer flex flex-row gap-2 items-center font-mono"
         title="Click to remove filter"
       >
         <span class="font-bold text-lg">
@@ -202,6 +203,54 @@
               {new Date(prop.filter[0].slice(1)).toLocaleString()}
             </span>
           {/if}
+        {/if}
+        {#if key == "player"}
+          <span>:</span>
+          {#if prop.filter[0].startsWith("@")}
+            {prop.filter[0]}
+          {:else}
+            "{prop.filter[0]}"
+          {/if}
+        {/if}
+        {#if key == "survivor"}
+          <span>:</span>
+          <div class="flex flex-row gap-1">
+            {#each prop.filter as survivor}
+              <div class="flex flex-row items-center gap-1">
+                <img src="/bodies/{BODIES[survivor].icon}" alt="" class="h-8" />
+                <!-- <span>{BODIES[survivor].displayName}</span> -->
+              </div>
+            {/each}
+          </div>
+        {/if}
+        {#if key == "ending"}
+          <span>:</span>
+          <div class="flex flex-row gap-4">
+            {#each prop.filter as ending}
+              <div
+                class="flex flex-row items-center gap-1 px-2"
+                style="background-color: {ENDINGS[ending].colorBg};"
+              >
+                <img src="/endings/{ENDINGS[ending].icon}" alt="" class="h-8" />
+                <span>{ENDINGS[ending].displayName}</span>
+              </div>
+            {/each}
+          </div>
+        {/if}
+        {#if key == "difficulty"}
+          <span>:</span>
+          <div class="flex flex-row gap-1">
+            {#each prop.filter as difficulty}
+              <div class="flex flex-row items-center gap-1">
+                <img
+                  src="/difficulties/{DIFFICULTIES[difficulty].icon}"
+                  alt=""
+                  class="h-8"
+                />
+                <!-- <span>{DIFFICULTIES[difficulty].displayName}</span> -->
+              </div>
+            {/each}
+          </div>
         {/if}
       </button>
     {/if}

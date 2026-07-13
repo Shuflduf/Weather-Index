@@ -243,7 +243,7 @@ pub async fn list(
         ("lunarPurchases", run_report::Column::LunarPurchases),
         //
         (
-            "distanceTraveledMetres",
+            "distanceTraveled",
             run_report::Column::DistanceTraveledMetres,
         ),
     ]
@@ -273,8 +273,16 @@ pub async fn list(
             })
         })
     });
+    let player_filter = filters.get("player").and_then(|f| {
+        if f[0].starts_with("@") {
+            Some(user::Column::Username.eq(&f[0][1..]))
+        } else {
+            Some(user::Column::Username.contains(&f[0]))
+        }
+    });
 
     for filter in [
+        player_filter,
         filters
             .get("difficulty")
             .map(|f| run_report::Column::Difficulty.is_in(f)),

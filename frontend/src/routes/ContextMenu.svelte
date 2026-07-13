@@ -34,9 +34,9 @@
     pos: [number, number];
   } = $state({ id: "", pos: [0.0, 0.0] });
 
-  let survivorChecked: Record<string, boolean> = $state({});
-  let difficultyChecked: Record<string, boolean> = $state({});
-  let endingChecked: Record<string, boolean> = $state({});
+  // let survivorChecked: Record<string, boolean> = $state({});
+  // let difficultyChecked: Record<string, boolean> = $state({});
+  // let endingChecked: Record<string, boolean> = $state({});
 
   export function open(e: MouseEvent, id: string) {
     console.log(id);
@@ -55,14 +55,27 @@
     contextMenu.id = id;
     contextMenu.pos = [e.clientX, e.clientY];
 
-    if (id == "survivor" && Object.keys(survivorChecked).length == 0) {
-      survivorChecked = Object.fromEntries(
-        ORDERED_SURVIVORS.map((s) => [
-          s,
-          properties.survivor.filter.includes(s),
-        ]),
-      );
-    }
+    // if (id == "survivor" && Object.keys(survivorChecked).length == 0) {
+    //   survivorChecked = Object.fromEntries(
+    //     ORDERED_SURVIVORS.map((s) => [
+    //       s,
+    //       properties.survivor.filter.includes(s),
+    //     ]),
+    //   );
+    // }
+    // if (id == "ending" && Object.keys(endingChecked).length == 0) {
+    //   endingChecked = Object.fromEntries(
+    //     ORDERED_ENDINGS.map((s) => [s, properties.ending.filter.includes(s)]),
+    //   );
+    // }
+    // if (id == "difficulty" && Object.keys(difficultyChecked).length == 0) {
+    //   difficultyChecked = Object.fromEntries(
+    //     ORDERED_DIFFICULTIES.map((s) => [
+    //       s,
+    //       properties.difficulty.filter.includes(s),
+    //     ]),
+    //   );
+    // }
   }
 
   function swapSign(prop: string) {
@@ -137,13 +150,23 @@
             <input
               type="checkbox"
               class="aspect-square"
-              checked={survivorChecked[survivor]}
+              checked={properties["survivor"].filter.includes(survivor)}
               onchange={(e) => {
-                survivorChecked[survivor] = e.currentTarget.checked;
-                const checked = Object.entries(survivorChecked)
-                  .filter(([_, checked]) => checked)
-                  .map(([name, _]) => name);
-                setFilter("survivor", checked);
+                if (!e.currentTarget.checked) {
+                  setFilter(
+                    "survivor",
+                    properties["survivor"].filter.filter((f) => f != survivor),
+                  );
+                } else {
+                  setFilter(
+                    "survivor",
+                    [...properties["survivor"].filter, survivor].toSorted(
+                      (a, b) =>
+                        ORDERED_SURVIVORS.indexOf(a) -
+                        ORDERED_SURVIVORS.indexOf(b),
+                    ),
+                  );
+                }
               }}
             />
             <Check
@@ -168,13 +191,25 @@
             <input
               type="checkbox"
               class="aspect-square"
-              checked={difficultyChecked[difficulty]}
+              checked={properties["difficulty"].filter.includes(difficulty)}
               onchange={(e) => {
-                difficultyChecked[difficulty] = e.currentTarget.checked;
-                const checked = Object.entries(difficultyChecked)
-                  .filter(([_, checked]) => checked)
-                  .map(([name, _]) => name);
-                setFilter("difficulty", checked);
+                if (!e.currentTarget.checked) {
+                  setFilter(
+                    "difficulty",
+                    properties["difficulty"].filter.filter(
+                      (f) => f != difficulty,
+                    ),
+                  );
+                } else {
+                  setFilter(
+                    "difficulty",
+                    [...properties["difficulty"].filter, difficulty].toSorted(
+                      (a, b) =>
+                        ORDERED_DIFFICULTIES.indexOf(a) -
+                        ORDERED_DIFFICULTIES.indexOf(b),
+                    ),
+                  );
+                }
               }}
             />
             <Check
@@ -195,19 +230,28 @@
       <div class="mt-2">
         {#each ORDERED_ENDINGS as ending}
           <div
-            class="flex flex-row items-center gap-2 relative p-2 border"
+            class="flex flex-row items-center gap-2 relative px-2 border"
             style="background-color: {ENDINGS[ending].colorBg};"
           >
             <input
               type="checkbox"
               class="aspect-square"
-              checked={endingChecked[ending]}
+              checked={properties["ending"].filter.includes(ending)}
               onchange={(e) => {
-                endingChecked[ending] = e.currentTarget.checked;
-                const checked = Object.entries(endingChecked)
-                  .filter(([_, checked]) => checked)
-                  .map(([name, _]) => name);
-                setFilter("ending", checked);
+                if (!e.currentTarget.checked) {
+                  setFilter(
+                    "ending",
+                    properties["ending"].filter.filter((f) => f != ending),
+                  );
+                } else {
+                  setFilter(
+                    "ending",
+                    [...properties["ending"].filter, ending].toSorted(
+                      (a, b) =>
+                        ORDERED_ENDINGS.indexOf(a) - ORDERED_ENDINGS.indexOf(b),
+                    ),
+                  );
+                }
               }}
             />
             <Check
@@ -222,6 +266,23 @@
             {ENDINGS[ending].displayName}
           </div>
         {/each}
+      </div>
+    {/if}
+    {#if contextMenu.id == "player"}
+      <div class="mt-2">
+        <input
+          type="text"
+          title="Use @ to specify exact username"
+          placeholder="Username"
+          value={properties["player"].filter.length != 0
+            ? properties["player"].filter[0]
+            : ""}
+          class="w-full bg-default hover:bg-hover active:bg-active transition-colors p-2 outline-none font-mono text-sm"
+          onchange={(e) => {
+            const value = e.currentTarget.value;
+            setFilter("player", [value]);
+          }}
+        />
       </div>
     {/if}
 
@@ -333,7 +394,7 @@
     {@render numberFilter("goldPurchases")}
     {@render numberFilter("bloodPurchases")}
     {@render numberFilter("lunarPurchases")}
-    {@render numberFilter("distanceTraveledMetres")}
+    {@render numberFilter("distanceTraveled")}
 
     {@render timeFilter("startTime")}
     {@render timeFilter("uploadTime")}
