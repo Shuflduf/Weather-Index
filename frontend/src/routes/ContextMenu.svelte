@@ -53,7 +53,13 @@
     }
 
     contextMenu.id = id;
-    contextMenu.pos = [e.clientX, e.clientY];
+    contextMenu.pos = [
+      Math.min(
+        e.clientX,
+        window.innerWidth - contextMenu.popup.getBoundingClientRect().width,
+      ),
+      e.clientY,
+    ];
 
     // if (id == "survivor" && Object.keys(survivorChecked).length == 0) {
     //   survivorChecked = Object.fromEntries(
