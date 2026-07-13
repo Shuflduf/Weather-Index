@@ -281,11 +281,11 @@ pub async fn list(
             })
         })
     });
-    let player_filter = filters.get("player").and_then(|f| {
+    let player_filter = filters.get("player").map(|f| {
         if f[0].starts_with("@") {
-            Some(user::Column::Username.eq(&f[0][1..]))
+            user::Column::Username.eq(&f[0][1..])
         } else {
-            Some(user::Column::Username.contains(&f[0]))
+            user::Column::Username.contains(&f[0])
         }
     });
 

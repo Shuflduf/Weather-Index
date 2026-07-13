@@ -19,7 +19,7 @@ use weather_index::{
     api,
     auth_entities::AppAdapter,
     auth_extractor::AuthenticatedUser,
-    db,
+    db, discord_oauth,
     entity::run_report,
     error::{make_error, WIError},
     github_oauth,
@@ -50,10 +50,20 @@ async fn main() -> Result<(), Box<dyn Error>> {
             .database(adapter)
             .plugin(SessionManagementPlugin::new())
             .plugin(AccountManagementPlugin::new())
-            .plugin(OAuthPlugin::new().add_provider(
-                "github",
-                OAuthProvider::github(&env::var("GITHUB_ID")?, &env::var("GITHUB_SECRET")?),
-            ))
+            .plugin(
+                OAuthPlugin::new()
+                    .add_provider(
+                        "github",
+                        OAuthProvider::github(&env::var("GITHUB_ID")?, &env::var("GITHUB_SECRET")?),
+                    )
+                    .add_provider(
+                        "discord",
+                        OAuthProvider::discord(
+                            &env::var("DISCORD_ID")?,
+                            &env::var("DISCORD_SECRET")?,
+                        ),
+                    ),
+            )
             .plugin(DeviceAuthorizationPlugin::with_config(
                 DeviceAuthorizationConfig {
                     enabled: true,
@@ -75,6 +85,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let app = Router::new()
         .nest("/auth", auth_router)
         .route("/auth/callback/github", get(github_oauth::handle_callback))
+        .route(
+            "/auth/callback/discord",
+            get(discord_oauth::handle_callback),
+        )
         .route("/", get(|| async { "Hello, World!" }))
         .route("/new-run", post(insert_new_run))
         .nest("/api", api::router())

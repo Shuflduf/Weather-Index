@@ -9,6 +9,7 @@ pub mod api;
 pub mod auth_entities;
 pub mod auth_extractor;
 pub mod db;
+pub mod discord_oauth;
 pub mod entity;
 pub mod error;
 pub mod github_oauth;
