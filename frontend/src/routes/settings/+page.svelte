@@ -2,7 +2,11 @@
   import { onMount } from "svelte";
   import ProfileSettings from "./ProfileSettings.svelte";
   import { ShieldUser, User } from "@lucide/svelte";
-  import { SiDiscord, SiGithub } from "@icons-pack/svelte-simple-icons";
+  import {
+    SiDiscord,
+    SiGithub,
+    SiGoogle,
+  } from "@icons-pack/svelte-simple-icons";
 
   let accounts: string[] = $state([]);
 
@@ -35,19 +39,28 @@
   <hr class="my-8" />
   <div>
     <h1 id="account" class="text-3xl tracking-tighter">Account</h1>
-    <div class="flex flex-row bg-bg-secondary border p-2 gap-2 w-max mt-4">
-      <SiGithub />
-      <span class="font-mono">Github:</span>
-      <span>
-        {accounts.includes("github") ? "Connected" : "Not Connected"}
-      </span>
-    </div>
-    <div class="flex flex-row bg-bg-secondary border p-2 gap-2 w-max mt-4">
-      <SiDiscord />
-      <span class="font-mono">Discord:</span>
-      <span>
-        {accounts.includes("discord") ? "Connected" : "Not Connected"}
-      </span>
+    <div class="flex flex-col gap-2 mt-4">
+      <div class="flex flex-row bg-bg-secondary border p-2 gap-2 w-max">
+        <SiGithub />
+        <span class="font-mono">Github:</span>
+        <span>
+          {accounts.includes("github") ? "Connected" : "Not Connected"}
+        </span>
+      </div>
+      <div class="flex flex-row bg-bg-secondary border p-2 gap-2 w-max">
+        <SiDiscord />
+        <span class="font-mono">Discord:</span>
+        <span>
+          {accounts.includes("discord") ? "Connected" : "Not Connected"}
+        </span>
+      </div>
+      <div class="flex flex-row bg-bg-secondary border p-2 gap-2 w-max">
+        <SiGoogle />
+        <span class="font-mono">Google:</span>
+        <span>
+          {accounts.includes("google") ? "Connected" : "Not Connected"}
+        </span>
+      </div>
     </div>
   </div>
 </div>

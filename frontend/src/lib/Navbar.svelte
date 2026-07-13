@@ -1,7 +1,6 @@
 <script lang="ts">
   import { SiGithub } from "@icons-pack/svelte-simple-icons";
   import { onMount } from "svelte";
-  import UserDisplay from "./UserDisplay.svelte";
   import PFP from "./PFP.svelte";
 
   let user: any = $state(null);
@@ -10,7 +9,7 @@
     let resp = await fetch("/auth/sign-in/social", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ provider: "github" }),
+      body: JSON.stringify({ provider: "google" }),
     });
     let { url } = await resp.json();
     if (url) window.location.href = url;

@@ -11,7 +11,7 @@ use axum::{
 use better_auth::{
     plugins::{
         oauth::OAuthProvider, AccountManagementPlugin, DeviceAuthorizationConfig,
-        DeviceAuthorizationPlugin, OAuthPlugin, SessionManagementPlugin,
+        DeviceAuthorizationPlugin, EmailPasswordPlugin, OAuthPlugin, SessionManagementPlugin,
     },
     AuthBuilder, AuthConfig, AxumIntegration, CsrfConfig,
 };
@@ -50,6 +50,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         AuthBuilder::new(auth_config)
             .csrf(CsrfConfig::new().enabled(false))
             .database(adapter)
+            .plugin(EmailPasswordPlugin::new())
             .plugin(SessionManagementPlugin::new())
             .plugin(AccountManagementPlugin::new())
             .plugin(
@@ -64,6 +65,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
                             &env::var("DISCORD_ID")?,
                             &env::var("DISCORD_SECRET")?,
                         ),
+                    )
+                    .add_provider(
+                        "google",
+                        OAuthProvider::google(&env::var("GOOGLE_ID")?, &env::var("GOOGLE_SECRET")?),
                     ),
             )
             .plugin(DeviceAuthorizationPlugin::with_config(
