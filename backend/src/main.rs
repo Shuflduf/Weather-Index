@@ -1,7 +1,10 @@
 use std::{env, error::Error, sync::Arc};
 
 use axum::{
+    body,
     extract::State,
+    http::{header, Request, Response},
+    middleware::{self, Next},
     routing::{get, post},
     Json, Router,
 };
@@ -75,7 +78,11 @@ async fn main() -> Result<(), Box<dyn Error>> {
             .build()
             .await?,
     );
-    let auth_router = auth.clone().axum_router().with_state(auth.clone());
+    let auth_router = auth
+        .clone()
+        .axum_router()
+        .with_state(auth.clone())
+        .layer(middleware::from_fn(oauth_redirect_middleware));
 
     let state = Arc::new(WIState {
         db,
@@ -85,10 +92,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let app = Router::new()
         .nest("/auth", auth_router)
         .route("/auth/callback/github", get(github_oauth::handle_callback))
-        .route(
-            "/auth/callback/discord",
-            get(discord_oauth::handle_callback),
-        )
+        // .route(
+        //     "/auth/callback/discord",
+        //     get(discord_oauth::handle_callback),
+        // )
         .route("/", get(|| async { "Hello, World!" }))
         .route("/new-run", post(insert_new_run))
         .nest("/api", api::router())
@@ -97,6 +104,28 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
     axum::serve(listener, app).await.unwrap();
     Ok(())
+}
+
+async fn oauth_redirect_middleware(
+    req: Request<body::Body>,
+    next: Next,
+) -> Result<Response<body::Body>, StatusCode> {
+    let path = req.uri().path().to_string();
+    let response = next.run(req).await;
+
+    if path.starts_with("/callback") {
+        let frontend_url = env::var("FRONTEND_URL").unwrap();
+        let (mut parts, _) = response.into_parts();
+        parts.status = StatusCode::FOUND;
+        parts
+            .headers
+            .insert(header::LOCATION, frontend_url.parse().unwrap());
+        parts.headers.remove(header::CONTENT_TYPE);
+
+        Ok(Response::from_parts(parts, ().into()))
+    } else {
+        Ok(response)
+    }
 }
 
 async fn insert_new_run(
