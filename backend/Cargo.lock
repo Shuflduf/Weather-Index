@@ -458,14 +458,14 @@ checksum = "2af50177e190e07a26ab74f8b1efbfe2ef87da2116221318cb1c2e82baf7de06"
 [[package]]
 name = "better-auth"
 version = "0.10.0"
-source = "git+https://github.com/better-auth-rs/better-auth-rs#41712067b76bbac50b434786f6649c20aeb70ddd"
+source = "git+https://github.com/Shuflduf/better-auth-rs?branch=master#aa058778fd6789e37d98dc2ea1fa036b55ac3bdc"
 dependencies = [
  "argon2",
  "async-trait",
  "axum",
  "base64",
  "better-auth-api",
- "better-auth-core 0.10.0 (git+https://github.com/better-auth-rs/better-auth-rs)",
+ "better-auth-core",
  "chrono",
  "clap",
  "jsonwebtoken",
@@ -485,13 +485,13 @@ dependencies = [
 [[package]]
 name = "better-auth-api"
 version = "0.10.0"
-source = "git+https://github.com/better-auth-rs/better-auth-rs#41712067b76bbac50b434786f6649c20aeb70ddd"
+source = "git+https://github.com/Shuflduf/better-auth-rs?branch=master#aa058778fd6789e37d98dc2ea1fa036b55ac3bdc"
 dependencies = [
  "aes-gcm",
  "argon2",
  "async-trait",
  "base64",
- "better-auth-core 0.10.0 (git+https://github.com/better-auth-rs/better-auth-rs)",
+ "better-auth-core",
  "bon",
  "chrono",
  "cookie",
@@ -515,32 +515,7 @@ dependencies = [
 [[package]]
 name = "better-auth-core"
 version = "0.10.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e89143c5bb1cb496a68d9c224c3e839bf6acab7199ca5e861b7104b2ad9a72af"
-dependencies = [
- "argon2",
- "async-trait",
- "base64",
- "chrono",
- "cookie",
- "glob-match",
- "idna",
- "jsonwebtoken",
- "rand 0.8.6",
- "serde",
- "serde_json",
- "thiserror",
- "tokio",
- "tracing",
- "url",
- "uuid",
- "validator",
-]
-
-[[package]]
-name = "better-auth-core"
-version = "0.10.0"
-source = "git+https://github.com/better-auth-rs/better-auth-rs#41712067b76bbac50b434786f6649c20aeb70ddd"
+source = "git+https://github.com/Shuflduf/better-auth-rs?branch=master#aa058778fd6789e37d98dc2ea1fa036b55ac3bdc"
 dependencies = [
  "argon2",
  "async-trait",
@@ -568,7 +543,7 @@ dependencies = [
 [[package]]
 name = "better-auth-derive"
 version = "0.10.0"
-source = "git+https://github.com/better-auth-rs/better-auth-rs#41712067b76bbac50b434786f6649c20aeb70ddd"
+source = "git+https://github.com/Shuflduf/better-auth-rs?branch=master#aa058778fd6789e37d98dc2ea1fa036b55ac3bdc"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -4022,7 +3997,7 @@ version = "0.1.0"
 dependencies = [
  "axum",
  "better-auth",
- "better-auth-core 0.10.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "better-auth-core",
  "chrono",
  "dotenvy",
  "fake",

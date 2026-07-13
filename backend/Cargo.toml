@@ -9,7 +9,7 @@ description = "Weather Index backend API"
 
 [dependencies]
 axum = { version = "0.8.9", features = ["macros"] }
-better-auth-core = "0.10.0"
+better-auth-core = { git = "https://github.com/Shuflduf/better-auth-rs", branch = "master" }
 chrono = "0.4"
 dotenvy = "0.15"
 fake = { version = "5.1.0", features = ["derive", "serde_json", "chrono"] }
@@ -21,9 +21,8 @@ tokio = { version = "1", features = ["full"] }
 tracing-subscriber = { version = "0.3.23", features = ["env-filter"] }
 
 [dependencies.better-auth]
-git = "https://github.com/better-auth-rs/better-auth-rs"
-# path = "../../better-auth-rs/"
-# version = "0.10.0"
+git = "https://github.com/Shuflduf/better-auth-rs"
+branch = "master"
 default-features = false
 features = ["axum", "derive", "rustls", "sqlx-postgres"]
 

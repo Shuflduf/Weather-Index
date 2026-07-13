@@ -91,7 +91,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     let app = Router::new()
         .nest("/auth", auth_router)
-        .route("/auth/callback/github", get(github_oauth::handle_callback))
+        // .route("/auth/callback/github", get(github_oauth::handle_callback))
         // .route(
         //     "/auth/callback/discord",
         //     get(discord_oauth::handle_callback),
