@@ -5,6 +5,7 @@
     Check,
     ChevronLeft,
     ChevronRight,
+    LoaderCircle,
   } from "@lucide/svelte";
   import { defaultProperties } from "$lib/properties";
   import { onDestroy, onMount } from "svelte";
@@ -41,7 +42,9 @@
   });
   let contextMenu: any = $state();
   let loadMoreObserver: IntersectionObserver;
-  let runPromise: Promise<any> | null = $state(null);
+  let runPromise: Promise<any> = $state(new Promise(() => {}));
+  let loadingStatus: "LOADING" | "END OF RUNS" | "NOT LOADING" =
+    $state("NOT LOADING");
   let runs: RunReportWithUser[] = $state([]);
   let pageNumber: number = $state(0);
 
@@ -63,11 +66,6 @@
   });
 
   onMount(() => {
-    // const observer = new IntersectionObserver((entries) => {
-    //   console.log(entries[0].isIntersecting);
-    // });
-    // observer.observe(document.getElementById("load-more")!);
-
     const savedSort = localStorage.getItem(SORT_STORAGE_KEY);
     if (savedSort) {
       const parsed = JSON.parse(savedSort);
@@ -96,7 +94,7 @@
   function observeLoadMore(node: HTMLElement) {
     console.log(node);
     loadMoreObserver = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting && runPromise == null) {
+      if (entries[0].isIntersecting && loadingStatus == "NOT LOADING") {
         pageNumber += 1;
         fetchRuns();
       }
@@ -123,6 +121,7 @@
         })
         .map(([prop, data]) => [prop, data.filter]),
     );
+    loadingStatus = "LOADING";
     runPromise = fetch(
       "/api/runs?" +
         new URLSearchParams({
@@ -135,7 +134,9 @@
       .then((j) => {
         if (j.length != 0) {
           runs = runs.concat(j);
-          runPromise = null;
+          loadingStatus = "NOT LOADING";
+        } else {
+          loadingStatus = "END OF RUNS";
         }
       });
   }
@@ -302,8 +303,17 @@
 
 <Table {properties} {runs} openContextMenu={contextMenu?.open} />
 
-{#await runPromise}
-  <span>loading</span>
-{:then}
-  <div class="p-2" use:observeLoadMore></div>
-{/await}
+{#if loadingStatus == "LOADING"}
+  <div class="flex flex-row justify-center gap-4 italic mt-4">
+    <div class="animate-spin w-min">
+      <LoaderCircle />
+    </div>
+    Loading more runs!
+  </div>
+{:else if loadingStatus == "NOT LOADING"}
+  <div class="p-2 bg-red-500" use:observeLoadMore></div>
+{:else if loadingStatus == "END OF RUNS"}
+  <div class="flex flex-row justify-center gap-4 italic mt-4">
+    No more runs!
+  </div>
+{/if}
