@@ -29,6 +29,8 @@
   --color-active-border: #828282;
 
   --color-checked: #0091ff;
+  --color-error: #e5484d;
+  --color-success: #46a758;
 }
 
 @layer base {

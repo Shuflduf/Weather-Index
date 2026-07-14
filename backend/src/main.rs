@@ -11,7 +11,8 @@ use axum::{
 use better_auth::{
     plugins::{
         oauth::OAuthProvider, AccountManagementPlugin, DeviceAuthorizationConfig,
-        DeviceAuthorizationPlugin, EmailPasswordPlugin, OAuthPlugin, SessionManagementPlugin,
+        DeviceAuthorizationPlugin, EmailPasswordPlugin, OAuthPlugin, PasswordManagementConfig,
+        PasswordManagementPlugin, SessionManagementPlugin,
     },
     AuthBuilder, AuthConfig, AxumIntegration, CsrfConfig,
 };
@@ -51,6 +52,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
             .csrf(CsrfConfig::new().enabled(false))
             .database(adapter)
             .plugin(EmailPasswordPlugin::new())
+            .plugin(PasswordManagementPlugin::new())
             .plugin(SessionManagementPlugin::new())
             .plugin(AccountManagementPlugin::new())
             .plugin(

@@ -164,8 +164,10 @@
       oncontextmenu={(e) => e.preventDefault()}
       {id}
       data-col-header
-      class="items-center justify-center h-12 active:bg-active hover:bg-hover transition-colors cursor-grab flex"
-      style="order: {properties[id].order}; grid-row: 1;"
+      class="items-center justify-center h-12 active:bg-active hover:bg-hover transition-colors flex"
+      style="order: {properties[id].order}; grid-row: 1; cursor: {drag.dragging
+        ? 'grabbing'
+        : 'grab'}"
     >
       <h2
         class="text-xl tracking-tight text-center font-bold px-2 relative z-2"

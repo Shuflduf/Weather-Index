@@ -15,6 +15,7 @@
       }),
     });
     const body = await resp.json();
+    window.location.href = "/";
     console.log(body);
   }
 </script>

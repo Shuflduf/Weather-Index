@@ -2,18 +2,9 @@
   import { SiGithub } from "@icons-pack/svelte-simple-icons";
   import { onMount } from "svelte";
   import PFP from "./PFP.svelte";
+  import { User } from "@lucide/svelte";
 
   let user: any = $state(null);
-
-  async function startGithubOauth() {
-    let resp = await fetch("/auth/sign-in/social", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ provider: "google" }),
-    });
-    let { url } = await resp.json();
-    if (url) window.location.href = url;
-  }
 
   onMount(async () => {
     let resp = await fetch("/auth/get-session");
@@ -65,17 +56,19 @@
       >
         <PFP src={user.image} class="h-full border" />
         <span class="text-primary text-lg">
-          {user.display_username ?? user.username}
+          {user.display_username && user.display_username.length > 0
+            ? user.display_username
+            : user.username}
         </span>
       </div>
     </button>
   {:else}
-    <button
+    <a
       class={`flex bg-bg-secondary hover:bg-default flex-row gap-2 text-xl border-l px-4 h-full text-primary transition justify-center items-center ${user == false ? "cursor-pointer" : "cursor-not-allowed"}`}
-      onclick={user == false ? startGithubOauth : null}
+      href={user == false ? "/sign-in" : ""}
     >
-      <SiGithub />
-      <span>Log In</span>
-    </button>
+      <User />
+      <span>Sign In</span>
+    </a>
   {/if}
 </div>
