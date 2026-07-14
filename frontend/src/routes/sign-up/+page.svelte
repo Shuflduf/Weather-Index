@@ -7,6 +7,9 @@
   let email: string = $state("");
   let password: string = $state("");
 
+  let errors: Record<string, string[]> = $state({});
+  let errorMessage: string = $state("");
+
   async function signIn() {
     const resp = await fetch("/auth/sign-up/email", {
       method: "POST",
@@ -20,14 +23,22 @@
       }),
     });
     const body = await resp.json();
-    window.location.href = "/";
-    console.log(body);
+    if ("errors" in body) {
+      errors = body.errors;
+    }
+    if ("message" in body) {
+      errorMessage = body.message;
+    }
+    if ("user" in body) {
+      window.location.href = "/";
+    }
   }
 </script>
 
 <div class="flex flex-col items-center">
   <h1 class="text-3xl tracking-tighter font-bold">Sign Up</h1>
-  <div class="flex flex-col w-80">
+  <a href="/sign-in" class="underline">Sign In here</a>
+  <form class="flex flex-col w-80">
     <label
       for="email"
       class="text-xl tracking-tighter mt-4 flex flex-row gap-1 items-center font-mono"
@@ -37,9 +48,18 @@
     <input
       type="email"
       id="email"
+      autocomplete="email"
       bind:value={email}
       class="p-2 bg-default hover:bg-hover active:bg-active transition-colors border outline-none font-mono"
     />
+    {#if "email" in errors}
+      {#each errors.email as err}
+        <div class="text-error">
+          {err}
+        </div>
+      {/each}
+    {/if}
+
     <label
       for="password"
       class="text-xl tracking-tighter mt-4 flex flex-row gap-1 items-center font-mono"
@@ -49,9 +69,18 @@
     <input
       type="password"
       id="password"
+      autocomplete="new-password"
       bind:value={password}
       class="p-2 bg-default hover:bg-hover active:bg-active transition-colors border outline-none font-mono"
     />
+    {#if "password" in errors}
+      {#each errors.password as err}
+        <div class="text-error">
+          {err}
+        </div>
+      {/each}
+    {/if}
+
     <label
       for="username"
       class="text-xl tracking-tighter mt-4 flex flex-row gap-1 items-center font-mono"
@@ -70,6 +99,14 @@
         class="outline-none font-mono w-full p-2 pl-0"
       />
     </div>
+    {#if "name" in errors}
+      {#each errors.name as err}
+        <div class="text-error">
+          {err.replaceAll("Name", "Username")}
+        </div>
+      {/each}
+    {/if}
+
     <label
       for="displayUsername"
       class="text-xl tracking-tighter mt-4 flex flex-row gap-1 items-center font-mono"
@@ -93,6 +130,9 @@
 
       Proceed
     </button>
-  </div>
+    <div class="text-error">
+      {errorMessage}
+    </div>
+  </form>
   <OAuthMethods />
 </div>

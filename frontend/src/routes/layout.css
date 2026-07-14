@@ -41,7 +41,7 @@
   }
 
   input[type="checkbox"] {
-    @apply bg-primary cursor-pointer appearance-none w-4 h-4 checked:bg-checked border;
+    @apply h-4 w-4 cursor-pointer appearance-none border bg-primary checked:bg-checked;
   }
 
   input[type="number"]::-webkit-inner-spin-button,

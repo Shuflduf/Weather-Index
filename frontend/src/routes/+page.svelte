@@ -38,7 +38,7 @@
   );
   let sortProperty: { by: string; sort: SortMode } = $state({
     by: "id",
-    sort: "DESC",
+    sort: "ASC",
   });
   let contextMenu: any = $state();
   let loadMoreObserver: IntersectionObserver;

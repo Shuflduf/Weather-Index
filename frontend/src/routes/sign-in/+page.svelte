@@ -4,6 +4,8 @@
 
   let email: string = $state("");
   let password: string = $state("");
+  let errors: Record<string, string> = $state({});
+  let errorMessage: string = $state("");
 
   async function signIn() {
     const resp = await fetch("/auth/sign-in/email", {
@@ -15,14 +17,22 @@
       }),
     });
     const body = await resp.json();
-    window.location.href = "/";
-    console.log(body);
+    if ("errors" in body) {
+      errors = body.errors;
+    }
+    if ("message" in body) {
+      errorMessage = body.message;
+    }
+    if ("user" in body) {
+      window.location.href = "/";
+    }
   }
 </script>
 
 <div class="flex flex-col items-center">
   <h1 class="text-3xl tracking-tighter font-bold">Sign In</h1>
-  <div class="flex flex-col w-80">
+  <a href="/sign-up" class="underline">Sign Up here</a>
+  <form class="flex flex-col w-80">
     <label
       for="email"
       class="text-xl tracking-tighter mt-4 flex flex-row gap-1 items-center font-mono"
@@ -32,9 +42,17 @@
     <input
       type="email"
       id="email"
+      autocomplete="email"
       bind:value={email}
       class="p-2 bg-default hover:bg-hover active:bg-active transition-colors border outline-none font-mono"
     />
+    {#if "email" in errors}
+      {#each errors.email as err}
+        <div class="text-error">
+          {err}
+        </div>
+      {/each}
+    {/if}
     <label
       for="password"
       class="text-xl tracking-tighter mt-4 flex flex-row gap-1 items-center font-mono"
@@ -43,10 +61,18 @@
     </label>
     <input
       type="password"
+      autocomplete="new-password"
       id="password"
       bind:value={password}
       class="p-2 bg-default hover:bg-hover active:bg-active transition-colors border outline-none font-mono"
     />
+    {#if "password" in errors}
+      {#each errors.password as err}
+        <div class="text-error">
+          {err}
+        </div>
+      {/each}
+    {/if}
     <button
       type="submit"
       onclick={signIn}
@@ -56,6 +82,7 @@
 
       Proceed
     </button>
-  </div>
+    <div class="text-error">{errorMessage}</div>
+  </form>
   <OAuthMethods />
 </div>
