@@ -2,6 +2,7 @@
   import { User } from "@lucide/svelte";
   import FormEntry from "./FormEntry.svelte";
   import { onMount } from "svelte";
+  import PFP from "$lib/PFP.svelte";
 
   let user: any = $state();
   let countries: { flag: string; name: string; alpha2Code: string }[] = $state(
@@ -69,11 +70,7 @@
     {#if user}
       <div class="relative">
         {#if user.image}
-          <img
-            src={user.image}
-            alt=""
-            class="absolute h-full right-full border"
-          />
+          <PFP src={user.image} class="absolute h-full right-full border" />
         {/if}
         <input
           type="text"
