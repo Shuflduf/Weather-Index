@@ -20,19 +20,14 @@ namespace WeatherIndex
     [BepInDependency("com.rune580.riskofoptions")]
     public class WeatherIndex : BaseUnityPlugin
     {
-        // The Plugin GUID should be a unique ID for this plugin,
-        // which is human readable (as it is used in places like the config).
-        // If we see this PluginGUID as it is on thunderstore,
-        // we will deprecate this mod.
-        // Change the PluginAuthor and the PluginName !
         public const string PluginGUID = PluginAuthor + "." + PluginName;
         public const string PluginAuthor = "Shuflduf";
         public const string PluginName = "WeatherIndex";
         public const string PluginVersion = "1.0.0";
 
-        private static ConfigEntry<KeyboardShortcut>? endRunKeybind;
         private static readonly HttpClient http = new();
         private static string backendURL = "http://localhost:3000";
+        private static ConfigEntry<KeyboardShortcut>? endRunKeybind;
         private static ConfigEntry<string>? accessToken;
 
         public void Awake()
@@ -52,6 +47,7 @@ namespace WeatherIndex
                         artifacts.Add(def.cachedName);
                     }
                 }
+                Log.Info(JsonConvert.SerializeObject(StageTracker.stages));
 
                 var info = new
                 {
@@ -113,25 +109,13 @@ namespace WeatherIndex
                 Log.Info(info);
                 this.PostRunReport(json);
             };
-
-            On.EntityStates.GameOver.RoR2MainEndingPlayCutscene.FixedUpdate += (orig, self) =>
-            {
-                orig(self);
-                self.outer.SetNextStateToMain();
-            };
-
-            On.EntityStates.GameOver.ShowCredits.OnEnter += (orig, self) =>
-            {
-                orig(self);
-                self.outer.SetNextState(new EntityStates.GameOver.ShowReport());
-            };
-
             endRunKeybind = Config.Bind<KeyboardShortcut>(
                 "Debug",
                 "End Run",
                 new KeyboardShortcut(KeyCode.F10),
                 "fucking"
             );
+
             accessToken = Config.Bind<string>(
                 "Account",
                 "Access Token",
@@ -149,6 +133,8 @@ namespace WeatherIndex
                 )
             );
 
+            StageTracker.Init();
+            Debug.Init();
             DataDumper.Init();
         }
 
