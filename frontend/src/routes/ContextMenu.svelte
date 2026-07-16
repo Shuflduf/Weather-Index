@@ -39,7 +39,6 @@
   // let endingChecked: Record<string, boolean> = $state({});
 
   export function open(e: MouseEvent, id: string) {
-    console.log(id);
     if (!contextMenu.popup)
       contextMenu.popup = document.getElementById("context-menu")!;
 
@@ -326,7 +325,6 @@
               }
 
               const sign = properties[prop].filter[0].slice(0, 1);
-              console.log(sign);
               setFilter(prop, [`${sign}${value}`]);
             }}
           />
@@ -363,14 +361,12 @@
               if (value == "") {
                 e.currentTarget.value = oldValue;
               }
-              console.log(value);
               if (properties[prop].filter.length == 0) {
                 setFilter(prop, [`>${value}`]);
                 return;
               }
 
               const sign = properties[prop].filter[0].slice(0, 1);
-              console.log(sign);
               setFilter(prop, [`${sign}${value}`]);
             }}
           />

@@ -93,7 +93,6 @@
   });
 
   function observeLoadMore(node: HTMLElement) {
-    console.log(node);
     loadMoreObserver = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting && loadingStatus == "NOT LOADING") {
         pageNumber += 1;
@@ -129,7 +128,11 @@
         new URLSearchParams({
           filters: JSON.stringify(filters),
           page: pageNumber.toFixed(0),
-          only: JSON.stringify(["id", "score"]),
+          only: JSON.stringify(
+            Object.entries(properties)
+              .filter(([_, v]) => v.enabled)
+              .map(([k, _]) => k),
+          ),
           ...sortProperty,
         }).toString(),
     )
@@ -137,7 +140,6 @@
       .then((j: { total: number; runs: RunReportWithUser[] }) => {
         if (j.runs.length != 0) {
           runs = runs.concat(j.runs);
-          console.log(runs);
           totalRuns = j.total;
           loadingStatus = "NOT LOADING";
         } else {

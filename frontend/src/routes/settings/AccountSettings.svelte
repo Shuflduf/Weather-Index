@@ -24,7 +24,6 @@
     fetch("/auth/list-accounts")
       .then((r) => r.json())
       .then((j: any[]) => {
-        console.log(j);
         accounts = j;
         providers = j.map((a) => a.provider);
       });
@@ -49,7 +48,6 @@
       body: JSON.stringify({ newPassword, currentPassword }),
     });
     let body = await resp.json();
-    console.log(body);
     if ("errors" in body) {
       changePasswordErrors = body.errors;
     }
