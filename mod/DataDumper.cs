@@ -70,6 +70,15 @@ namespace WeatherIndex
                     DataDumper.DumpArtifacts
                 )
             );
+            ModSettingsManager.AddOption(
+                new GenericButtonOption(
+                    "Dump Environments",
+                    "Debug",
+                    "environemtns/stages/scenes",
+                    "Dump",
+                    DataDumper.DumpEnvironments
+                )
+            );
         }
 
         public static void DumpItems()
@@ -296,6 +305,42 @@ namespace WeatherIndex
             }
             var json = JsonConvert.SerializeObject(artifacts);
             File.WriteAllText(Path.Combine(outputDir, "artifacts.json"), json);
+        }
+
+        public static void DumpEnvironments()
+        {
+            var outputDir = Path.Combine(pluginDir, "environments");
+            Directory.CreateDirectory(outputDir);
+            var environments = new List<object>();
+            foreach (var def in RoR2.SceneCatalog.allStageSceneDefs)
+            {
+                if (def == null)
+                    continue;
+
+                Texture2D tex = def.previewTexture as Texture2D;
+                // if (sprite == null)
+                //     continue;
+
+                string? filename = null;
+                // Texture2D tex = sprite.texture;
+                if (tex != null)
+                {
+                    filename = $"{def.cachedName}.png";
+                    writeTexture(Path.Combine(outputDir, filename), tex);
+                }
+
+                environments.Add(
+                    new
+                    {
+                        name = def.cachedName,
+                        nameToken = def.nameToken,
+                        displayName = RoR2.Language.GetString(def.nameToken),
+                        icon = filename,
+                    }
+                );
+            }
+            var json = JsonConvert.SerializeObject(environments);
+            File.WriteAllText(Path.Combine(outputDir, "environments.json"), json);
         }
 
         private static void writeEndingTexture(string path, Texture2D tex, Color color)

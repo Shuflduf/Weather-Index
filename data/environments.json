@@ -1,0 +1,230 @@
+[
+  {
+    "name": "ancientloft",
+    "nameToken": "MAP_ANCIENTLOFT_TITLE",
+    "displayName": "Aphelian Sanctuary",
+    "icon": "ancientloft.png"
+  },
+  {
+    "name": "blackbeach",
+    "nameToken": "MAP_BLACKBEACH_TITLE",
+    "displayName": "Distant Roost",
+    "icon": "blackbeach.png"
+  },
+  {
+    "name": "blackbeach2",
+    "nameToken": "MAP_BLACKBEACH_TITLE",
+    "displayName": "Distant Roost",
+    "icon": "blackbeach2.png"
+  },
+  {
+    "name": "conduitcanyon",
+    "nameToken": "MAP_CONDUITCANYON_TITLE",
+    "displayName": "Conduit Canyon",
+    "icon": "conduitcanyon.png"
+  },
+  {
+    "name": "dampcavesimple",
+    "nameToken": "MAP_DAMPCAVE_TITLE",
+    "displayName": "Abyssal Depths",
+    "icon": "dampcavesimple.png"
+  },
+  {
+    "name": "foggyswamp",
+    "nameToken": "MAP_FOGGYSWAMP_TITLE",
+    "displayName": "Wetland Aspect",
+    "icon": "foggyswamp.png"
+  },
+  {
+    "name": "frozenwall",
+    "nameToken": "MAP_FROZENWALL_TITLE",
+    "displayName": "Rallypoint Delta",
+    "icon": "frozenwall.png"
+  },
+  {
+    "name": "golemplains",
+    "nameToken": "MAP_GOLEMPLAINS_TITLE",
+    "displayName": "Titanic Plains",
+    "icon": "golemplains.png"
+  },
+  {
+    "name": "golemplains2",
+    "nameToken": "MAP_GOLEMPLAINS_TITLE",
+    "displayName": "Titanic Plains",
+    "icon": "golemplains2.png"
+  },
+  {
+    "name": "goolake",
+    "nameToken": "MAP_GOOLAKE_TITLE",
+    "displayName": "Abandoned Aqueduct",
+    "icon": "goolake.png"
+  },
+  {
+    "name": "habitat",
+    "nameToken": "MAP_HABITAT_TITLE",
+    "displayName": "Treeborn Colony",
+    "icon": "habitat.png"
+  },
+  {
+    "name": "habitatfall",
+    "nameToken": "MAP_HABITATFALL_TITLE",
+    "displayName": "Golden Dieback",
+    "icon": "habitatfall.png"
+  },
+  {
+    "name": "helminthroost",
+    "nameToken": "MAP_HELMINTHROOST_TITLE",
+    "displayName": "Helminth Hatchery",
+    "icon": "helminthroost.png"
+  },
+  {
+    "name": "ironalluvium",
+    "nameToken": "MAP_IRONALLUVIUM_TITLE",
+    "displayName": "Iron Alluvium",
+    "icon": "ironalluvium.png"
+  },
+  {
+    "name": "ironalluvium2",
+    "nameToken": "MAP_IRONALLUVIUM2_TITLE",
+    "displayName": "Iron Auroras",
+    "icon": "ironalluvium2.png"
+  },
+  {
+    "name": "itancientloft",
+    "nameToken": "MAP_INFINITETOWER_TITLE",
+    "displayName": "The Simulacrum",
+    "icon": "itancientloft.png"
+  },
+  {
+    "name": "itdampcave",
+    "nameToken": "MAP_INFINITETOWER_TITLE",
+    "displayName": "The Simulacrum",
+    "icon": "itdampcave.png"
+  },
+  {
+    "name": "itfrozenwall",
+    "nameToken": "MAP_INFINITETOWER_TITLE",
+    "displayName": "The Simulacrum",
+    "icon": "itfrozenwall.png"
+  },
+  {
+    "name": "itgolemplains",
+    "nameToken": "MAP_INFINITETOWER_TITLE",
+    "displayName": "The Simulacrum",
+    "icon": "itgolemplains.png"
+  },
+  {
+    "name": "itgoolake",
+    "nameToken": "MAP_INFINITETOWER_TITLE",
+    "displayName": "The Simulacrum",
+    "icon": "itgoolake.png"
+  },
+  {
+    "name": "itmoon",
+    "nameToken": "MAP_INFINITETOWER_TITLE",
+    "displayName": "The Simulacrum",
+    "icon": "itmoon.png"
+  },
+  {
+    "name": "itskymeadow",
+    "nameToken": "MAP_INFINITETOWER_TITLE",
+    "displayName": "The Simulacrum",
+    "icon": "itskymeadow.png"
+  },
+  {
+    "name": "lakes",
+    "nameToken": "MAP_LAKES_TITLE",
+    "displayName": "Verdant Falls",
+    "icon": "lakes.png"
+  },
+  {
+    "name": "lakesnight",
+    "nameToken": "MAP_LAKESNIGHT_TITLE",
+    "displayName": "Viscous Falls",
+    "icon": "lakesnight.png"
+  },
+  {
+    "name": "lemuriantemple",
+    "nameToken": "MAP_LEMURIANTEMPLE_TITLE",
+    "displayName": "Reformed Altar",
+    "icon": "lemuriantemple.png"
+  },
+  {
+    "name": "moon2",
+    "nameToken": "MAP_MOON_TITLE",
+    "displayName": "Commencement",
+    "icon": "moon2.png"
+  },
+  {
+    "name": "nest",
+    "nameToken": "MAP_NEST_TITLE",
+    "displayName": "Pretender's Precipice",
+    "icon": "nest.png"
+  },
+  {
+    "name": "repurposedcrater",
+    "nameToken": "MAP_REPURPOSEDCRATER_TITLE",
+    "displayName": "Repurposed Crater",
+    "icon": "repurposedcrater.png"
+  },
+  {
+    "name": "rootjungle",
+    "nameToken": "MAP_ROOTJUNGLE_TITLE",
+    "displayName": "Sundered Grove",
+    "icon": "rootjungle.png"
+  },
+  {
+    "name": "shipgraveyard",
+    "nameToken": "MAP_SHIPGRAVEYARD_TITLE",
+    "displayName": "Siren's Call",
+    "icon": "shipgraveyard.png"
+  },
+  {
+    "name": "skymeadow",
+    "nameToken": "MAP_SKYMEADOW_TITLE",
+    "displayName": "Sky Meadow",
+    "icon": "skymeadow.png"
+  },
+  {
+    "name": "snowyforest",
+    "nameToken": "MAP_SNOWYFOREST_TITLE",
+    "displayName": "Siphoned Forest",
+    "icon": "snowyforest.png"
+  },
+  {
+    "name": "sulfurpools",
+    "nameToken": "MAP_SULFURPOOLS_TITLE",
+    "displayName": "Sulfur Pools",
+    "icon": "sulfurpools.png"
+  },
+  {
+    "name": "village",
+    "nameToken": "MAP_VILLAGE_TITLE",
+    "displayName": "Shattered Abodes",
+    "icon": "village.png"
+  },
+  {
+    "name": "villagenight",
+    "nameToken": "MAP_VILLAGENIGHT_TITLE",
+    "displayName": "Disturbed Impact",
+    "icon": "villagenight.png"
+  },
+  {
+    "name": "voidraid",
+    "nameToken": "MAP_VOIDRAID_TITLE",
+    "displayName": "Hidden Realm: The Planetarium",
+    "icon": "voidraid.png"
+  },
+  {
+    "name": "voidstage",
+    "nameToken": "MAP_VOIDSTAGE_TITLE",
+    "displayName": "Hidden Realm: Void Locus",
+    "icon": "voidstage.png"
+  },
+  {
+    "name": "wispgraveyard",
+    "nameToken": "MAP_WISPGRAVEYARD_TITLE",
+    "displayName": "Scorched Acres",
+    "icon": "wispgraveyard.png"
+  }
+]

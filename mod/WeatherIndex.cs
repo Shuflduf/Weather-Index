@@ -47,7 +47,6 @@ namespace WeatherIndex
                         artifacts.Add(def.cachedName);
                     }
                 }
-                Log.Info(JsonConvert.SerializeObject(StageTracker.stages));
 
                 var info = new
                 {
@@ -61,6 +60,7 @@ namespace WeatherIndex
                     timeAliveSeconds = (ulong)stats.GetStatValueAsDouble(StatDef.totalTimeAlive),
                     artifacts = artifacts,
                     stagesCompleted = stats.GetStatValueULong(StatDef.totalStagesCompleted),
+                    stageHistory = StageTracker.stages,
 
                     // items
                     items = itemCounts,
@@ -97,6 +97,9 @@ namespace WeatherIndex
                     distanceTraveledMetres = (ulong)
                         stats.GetStatValueAsDouble(StatDef.totalDistanceTraveled),
                 };
+
+                StageTracker.stages = new List<string>();
+
                 var json = JsonConvert.SerializeObject(
                     info,
                     Formatting.Indented,

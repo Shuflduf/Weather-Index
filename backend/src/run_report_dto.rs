@@ -32,6 +32,8 @@ pub struct RunReportDTO {
     pub artifacts: Vec<String>,
     #[dummy(faker = "1..1000i16")]
     pub stages_completed: i16,
+    #[dummy(expr = "vec![]")]
+    pub stage_history: Vec<String>,
 
     // items
     #[dummy(expr = "serde_json::json!({})")]
