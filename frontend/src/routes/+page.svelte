@@ -136,6 +136,7 @@
       .then((j: { total: number; runs: RunReportWithUser[] }) => {
         if (j.runs.length != 0) {
           runs = runs.concat(j.runs);
+          console.log(runs);
           totalRuns = j.total;
           loadingStatus = "NOT LOADING";
         } else {

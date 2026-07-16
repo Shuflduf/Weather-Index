@@ -72,7 +72,7 @@ const ORDERED_ENDINGS: [&str; 9] = [
 #[serde(rename_all = "camelCase")]
 pub struct RunReportWithUser {
     #[serde(flatten)]
-    report: run_report::Model,
+    report: serde_json::Value,
     user_image: Option<String>,
     user_username: Option<String>,
     user_display_username: Option<String>,
@@ -84,9 +84,12 @@ pub struct ListParams {
     by: String,
     #[serde(default = "default_sort")]
     sort: String,
+    #[serde(default = "default_sort")]
+    fallback_sort: String,
     #[serde(default)]
     page: u64,
     filters: Option<String>,
+    only: Option<Vec<String>>,
 }
 
 #[derive(Serialize)]
@@ -187,6 +190,14 @@ pub async fn list(
             ))?,
         },
     };
+    let fallback_order = match params.fallback_sort.as_ref() {
+        "DESC" => Order::Desc,
+        "ASC" => Order::Asc,
+        _ => Err(make_error(
+            StatusCode::BAD_REQUEST,
+            "field `fallback_order` should be either `DESC` or `ASC`".into(),
+        ))?,
+    };
 
     let mut condition = Condition::all();
     let numerical_conditions = [
@@ -277,26 +288,9 @@ pub async fn list(
     {
         condition = condition.add_option(filter);
     }
-    // return Ok(Json(ListReturn {
-    //     total: 1,
-    //     runs: RunReport::find()
-    //         .columns([run_report::Column::Id])
-    //         .find_also_related(user::Entity)
-    //         .all(&state.db)
-    //         .await
-    //         .unwrap()
-    //         .into_iter()
-    //         .map(|(report, user)| RunReportWithUser {
-    //             report,
-    //             user_username: user.as_ref().and_then(|u| u.username.clone()),
-    //             user_display_username: user.as_ref().and_then(|u| u.display_username.clone()),
-    //             user_image: user.as_ref().and_then(|u| u.image.clone()),
-    //         })
-    //         .collect(),
-    // }));
     let report_pages = RunReport::find()
-        .select_only()
         .order_by(sort_by, order)
+        .order_by(run_report::Column::Id, fallback_order)
         .filter(condition)
         .find_also_related(user::Entity)
         .paginate(&state.db, 10);
@@ -310,7 +304,7 @@ pub async fn list(
     let results = reports
         .into_iter()
         .map(|(report, user)| RunReportWithUser {
-            report,
+            report: serde_json::to_value(report).unwrap(),
             user_username: user.as_ref().and_then(|u| u.username.clone()),
             user_display_username: user.as_ref().and_then(|u| u.display_username.clone()),
             user_image: user.as_ref().and_then(|u| u.image.clone()),
@@ -340,7 +334,7 @@ pub async fn get(
         .ok_or_else(|| make_error(StatusCode::NOT_FOUND, format!("Run {id} not found")))?;
 
     let result = RunReportWithUser {
-        report,
+        report: serde_json::to_value(report).unwrap(),
         user_username: user.as_ref().and_then(|u| u.username.clone()),
         user_display_username: user.as_ref().and_then(|u| u.display_username.clone()),
         user_image: user.as_ref().and_then(|u| u.image.clone()),
