@@ -6,13 +6,11 @@ use axum::{
     Form, Json,
 };
 use reqwest::StatusCode;
-use sea_orm::{
-    ActiveValue::Set, ColumnTrait, EntityTrait, QueryFilter,
-};
+use sea_orm::{ActiveValue::Set, ColumnTrait, EntityTrait, QueryFilter};
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    auth_extractor::AuthenticatedUser,
+    auth_session::WISession,
     entity::{run_report, user},
     error::{db_error, make_error, WIError},
     ror2, WIState,
@@ -134,13 +132,14 @@ pub struct UpdatePlayer {
     region: Option<String>,
 }
 
+#[axum::debug_handler]
 pub async fn update(
-    current_user: AuthenticatedUser,
+    session: WISession,
     State(state): State<Arc<WIState>>,
     Form(payload): Form<UpdatePlayer>,
 ) -> Result<Redirect, WIError> {
     let new_user = user::ActiveModel {
-        id: Set(current_user.user_id),
+        id: Set(session.0.user.id),
         username: Set(payload.username),
         display_username: Set(payload.display_username),
         image: Set(payload.image),

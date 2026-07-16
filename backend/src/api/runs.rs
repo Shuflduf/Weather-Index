@@ -6,8 +6,8 @@ use axum::{
 };
 use reqwest::StatusCode;
 use sea_orm::{
-    prelude::Expr, ColumnTrait, Condition, EntityTrait, IntoSimpleExpr, Order, PaginatorTrait,
-    QueryFilter, QueryOrder, Values,
+    ColumnTrait, Condition, EntityTrait, IntoSimpleExpr, Order, PaginatorTrait, QueryFilter,
+    QueryOrder, QuerySelect, Values,
 };
 use serde::{Deserialize, Serialize};
 
@@ -122,100 +122,70 @@ pub async fn list(
         .map_err(|e| make_error(StatusCode::BAD_REQUEST, format!("Invalid filter json: {e}")))?
         .unwrap_or_default();
     // println!("{:?}", params.page);
-    let order = match params.sort.as_ref() {
-        "DESC" => Order::Desc,
-        "ASC" => Order::Asc,
-        _ => Err(make_error(
-            StatusCode::BAD_REQUEST,
-            "field `order` should be either `DESC` or `ASC`".into(),
-        ))?,
-    };
-    let (sort_by, order) = match params.by.as_ref() {
-        "id" => (run_report::Column::Id.into_simple_expr(), order),
-        "player" => (Expr::col((user::Entity, user::Column::Username)), order),
-        "uploadTime" => (run_report::Column::UploadTime.into_simple_expr(), order),
-
+    let columns: HashMap<&str, run_report::Column> = HashMap::from([
+        ("id", run_report::Column::Id),
+        ("uploadTime", run_report::Column::UploadTime),
         // run info
-        "survivor" => (
-            run_report::Column::Survivor.into_simple_expr(),
-            to_order(&params.sort, &ORDERED_SURVIVORS),
-        ),
-        "startTime" => (run_report::Column::StartTime.into_simple_expr(), order),
-        "ending" => (
-            run_report::Column::Ending.into_simple_expr(),
-            to_order(&params.sort, &ORDERED_ENDINGS),
-        ),
-        "difficulty" => (
-            run_report::Column::Difficulty.into_simple_expr(),
-            to_order(&params.sort, &ORDERED_DIFFICULTIES),
-        ),
-        "timeAlive" => (
-            run_report::Column::TimeAliveSeconds.into_simple_expr(),
-            order,
-        ),
-        "artifacts" => (run_report::Column::Artifacts.into_simple_expr(), order),
-        "stagesCompleted" => (
-            run_report::Column::StagesCompleted.into_simple_expr(),
-            order,
-        ),
-        "score" => (run_report::Column::Score.into_simple_expr(), order),
-
-        // items
-        "itemsCollected" => (run_report::Column::ItemsCollected.into_simple_expr(), order),
-
-        // drones
-        "dronesPurchased" => (
-            run_report::Column::DronesPurchased.into_simple_expr(),
-            order,
-        ),
-        "turretsPurchased" => (
-            run_report::Column::TurretsPurchased.into_simple_expr(),
-            order,
-        ),
-
+        ("survivor", run_report::Column::Survivor),
+        ("startTime", run_report::Column::StartTime),
+        ("ending", run_report::Column::Ending),
+        ("difficulty", run_report::Column::Difficulty),
+        ("timeAlive", run_report::Column::TimeAliveSeconds),
+        ("artifacts", run_report::Column::Artifacts),
+        ("stagesCompleted", run_report::Column::StagesCompleted),
+        ("score", run_report::Column::Score),
+        // pickups
+        ("itemsCollected", run_report::Column::ItemsCollected),
+        ("dronesPurchased", run_report::Column::DronesPurchased),
+        ("turretsPurchased", run_report::Column::TurretsPurchased),
         // combat
-        "kills" => (run_report::Column::Kills.into_simple_expr(), order),
-        "eliteKills" => (run_report::Column::EliteKills.into_simple_expr(), order),
-        "minionKills" => (run_report::Column::MinionKills.into_simple_expr(), order),
-        "deaths" => (run_report::Column::Deaths.into_simple_expr(), order),
-
-        // damage
-        "damageDealt" => (run_report::Column::DamageDealt.into_simple_expr(), order),
-        "minionDamageDealt" => (
-            run_report::Column::MinionDamageDealt.into_simple_expr(),
-            order,
-        ),
-        "damageTaken" => (run_report::Column::DamageTaken.into_simple_expr(), order),
-        "highestDamageDealt" => (
-            run_report::Column::HighestDamageDealt.into_simple_expr(),
-            order,
-        ),
-
+        ("kills", run_report::Column::Kills),
+        ("eliteKills", run_report::Column::EliteKills),
+        ("minionKills", run_report::Column::MinionKills),
+        ("deaths", run_report::Column::Deaths),
+        ("damageDealt", run_report::Column::DamageDealt),
+        ("minionDamageDealt", run_report::Column::MinionDamageDealt),
+        ("damageTaken", run_report::Column::DamageTaken),
+        ("highestDamageDealt", run_report::Column::HighestDamageDealt),
         // healing
-        "healingRecieved" => (
-            run_report::Column::HealingRecieved.into_simple_expr(),
-            order,
-        ),
-
+        ("healingRecieved", run_report::Column::HealingRecieved),
         // progression
-        "highestLevel" => (run_report::Column::HighestLevel.into_simple_expr(), order),
-        "goldCollected" => (run_report::Column::GoldCollected.into_simple_expr(), order),
-        "purchases" => (run_report::Column::Purchases.into_simple_expr(), order),
-        "goldPurchases" => (run_report::Column::GoldPurchases.into_simple_expr(), order),
-        "bloodPurchases" => (run_report::Column::BloodPurchases.into_simple_expr(), order),
-        "lunarPurchases" => (run_report::Column::LunarPurchases.into_simple_expr(), order),
-
+        ("highestLevel", run_report::Column::HighestLevel),
+        ("goldCollected", run_report::Column::GoldCollected),
+        ("purchases", run_report::Column::Purchases),
+        ("goldPurchases", run_report::Column::GoldPurchases),
+        ("bloodPurchases", run_report::Column::BloodPurchases),
+        ("lunarPurchases", run_report::Column::LunarPurchases),
         // movement
-        "distanceTraveled" => (
-            run_report::Column::DistanceTraveledMetres.into_simple_expr(),
-            order,
+        (
+            "distanceTraveled",
+            run_report::Column::DistanceTraveledMetres,
         ),
-
-        _ => Err(make_error(
-            StatusCode::BAD_REQUEST,
-            format!("{} is an invalid column name", params.by),
-            // TODO: show actual column names to sort by
-        ))?,
+    ]);
+    let sort_by = if params.by == "player" {
+        user::Column::Username.into_simple_expr()
+    } else {
+        columns
+            .get::<str>(params.by.as_ref())
+            .ok_or(make_error(
+                StatusCode::BAD_REQUEST,
+                format!("{} is an invalid column name", params.by),
+            ))?
+            .into_simple_expr()
+    };
+    let order = match params.by.as_ref() {
+        // run info
+        "survivor" => to_order(&params.sort, &ORDERED_SURVIVORS),
+        "ending" => to_order(&params.sort, &ORDERED_ENDINGS),
+        "difficulty" => to_order(&params.sort, &ORDERED_DIFFICULTIES),
+        _ => match params.sort.as_ref() {
+            "DESC" => Order::Desc,
+            "ASC" => Order::Asc,
+            _ => Err(make_error(
+                StatusCode::BAD_REQUEST,
+                "field `order` should be either `DESC` or `ASC`".into(),
+            ))?,
+        },
     };
 
     let mut condition = Condition::all();
@@ -307,7 +277,25 @@ pub async fn list(
     {
         condition = condition.add_option(filter);
     }
+    // return Ok(Json(ListReturn {
+    //     total: 1,
+    //     runs: RunReport::find()
+    //         .columns([run_report::Column::Id])
+    //         .find_also_related(user::Entity)
+    //         .all(&state.db)
+    //         .await
+    //         .unwrap()
+    //         .into_iter()
+    //         .map(|(report, user)| RunReportWithUser {
+    //             report,
+    //             user_username: user.as_ref().and_then(|u| u.username.clone()),
+    //             user_display_username: user.as_ref().and_then(|u| u.display_username.clone()),
+    //             user_image: user.as_ref().and_then(|u| u.image.clone()),
+    //         })
+    //         .collect(),
+    // }));
     let report_pages = RunReport::find()
+        .select_only()
         .order_by(sort_by, order)
         .filter(condition)
         .find_also_related(user::Entity)

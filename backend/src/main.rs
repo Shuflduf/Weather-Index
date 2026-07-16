@@ -11,7 +11,7 @@ use axum::{
 use better_auth::{
     plugins::{
         oauth::OAuthProvider, AccountManagementPlugin, DeviceAuthorizationConfig,
-        DeviceAuthorizationPlugin, EmailPasswordPlugin, OAuthPlugin, PasswordManagementConfig,
+        DeviceAuthorizationPlugin, EmailPasswordPlugin, OAuthPlugin,
         PasswordManagementPlugin, SessionManagementPlugin,
     },
     AuthBuilder, AuthConfig, AxumIntegration, CsrfConfig,
@@ -22,7 +22,7 @@ use sea_orm::{ActiveModelTrait, ActiveValue::Set};
 use weather_index::{
     api,
     auth_entities::AppAdapter,
-    auth_extractor::AuthenticatedUser,
+    auth_session::WISession,
     db,
     entity::run_report,
     error::{make_error, WIError},
@@ -136,7 +136,7 @@ async fn oauth_redirect_middleware(
 }
 
 async fn insert_new_run(
-    user: AuthenticatedUser,
+    session: WISession,
     State(state): State<Arc<WIState>>,
     Json(payload): Json<RunReportDTO>,
 ) -> Result<Json<&'static str>, WIError> {
@@ -144,7 +144,7 @@ async fn insert_new_run(
         payload.try_into().map_err(|e: Box<dyn Error>| {
             make_error(StatusCode::BAD_REQUEST, format!("Failed to parse: {e}"))
         })?;
-    game_run.user_id = Set(user.user_id);
+    game_run.user_id = Set(session.0.user.id);
     game_run.insert(&state.db).await.map_err(|e| {
         make_error(
             StatusCode::INTERNAL_SERVER_ERROR,

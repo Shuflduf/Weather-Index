@@ -7,7 +7,7 @@ use crate::auth_entities::AppAdapter;
 
 pub mod api;
 pub mod auth_entities;
-pub mod auth_extractor;
+pub mod auth_session;
 pub mod db;
 pub mod entity;
 pub mod error;
