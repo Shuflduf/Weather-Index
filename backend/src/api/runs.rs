@@ -80,16 +80,27 @@ pub struct RunReportWithUser {
 
 #[derive(Deserialize, Debug)]
 pub struct ListParams {
+    // prop name, ex. "id"
     #[serde(default = "default_sort_by")]
     by: String,
+
+    // ASC or DESC
     #[serde(default = "default_sort")]
     sort: String,
+
+    // ASC or DESC
     #[serde(default = "default_sort")]
     fallback_sort: String,
+
     #[serde(default)]
+    // numbmer, ex. 4
     page: u64,
+
+    // json object of props to array of filters. some props only have one filter, ex. {"id":[">10"],"survivor":["CommandoBody","BanditBody"]}
     filters: Option<String>,
-    only: Option<Vec<String>>,
+
+    // json array of props, ex. ["id", "score"]
+    only: Option<String>,
 }
 
 #[derive(Serialize)]
@@ -303,11 +314,19 @@ pub async fn list(
 
     let results = reports
         .into_iter()
-        .map(|(report, user)| RunReportWithUser {
-            report: serde_json::to_value(report).unwrap(),
-            user_username: user.as_ref().and_then(|u| u.username.clone()),
-            user_display_username: user.as_ref().and_then(|u| u.display_username.clone()),
-            user_image: user.as_ref().and_then(|u| u.image.clone()),
+        .map(|(report, user)| {
+            let mut report = serde_json::to_value(report).unwrap();
+            if let Some(ref fields) = params.only {
+                if let serde_json::Value::Object(ref mut map) = report {
+                    map.retain(|k, _| fields.contains(k));
+                };
+            };
+            RunReportWithUser {
+                report,
+                user_username: user.as_ref().and_then(|u| u.username.clone()),
+                user_display_username: user.as_ref().and_then(|u| u.display_username.clone()),
+                user_image: user.as_ref().and_then(|u| u.image.clone()),
+            }
         })
         .collect();
     Ok(Json(ListReturn {

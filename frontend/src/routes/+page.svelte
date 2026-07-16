@@ -129,8 +129,9 @@
         new URLSearchParams({
           filters: JSON.stringify(filters),
           page: pageNumber.toFixed(0),
+          only: JSON.stringify(["id", "score"]),
           ...sortProperty,
-        }),
+        }).toString(),
     )
       .then((r) => r.json())
       .then((j: { total: number; runs: RunReportWithUser[] }) => {
