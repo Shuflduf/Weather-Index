@@ -5,6 +5,7 @@
     BODIES,
     DIFFICULTIES,
     ENDINGS,
+    ENVIRONMENTS,
     formatBig,
     formatSeconds,
     ITEMS,
@@ -42,6 +43,7 @@
       {ENDINGS[run.ending].endingMessage}
     </h1>
   </div>
+
   <div class="flex flex-row gap-4 mt-4">
     <div class="border bg-bg-secondary w-full p-2">
       <h1 class="text-3xl text-center">Stats</h1>
@@ -218,6 +220,25 @@
           {new Date(run.uploadTime).toLocaleString()}
         </span>
       </div>
+    </div>
+  </div>
+
+  <div class="p-4 bg-bg-secondary border mt-4">
+    <h1 class="text-3xl text-center">Stage History</h1>
+
+    <div class="flex flex-row overflow-x-auto gap-2 mt-4">
+      {#each run.stageHistory as stage}
+        <div class="shrink-0">
+          <img
+            src="/environments/{ENVIRONMENTS[stage].icon}"
+            alt="stage"
+            class="h-32 border"
+          />
+          <span class="text-secondary italic block text-center mb-4">
+            {ENVIRONMENTS[stage].displayName}
+          </span>
+        </div>
+      {/each}
     </div>
   </div>
 {:catch err}

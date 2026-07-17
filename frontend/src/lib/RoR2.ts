@@ -5,6 +5,7 @@ import endings from "../../../data/endings.json";
 import items from "../../../data/items.json";
 import scoring_table from "../../../data/scoring.json";
 import tiers from "../../../data/tiers.json";
+import environments from "../../../data/environments.json";
 
 export type RunReportWithUser = {
   userImage: string;
@@ -22,6 +23,7 @@ export type RunReportWithUser = {
   timeAliveSeconds: number;
   artifacts: string[];
   stagesCompleted: number;
+  stageHistory: string[];
   score: number;
 
   // items
@@ -111,7 +113,15 @@ export type Tier = {
   name: string;
   sort: number;
 };
+
 export type Artifact = {
+  name: string;
+  nameToken: string;
+  displayName: string;
+  icon: string;
+};
+
+export type Environment = {
   name: string;
   nameToken: string;
   displayName: string;
@@ -139,6 +149,9 @@ export const TIERS = Object.fromEntries(
 );
 export const ARTIFACTS = Object.fromEntries(
   artifacts.map((artifact: Artifact) => [artifact.name, artifact]),
+);
+export const ENVIRONMENTS = Object.fromEntries(
+  environments.map((environment: Environment) => [environment.name, environment]),
 );
 
 export const ORDERED_SURVIVORS: string[] = [
