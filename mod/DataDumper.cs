@@ -317,9 +317,14 @@ namespace WeatherIndex
                 if (def == null)
                     continue;
 
+#pragma warning disable CS0618
+#pragma warning disable CS8600
+
+                // istg
                 Texture2D tex = def.previewTexture as Texture2D;
-                // if (sprite == null)
-                //     continue;
+
+#pragma warning restore CS0618
+#pragma warning restore CS8600
 
                 string? filename = null;
                 // Texture2D tex = sprite.texture;

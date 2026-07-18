@@ -1,18 +1,22 @@
 #nullable enable
 
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using RoR2;
 
 namespace WeatherIndex
 {
+    using ItemList = Dictionary<ItemIndex, int>;
+
     struct ItemEvent
     {
-        public int Id;
-        public int Count;
+        public ItemIndex id;
+        public int count;
 
-        public ItemEvent(int id, int count)
+        public ItemEvent(ItemIndex Id, int Count)
         {
-            Id = id;
-            Count = count;
+            id = Id;
+            count = Count;
         }
     }
 
@@ -20,6 +24,7 @@ namespace WeatherIndex
     {
         public static List<string> stages = new List<string>();
         public static List<ItemEvent> items = new List<ItemEvent>();
+        static ItemList oldItems = new ItemList();
 
         public static void Init()
         {
@@ -62,12 +67,62 @@ namespace WeatherIndex
                 )
                     return;
 
-                Log.Info(inv);
                 var stacks = inv.permanentItemStacks;
-                Log.Info(stacks);
-                Log.Info(stacks.GetTotalItemStacks());
-                Log.Info(stacks.GetStackValue((RoR2.ItemIndex)206));
+                var newItems = itemList(stacks);
+
+                ItemEvent? diff = itemDifference(oldItems, newItems);
+                if (diff is not null)
+                {
+                    items.Add(diff.Value);
+                }
+                Log.Info(JsonConvert.SerializeObject(items));
+
+                oldItems = newItems;
             };
+        }
+
+        static ItemList itemList(ItemCollection stacks)
+        {
+            var list = new Dictionary<ItemIndex, int>();
+            for (int i = 0; i < ItemCatalog.itemCount; i++)
+            {
+                ItemIndex item = (ItemIndex)i;
+                int count = stacks.GetStackValue(item);
+                if (count == 0)
+                    continue;
+
+                list[item] = count;
+            }
+            return list;
+        }
+
+        static ItemEvent? itemDifference(ItemList oldItems, ItemList newItems)
+        {
+            for (int i = 0; i < ItemCatalog.itemCount; i++)
+            {
+                ItemIndex item = (ItemIndex)i;
+                if (!oldItems.ContainsKey(item) && !newItems.ContainsKey(item))
+                {
+                    continue;
+                }
+                else if (oldItems.ContainsKey(item) && !newItems.ContainsKey(item))
+                {
+                    return new ItemEvent(item, -oldItems[item]);
+                }
+                else if (!oldItems.ContainsKey(item) && newItems.ContainsKey(item))
+                {
+                    return new ItemEvent(item, newItems[item]);
+                }
+                else if (oldItems[item] == newItems[item])
+                {
+                    continue;
+                }
+                else
+                {
+                    return new ItemEvent(item, newItems[item] - oldItems[item]);
+                }
+            }
+            return null;
         }
     }
 }
