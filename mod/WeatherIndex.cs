@@ -60,7 +60,7 @@ namespace WeatherIndex
                     timeAliveSeconds = (ulong)stats.GetStatValueAsDouble(StatDef.totalTimeAlive),
                     artifacts = artifacts,
                     stagesCompleted = stats.GetStatValueULong(StatDef.totalStagesCompleted),
-                    stageHistory = StageTracker.stages,
+                    stageHistory = RunTracker.stages,
 
                     // items
                     items = itemCounts,
@@ -98,7 +98,7 @@ namespace WeatherIndex
                         stats.GetStatValueAsDouble(StatDef.totalDistanceTraveled),
                 };
 
-                StageTracker.stages = new List<string>();
+                RunTracker.stages = new List<string>();
 
                 var json = JsonConvert.SerializeObject(
                     info,
@@ -136,7 +136,7 @@ namespace WeatherIndex
                 )
             );
 
-            StageTracker.Init();
+            RunTracker.Init();
             Debug.Init();
             DataDumper.Init();
         }
