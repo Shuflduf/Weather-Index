@@ -7,6 +7,12 @@ import scoring_table from "../../../data/scoring.json";
 import tiers from "../../../data/tiers.json";
 import environments from "../../../data/environments.json";
 
+type ItemEvent = {
+  id: number;
+  count: number;
+  time: number;
+}
+
 export type RunReportWithUser = {
   userImage: string;
   userUsername: string;
@@ -29,6 +35,7 @@ export type RunReportWithUser = {
   // items
   items: Record<string, number>;
   itemsCollected: number;
+  itemHistory: ItemEvent[];
 
   // drones
   dronesPurchased: number;

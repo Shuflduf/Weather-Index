@@ -223,7 +223,9 @@
     </div>
   </div>
 
-  <div class="p-4 bg-bg-secondary border mt-4">
+  <hr class="mt-8" />
+
+  <div class="mt-8">
     <h1 class="text-3xl text-center">Stage History</h1>
 
     <div class="flex flex-row overflow-x-auto gap-2 mt-4">
@@ -240,6 +242,59 @@
         </div>
       {/each}
     </div>
+  </div>
+
+  <hr />
+
+  <div class="mt-8">
+    <h1 class="text-3xl text-center">Item History</h1>
+
+    <table class="w-full">
+      <thead>
+        <tr>
+          <th
+            class="text-xl tracking-tight text-center font-bold px-2 relative z-2"
+          >
+            Item
+          </th>
+          <th
+            class="text-xl tracking-tight text-center font-bold px-2 relative z-2"
+          >
+            Count
+          </th>
+          <th
+            class="text-xl tracking-tight text-center font-bold px-2 relative z-2"
+          >
+            Time
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {#each run.itemHistory as itemEvent}
+          <tr class="">
+            <td class="border px-4 bg-bg-secondary">
+              <img
+                src="/items/{ITEMS[itemEvent.id].icon}"
+                alt="stage"
+                class="h-8 inline"
+              />
+              <span class="">
+                {ITEMS[itemEvent.id].displayName}
+              </span>
+            </td>
+            <td class="border px-4 bg-bg-secondary">
+              <span class={itemEvent.count > 0 ? "text-success" : "text-error"}>
+                {itemEvent.count > 0 ? "+" : "-"}
+                {itemEvent.count.toString().replace("-", "")}
+              </span>
+            </td>
+            <td class="border px-4 bg-bg-secondary">
+              <span>{formatSeconds(itemEvent.time)}</span>
+            </td>
+          </tr>
+        {/each}
+      </tbody>
+    </table>
   </div>
 {:catch err}
   {err}
