@@ -327,6 +327,7 @@ namespace WeatherIndex
 #pragma warning restore CS8600
 
                 string? filename = null;
+
                 // Texture2D tex = sprite.texture;
                 if (tex != null)
                 {
