@@ -328,7 +328,6 @@ namespace WeatherIndex
 
                 string? filename = null;
 
-                // Texture2D tex = sprite.texture;
                 if (tex != null)
                 {
                     filename = $"{def.cachedName}.png";
