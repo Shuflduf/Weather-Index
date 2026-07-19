@@ -109,6 +109,7 @@ impl TryFrom<RunReportDTO> for run_report::ActiveModel {
             time_alive_seconds: Set(dto.time_alive_seconds),
             artifacts: Set(dto.artifacts),
             stages_completed: Set(dto.stages_completed),
+            stage_history: Set(dto.stage_history),
             score: Set(score),
             items: Set(dto.items),
             items_collected: Set(dto.items_collected),

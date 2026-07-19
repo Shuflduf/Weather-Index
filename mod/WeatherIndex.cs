@@ -34,6 +34,12 @@ namespace WeatherIndex
         {
             Log.Init(Logger);
 
+            Run.onRunStartGlobal += (Run run) =>
+            {
+                RunTracker.items = new List<ItemEvent>();
+                RunTracker.stages = new List<string>();
+            };
+
             Run.onClientGameOverGlobal += (Run run, RunReport report) =>
             {
                 var player = report.playerInfos?[0];
@@ -98,18 +104,16 @@ namespace WeatherIndex
                         stats.GetStatValueAsDouble(StatDef.totalDistanceTraveled),
                 };
 
-                RunTracker.stages = new List<string>();
-
                 var json = JsonConvert.SerializeObject(
                     info,
-                    Formatting.Indented,
+                    Formatting.None,
                     new JsonSerializerSettings
                     {
                         ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                         NullValueHandling = NullValueHandling.Ignore,
                     }
                 );
-                Log.Info(info);
+                Log.Info(json);
                 this.PostRunReport(json);
             };
             endRunKeybind = Config.Bind<KeyboardShortcut>(
