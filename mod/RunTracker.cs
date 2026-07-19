@@ -59,11 +59,37 @@ namespace WeatherIndex
                 var newItems = itemList(stacks);
 
                 List<ItemEvent> diffs = itemDifference(oldItems, newItems);
-                items.AddRange(diffs);
+                addItemEvents(diffs);
                 Log.Info(JsonConvert.SerializeObject(items));
 
                 oldItems = newItems;
             };
+        }
+
+        static void addItemEvents(List<ItemEvent> diffs)
+        {
+            if (items.Count == 0)
+            {
+                items.AddRange(diffs);
+                return;
+            }
+
+            foreach (ItemEvent diff in diffs)
+            {
+                ItemEvent last = items[items.Count - 1];
+                if (last.id == diff.id)
+                {
+                    items[items.Count - 1] = new ItemEvent(
+                        last.id,
+                        last.count + diff.count,
+                        last.time
+                    );
+                }
+                else
+                {
+                    items.Add(diff);
+                }
+            }
         }
 
         static ItemList itemList(ItemCollection stacks)
