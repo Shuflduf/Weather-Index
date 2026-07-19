@@ -8,7 +8,7 @@
   let user: any = $state(null);
 
   onMount(async () => {
-    let resp = await fetch(auth("get-session"));
+    let resp = await fetch(auth("get-session"), { credentials: "include" });
     let body = await resp.json();
     if (body.user) {
       user = body.user;

@@ -101,7 +101,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let cors = CorsLayer::new()
         .allow_origin(env::var("FRONTEND_URL")?.parse::<HeaderValue>()?)
         .allow_headers(cors::Any)
-        .allow_methods(cors::Any);
+        .allow_methods(cors::Any)
+        .allow_credentials(true);
 
     let app = Router::new()
         .nest("/auth", auth_router)

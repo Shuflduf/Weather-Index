@@ -1,6 +1,7 @@
 <script lang="ts">
   import { Mail, KeyRound, Heart } from "@lucide/svelte";
   import OAuthMethods from "$lib/OAuthMethods.svelte";
+  import { auth } from "$lib";
 
   let email: string = $state("");
   let password: string = $state("");
@@ -8,7 +9,7 @@
   let errorMessage: string = $state("");
 
   async function signIn() {
-    const resp = await fetch("/auth/sign-in/email", {
+    const resp = await fetch(auth("sign-in/email"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
