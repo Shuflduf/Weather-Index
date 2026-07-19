@@ -15,6 +15,8 @@
 >
   <PFP src={user.image} class="h-full border" />
   <a class="text-primary text-lg" href="/player/{user.username}">
-    {user.displayUsername ?? user.username}
+    {user.displayUsername && user.displayUsername.length > 0
+      ? user.displayUsername
+      : user.username}
   </a>
 </div>
