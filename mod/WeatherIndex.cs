@@ -148,7 +148,7 @@ namespace WeatherIndex
         private async void PostRunReport(string json)
         {
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var request = new HttpRequestMessage(HttpMethod.Post, $"{backendURL}/new-run")
+            var request = new HttpRequestMessage(HttpMethod.Post, $"{backendURL}/runs/new")
             {
                 Content = content,
             };

@@ -6,7 +6,7 @@ use sea_orm::ActiveValue::Set;
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    api::runs::{ORDERED_DIFFICULTIES, ORDERED_SURVIVORS},
+    data::{ORDERED_DIFFICULTIES, ORDERED_SURVIVORS},
     entity::run_report::{self},
     ror2::{self, endings},
 };

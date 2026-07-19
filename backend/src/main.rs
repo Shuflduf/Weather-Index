@@ -3,7 +3,7 @@ use std::{env, error::Error, sync::Arc};
 use axum::{
     body,
     extract::State,
-    http::{header, method, HeaderValue, Request, Response},
+    http::{header, Request, Response},
     middleware::{self, Next},
     routing::{get, post},
     Json, Router,
@@ -16,10 +16,10 @@ use better_auth::{
     },
     AuthBuilder, AuthConfig, AxumIntegration, CsrfConfig, SameSite,
 };
-use reqwest::{Method, StatusCode};
+use reqwest::StatusCode;
 use sea_orm::{ActiveModelTrait, ActiveValue::Set};
 
-use tower_http::cors::{self, AllowHeaders, CorsLayer};
+use tower_http::cors::{self, CorsLayer};
 use weather_index::{
     api,
     auth_entities::AppAdapter,
@@ -98,13 +98,14 @@ async fn main() -> Result<(), Box<dyn Error>> {
         auth: auth.clone(),
     });
 
+    let cors = CorsLayer::new()
+        .allow_origin(cors::Any)
+        .allow_methods(cors::Any)
+        .allow_headers(cors::Any);
+
+    let _api_routes = api::router().layer(cors);
     let app = Router::new()
         .nest("/auth", auth_router)
-        // .route("/auth/callback/github", get(github_oauth::handle_callback))
-        // .route(
-        //     "/auth/callback/discord",
-        //     get(discord_oauth::handle_callback),
-        // )
         .route("/", get(|| async { "Hello, World!" }))
         .route("/new-run", post(insert_new_run))
         .nest("/api", api::router())

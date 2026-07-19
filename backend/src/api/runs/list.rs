@@ -1,82 +1,23 @@
 use std::{collections::HashMap, sync::Arc};
 
 use axum::{
-    extract::{Path, Query, State},
+    extract::{Query, State},
     Json,
 };
 use reqwest::StatusCode;
 use sea_orm::{
     ColumnTrait, Condition, EntityTrait, IntoSimpleExpr, Order, PaginatorTrait, QueryFilter,
-    QueryOrder, QuerySelect, Values,
+    QueryOrder,
 };
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    entity::{
-        run_report::{self, Entity as RunReport},
-        user,
-    },
+    api::runs::RunReportWithUser,
+    data::{ORDERED_DIFFICULTIES, ORDERED_ENDINGS, ORDERED_SURVIVORS},
+    entity::{run_report, user},
     error::{db_error, make_error, WIError},
     WIState,
 };
-
-// TODO: make not hardcoded
-pub const ORDERED_DIFFICULTIES: [&str; 11] = [
-    "DIFFICULTY_EASY_NAME",
-    "DIFFICULTY_NORMAL_NAME",
-    "DIFFICULTY_HARD_NAME",
-    "ECLIPSE_1_NAME",
-    "ECLIPSE_2_NAME",
-    "ECLIPSE_3_NAME",
-    "ECLIPSE_4_NAME",
-    "ECLIPSE_5_NAME",
-    "ECLIPSE_6_NAME",
-    "ECLIPSE_7_NAME",
-    "ECLIPSE_8_NAME",
-];
-
-pub const ORDERED_SURVIVORS: [&str; 18] = [
-    "CommandoBody",
-    "HuntressBody",
-    "BanditBody",
-    "ToolbotBody",
-    "EngiBody",
-    "MageBody",
-    "MercBody",
-    "TreebotBody",
-    "LoaderBody",
-    "CrocoBody",
-    "CaptainBody",
-    "RailgunnerBody",
-    "VoidSurvivorBody",
-    "SeekerBody",
-    "FalseSonBody",
-    "ChefBody",
-    "DroneTechBody",
-    "DrifterBody",
-];
-
-const ORDERED_ENDINGS: [&str; 9] = [
-    "StandardLoss",
-    "EscapeSequenceFailed",
-    "PrismaticTrialEnding",
-    "VoidEnding",
-    "DecompileEnding",
-    "RebirthEndingDef",
-    "ObliterationEnding",
-    "LimboEnding",
-    "MainEnding",
-];
-
-#[derive(Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct RunReportWithUser {
-    #[serde(flatten)]
-    report: serde_json::Value,
-    user_image: Option<String>,
-    user_username: Option<String>,
-    user_display_username: Option<String>,
-}
 
 #[derive(Deserialize, Debug)]
 pub struct ListParams {
@@ -121,10 +62,10 @@ fn to_order(sort: &str, list: &[&str]) -> Order {
     if sort == "DESC" {
         list.reverse();
     }
-    Order::Field(Values(list))
+    Order::Field(sea_orm::Values(list))
 }
 
-pub async fn list(
+pub async fn get(
     State(state): State<Arc<WIState>>,
     Query(params): Query<ListParams>,
 ) -> Result<Json<ListReturn>, WIError> {
@@ -292,7 +233,7 @@ pub async fn list(
     {
         condition = condition.add_option(filter);
     }
-    let report_pages = RunReport::find()
+    let report_pages = run_report::Entity::find()
         .order_by(sort_by, order)
         .order_by(run_report::Column::Id, fallback_order)
         .filter(condition)
@@ -326,30 +267,4 @@ pub async fn list(
         total: report_pages.num_items().await.map_err(db_error)?,
         runs: results,
     }))
-}
-
-pub async fn get(
-    Path(id): Path<i32>,
-    State(state): State<Arc<WIState>>,
-) -> Result<Json<RunReportWithUser>, WIError> {
-    let (report, user) = RunReport::find()
-        .filter(run_report::Column::Id.eq(id))
-        .find_also_related(user::Entity)
-        .one(&state.db)
-        .await
-        .map_err(|e| {
-            make_error(
-                StatusCode::INTERNAL_SERVER_ERROR,
-                format!("Failed to query runs: {e}"),
-            )
-        })?
-        .ok_or_else(|| make_error(StatusCode::NOT_FOUND, format!("Run {id} not found")))?;
-
-    let result = RunReportWithUser {
-        report: serde_json::to_value(report).unwrap(),
-        user_username: user.as_ref().and_then(|u| u.username.clone()),
-        user_display_username: user.as_ref().and_then(|u| u.display_username.clone()),
-        user_image: user.as_ref().and_then(|u| u.image.clone()),
-    };
-    Ok(Json(result))
 }
