@@ -1,5 +1,6 @@
 #nullable enable
 
+using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using RoR2;
@@ -12,11 +13,13 @@ namespace WeatherIndex
     {
         public ItemIndex id;
         public int count;
+        public int time;
 
-        public ItemEvent(ItemIndex Id, int Count)
+        public ItemEvent(ItemIndex Id, int Count, int Time)
         {
             id = Id;
             count = Count;
+            time = Time;
         }
     }
 
@@ -25,6 +28,13 @@ namespace WeatherIndex
         public static List<string> stages = new List<string>();
         public static List<ItemEvent> items = new List<ItemEvent>();
         static ItemList oldItems = new ItemList();
+
+        public static void Reset()
+        {
+            stages = new List<string>();
+            items = new List<ItemEvent>();
+            oldItems = new ItemList();
+        }
 
         public static void Init()
         {
@@ -35,28 +45,6 @@ namespace WeatherIndex
                 string stageName = RoR2.SceneCatalog.GetSceneDefForCurrentScene().cachedName;
                 stages.Add(stageName);
             };
-
-            // On.RoR2.CharacterMaster.OnItemAddedClient += (orig, self, item) =>
-            // {
-            //     orig(self, item);
-
-            //     foreach (var localUser in RoR2.NetworkUser.localPlayers)
-            //     {
-            //         if (localUser.master == self)
-            //         {
-            //             if (items[-1].Id == (int)item)
-            //             {
-            //                 items[-1] = new ItemEvent((int)item, items[-1].Count + 1);
-            //             }
-            //             else
-            //             {
-            //                 // items.Add
-            //             }
-            //             Log.Info(item);
-            //             break;
-            //         }
-            //     }
-            // };
 
             RoR2.Inventory.onInventoryChangedGlobal += (inv) =>
             {
@@ -70,11 +58,8 @@ namespace WeatherIndex
                 var stacks = inv.permanentItemStacks;
                 var newItems = itemList(stacks);
 
-                ItemEvent? diff = itemDifference(oldItems, newItems);
-                if (diff is not null)
-                {
-                    items.Add(diff.Value);
-                }
+                List<ItemEvent> diffs = itemDifference(oldItems, newItems);
+                items.AddRange(diffs);
                 Log.Info(JsonConvert.SerializeObject(items));
 
                 oldItems = newItems;
@@ -96,8 +81,10 @@ namespace WeatherIndex
             return list;
         }
 
-        static ItemEvent? itemDifference(ItemList oldItems, ItemList newItems)
+        static List<ItemEvent> itemDifference(ItemList oldItems, ItemList newItems)
         {
+            int timestamp = (int)Math.Floor(Run.TimeStamp.tNow);
+            List<ItemEvent> diffs = new List<ItemEvent>();
             for (int i = 0; i < ItemCatalog.itemCount; i++)
             {
                 ItemIndex item = (ItemIndex)i;
@@ -107,11 +94,11 @@ namespace WeatherIndex
                 }
                 else if (oldItems.ContainsKey(item) && !newItems.ContainsKey(item))
                 {
-                    return new ItemEvent(item, -oldItems[item]);
+                    diffs.Add(new ItemEvent(item, -oldItems[item], timestamp));
                 }
                 else if (!oldItems.ContainsKey(item) && newItems.ContainsKey(item))
                 {
-                    return new ItemEvent(item, newItems[item]);
+                    diffs.Add(new ItemEvent(item, newItems[item], timestamp));
                 }
                 else if (oldItems[item] == newItems[item])
                 {
@@ -119,10 +106,10 @@ namespace WeatherIndex
                 }
                 else
                 {
-                    return new ItemEvent(item, newItems[item] - oldItems[item]);
+                    diffs.Add(new ItemEvent(item, newItems[item] - oldItems[item], timestamp));
                 }
             }
-            return null;
+            return diffs;
         }
     }
 }

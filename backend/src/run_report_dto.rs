@@ -3,13 +3,21 @@ use std::error::Error;
 use chrono::{DateTime, Utc};
 use fake::{Dummy, Fake, Faker};
 use sea_orm::ActiveValue::Set;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 use crate::{
     api::runs::{ORDERED_DIFFICULTIES, ORDERED_SURVIVORS},
     entity::run_report::{self},
     ror2::{self, endings},
 };
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct ItemEvent {
+    id: i16,
+    count: i32,
+    time: i32,
+}
 
 #[derive(Deserialize, Debug, Clone, Dummy)]
 #[serde(rename_all = "camelCase")]
@@ -40,6 +48,8 @@ pub struct RunReportDTO {
     pub items: serde_json::Value,
     #[dummy(faker = "1..1000i32")]
     pub items_collected: i32,
+    #[dummy(expr = "vec![]")]
+    pub item_history: Vec<ItemEvent>,
 
     //
     // drones
@@ -113,6 +123,11 @@ impl TryFrom<RunReportDTO> for run_report::ActiveModel {
             score: Set(score),
             items: Set(dto.items),
             items_collected: Set(dto.items_collected),
+            item_history: Set(dto
+                .item_history
+                .into_iter()
+                .map(|e| serde_json::to_value(e).unwrap())
+                .collect()),
             drones_purchased: Set(dto.drones_purchased),
             turrets_purchased: Set(dto.turrets_purchased),
             kills: Set(dto.kills),

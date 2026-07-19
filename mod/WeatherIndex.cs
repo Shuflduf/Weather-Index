@@ -36,8 +36,7 @@ namespace WeatherIndex
 
             Run.onRunStartGlobal += (Run run) =>
             {
-                RunTracker.items = new List<ItemEvent>();
-                RunTracker.stages = new List<string>();
+                RunTracker.Reset();
             };
 
             Run.onClientGameOverGlobal += (Run run, RunReport report) =>
@@ -71,6 +70,7 @@ namespace WeatherIndex
                     // items
                     items = itemCounts,
                     itemsCollected = stats.GetStatValueULong(StatDef.totalItemsCollected),
+                    itemHistory = RunTracker.items,
 
                     // drones
                     dronesPurchased = stats.GetStatValueULong(StatDef.totalDronesPurchased),

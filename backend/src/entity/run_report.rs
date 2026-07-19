@@ -27,6 +27,8 @@ pub struct Model {
     // items
     pub items: serde_json::Value,
     pub items_collected: i32,
+    #[sea_orm(default_value = "{}")]
+    pub item_history: Vec<Json>,
     // pub items_scrapped: u16,
     // pub chests_left_behind: u16,
 
