@@ -3,7 +3,7 @@ use std::{env, error::Error, sync::Arc};
 use axum::{
     body,
     extract::State,
-    http::{header, HeaderValue, Request, Response},
+    http::{header, method, HeaderValue, Request, Response},
     middleware::{self, Next},
     routing::{get, post},
     Json, Router,
@@ -16,11 +16,10 @@ use better_auth::{
     },
     AuthBuilder, AuthConfig, AxumIntegration, CsrfConfig,
 };
-use reqwest::StatusCode;
+use reqwest::{Method, StatusCode};
 use sea_orm::{ActiveModelTrait, ActiveValue::Set};
 
-use sqlx::Any;
-use tower_http::cors::{self, CorsLayer};
+use tower_http::cors::{self, AllowHeaders, CorsLayer};
 use weather_index::{
     api,
     auth_entities::AppAdapter,
@@ -100,8 +99,11 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     let cors = CorsLayer::new()
         .allow_origin(env::var("FRONTEND_URL")?.parse::<HeaderValue>()?)
-        .allow_headers(cors::Any)
-        .allow_methods(cors::Any)
+        .allow_headers(AllowHeaders::list([
+            header::CONTENT_TYPE,
+            header::AUTHORIZATION,
+        ]))
+        .allow_methods([Method::GET, Method::POST, Method::OPTIONS])
         .allow_credentials(true);
 
     let app = Router::new()
