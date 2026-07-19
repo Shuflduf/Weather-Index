@@ -67,7 +67,7 @@ pub struct Model {
     pub lunar_purchases: i32,
 
     // movement
-    pub distance_traveled_metres: i64,
+    pub distance_traveled: i64,
     // pub jumps: u32,
 
     // abilities

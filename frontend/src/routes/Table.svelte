@@ -328,8 +328,7 @@
     {@render propHeader("distanceTraveled")}
     {#each runs as run, idx (run.id)}
       <TableBlock order={properties.distanceTraveled.order} {idx}>
-        {formatBig(run.distanceTraveledMetres)}
-
+        {formatBig(run.distanceTraveled)}
         <span class="text-yellow-200 ml-1">metres</span>
       </TableBlock>
     {/each}

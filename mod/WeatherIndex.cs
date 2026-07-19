@@ -100,7 +100,7 @@ namespace WeatherIndex
                     lunarPurchases = stats.GetStatValueULong(StatDef.totalLunarPurchases),
 
                     // movement
-                    distanceTraveledMetres = (ulong)
+                    distanceTraveled = (ulong)
                         stats.GetStatValueAsDouble(StatDef.totalDistanceTraveled),
                 };
 

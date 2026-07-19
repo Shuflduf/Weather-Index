@@ -191,7 +191,15 @@
         {#each props as prop (prop.name)}
           <div class="flex flex-row justify-between relative items-center">
             <span>{prop.name}</span>
-            <input type="checkbox" bind:checked={prop.enabled} class="" />
+            <input
+              type="checkbox"
+              checked={prop.enabled}
+              onchange={(e) => {
+                prop.enabled = e.currentTarget.checked;
+                resetTable();
+              }}
+              class=""
+            />
             <Check
               class="absolute right-0 w-4 h-4 pointer-events-none"
               strokeWidth="2"

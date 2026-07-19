@@ -135,7 +135,6 @@ pub async fn list(
         .transpose()
         .map_err(|e| make_error(StatusCode::BAD_REQUEST, format!("Invalid filter json: {e}")))?
         .unwrap_or_default();
-    // println!("{:?}", params.page);
     let columns: HashMap<&str, run_report::Column> = HashMap::from([
         ("id", run_report::Column::Id),
         ("uploadTime", run_report::Column::UploadTime),
@@ -171,10 +170,7 @@ pub async fn list(
         ("bloodPurchases", run_report::Column::BloodPurchases),
         ("lunarPurchases", run_report::Column::LunarPurchases),
         // movement
-        (
-            "distanceTraveled",
-            run_report::Column::DistanceTraveledMetres,
-        ),
+        ("distanceTraveled", run_report::Column::DistanceTraveled),
     ]);
     let sort_by = if params.by == "player" {
         user::Column::Username.into_simple_expr()
@@ -242,10 +238,7 @@ pub async fn list(
         ("bloodPurchases", run_report::Column::BloodPurchases),
         ("lunarPurchases", run_report::Column::LunarPurchases),
         //
-        (
-            "distanceTraveled",
-            run_report::Column::DistanceTraveledMetres,
-        ),
+        ("distanceTraveled", run_report::Column::DistanceTraveled),
     ]
     .map(|(name, col)| {
         filters.get(name).and_then(|f| f.first()).and_then(|f| {
@@ -312,7 +305,7 @@ pub async fn list(
         )
     })?;
 
-    let results = reports
+    let results: Vec<RunReportWithUser> = reports
         .into_iter()
         .map(|(report, user)| {
             let mut report = serde_json::to_value(report).unwrap();

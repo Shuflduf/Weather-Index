@@ -65,7 +65,7 @@ export type RunReportWithUser = {
   lunarPurchases: number;
 
   // movement
-  distanceTraveledMetres: number;
+  distanceTraveled: number;
 };
 
 export type Item = {

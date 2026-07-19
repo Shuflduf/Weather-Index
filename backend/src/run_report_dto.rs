@@ -98,7 +98,7 @@ pub struct RunReportDTO {
 
     // movement
     #[dummy(faker = "1..1000i64")]
-    pub distance_traveled_metres: i64,
+    pub distance_traveled: i64,
 }
 
 impl TryFrom<RunReportDTO> for run_report::ActiveModel {
@@ -145,7 +145,7 @@ impl TryFrom<RunReportDTO> for run_report::ActiveModel {
             gold_purchases: Set(dto.gold_purchases),
             blood_purchases: Set(dto.blood_purchases),
             lunar_purchases: Set(dto.lunar_purchases),
-            distance_traveled_metres: Set(dto.distance_traveled_metres),
+            distance_traveled: Set(dto.distance_traveled),
 
             ..Default::default()
         })
