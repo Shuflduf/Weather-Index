@@ -12,6 +12,7 @@
     const resp = await fetch(auth("sign-in/email"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({
         email,
         password,

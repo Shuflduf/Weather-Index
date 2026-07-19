@@ -14,7 +14,7 @@ use better_auth::{
         DeviceAuthorizationPlugin, EmailPasswordPlugin, OAuthPlugin, PasswordManagementPlugin,
         SessionManagementPlugin,
     },
-    AuthBuilder, AuthConfig, AxumIntegration, CsrfConfig,
+    AuthBuilder, AuthConfig, AxumIntegration, CsrfConfig, SameSite,
 };
 use reqwest::{Method, StatusCode};
 use sea_orm::{ActiveModelTrait, ActiveValue::Set};
@@ -45,9 +45,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     let adapter = AppAdapter::from_pool(pg_pool.clone());
 
-    let auth_config = AuthConfig::new(env::var("ENCRYPTION_KEY")?)
+    let mut auth_config = AuthConfig::new(env::var("ENCRYPTION_KEY")?)
         .trusted_origins(vec![env::var("FRONTEND_URL")?])
         .base_url(format!("{}/auth", env::var("BACKEND_URL")?));
+    auth_config.session.cookie_same_site = SameSite::None;
 
     let auth = Arc::new(
         AuthBuilder::new(auth_config)
@@ -97,15 +98,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
         auth: auth.clone(),
     });
 
-    let cors = CorsLayer::new()
-        .allow_origin(env::var("FRONTEND_URL")?.parse::<HeaderValue>()?)
-        .allow_headers(AllowHeaders::list([
-            header::CONTENT_TYPE,
-            header::AUTHORIZATION,
-        ]))
-        .allow_methods([Method::GET, Method::POST, Method::OPTIONS])
-        .allow_credentials(true);
-
     let app = Router::new()
         .nest("/auth", auth_router)
         // .route("/auth/callback/github", get(github_oauth::handle_callback))
@@ -116,7 +108,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .route("/", get(|| async { "Hello, World!" }))
         .route("/new-run", post(insert_new_run))
         .nest("/api", api::router())
-        .layer(cors)
         .with_state(state);
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
