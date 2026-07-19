@@ -10,7 +10,7 @@
   import { defaultProperties } from "$lib/properties";
   import { onDestroy, onMount } from "svelte";
   import Table from "./Table.svelte";
-  import type { Property, SortMode } from "$lib";
+  import { api, type Property, type SortMode } from "$lib";
   import ContextMenu from "./ContextMenu.svelte";
   import {
     BODIES,
@@ -19,6 +19,7 @@
     formatBig,
     type RunReportWithUser,
   } from "$lib/RoR2";
+  import { env } from "$env/dynamic/public";
 
   const TABLE_STORAGE_KEY = "table-properties";
   const SORT_STORAGE_KEY = "sort-property";
@@ -124,7 +125,8 @@
     );
     loadingStatus = "LOADING";
     runPromise = fetch(
-      "/api/runs?" +
+      api("runs") +
+        "?" +
         new URLSearchParams({
           filters: JSON.stringify(filters),
           page: pageNumber.toFixed(0),

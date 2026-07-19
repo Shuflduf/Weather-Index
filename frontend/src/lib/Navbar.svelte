@@ -3,11 +3,12 @@
   import { onMount } from "svelte";
   import PFP from "./PFP.svelte";
   import { User } from "@lucide/svelte";
+  import { auth } from "$lib";
 
   let user: any = $state(null);
 
   onMount(async () => {
-    let resp = await fetch("/auth/get-session");
+    let resp = await fetch(auth("get-session"));
     let body = await resp.json();
     if (body.user) {
       user = body.user;

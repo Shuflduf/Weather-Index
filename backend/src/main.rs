@@ -3,7 +3,7 @@ use std::{env, error::Error, sync::Arc};
 use axum::{
     body,
     extract::State,
-    http::{header, Request, Response},
+    http::{header, HeaderValue, Request, Response},
     middleware::{self, Next},
     routing::{get, post},
     Json, Router,
@@ -11,14 +11,16 @@ use axum::{
 use better_auth::{
     plugins::{
         oauth::OAuthProvider, AccountManagementPlugin, DeviceAuthorizationConfig,
-        DeviceAuthorizationPlugin, EmailPasswordPlugin, OAuthPlugin,
-        PasswordManagementPlugin, SessionManagementPlugin,
+        DeviceAuthorizationPlugin, EmailPasswordPlugin, OAuthPlugin, PasswordManagementPlugin,
+        SessionManagementPlugin,
     },
     AuthBuilder, AuthConfig, AxumIntegration, CsrfConfig,
 };
 use reqwest::StatusCode;
 use sea_orm::{ActiveModelTrait, ActiveValue::Set};
 
+use sqlx::Any;
+use tower_http::cors::{self, CorsLayer};
 use weather_index::{
     api,
     auth_entities::AppAdapter,
@@ -47,6 +49,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let auth_config = AuthConfig::new(env::var("ENCRYPTION_KEY")?)
         .trusted_origins(vec![env::var("FRONTEND_URL")?])
         .base_url(format!("{}/auth", env::var("BACKEND_URL")?));
+
     let auth = Arc::new(
         AuthBuilder::new(auth_config)
             .csrf(CsrfConfig::new().enabled(false))
@@ -95,6 +98,11 @@ async fn main() -> Result<(), Box<dyn Error>> {
         auth: auth.clone(),
     });
 
+    let cors = CorsLayer::new()
+        .allow_origin(env::var("FRONTEND_URL")?.parse::<HeaderValue>()?)
+        .allow_headers(cors::Any)
+        .allow_methods(cors::Any);
+
     let app = Router::new()
         .nest("/auth", auth_router)
         // .route("/auth/callback/github", get(github_oauth::handle_callback))
@@ -105,6 +113,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .route("/", get(|| async { "Hello, World!" }))
         .route("/new-run", post(insert_new_run))
         .nest("/api", api::router())
+        .layer(cors)
         .with_state(state);
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
