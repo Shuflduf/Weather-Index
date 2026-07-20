@@ -3,7 +3,7 @@ use std::{env, error::Error, sync::Arc};
 use axum::{
     body,
     extract::State,
-    http::{header, Request, Response},
+    http::{header, HeaderValue, Request, Response},
     middleware::{self, Next},
     routing::{get, post},
     Json, Router,
@@ -16,10 +16,10 @@ use better_auth::{
     },
     AuthBuilder, AuthConfig, AxumIntegration, CsrfConfig, SameSite,
 };
-use reqwest::StatusCode;
+use reqwest::{Method, StatusCode};
 use sea_orm::{ActiveModelTrait, ActiveValue::Set};
 
-use tower_http::cors::{self, CorsLayer};
+use tower_http::cors::{self, AllowHeaders, CorsLayer};
 use weather_index::{
     api,
     auth_entities::AppAdapter,
@@ -99,16 +99,19 @@ async fn main() -> Result<(), Box<dyn Error>> {
     });
 
     let cors = CorsLayer::new()
-        .allow_origin(cors::Any)
-        .allow_methods(cors::Any)
-        .allow_headers(cors::Any);
+        .allow_origin(env::var("FRONTEND_URL")?.parse::<HeaderValue>()?)
+        .allow_methods([Method::GET, Method::POST, Method::DELETE])
+        .allow_headers(AllowHeaders::list([
+            header::CONTENT_TYPE,
+            header::AUTHORIZATION,
+        ]))
+        .allow_credentials(true);
 
-    let _api_routes = api::router().layer(cors);
+    let api_routes = api::router().layer(cors);
     let app = Router::new()
         .nest("/auth", auth_router)
         .route("/", get(|| async { "Hello, World!" }))
-        .route("/new-run", post(insert_new_run))
-        .nest("/api", api::router())
+        .merge(api_routes)
         .with_state(state);
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
@@ -137,23 +140,4 @@ async fn oauth_redirect_middleware(
     } else {
         Ok(response)
     }
-}
-
-async fn insert_new_run(
-    session: WISession,
-    State(state): State<Arc<WIState>>,
-    Json(payload): Json<RunReportDTO>,
-) -> Result<Json<&'static str>, WIError> {
-    let mut game_run: run_report::ActiveModel =
-        payload.try_into().map_err(|e: Box<dyn Error>| {
-            make_error(StatusCode::BAD_REQUEST, format!("Failed to parse: {e}"))
-        })?;
-    game_run.user_id = Set(session.0.user.id);
-    game_run.insert(&state.db).await.map_err(|e| {
-        make_error(
-            StatusCode::INTERNAL_SERVER_ERROR,
-            format!("Failed to insert run: {e}"),
-        )
-    })?;
-    Ok(Json("Game run created"))
 }
