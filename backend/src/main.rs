@@ -94,7 +94,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .axum_router()
         .with_state(auth.clone())
         .layer(middleware::from_fn(oauth_redirect_middleware))
-        .route("/*path", routing::options(|| async { StatusCode::OK }));
+        .route("/{*path}", routing::options(|| async { StatusCode::OK }));
 
     let state = Arc::new(WIState {
         db,
