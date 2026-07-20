@@ -107,11 +107,11 @@ async fn main() -> Result<(), Box<dyn Error>> {
         ]))
         .allow_credentials(true);
 
-    let api_routes = api::router().layer(cors);
+    let api_router = api::router().layer(cors);
     let app = Router::new()
         .nest("/auth", auth_router)
+        .nest("/api", api_router)
         .route("/", get(|| async { "Hello, World!" }))
-        .merge(api_routes)
         .with_state(state);
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
