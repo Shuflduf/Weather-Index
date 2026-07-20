@@ -14,7 +14,7 @@ use better_auth::{
         DeviceAuthorizationPlugin, EmailPasswordPlugin, OAuthPlugin, PasswordManagementPlugin,
         SessionManagementPlugin,
     },
-    AuthBuilder, AuthConfig, AxumIntegration, CsrfConfig, SameSite,
+    AuthBuilder, AuthConfig, AxumIntegration, CorsConfig, CsrfConfig, SameSite,
 };
 use reqwest::{Method, StatusCode};
 use sea_orm::{ActiveModelTrait, ActiveValue::Set};
@@ -50,9 +50,11 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .base_url(format!("{}/auth", env::var("BACKEND_URL")?));
     auth_config.session.cookie_same_site = SameSite::None;
 
+    let cors_config = CorsConfig::new().allowed_origin(env::var("FRONTEND_URL")?);
     let auth = Arc::new(
         AuthBuilder::new(auth_config)
             .csrf(CsrfConfig::new().enabled(false))
+            .cors(cors_config)
             .database(adapter)
             .plugin(EmailPasswordPlugin::new())
             .plugin(PasswordManagementPlugin::new())
