@@ -5,7 +5,7 @@ use axum::{
     extract::State,
     http::{header, HeaderValue, Request, Response},
     middleware::{self, Next},
-    routing::{get, post},
+    routing::{self, get, post},
     Json, Router,
 };
 use better_auth::{
@@ -93,7 +93,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .clone()
         .axum_router()
         .with_state(auth.clone())
-        .layer(middleware::from_fn(oauth_redirect_middleware));
+        .layer(middleware::from_fn(oauth_redirect_middleware))
+        .route("/*path", routing::options(|| async { StatusCode::OK }));
 
     let state = Arc::new(WIState {
         db,
