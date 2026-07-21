@@ -4,7 +4,7 @@ use axum::{
     body::{self, Body},
     http::{header, HeaderValue, Request, Response},
     middleware::{self, Next},
-    routing::{self, get},
+    routing::get,
     Router,
 };
 use better_auth::{
