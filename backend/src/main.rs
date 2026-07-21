@@ -87,8 +87,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .clone()
         .axum_router()
         .with_state(auth.clone())
-        .layer(middleware::from_fn(oauth_redirect_middleware))
-        .route("/{*path}", routing::options(auth_preflight));
+        .layer(middleware::from_fn(oauth_redirect_middleware));
 
     let state = Arc::new(WIState {
         db,
@@ -108,6 +107,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let app = Router::new()
         .nest("/auth", auth_router)
         .nest("/api", api_router)
+        .layer(middleware::from_fn(cors_middleware))
         .route("/", get(|| async { "Hello, World!" }))
         .with_state(state);
 
@@ -139,29 +139,35 @@ async fn oauth_redirect_middleware(
     }
 }
 
-async fn auth_preflight() -> Response<Body> {
-    let cors_config =
-        CorsConfig::new().allowed_origin(env::var("FRONTEND_URL").unwrap_or_default());
+async fn cors_middleware(
+    req: Request<body::Body>,
+    next: Next,
+) -> Result<Response<Body>, StatusCode> {
+    if req.method() == Method::OPTIONS {
+        let cors_config =
+            CorsConfig::new().allowed_origin(env::var("FRONTEND_URL").unwrap_or_default());
 
-    Response::builder()
-        .status(StatusCode::NO_CONTENT)
-        .header(
-            ACCESS_CONTROL_ALLOW_ORIGIN.to_string(),
-            cors_config.allowed_origins.join(", "),
-        )
-        .header(
-            ACCESS_CONTROL_ALLOW_METHODS.to_string(),
-            cors_config.allowed_methods.join(", "),
-        )
-        .header(
-            ACCESS_CONTROL_ALLOW_HEADERS.to_string(),
-            cors_config.allowed_headers.join(", "),
-        )
-        .header(
-            ACCESS_CONTROL_ALLOW_CREDENTIALS.to_string(),
-            cors_config.allow_credentials.to_string(),
-        )
-        .header(ACCESS_CONTROL_MAX_AGE, cors_config.max_age)
-        .body(Body::empty())
-        .unwrap()
+        return Ok(Response::builder()
+            .status(StatusCode::NO_CONTENT)
+            .header(
+                ACCESS_CONTROL_ALLOW_ORIGIN.to_string(),
+                cors_config.allowed_origins.join(", "),
+            )
+            .header(
+                ACCESS_CONTROL_ALLOW_METHODS.to_string(),
+                cors_config.allowed_methods.join(", "),
+            )
+            .header(
+                ACCESS_CONTROL_ALLOW_HEADERS.to_string(),
+                cors_config.allowed_headers.join(", "),
+            )
+            .header(
+                ACCESS_CONTROL_ALLOW_CREDENTIALS.to_string(),
+                cors_config.allow_credentials.to_string(),
+            )
+            .header(ACCESS_CONTROL_MAX_AGE, cors_config.max_age)
+            .body(Body::empty())
+            .unwrap());
+    }
+    Ok(next.run(req).await)
 }
