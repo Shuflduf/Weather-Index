@@ -1,12 +1,11 @@
 use std::{env, error::Error, sync::Arc};
 
 use axum::{
-    body,
-    extract::State,
+    body::{self, Body},
     http::{header, HeaderValue, Request, Response},
     middleware::{self, Next},
-    routing::{self, get, post},
-    Json, Router,
+    routing::{self, get},
+    Router,
 };
 use better_auth::{
     plugins::{
@@ -16,20 +15,16 @@ use better_auth::{
     },
     AuthBuilder, AuthConfig, AxumIntegration, CorsConfig, CsrfConfig, SameSite,
 };
-use reqwest::{Method, StatusCode};
-use sea_orm::{ActiveModelTrait, ActiveValue::Set};
-
-use tower_http::cors::{self, AllowHeaders, CorsLayer};
-use weather_index::{
-    api,
-    auth_entities::AppAdapter,
-    auth_session::WISession,
-    db,
-    entity::run_report,
-    error::{make_error, WIError},
-    run_report_dto::RunReportDTO,
-    WIState,
+use reqwest::{
+    header::{
+        ACCESS_CONTROL_ALLOW_CREDENTIALS, ACCESS_CONTROL_ALLOW_HEADERS,
+        ACCESS_CONTROL_ALLOW_METHODS, ACCESS_CONTROL_ALLOW_ORIGIN, ACCESS_CONTROL_MAX_AGE,
+    },
+    Method, StatusCode,
 };
+
+use tower_http::cors::{AllowHeaders, CorsLayer};
+use weather_index::{api, auth_entities::AppAdapter, db, WIState};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
@@ -50,11 +45,9 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .base_url(format!("{}/auth", env::var("BACKEND_URL")?));
     auth_config.session.cookie_same_site = SameSite::None;
 
-    let cors_config = CorsConfig::new().allowed_origin(env::var("FRONTEND_URL")?);
     let auth = Arc::new(
         AuthBuilder::new(auth_config)
             .csrf(CsrfConfig::new().enabled(false))
-            .cors(cors_config)
             .database(adapter)
             .plugin(EmailPasswordPlugin::new())
             .plugin(PasswordManagementPlugin::new())
@@ -89,12 +82,13 @@ async fn main() -> Result<(), Box<dyn Error>> {
             .build()
             .await?,
     );
+
     let auth_router = auth
         .clone()
         .axum_router()
         .with_state(auth.clone())
         .layer(middleware::from_fn(oauth_redirect_middleware))
-        .route("/{*path}", routing::options(|| async { StatusCode::OK }));
+        .route("/{*path}", routing::options(auth_preflight));
 
     let state = Arc::new(WIState {
         db,
@@ -143,4 +137,31 @@ async fn oauth_redirect_middleware(
     } else {
         Ok(response)
     }
+}
+
+async fn auth_preflight() -> Response<Body> {
+    let cors_config =
+        CorsConfig::new().allowed_origin(env::var("FRONTEND_URL").unwrap_or_default());
+
+    Response::builder()
+        .status(StatusCode::NO_CONTENT)
+        .header(
+            ACCESS_CONTROL_ALLOW_ORIGIN.to_string(),
+            cors_config.allowed_origins.join(", "),
+        )
+        .header(
+            ACCESS_CONTROL_ALLOW_METHODS.to_string(),
+            cors_config.allowed_methods.join(", "),
+        )
+        .header(
+            ACCESS_CONTROL_ALLOW_HEADERS.to_string(),
+            cors_config.allowed_headers.join(", "),
+        )
+        .header(
+            ACCESS_CONTROL_ALLOW_CREDENTIALS.to_string(),
+            cors_config.allow_credentials.to_string(),
+        )
+        .header(ACCESS_CONTROL_MAX_AGE, cors_config.max_age)
+        .body(Body::empty())
+        .unwrap()
 }
