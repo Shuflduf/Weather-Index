@@ -17,7 +17,7 @@ using UnityEngine;
 namespace WeatherIndex
 {
     [BepInPlugin(PluginGUID, PluginName, PluginVersion)]
-    [BepInDependency("com.rune580.riskofoptions")]
+    [BepInDependency("com.rune580.riskofoptions", BepInDependency.DependencyFlags.HardDependency)]
     public class WeatherIndex : BaseUnityPlugin
     {
         public const string PluginGUID = PluginAuthor + "." + PluginName;

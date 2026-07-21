@@ -1,5 +1,6 @@
 <script lang="ts">
   import { page } from "$app/state";
+  import { api } from "$lib";
   import ArtifactsDisplay from "$lib/ArtifactsDisplay.svelte";
   import {
     BODIES,
@@ -20,7 +21,7 @@
 
   onMount(async () => {
     const runId = page.params.id;
-    runPromise = fetch(`/api/runs/${runId}`).then((resp) => resp.json());
+    runPromise = fetch(api(`runs/${runId}`)).then((resp) => resp.json());
   });
 </script>
 
