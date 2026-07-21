@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { auth } from "$lib";
   import {
     SiDiscord,
     SiGithub,
@@ -6,7 +7,7 @@
   } from "@icons-pack/svelte-simple-icons";
 
   async function startOauth(provider: string) {
-    let resp = await fetch("/auth/sign-in/social", {
+    let resp = await fetch(auth("sign-in/social"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ provider: provider }),

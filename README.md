@@ -13,7 +13,7 @@ TODO: PUBLISH THE SITE TOO
 
 # Project Structure
 ```bash
-/Weather-Index
+Weather-Index/
 ├── backend # This is where the BACKEND goes
 ├── data # This is where static DATA goes
 ├── frontend # This is where the FRONTEND goes
