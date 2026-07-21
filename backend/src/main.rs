@@ -24,7 +24,13 @@ use reqwest::{
 };
 
 use tower_http::cors::{AllowHeaders, CorsLayer};
-use weather_index::{api, auth_entities::AppAdapter, db, WIState};
+use weather_index::{
+    api,
+    auth_entities::AppAdapter,
+    db,
+    error::{make_error, WIError},
+    WIState,
+};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
@@ -139,14 +145,11 @@ async fn oauth_redirect_middleware(
     }
 }
 
-async fn cors_middleware(
-    req: Request<body::Body>,
-    next: Next,
-) -> Result<Response<Body>, StatusCode> {
+async fn cors_middleware(req: Request<body::Body>, next: Next) -> Result<Response<Body>, WIError> {
+    let frontend_url = env::var("FRONTEND_URL")
+        .map_err(|e| make_error(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    let cors_config = CorsConfig::new().allowed_origin(frontend_url);
     if req.method() == Method::OPTIONS {
-        let cors_config =
-            CorsConfig::new().allowed_origin(env::var("FRONTEND_URL").unwrap_or_default());
-
         return Ok(Response::builder()
             .status(StatusCode::NO_CONTENT)
             .header(
@@ -169,5 +172,15 @@ async fn cors_middleware(
             .body(Body::empty())
             .unwrap());
     }
-    Ok(next.run(req).await)
+    let mut response = next.run(req).await;
+    let headers = response.headers_mut();
+    headers.insert(
+        ACCESS_CONTROL_ALLOW_ORIGIN,
+        cors_config.allowed_origins.join(", ").parse().unwrap(),
+    );
+    headers.insert(
+        ACCESS_CONTROL_ALLOW_CREDENTIALS,
+        cors_config.allow_credentials.to_string().parse().unwrap(),
+    );
+    Ok(response)
 }
