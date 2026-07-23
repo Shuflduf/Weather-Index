@@ -16,5 +16,6 @@ pub fn router() -> Router<Arc<WIState>> {
         .route("/runs/{id}", get(runs::get))
         .route("/runs/new", get(runs::new::post))
         .route("/player/{username}", get(player::get))
+        .route("/player/lifetime/{username}", get(player::lifetime::get))
         .route("/player", post(player::update))
 }

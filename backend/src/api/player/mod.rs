@@ -16,6 +16,8 @@ use crate::{
     ror2, WIState,
 };
 
+pub mod lifetime;
+
 #[derive(Serialize)]
 pub struct PlayerInfo {
     id: String,

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from "$app/state";
   import PFP from "$lib/PFP.svelte";
-  import type { PlayerInfoExtra } from "$lib";
+  import { api, type PlayerInfoExtra } from "$lib";
   import { BODIES } from "$lib/RoR2";
   import TableDifficulty from "$lib/TableDifficulty.svelte";
   import TableSurvivor from "$lib/TableSurvivor.svelte";
@@ -17,7 +17,7 @@
   onMount(() => {
     const username = page.params.username;
     if (!username) console.error("no username");
-    playerInfoPromise = fetch(`/api/player/${username}`)
+    playerInfoPromise = fetch(api(`player/${username}`))
       .then((r) => r.json())
       .then((info) => {
         if (info.region) {
