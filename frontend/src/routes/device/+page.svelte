@@ -19,6 +19,7 @@
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userCode }),
+      credentials: "include",
     });
     if (resp.ok) {
       status = "approved";

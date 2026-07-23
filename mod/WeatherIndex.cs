@@ -1,6 +1,7 @@
 ﻿#nullable enable
 
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -9,6 +10,7 @@ using BepInEx;
 using BepInEx.Configuration;
 using Newtonsoft.Json;
 using RiskOfOptions;
+using RiskOfOptions.OptionConfigs;
 using RiskOfOptions.Options;
 using RoR2;
 using RoR2.Stats;
@@ -26,9 +28,11 @@ namespace WeatherIndex
         public const string PluginVersion = "1.0.0";
 
         private static readonly HttpClient http = new();
-        private static string backendURL = "http://localhost:3000";
         private static ConfigEntry<KeyboardShortcut>? endRunKeybind;
         private static ConfigEntry<string>? accessToken;
+        private static ConfigEntry<string>? backendURL;
+        private static ConfigEntry<string>? connectionStatus;
+        private static bool connecting = false;
 
         public void Awake()
         {
@@ -130,6 +134,20 @@ namespace WeatherIndex
                 "Weather Index access token"
             );
 
+            backendURL = Config.Bind<string>(
+                "Debug",
+                "Backend URL",
+                "https://wi-backend.shuflduf.hackclub.app",
+                "Weather Index backend URL"
+            );
+
+            connectionStatus = Config.Bind<string>(
+                "Account",
+                "Status",
+                "NOT CONNECTED",
+                "Status of Weather Index connection"
+            );
+
             ModSettingsManager.AddOption(
                 new GenericButtonOption(
                     "Link Account",
@@ -140,18 +158,31 @@ namespace WeatherIndex
                 )
             );
 
+            ModSettingsManager.AddOption(
+                new StringInputFieldOption(
+                    connectionStatus!,
+                    new InputFieldConfig
+                    {
+                        name = "Status",
+                        category = "General",
+                        description =
+                            "Status of Weather Index connection.\n\nPossible values: NOT CONNECTED, CONNECTED AS [username], CONNECTING, ERROR\n\n Automatically updated.",
+                    }
+                )
+            );
+
             RunTracker.Init();
             Debug.Init();
             DataDumper.Init();
+
+            RefreshStatus();
         }
 
         private async void PostRunReport(string json)
         {
+            string url = $"{backendURL?.Value}/api/runs/new";
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var request = new HttpRequestMessage(HttpMethod.Post, $"{backendURL}/runs/new")
-            {
-                Content = content,
-            };
+            var request = new HttpRequestMessage(HttpMethod.Post, url) { Content = content };
             if (!string.IsNullOrEmpty(accessToken?.Value))
             {
                 request.Headers.Authorization = new AuthenticationHeaderValue(
@@ -163,10 +194,50 @@ namespace WeatherIndex
             Log.Info(await response.Content.ReadAsStringAsync());
         }
 
+        private async void RefreshStatus()
+        {
+            connectionStatus?.Value = "LOADING";
+            string url = $"{backendURL?.Value}/auth/get-session";
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
+            if (!string.IsNullOrEmpty(accessToken?.Value))
+            {
+                request.Headers.Authorization = new AuthenticationHeaderValue(
+                    "Bearer",
+                    accessToken.Value
+                );
+            }
+            var response = await http.SendAsync(request);
+            switch (response.StatusCode)
+            {
+                case HttpStatusCode.Unauthorized:
+                    connectionStatus?.Value = "NOT CONNECTED";
+                    break;
+                case HttpStatusCode.OK:
+                    var json = await response.Content.ReadAsStringAsync();
+                    var data = JsonConvert.DeserializeAnonymousType(
+                        json,
+                        new { user = new { username = "" } }
+                    );
+                    connectionStatus?.Value = $"CONNECTED AS @{data.user.username}";
+                    break;
+                default:
+                    connectionStatus?.Value = "ERROR";
+                    Log.Info(await response.Content.ReadAsStringAsync());
+                    break;
+            }
+        }
+
         private async void OnConnectClick()
         {
+            if (connecting)
+                return;
+            connecting = true;
+
+            connectionStatus?.Value = "CONNECTING";
+
+            string url = $"{backendURL?.Value}/auth/device/code";
             var resp = await http.PostAsync(
-                $"{backendURL}/auth/device/code",
+                url,
                 new StringContent(
                     JsonConvert.SerializeObject(new { client_id = "weather-index-mod" }),
                     Encoding.UTF8,
@@ -218,8 +289,9 @@ namespace WeatherIndex
                         await poll.Content.ReadAsStringAsync(),
                         new { access_token = "" }
                     );
-                    accessToken!.Value = tokenBody.access_token;
-                    // Log.Info(await poll.Content.ReadAsStringAsync());
+                    accessToken?.Value = tokenBody.access_token;
+                    connecting = false;
+                    RefreshStatus();
                     break;
                 }
             });

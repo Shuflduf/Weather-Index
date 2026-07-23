@@ -5,7 +5,10 @@
   let status: string = $state("Signing out...");
 
   onMount(async () => {
-    const resp = await fetch(auth("sign-out"), { method: "POST" });
+    const resp = await fetch(auth("sign-out"), {
+      method: "POST",
+      credentials: "include",
+    });
     if (resp.ok) {
       status = "Signed out! Redirecting to /";
     } else {

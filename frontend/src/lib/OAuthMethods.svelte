@@ -10,6 +10,7 @@
     let resp = await fetch(auth("sign-in/social"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({ provider: provider }),
     });
     let { url } = await resp.json();
