@@ -2,14 +2,18 @@
   import { page } from "$app/state";
   import PFP from "$lib/PFP.svelte";
   import { api, type PlayerInfoExtra } from "$lib";
-  import { BODIES } from "$lib/RoR2";
+  import { BODIES, formatBig, formatSeconds } from "$lib/RoR2";
   import TableDifficulty from "$lib/TableDifficulty.svelte";
   import TableSurvivor from "$lib/TableSurvivor.svelte";
   import { Plane } from "@lucide/svelte";
 
   import { onMount } from "svelte";
+  import { defaultProperties } from "$lib/properties";
 
   let playerInfoPromise: Promise<PlayerInfoExtra> = $state(
+    new Promise(() => {}),
+  );
+  let lifetimeStatsPromise: Promise<PlayerInfoExtra> = $state(
     new Promise(() => {}),
   );
   let regionPromise: Promise<any> | null = $state(null);
@@ -27,6 +31,9 @@
         }
         return info;
       });
+    lifetimeStatsPromise = fetch(api(`player/lifetime/${username}`)).then((r) =>
+      r.json(),
+    );
   });
 </script>
 
@@ -112,4 +119,55 @@
   {:else}
     {playerInfo.error}
   {/if}
+{/await}
+
+<hr class="my-8" />
+<h1 class="text-center tracking-tighter text-3xl mb-4">Lifetime Stats</h1>
+{#await lifetimeStatsPromise}
+  Loading Lifetime Stats
+{:then stats}
+  <div class="flex flex-row flex-wrap">
+    {#each Object.entries(stats) as [stat, value]}
+      {#snippet basicStat(name: string)}
+        {#if stat == name}
+          <span class="text-yellow-200">{formatBig(Number(value))}</span>
+        {/if}
+      {/snippet}
+      <div
+        class="min-w-80 p-4 bg-bg-secondary border flex flex-row justify-between flex-1"
+      >
+        <span>{defaultProperties[stat].name}</span>
+
+        {#if stat == "timeAliveSeconds"}
+          <span class="text-yellow-200">{formatSeconds(Number(value))}</span>
+        {/if}
+        {@render basicStat("stagesCompleted")}
+        {@render basicStat("score")}
+        {@render basicStat("itemsCollected")}
+        {@render basicStat("dronesPurchased")}
+        {@render basicStat("turretsPurchased")}
+        {@render basicStat("kills")}
+        {@render basicStat("eliteKills")}
+        {@render basicStat("minionKills")}
+        {@render basicStat("deaths")}
+        {@render basicStat("damageDealt")}
+        {@render basicStat("minionDamageDealt")}
+        {@render basicStat("damageTaken")}
+        {@render basicStat("highestDamageDealt")}
+        {@render basicStat("healingRecieved")}
+        {@render basicStat("highestLevel")}
+        {@render basicStat("goldCollected")}
+        {@render basicStat("purchases")}
+        {@render basicStat("goldPurchases")}
+        {@render basicStat("bloodPurchases")}
+        {@render basicStat("lunarPurchases")}
+        {#if stat == "distanceTraveled"}
+          <span>
+            <span class="text-yellow-200">{formatBig(Number(value))}</span>
+            m
+          </span>
+        {/if}
+      </div>
+    {/each}
+  </div>
 {/await}

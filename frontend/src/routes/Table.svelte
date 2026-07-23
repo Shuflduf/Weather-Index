@@ -279,10 +279,10 @@
       </TableBlock>
     {/each}
   {/if}
-  {#if properties.timeAlive.enabled}
-    {@render propHeader("timeAlive")}
+  {#if properties.timeAliveSeconds.enabled}
+    {@render propHeader("timeAliveSeconds")}
     {#each runs as run, idx (run.id)}
-      <TableBlock order={properties.timeAlive.order} {idx}>
+      <TableBlock order={properties.timeAliveSeconds.order} {idx}>
         <span class="">
           {formatSeconds(run.timeAliveSeconds)}
         </span>

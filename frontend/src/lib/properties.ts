@@ -52,7 +52,7 @@ export const defaultProperties: Record<string, Property> = {
     category: "Run",
     filter: [],
   },
-  timeAlive: {
+  timeAliveSeconds: {
     enabled: false,
     order: 9,
     name: "Time Alive",

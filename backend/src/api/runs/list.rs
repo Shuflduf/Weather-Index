@@ -84,7 +84,7 @@ pub async fn get(
         ("startTime", run_report::Column::StartTime),
         ("ending", run_report::Column::Ending),
         ("difficulty", run_report::Column::Difficulty),
-        ("timeAlive", run_report::Column::TimeAliveSeconds),
+        ("timeAliveSeconds", run_report::Column::TimeAliveSeconds),
         ("artifacts", run_report::Column::Artifacts),
         ("stagesCompleted", run_report::Column::StagesCompleted),
         ("score", run_report::Column::Score),
@@ -151,7 +151,7 @@ pub async fn get(
     let numerical_conditions = [
         ("id", run_report::Column::Id),
         //
-        ("timeAlive", run_report::Column::TimeAliveSeconds),
+        ("timeAliveSeconds", run_report::Column::TimeAliveSeconds),
         ("stagesCompleted", run_report::Column::StagesCompleted),
         ("score", run_report::Column::Score),
         //
