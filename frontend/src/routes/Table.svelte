@@ -19,11 +19,11 @@
   let {
     properties,
     runs,
-    openContextMenu,
+    openContextMenu = null,
   }: {
     properties: Record<string, Property>;
     runs: RunReportWithUser[];
-    openContextMenu: (e: MouseEvent, id: string) => null;
+    openContextMenu?: ((e: MouseEvent, id: string) => null) | null;
   } = $props();
 
   let columnCount = $derived(

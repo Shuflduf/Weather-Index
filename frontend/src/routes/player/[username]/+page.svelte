@@ -2,7 +2,12 @@
   import { page } from "$app/state";
   import PFP from "$lib/PFP.svelte";
   import { api, type PlayerInfoExtra } from "$lib";
-  import { BODIES, formatBig, formatSeconds } from "$lib/RoR2";
+  import {
+    BODIES,
+    formatBig,
+    formatSeconds,
+    type RunReportWithUser,
+  } from "$lib/RoR2";
   import TableDifficulty from "$lib/TableDifficulty.svelte";
   import TableSurvivor from "$lib/TableSurvivor.svelte";
   import { Plane } from "@lucide/svelte";
@@ -10,13 +15,17 @@
   import { onMount } from "svelte";
   import { defaultProperties } from "$lib/properties";
   import LoadingIndicator from "$lib/LoadingIndicator.svelte";
+  import Table from "../../Table.svelte";
+  import TableView from "$lib/TableView.svelte";
 
   let playerInfoPromise: Promise<PlayerInfoExtra> = $state(
     new Promise(() => {}),
   );
-  let lifetimeStatsPromise: Promise<PlayerInfoExtra> = $state(
+  let lifetimeStatsPromise: Promise<RunReportWithUser> = $state(
     new Promise(() => {}),
   );
+  let recentRunsPromise: Promise<{ runs: RunReportWithUser[]; total: number }> =
+    $state(new Promise(() => {}));
   let regionPromise: Promise<any> | null = $state(null);
 
   onMount(() => {
@@ -35,6 +44,11 @@
     lifetimeStatsPromise = fetch(api(`player/lifetime/${username}`)).then((r) =>
       r.json(),
     );
+    recentRunsPromise = fetch(
+      api(
+        `runs?${new URLSearchParams({ filters: JSON.stringify({ player: [`@${username}`] }) }).toString()}`,
+      ),
+    ).then((r) => r.json());
   });
 </script>
 
@@ -171,4 +185,13 @@
       </div>
     {/each}
   </div>
+{/await}
+
+<hr class="my-8" />
+<h1 class="text-center tracking-tighter text-3xl mb-4">Recent Runs</h1>
+
+{#await recentRunsPromise}
+  <LoadingIndicator indicator text="Loading recent runs" />
+{:then recentRuns}
+  <TableView runs={recentRuns.runs} />
 {/await}

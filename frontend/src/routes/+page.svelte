@@ -8,7 +8,7 @@
     LoaderCircle,
   } from "@lucide/svelte";
   import { defaultProperties } from "$lib/properties";
-  import { onDestroy, onMount } from "svelte";
+  import { onMount } from "svelte";
   import Table from "./Table.svelte";
   import { api, type Property, type SortMode } from "$lib";
   import ContextMenu from "./ContextMenu.svelte";
@@ -20,7 +20,7 @@
     formatBig,
     type RunReportWithUser,
   } from "$lib/RoR2";
-  import { env } from "$env/dynamic/public";
+  import TableView from "$lib/TableView.svelte";
 
   const TABLE_STORAGE_KEY = "table-properties";
   const SORT_STORAGE_KEY = "sort-property";
@@ -333,7 +333,7 @@
   total runs
 </div>
 
-<Table {properties} {runs} openContextMenu={contextMenu?.open} />
+<TableView {runs} openContextMenu={contextMenu?.open} />
 
 {#if loadingStatus == "LOADING"}
   <LoadingIndicator indicator text="Loading more runs!" />

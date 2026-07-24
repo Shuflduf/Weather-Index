@@ -40,3 +40,11 @@ Weather-Index/
 1. Clone from `ssh://git@codeberg.org/Shuflduf/Weather-Index.git`
 
 [^1]: The official library is so buggy, this project instead uses [a fork](https://github.com/Shuflduf/better-auth-rs)
+
+# API Routes
+- `/auth`: Better Auth routes
+- `/api`: Weather Index api routes
+  - `/runs`: Get list of runs. Supports filtering, sorting by a specific propery (ASC or DESC), and requesting only specific columns
+  - `/runs/{id}`: Get detailed info for a specific run. Has items, item history, and stage history
+  - `/player/{username}`: Get info about a specific user, by username. Has most played survivor, difficulty, and winrate
+  - `/player/lifetime/{username}`: Get lifetime stats for a specific user, aggregated from all runs
