@@ -1,4 +1,4 @@
-use std::{collections::HashMap, sync::Arc};
+use std::{collections::HashMap, env, sync::Arc};
 
 use axum::{
     extract::{Path, State},
@@ -134,7 +134,6 @@ pub struct UpdatePlayer {
     region: Option<String>,
 }
 
-#[axum::debug_handler]
 pub async fn update(
     session: WISession,
     State(state): State<Arc<WIState>>,
@@ -161,5 +160,9 @@ pub async fn update(
         .await
         .map_err(db_error)?;
 
-    Ok(Redirect::to("/settings"))
+    Ok(Redirect::permanent(&format!(
+        "{}/settings",
+        env::var("FRONTEND_URL")
+            .map_err(|e| make_error(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?
+    )))
 }

@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { User } from "@lucide/svelte";
   import FormEntry from "./FormEntry.svelte";
   import { onMount } from "svelte";
   import PFP from "$lib/PFP.svelte";
