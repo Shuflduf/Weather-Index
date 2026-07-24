@@ -22,7 +22,7 @@
   });
 
   async function fetchAccounts() {
-    fetch(auth("list-accounts"))
+    fetch(auth("list-accounts"), { credentials: "include" })
       .then((r) => r.json())
       .then((j: any[]) => {
         accounts = j;
@@ -47,6 +47,7 @@
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ newPassword, currentPassword }),
+      credentials: "include",
     });
     let body = await resp.json();
     if ("errors" in body) {

@@ -2,6 +2,7 @@
   import { page } from "$app/state";
   import { api } from "$lib";
   import ArtifactsDisplay from "$lib/ArtifactsDisplay.svelte";
+  import LoadingIndicator from "$lib/LoadingIndicator.svelte";
   import {
     BODIES,
     DIFFICULTIES,
@@ -26,7 +27,7 @@
 </script>
 
 {#await runPromise}
-  waiting
+  <LoadingIndicator indicator text="Loading run report!" />
 {:then run}
   <div
     style={`background-color: ${ENDINGS[run.ending].colorBg};`}

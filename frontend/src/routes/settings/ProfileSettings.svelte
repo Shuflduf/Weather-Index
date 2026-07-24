@@ -3,14 +3,14 @@
   import FormEntry from "./FormEntry.svelte";
   import { onMount } from "svelte";
   import PFP from "$lib/PFP.svelte";
-  import { auth } from "$lib";
+  import { api, auth } from "$lib";
 
   let user: any = $state();
   let countries: { flag: string; name: string; alpha2Code: string }[] = $state(
     [],
   );
   onMount(async () => {
-    let resp = await fetch(auth("get-session"));
+    let resp = await fetch(auth("get-session"), { credentials: "include" });
     let body = await resp.json();
     if (body.user) {
       user = body.user;
@@ -21,7 +21,7 @@
   });
 </script>
 
-<form action="/api/player" method="POST">
+<form action={api("player")} method="POST">
   <h1 id="profile" class="text-3xl tracking-tighter">Profile</h1>
   <FormEntry label="Username" id="profile_username">
     <span class="bg-default flex flex-row border w-60">

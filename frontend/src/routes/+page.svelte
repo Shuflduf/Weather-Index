@@ -12,6 +12,7 @@
   import Table from "./Table.svelte";
   import { api, type Property, type SortMode } from "$lib";
   import ContextMenu from "./ContextMenu.svelte";
+  import LoadingIndicator from "$lib/LoadingIndicator.svelte";
   import {
     BODIES,
     DIFFICULTIES,
@@ -335,16 +336,9 @@
 <Table {properties} {runs} openContextMenu={contextMenu?.open} />
 
 {#if loadingStatus == "LOADING"}
-  <div class="flex flex-row justify-center gap-4 italic mt-4 text-secondary">
-    <div class="animate-spin w-min">
-      <LoaderCircle />
-    </div>
-    Loading more runs!
-  </div>
+  <LoadingIndicator indicator text="Loading more runs!" />
 {:else if loadingStatus == "NOT LOADING"}
   <div class="p-2" use:observeLoadMore></div>
 {:else if loadingStatus == "END OF RUNS"}
-  <div class="flex flex-row justify-center gap-4 italic mt-4 text-secondary">
-    No more runs!
-  </div>
+  <LoadingIndicator text="No more runs!" />
 {/if}

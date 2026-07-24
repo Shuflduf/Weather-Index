@@ -9,6 +9,7 @@
 
   import { onMount } from "svelte";
   import { defaultProperties } from "$lib/properties";
+  import LoadingIndicator from "$lib/LoadingIndicator.svelte";
 
   let playerInfoPromise: Promise<PlayerInfoExtra> = $state(
     new Promise(() => {}),
@@ -38,7 +39,7 @@
 </script>
 
 {#await playerInfoPromise}
-  loading
+  <LoadingIndicator indicator text="Loading user info" />
 {:then playerInfo}
   {#if !("error" in playerInfo)}
     <div class="flex flex-row justify-between">
@@ -124,7 +125,7 @@
 <hr class="my-8" />
 <h1 class="text-center tracking-tighter text-3xl mb-4">Lifetime Stats</h1>
 {#await lifetimeStatsPromise}
-  Loading Lifetime Stats
+  <LoadingIndicator indicator text="Loading lifetime stats" />
 {:then stats}
   <div class="flex flex-row flex-wrap">
     {#each Object.entries(stats) as [stat, value]}
@@ -140,6 +141,12 @@
 
         {#if stat == "timeAliveSeconds"}
           <span class="text-yellow-200">{formatSeconds(Number(value))}</span>
+        {/if}
+        {#if stat == "distanceTraveled"}
+          <span>
+            <span class="text-yellow-200">{formatBig(Number(value))}</span>
+            m
+          </span>
         {/if}
         {@render basicStat("stagesCompleted")}
         {@render basicStat("score")}
@@ -161,12 +168,6 @@
         {@render basicStat("goldPurchases")}
         {@render basicStat("bloodPurchases")}
         {@render basicStat("lunarPurchases")}
-        {#if stat == "distanceTraveled"}
-          <span>
-            <span class="text-yellow-200">{formatBig(Number(value))}</span>
-            m
-          </span>
-        {/if}
       </div>
     {/each}
   </div>
