@@ -28,9 +28,12 @@
     $state(new Promise(() => {}));
   let regionPromise: Promise<any> | null = $state(null);
 
+  let username: string | null = $state(null);
+
   onMount(() => {
-    const username = page.params.username;
-    if (!username) console.error("no username");
+    if (!page.params.username) console.error("no username");
+    username = page.params.username as string | null;
+
     playerInfoPromise = fetch(api(`player/${username}`))
       .then((r) => r.json())
       .then((info) => {
@@ -193,5 +196,10 @@
 {#await recentRunsPromise}
   <LoadingIndicator indicator text="Loading recent runs" />
 {:then recentRuns}
-  <TableView runs={recentRuns.runs} />
+  {#if username}
+    <TableView
+      sort={{ by: "uploadTime", sort: "DESC" }}
+      filter={{ player: [`@${username}`] }}
+    />
+  {/if}
 {/await}
