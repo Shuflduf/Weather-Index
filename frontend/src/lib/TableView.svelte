@@ -26,11 +26,9 @@
   type Sort = { by: string; sort: SortMode };
 
   let {
-    openContextMenu = null,
     sort = null,
     filter = null,
   }: {
-    openContextMenu?: ((e: MouseEvent, id: string) => null) | null;
     sort?: Sort | null;
     filter?: Record<string, string[]> | null;
   } = $props();
@@ -39,7 +37,7 @@
     structuredClone(defaultProperties),
   );
 
-  let sortProperty: Sort = $state({
+  let fallbackSort: Sort = $state({
     by: "id",
     sort: "ASC",
   });
@@ -58,7 +56,6 @@
 
   let contextMenu: any = $state();
   let loadMoreObserver: IntersectionObserver;
-  let runPromise: Promise<any> = $state(new Promise(() => {}));
   let loadingStatus: "LOADING" | "END OF RUNS" | "NOT LOADING" =
     $state("NOT LOADING");
   let runs: RunReportWithUser[] = $state([]);
@@ -85,10 +82,10 @@
   }
 
   function setSort(sort: SortMode, by: string) {
-    sortProperty.by = by;
-    sortProperty.sort = sort;
+    fallbackSort.by = by;
+    fallbackSort.sort = sort;
 
-    localStorage.setItem(SORT_STORAGE_KEY, JSON.stringify(sortProperty));
+    localStorage.setItem(SORT_STORAGE_KEY, JSON.stringify(fallbackSort));
 
     resetTable();
   }
@@ -106,26 +103,28 @@
   }
 
   function fetchRuns() {
-    const filters = Object.fromEntries(
-      Object.entries(properties)
-        .filter(([_, data]) => {
-          return data.filter && data.filter.length > 0;
-        })
-        .map(([prop, data]) => [prop, data.filter]),
-    );
+    const activeFilters =
+      filter ??
+      Object.fromEntries(
+        Object.entries(properties)
+          .filter(([_, data]) => {
+            return data.filter && data.filter.length > 0;
+          })
+          .map(([prop, data]) => [prop, data.filter]),
+      );
     loadingStatus = "LOADING";
-    runPromise = fetch(
+    fetch(
       api("runs") +
         "?" +
         new URLSearchParams({
-          filters: JSON.stringify(filters),
+          filters: JSON.stringify(activeFilters),
           page: pageNumber.toFixed(0),
           only: JSON.stringify(
             Object.entries(properties)
               .filter(([_, v]) => v.enabled)
               .map(([k, _]) => k),
           ),
-          ...sortProperty,
+          ...(sort ?? fallbackSort),
         }).toString(),
     )
       .then((r) => r.json())
@@ -161,7 +160,7 @@
     const savedSort = localStorage.getItem(SORT_STORAGE_KEY);
     if (savedSort) {
       const parsed = JSON.parse(savedSort);
-      sortProperty = parsed;
+      fallbackSort = parsed;
     }
 
     const saved = localStorage.getItem(TABLE_STORAGE_KEY);
@@ -187,9 +186,11 @@
 <ContextMenu
   bind:this={contextMenu}
   {properties}
-  {sortProperty}
+  sortProperty={fallbackSort}
   {setSort}
   {setFilter}
+  sortEnabled={sort == null}
+  filterEnabled={filter == null}
 />
 <div
   id="visible-properties"
@@ -238,97 +239,109 @@
   >
     Visible Properties
   </button>
-  <span class="font-mono p-2 text-secondary flex flex-row gap-2 h-min">
-    <span>
-      Sorting By: {properties[sortProperty.by].name}
+  {#if sort == null}
+    <span class="font-mono p-2 text-secondary flex flex-row gap-2 h-min">
+      <span>
+        Sorting By: {properties[fallbackSort.by].name}
+      </span>
+      {#if fallbackSort.sort == "ASC"}
+        <ArrowUpWideNarrow />
+      {:else}
+        <ArrowDownWideNarrow />
+      {/if}
     </span>
-    {#if sortProperty.sort == "ASC"}
-      <ArrowUpWideNarrow />
-    {:else}
-      <ArrowDownWideNarrow />
-    {/if}
-  </span>
+  {/if}
 
-  {#each Object.entries(properties) as [key, prop]}
-    {#if prop.filter.length > 0}
-      <button
-        onclick={() => {
-          prop.filter = [];
-          resetTable();
-        }}
-        class="p-2 bg-default hover:bg-hover active:bg-active border cursor-pointer flex flex-row gap-2 items-center font-mono"
-        title="Click to remove filter"
-      >
-        <span class="font-bold text-lg">
-          {prop.name}
-        </span>
-        {#if prop.filter[0].startsWith("<")}
-          <ChevronLeft />
-        {:else if prop.filter[0].startsWith(">")}
-          <ChevronRight />
-        {/if}
-        {#if prop.filter[0].startsWith("<") || prop.filter[0].startsWith(">")}
-          {#if !isNaN(Number(prop.filter[0].slice(1)))}
-            <span>
-              {formatBig(Number(prop.filter[0].slice(1)))}
-            </span>
-          {:else}
-            <span>
-              {new Date(prop.filter[0].slice(1)).toLocaleString()}
-            </span>
+  {#if filter == null}
+    {#each Object.entries(properties) as [key, prop]}
+      {#if prop.filter.length > 0}
+        <button
+          onclick={() => {
+            prop.filter = [];
+            resetTable();
+          }}
+          class="p-2 bg-default hover:bg-hover active:bg-active border cursor-pointer flex flex-row gap-2 items-center font-mono"
+          title="Click to remove filter"
+        >
+          <span class="font-bold text-lg">
+            {prop.name}
+          </span>
+          {#if prop.filter[0].startsWith("<")}
+            <ChevronLeft />
+          {:else if prop.filter[0].startsWith(">")}
+            <ChevronRight />
           {/if}
-        {/if}
-        {#if key == "player"}
-          <span>:</span>
-          {#if prop.filter[0].startsWith("@")}
-            {prop.filter[0]}
-          {:else}
-            "{prop.filter[0]}"
+          {#if prop.filter[0].startsWith("<") || prop.filter[0].startsWith(">")}
+            {#if !isNaN(Number(prop.filter[0].slice(1)))}
+              <span>
+                {formatBig(Number(prop.filter[0].slice(1)))}
+              </span>
+            {:else}
+              <span>
+                {new Date(prop.filter[0].slice(1)).toLocaleString()}
+              </span>
+            {/if}
           {/if}
-        {/if}
-        {#if key == "survivor"}
-          <span>:</span>
-          <div class="flex flex-row gap-1">
-            {#each prop.filter as survivor}
-              <div class="flex flex-row items-center gap-1">
-                <img src="/bodies/{BODIES[survivor].icon}" alt="" class="h-8" />
-                <!-- <span>{BODIES[survivor].displayName}</span> -->
-              </div>
-            {/each}
-          </div>
-        {/if}
-        {#if key == "ending"}
-          <span>:</span>
-          <div class="flex flex-row gap-4">
-            {#each prop.filter as ending}
-              <div
-                class="flex flex-row items-center gap-1 px-2"
-                style="background-color: {ENDINGS[ending].colorBg};"
-              >
-                <img src="/endings/{ENDINGS[ending].icon}" alt="" class="h-8" />
-                <span>{ENDINGS[ending].displayName}</span>
-              </div>
-            {/each}
-          </div>
-        {/if}
-        {#if key == "difficulty"}
-          <span>:</span>
-          <div class="flex flex-row gap-1">
-            {#each prop.filter as difficulty}
-              <div class="flex flex-row items-center gap-1">
-                <img
-                  src="/difficulties/{DIFFICULTIES[difficulty].icon}"
-                  alt=""
-                  class="h-8"
-                />
-                <!-- <span>{DIFFICULTIES[difficulty].displayName}</span> -->
-              </div>
-            {/each}
-          </div>
-        {/if}
-      </button>
-    {/if}
-  {/each}
+          {#if key == "player"}
+            <span>:</span>
+            {#if prop.filter[0].startsWith("@")}
+              {prop.filter[0]}
+            {:else}
+              "{prop.filter[0]}"
+            {/if}
+          {/if}
+          {#if key == "survivor"}
+            <span>:</span>
+            <div class="flex flex-row gap-1">
+              {#each prop.filter as survivor}
+                <div class="flex flex-row items-center gap-1">
+                  <img
+                    src="/bodies/{BODIES[survivor].icon}"
+                    alt=""
+                    class="h-8"
+                  />
+                  <!-- <span>{BODIES[survivor].displayName}</span> -->
+                </div>
+              {/each}
+            </div>
+          {/if}
+          {#if key == "ending"}
+            <span>:</span>
+            <div class="flex flex-row gap-4">
+              {#each prop.filter as ending}
+                <div
+                  class="flex flex-row items-center gap-1 px-2"
+                  style="background-color: {ENDINGS[ending].colorBg};"
+                >
+                  <img
+                    src="/endings/{ENDINGS[ending].icon}"
+                    alt=""
+                    class="h-8"
+                  />
+                  <span>{ENDINGS[ending].displayName}</span>
+                </div>
+              {/each}
+            </div>
+          {/if}
+          {#if key == "difficulty"}
+            <span>:</span>
+            <div class="flex flex-row gap-1">
+              {#each prop.filter as difficulty}
+                <div class="flex flex-row items-center gap-1">
+                  <img
+                    src="/difficulties/{DIFFICULTIES[difficulty].icon}"
+                    alt=""
+                    class="h-8"
+                  />
+                  <!-- <span>{DIFFICULTIES[difficulty].displayName}</span> -->
+                </div>
+              {/each}
+            </div>
+          {/if}
+        </button>
+      {/if}
+    {/each}
+  {/if}
 </div>
 
 <div class="text-secondary text-right">
@@ -342,7 +355,9 @@
   </span>
   total runs
 </div>
-<Table {properties} {runs} {openContextMenu} />
+
+<Table {properties} {runs} openContextMenu={contextMenu?.open} />
+
 {#if loadingStatus == "LOADING"}
   <LoadingIndicator indicator text="Loading more runs!" />
 {:else if loadingStatus == "NOT LOADING"}

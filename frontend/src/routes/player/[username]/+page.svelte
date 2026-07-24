@@ -10,12 +10,10 @@
   } from "$lib/RoR2";
   import TableDifficulty from "$lib/TableDifficulty.svelte";
   import TableSurvivor from "$lib/TableSurvivor.svelte";
-  import { Plane } from "@lucide/svelte";
 
   import { onMount } from "svelte";
   import { defaultProperties } from "$lib/properties";
   import LoadingIndicator from "$lib/LoadingIndicator.svelte";
-  import Table from "../../Table.svelte";
   import TableView from "$lib/TableView.svelte";
 
   let playerInfoPromise: Promise<PlayerInfoExtra> = $state(
@@ -24,8 +22,6 @@
   let lifetimeStatsPromise: Promise<RunReportWithUser> = $state(
     new Promise(() => {}),
   );
-  let recentRunsPromise: Promise<{ runs: RunReportWithUser[]; total: number }> =
-    $state(new Promise(() => {}));
   let regionPromise: Promise<any> | null = $state(null);
 
   let username: string | null = $state(null);
@@ -47,11 +43,6 @@
     lifetimeStatsPromise = fetch(api(`player/lifetime/${username}`)).then((r) =>
       r.json(),
     );
-    recentRunsPromise = fetch(
-      api(
-        `runs?${new URLSearchParams({ filters: JSON.stringify({ player: [`@${username}`] }) }).toString()}`,
-      ),
-    ).then((r) => r.json());
   });
 </script>
 
@@ -193,13 +184,9 @@
 <hr class="my-8" />
 <h1 class="text-center tracking-tighter text-3xl mb-4">Recent Runs</h1>
 
-{#await recentRunsPromise}
-  <LoadingIndicator indicator text="Loading recent runs" />
-{:then recentRuns}
-  {#if username}
-    <TableView
-      sort={{ by: "uploadTime", sort: "DESC" }}
-      filter={{ player: [`@${username}`] }}
-    />
-  {/if}
-{/await}
+{#if username}
+  <TableView
+    sort={{ by: "uploadTime", sort: "DESC" }}
+    filter={{ player: [`@${username}`] }}
+  />
+{/if}
