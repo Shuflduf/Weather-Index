@@ -9,7 +9,6 @@ use sea_orm::{
 use serde::Serialize;
 
 use crate::{
-    api::player::lifetime::LifetimeStatsDTO,
     entity::run_report,
     error::{db_error, make_error, WIError},
     WIState,
@@ -99,10 +98,6 @@ impl From<GlobalStats> for GlobalStatsDTO {
     }
 }
 
-pub async fn get(State(state): State<Arc<WIState>>) -> Result<Json<GlobalStatsDTO>, WIError> {
-    return Err(make_error(StatusCode::NOT_IMPLEMENTED, "shit".into()));
-}
-
 pub async fn aggregate_stats(
     db: &DatabaseConnection,
     user_id: Option<&String>,
@@ -149,4 +144,8 @@ pub async fn aggregate_stats(
         .map_err(db_error)?
         .ok_or(make_error(StatusCode::NOT_FOUND, "oops".into()))?;
     Ok(row)
+}
+
+pub async fn get(State(state): State<Arc<WIState>>) -> Result<Json<GlobalStatsDTO>, WIError> {
+    Ok(Json(aggregate_stats(&state.db, None).await?.into()))
 }
