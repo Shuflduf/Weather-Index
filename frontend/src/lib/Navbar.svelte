@@ -43,9 +43,13 @@
 <div
   class="bg-bg-secondary flex flex-row items-center border justify-between h-18"
 >
-  <a class="text-primary text-2xl font-bold tracking-tighter pl-4" href="/">
-    Weather Index
-  </a>
+  <div class="flex flex-row gap-8 items-end pl-4">
+    <a class="text-primary text-2xl font-bold tracking-tighter" href="/">
+      Weather Index
+    </a>
+    <div class="border py-4"></div>
+    <a class="text-xl tracking-tight text-secondary" href="/stats">Stats</a>
+  </div>
   {#if user}
     <button
       class="h-full border-l px-4 flex items-center cursor-pointer transition-colors bg-bg-secondary hover:bg-hover active:bg-active"
