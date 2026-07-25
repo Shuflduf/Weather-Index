@@ -5,15 +5,21 @@
   import type { RunReportWithUser } from "$lib/RoR2";
   import { onMount } from "svelte";
 
-  let statsPromise: Promise<RunReportWithUser> = $state(new Promise(() => {}));
+  let sumStatsPromise: Promise<RunReportWithUser> = $state(
+    new Promise(() => {}),
+  );
+  let avgStatsPromise: Promise<RunReportWithUser> = $state(
+    new Promise(() => {}),
+  );
 
   onMount(() => {
-    statsPromise = fetch(api("global")).then((r) => r.json());
+    sumStatsPromise = fetch(api("global/sum")).then((r) => r.json());
+    avgStatsPromise = fetch(api("global/avg")).then((r) => r.json());
   });
 </script>
 
-{#await statsPromise}
-  <LoadingIndicator indicator text="Aggregating stats" />
+{#await sumStatsPromise}
+  <LoadingIndicator indicator text="Loading stats" />
 {:then stats}
   <GlobalStatsDisplay {stats} />
 {/await}

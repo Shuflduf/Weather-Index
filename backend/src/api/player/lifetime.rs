@@ -36,7 +36,8 @@ pub async fn get(
             )
         })?;
 
-    let stats = aggregate_stats(&state.db, Some(&player.id)).await?;
+    // TODO: also send avg. or make it part of global/
+    let stats = aggregate_stats(&state.db, false, Some(&player.id)).await?;
 
     Ok(Json(stats.into()))
 }

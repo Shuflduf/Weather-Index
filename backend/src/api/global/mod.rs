@@ -100,6 +100,7 @@ impl From<GlobalStats> for GlobalStatsDTO {
 
 pub async fn aggregate_stats(
     db: &DatabaseConnection,
+    is_avg: bool,
     user_id: Option<&String>,
 ) -> Result<GlobalStats, WIError> {
     let sum_columns = [
@@ -130,12 +131,21 @@ pub async fn aggregate_stats(
         row = row.filter(run_report::Column::UserId.eq(id));
     }
 
-    sum_columns.iter().for_each(|c| {
-        row = row.clone().column_as(c.0.sum().cast_as("BIGINT"), c.1);
-    });
-    highest_columns.iter().for_each(|c| {
-        row = row.clone().column_as(c.0.max().cast_as("BIGINT"), c.1);
-    });
+    if is_avg {
+        sum_columns
+            .iter()
+            .chain(highest_columns.iter())
+            .for_each(|c| {
+                row = row.clone().column_as(c.0.avg().cast_as("BIGINT"), c.1);
+            });
+    } else {
+        sum_columns.iter().for_each(|c| {
+            row = row.clone().column_as(c.0.sum().cast_as("BIGINT"), c.1);
+        });
+        highest_columns.iter().for_each(|c| {
+            row = row.clone().column_as(c.0.max().cast_as("BIGINT"), c.1);
+        });
+    }
 
     let row = row
         .into_model::<GlobalStats>()
@@ -146,6 +156,10 @@ pub async fn aggregate_stats(
     Ok(row)
 }
 
-pub async fn get(State(state): State<Arc<WIState>>) -> Result<Json<GlobalStatsDTO>, WIError> {
-    Ok(Json(aggregate_stats(&state.db, None).await?.into()))
+pub async fn sum(State(state): State<Arc<WIState>>) -> Result<Json<GlobalStatsDTO>, WIError> {
+    Ok(Json(aggregate_stats(&state.db, false, None).await?.into()))
+}
+
+pub async fn avg(State(state): State<Arc<WIState>>) -> Result<Json<GlobalStatsDTO>, WIError> {
+    Ok(Json(aggregate_stats(&state.db, true, None).await?.into()))
 }
