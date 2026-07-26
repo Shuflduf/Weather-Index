@@ -2,7 +2,7 @@
 
 import { env } from "$env/dynamic/public";
 
-export type GlobalStatsCategory = "AVG" | "SUM";
+export type StatsCategory = "AVG" | "SUM";
 
 export type SortMode = "ASC" | "DESC";
 export type Property = {

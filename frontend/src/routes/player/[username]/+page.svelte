@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from "$app/state";
   import PFP from "$lib/PFP.svelte";
-  import { api, type PlayerInfoExtra } from "$lib";
+  import { api, type PlayerInfoExtra, type StatsCategory } from "$lib";
   import {
     BODIES,
     formatBig,
@@ -15,14 +15,13 @@
   import { defaultProperties } from "$lib/properties";
   import LoadingIndicator from "$lib/LoadingIndicator.svelte";
   import TableView from "$lib/TableView.svelte";
-  import GlobalStatsDisplay from "$lib/GlobalStatsDisplay.svelte";
+  import StatsDisplay from "$lib/StatsDisplay.svelte";
 
   let playerInfoPromise: Promise<PlayerInfoExtra> = $state(
     new Promise(() => {}),
   );
-  let lifetimeStatsPromise: Promise<RunReportWithUser> = $state(
-    new Promise(() => {}),
-  );
+  let lifetimeStatsPromise: Promise<Record<StatsCategory, RunReportWithUser>> =
+    $state(new Promise(() => {}));
   let regionPromise: Promise<any> | null = $state(null);
 
   let username: string | null = $state(null);
@@ -41,9 +40,18 @@
         }
         return info;
       });
-    lifetimeStatsPromise = fetch(
-      api(`stats/sum?${new URLSearchParams(JSON.stringify({ username }))}`),
-    ).then((r) => r.json());
+    lifetimeStatsPromise = Promise.all([
+      fetch(
+        api(
+          `stats/sum?${new URLSearchParams({ username: username! }).toString()}`,
+        ),
+      ).then((r) => r.json()),
+      fetch(
+        api(
+          `stats/avg?${new URLSearchParams({ username: username! }).toString()}`,
+        ),
+      ).then((r) => r.json()),
+    ]).then(([sum, avg]) => ({ SUM: sum, AVG: avg }));
   });
 </script>
 
@@ -136,7 +144,7 @@
 {#await lifetimeStatsPromise}
   <LoadingIndicator indicator text="Loading lifetime stats" />
 {:then stats}
-  <GlobalStatsDisplay {stats} />
+  <StatsDisplay {stats} />
 {/await}
 
 <hr class="my-8" />
