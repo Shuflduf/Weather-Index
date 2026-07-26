@@ -19,6 +19,8 @@ use crate::{
     WIState,
 };
 
+pub mod survivors;
+
 #[derive(FromQueryResult)]
 pub struct GlobalStats {
     pub time_alive_seconds: Option<i64>,

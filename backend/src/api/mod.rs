@@ -20,4 +20,5 @@ pub fn router() -> Router<Arc<WIState>> {
         .route("/player", post(player::update))
         .route("/stats/sum", get(stats::sum))
         .route("/stats/avg", get(stats::avg))
+        .route("/stats/survivors", get(stats::survivors::get))
 }
