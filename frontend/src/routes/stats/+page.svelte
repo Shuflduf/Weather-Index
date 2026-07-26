@@ -73,7 +73,9 @@
     key="survivor"
     value="count"
     height={300}
-    props={{ pie: { motion: "spring" } }}
+    props={{
+      pie: { motion: "spring" },
+    }}
     class="font-mono"
     legend={{ orientation: "vertical", placement: "right" }}
     cRange={SURVIVOR_COLOURS}
