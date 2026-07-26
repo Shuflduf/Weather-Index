@@ -41,9 +41,9 @@
         }
         return info;
       });
-    lifetimeStatsPromise = fetch(api(`player/lifetime/${username}`)).then((r) =>
-      r.json(),
-    );
+    lifetimeStatsPromise = fetch(
+      api(`stats/sum?${new URLSearchParams(JSON.stringify({ username }))}`),
+    ).then((r) => r.json());
   });
 </script>
 
