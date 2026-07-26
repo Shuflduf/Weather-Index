@@ -12,7 +12,6 @@
   import TableSurvivor from "$lib/TableSurvivor.svelte";
 
   import { onMount } from "svelte";
-  import { defaultProperties } from "$lib/properties";
   import LoadingIndicator from "$lib/LoadingIndicator.svelte";
   import TableView from "$lib/TableView.svelte";
   import StatsDisplay from "$lib/StatsDisplay.svelte";

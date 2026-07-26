@@ -14,7 +14,8 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@lucide/svelte": "^1.23.0"
+    "@lucide/svelte": "^1.23.0",
+    "layerchart": "^2.0.2"
   },
   "devDependencies": {
     "@icons-pack/svelte-simple-icons": "^7.2.0",
