@@ -6,7 +6,7 @@ use axum::{
     Form, Json,
 };
 use reqwest::StatusCode;
-use sea_orm::{ActiveValue::Set, ColumnTrait, EntityTrait, QueryFilter};
+use sea_orm::{ActiveValue::Set, ColumnTrait, DatabaseConnection, EntityTrait, QueryFilter};
 use serde::{Deserialize, Serialize};
 
 use crate::{
@@ -15,8 +15,6 @@ use crate::{
     error::{db_error, make_error, WIError},
     ror2, WIState,
 };
-
-pub mod lifetime;
 
 #[derive(Serialize)]
 pub struct PlayerInfo {
@@ -51,13 +49,10 @@ pub struct PlayerGetResponse {
     favourite_difficulty: Option<String>,
 }
 
-pub async fn get(
-    State(state): State<Arc<WIState>>,
-    Path(username): Path<String>,
-) -> Result<Json<PlayerGetResponse>, WIError> {
-    let player = user::Entity::find()
-        .filter(user::Column::Username.eq(&username))
-        .one(&state.db)
+pub async fn find_player(db: &DatabaseConnection, username: &str) -> Result<user::Model, WIError> {
+    Ok(user::Entity::find()
+        .filter(user::Column::Username.eq(username))
+        .one(db)
         .await
         .map_err(|e| {
             make_error(
@@ -68,9 +63,16 @@ pub async fn get(
         .ok_or_else(|| {
             make_error(
                 StatusCode::NOT_FOUND,
-                format!("User `{username}` not found"),
+                format!("Player `{username}` not found"),
             )
-        })?;
+        })?)
+}
+
+pub async fn get(
+    State(state): State<Arc<WIState>>,
+    Path(username): Path<String>,
+) -> Result<Json<PlayerGetResponse>, WIError> {
+    let player = find_player(&state.db, &username).await?;
     let runs = run_report::Entity::find()
         .filter(run_report::Column::UserId.eq(&player.id))
         .all(&state.db)

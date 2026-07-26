@@ -1,15 +1,20 @@
 use std::sync::Arc;
 
-use axum::{extract::State, Json};
+use axum::{
+    extract::{Query, State},
+    routing::put_service,
+    Json,
+};
 use reqwest::StatusCode;
 use sea_orm::{
     ColumnTrait, DatabaseConnection, EntityTrait, ExprTrait, FromQueryResult, QueryFilter,
     QuerySelect,
 };
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 
 use crate::{
-    entity::run_report,
+    api::player::find_player,
+    entity::{run_report, user},
     error::{db_error, make_error, WIError},
     WIState,
 };
@@ -67,6 +72,11 @@ pub struct GlobalStatsDTO {
     pub blood_purchases: i64,
     pub lunar_purchases: i64,
     pub distance_traveled: i64,
+}
+
+#[derive(Deserialize, Default)]
+pub struct StatsParams {
+    username: Option<String>,
 }
 
 impl From<GlobalStats> for GlobalStatsDTO {
@@ -156,10 +166,32 @@ pub async fn aggregate_stats(
     Ok(row)
 }
 
-pub async fn sum(State(state): State<Arc<WIState>>) -> Result<Json<GlobalStatsDTO>, WIError> {
-    Ok(Json(aggregate_stats(&state.db, false, None).await?.into()))
+pub async fn sum(
+    State(state): State<Arc<WIState>>,
+    params: Query<StatsParams>,
+) -> Result<Json<GlobalStatsDTO>, WIError> {
+    let player_id = match &params.username {
+        Some(username) => Some(find_player(&state.db, username).await?.id),
+        None => None,
+    };
+    Ok(Json(
+        aggregate_stats(&state.db, false, player_id.as_ref())
+            .await?
+            .into(),
+    ))
 }
 
-pub async fn avg(State(state): State<Arc<WIState>>) -> Result<Json<GlobalStatsDTO>, WIError> {
-    Ok(Json(aggregate_stats(&state.db, true, None).await?.into()))
+pub async fn avg(
+    State(state): State<Arc<WIState>>,
+    params: Query<StatsParams>,
+) -> Result<Json<GlobalStatsDTO>, WIError> {
+    let player_id = match &params.username {
+        Some(username) => Some(find_player(&state.db, username).await?.id),
+        None => None,
+    };
+    Ok(Json(
+        aggregate_stats(&state.db, true, player_id.as_ref())
+            .await?
+            .into(),
+    ))
 }
