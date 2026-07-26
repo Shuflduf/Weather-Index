@@ -76,7 +76,6 @@
     props={{
       pie: { motion: "spring" },
     }}
-    class="font-mono"
     legend={{ orientation: "vertical", placement: "right" }}
     cRange={SURVIVOR_COLOURS}
   />

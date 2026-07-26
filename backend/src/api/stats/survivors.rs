@@ -4,7 +4,7 @@ use axum::{
     extract::{Query, State},
     Json,
 };
-use sea_orm::{ColumnTrait, EntityTrait, QueryFilter, QuerySelect};
+use sea_orm::{ColumnTrait, EntityTrait, QueryFilter};
 use serde::Deserialize;
 
 use crate::{

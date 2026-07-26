@@ -50,7 +50,7 @@ pub struct PlayerGetResponse {
 }
 
 pub async fn find_player(db: &DatabaseConnection, username: &str) -> Result<user::Model, WIError> {
-    Ok(user::Entity::find()
+    user::Entity::find()
         .filter(user::Column::Username.eq(username))
         .one(db)
         .await
@@ -65,7 +65,7 @@ pub async fn find_player(db: &DatabaseConnection, username: &str) -> Result<user
                 StatusCode::NOT_FOUND,
                 format!("Player `{username}` not found"),
             )
-        })?)
+        })
 }
 
 pub async fn get(
