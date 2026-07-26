@@ -21,8 +21,8 @@ pub async fn get(State(state): State<Arc<WIState>>) -> Result<Json<OverallRespon
     let winning_endings = endings()
         .iter()
         .filter(|e| e.is_win)
-        .map(|e| e.name.clone())
-        .collect::<Vec<String>>();
+        .map(|e| e.name.as_ref())
+        .collect::<Vec<&str>>();
 
     let run_count = run_report::Entity::find()
         .count(&state.db)
