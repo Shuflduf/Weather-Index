@@ -2,9 +2,14 @@
   import { api, type StatsCategory } from "$lib";
   import StatsDisplay from "$lib/StatsDisplay.svelte";
   import LoadingIndicator from "$lib/LoadingIndicator.svelte";
-  import { BODIES, DIFFICULTIES, type RunReportWithUser } from "$lib/RoR2";
+  import {
+    ARTIFACTS,
+    BODIES,
+    DIFFICULTIES,
+    type RunReportWithUser,
+  } from "$lib/RoR2";
   import { onMount } from "svelte";
-  import { LineChart, PieChart } from "layerchart";
+  import { BarChart, LineChart, PieChart } from "layerchart";
 
   const SURVIVOR_COLOURS = [
     "var(--color-red-400)",
@@ -60,6 +65,10 @@
     new Promise(() => {}),
   );
 
+  let artifactsPromise: Promise<Record<number, number>> = $state(
+    new Promise(() => {}),
+  );
+
   onMount(() => {
     overallInfoPromise = fetch(api("stats/overall")).then((r) => r.json());
     statsPromise = Promise.all([
@@ -71,6 +80,7 @@
       r.json(),
     );
     stagesPromise = fetch(api("stats/stages")).then((r) => r.json());
+    artifactsPromise = fetch(api("stats/artifacts")).then((r) => r.json());
   });
 </script>
 
@@ -133,7 +143,7 @@
 <hr class="my-8" />
 <h1 class="text-center tracking-tighter text-3xl">Difficulties</h1>
 <h2 class="text-center italic text-secondary mb-4">
-  What difficulties are people playing
+  What difficulties do people play
 </h2>
 
 {#await difficultiesPromise}
@@ -170,7 +180,6 @@
     data={Object.entries(stages).map(([stage, count]) => ({
       stage,
       count,
-      name: `Stage ${stage}`,
     }))}
     x="stage"
     y="count"
@@ -180,5 +189,26 @@
         tickLabel: "stroke-none",
       },
     }}
+  />
+{/await}
+
+<hr class="my-8" />
+<h1 class="text-center tracking-tighter text-3xl">Artifacts</h1>
+<h2 class="text-center italic text-secondary mb-4">
+  What artifacts do people play
+</h2>
+
+{#await artifactsPromise}
+  <LoadingIndicator indicator text="Loading artifacts data" />
+{:then artifacts}
+  <BarChart
+    data={Object.entries(artifacts).map(([artif, count]) => ({
+      artif: ARTIFACTS[artif].displayName,
+      count,
+    }))}
+    x="artif"
+    y="count"
+    height={300}
+    axis={{ classes: { tickLabel: "stroke-none" } }}
   />
 {/await}
