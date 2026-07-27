@@ -58,7 +58,17 @@
 {#await overallInfoPromise}
   <LoadingIndicator indicator text="Loading info" />
 {:then info}
-  {JSON.stringify(info)}
+  <p class="text-center text-lg">
+    A total of
+    <b>
+      {info.runCount}
+    </b>
+    runs have been played,
+    <b>
+      {info.winCount}
+    </b>
+    of which are wins.
+  </p>
 {/await}
 
 <hr class="my-8" />
@@ -73,7 +83,7 @@
 <hr class="my-8" />
 <h1 class="text-center tracking-tighter text-3xl">Survivors</h1>
 <h2 class="text-center italic text-secondary mb-4">
-  What are the most popular survivors
+  Who are the most popular survivors
 </h2>
 
 {#await survivorsPromise}
