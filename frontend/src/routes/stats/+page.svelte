@@ -5,22 +5,7 @@
   import { BODIES, type Body, type RunReportWithUser } from "$lib/RoR2";
   import { onMount } from "svelte";
   import { PieChart } from "layerchart";
-  import { MotorbikeIcon } from "@lucide/svelte";
 
-  // let sumStatsPromise: Promise<RunReportWithUser> = $state(
-  //   new Promise(() => {}),
-  // );
-  // let avgStatsPromise: Promise<RunReportWithUser> = $state(
-  //   new Promise(() => {}),
-  // );
-
-  let statsPromise: Promise<Record<StatsCategory, RunReportWithUser>> = $state(
-    new Promise(() => {}),
-  );
-
-  let survivorsPromise: Promise<Record<string, Body>> = $state(
-    new Promise(() => {}),
-  );
   const SURVIVOR_COLOURS = [
     "var(--color-red-400)",
     "var(--color-orange-400)",
@@ -42,15 +27,36 @@
     "var(--color-slate-200)",
   ];
 
+  let overallInfoPromise: Promise<{ runCount: number; winCount: number }> =
+    $state(new Promise(() => {}));
+
+  let statsPromise: Promise<Record<StatsCategory, RunReportWithUser>> = $state(
+    new Promise(() => {}),
+  );
+
+  let survivorsPromise: Promise<Record<string, Body>> = $state(
+    new Promise(() => {}),
+  );
+
   onMount(() => {
     statsPromise = Promise.all([
       fetch(api("stats/sum")).then((r) => r.json()),
       fetch(api("stats/avg")).then((r) => r.json()),
     ]).then(([sum, avg]) => ({ SUM: sum, AVG: avg }));
     survivorsPromise = fetch(api("stats/survivors")).then((r) => r.json());
+    overallInfoPromise = fetch(api("stats/overall")).then((r) => r.json());
   });
 </script>
 
+<h1 class="text-center tracking-tighter text-3xl mb-4">Overall Info</h1>
+
+{#await overallInfoPromise}
+  <LoadingIndicator indicator text="Loading info" />
+{:then info}
+  {JSON.stringify(info)}
+{/await}
+
+<hr class="my-8" />
 <h1 class="text-center tracking-tighter text-3xl mb-4">Combined Stats</h1>
 
 {#await statsPromise}

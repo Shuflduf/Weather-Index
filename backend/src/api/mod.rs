@@ -21,5 +21,6 @@ pub fn router() -> Router<Arc<WIState>> {
         .route("/stats/sum", get(stats::combined::sum))
         .route("/stats/avg", get(stats::combined::avg))
         .route("/stats/survivors", get(stats::survivors::get))
+        .route("/stats/stages", get(stats::stages::get))
         .route("/stats/overall", get(stats::overall::get))
 }
