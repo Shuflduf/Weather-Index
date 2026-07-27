@@ -2,7 +2,7 @@
   import { api, type StatsCategory } from "$lib";
   import StatsDisplay from "$lib/StatsDisplay.svelte";
   import LoadingIndicator from "$lib/LoadingIndicator.svelte";
-  import { BODIES, type Body, type RunReportWithUser } from "$lib/RoR2";
+  import { BODIES, DIFFICULTIES, type RunReportWithUser } from "$lib/RoR2";
   import { onMount } from "svelte";
   import { LineChart, PieChart } from "layerchart";
 
@@ -27,6 +27,20 @@
     "var(--color-slate-200)",
   ];
 
+  const DIFFICULTY_COLOURS = [
+    "var(--color-green-400)",
+    "var(--color-orange-400)",
+    "var(--color-red-400)",
+    "var(--color-slate-100)",
+    "var(--color-slate-200)",
+    "var(--color-slate-300)",
+    "var(--color-slate-400)",
+    "var(--color-slate-500)",
+    "var(--color-slate-600)",
+    "var(--color-slate-700)",
+    "var(--color-slate-800)",
+  ];
+
   let overallInfoPromise: Promise<{ runCount: number; winCount: number }> =
     $state(new Promise(() => {}));
 
@@ -34,7 +48,11 @@
     new Promise(() => {}),
   );
 
-  let survivorsPromise: Promise<Record<string, Body>> = $state(
+  let survivorsPromise: Promise<Record<string, number>> = $state(
+    new Promise(() => {}),
+  );
+
+  let difficultiesPromise: Promise<Record<string, number>> = $state(
     new Promise(() => {}),
   );
 
@@ -49,6 +67,9 @@
       fetch(api("stats/avg")).then((r) => r.json()),
     ]).then(([sum, avg]) => ({ SUM: sum, AVG: avg }));
     survivorsPromise = fetch(api("stats/survivors")).then((r) => r.json());
+    difficultiesPromise = fetch(api("stats/difficulties")).then((r) =>
+      r.json(),
+    );
     stagesPromise = fetch(api("stats/stages")).then((r) => r.json());
   });
 </script>
@@ -106,6 +127,35 @@
       classes: { label: "text-xs", swatch: "h-2", items: "gap-0" },
     }}
     cRange={SURVIVOR_COLOURS}
+  />
+{/await}
+
+<hr class="my-8" />
+<h1 class="text-center tracking-tighter text-3xl">Difficulties</h1>
+<h2 class="text-center italic text-secondary mb-4">
+  What difficulties are people playing
+</h2>
+
+{#await difficultiesPromise}
+  <LoadingIndicator indicator text="Loading difficulty data" />
+{:then difficulties}
+  <PieChart
+    data={Object.entries(difficulties).map(([diff, count]) => ({
+      diff: DIFFICULTIES[diff].displayName,
+      count,
+    }))}
+    key="diff"
+    value="count"
+    height={300}
+    props={{
+      pie: { motion: "spring" },
+    }}
+    legend={{
+      orientation: "vertical",
+      placement: "right",
+      classes: { label: "text-xs", swatch: "h-2", items: "gap-0" },
+    }}
+    cRange={DIFFICULTY_COLOURS}
   />
 {/await}
 
