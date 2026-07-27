@@ -15,19 +15,21 @@
   import LoadingIndicator from "$lib/LoadingIndicator.svelte";
   import TableView from "$lib/TableView.svelte";
   import StatsDisplay from "$lib/StatsDisplay.svelte";
+  import StatsSurvivors from "$lib/StatsSurvivors.svelte";
 
   let playerInfoPromise: Promise<PlayerInfoExtra> = $state(
     new Promise(() => {}),
   );
-  let lifetimeStatsPromise: Promise<Record<StatsCategory, RunReportWithUser>> =
-    $state(new Promise(() => {}));
+  let statsPromise: Promise<Record<StatsCategory, RunReportWithUser>> = $state(
+    new Promise(() => {}),
+  );
   let regionPromise: Promise<any> | null = $state(null);
 
-  let username: string | null = $state(null);
+  let username: string | undefined = $state(page.params.username);
 
   onMount(() => {
-    if (!page.params.username) console.error("no username");
-    username = page.params.username as string | null;
+    // if (!page.params.username) console.error("no username");
+    // username =  as string | undefined;
 
     playerInfoPromise = fetch(api(`player/${username}`))
       .then((r) => r.json())
@@ -39,7 +41,7 @@
         }
         return info;
       });
-    lifetimeStatsPromise = Promise.all([
+    statsPromise = Promise.all([
       fetch(
         api(
           `stats/sum?${new URLSearchParams({ username: username! }).toString()}`,
@@ -139,12 +141,17 @@
 {/await}
 
 <hr class="my-8" />
-<h1 class="text-center tracking-tighter text-3xl mb-4">Lifetime Stats</h1>
-{#await lifetimeStatsPromise}
-  <LoadingIndicator indicator text="Loading lifetime stats" />
+<h1 class="text-center tracking-tighter text-3xl mb-4">Combined Stats</h1>
+
+{#await statsPromise}
+  <LoadingIndicator indicator text="Loading stats" />
 {:then stats}
   <StatsDisplay {stats} />
 {/await}
+
+<hr class="my-8" />
+<h1 class="text-center tracking-tighter text-3xl mb-4">Survivors</h1>
+<StatsSurvivors {username} />
 
 <hr class="my-8" />
 <h1 class="text-center tracking-tighter text-3xl mb-4">Recent Runs</h1>

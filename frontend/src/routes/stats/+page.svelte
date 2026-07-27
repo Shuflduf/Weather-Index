@@ -10,27 +10,7 @@
   } from "$lib/RoR2";
   import { onMount } from "svelte";
   import { BarChart, LineChart, PieChart } from "layerchart";
-
-  const SURVIVOR_COLOURS = [
-    "var(--color-red-400)",
-    "var(--color-orange-400)",
-    "var(--color-amber-400)",
-    "var(--color-yellow-400)",
-    "var(--color-lime-400)",
-    "var(--color-green-400)",
-    "var(--color-emerald-400)",
-    "var(--color-teal-400)",
-    "var(--color-cyan-400)",
-    "var(--color-sky-400)",
-    "var(--color-blue-400)",
-    "var(--color-indigo-400)",
-    "var(--color-violet-400)",
-    "var(--color-purple-400)",
-    "var(--color-fuchsia-400)",
-    "var(--color-pink-400)",
-    "var(--color-rose-400)",
-    "var(--color-slate-200)",
-  ];
+  import StatsSurvivors from "$lib/StatsSurvivors.svelte";
 
   const DIFFICULTY_COLOURS = [
     "var(--color-green-400)",
@@ -53,10 +33,6 @@
     new Promise(() => {}),
   );
 
-  let survivorsPromise: Promise<Record<string, number>> = $state(
-    new Promise(() => {}),
-  );
-
   let difficultiesPromise: Promise<Record<string, number>> = $state(
     new Promise(() => {}),
   );
@@ -75,7 +51,6 @@
       fetch(api("stats/sum")).then((r) => r.json()),
       fetch(api("stats/avg")).then((r) => r.json()),
     ]).then(([sum, avg]) => ({ SUM: sum, AVG: avg }));
-    survivorsPromise = fetch(api("stats/survivors")).then((r) => r.json());
     difficultiesPromise = fetch(api("stats/difficulties")).then((r) =>
       r.json(),
     );
@@ -117,28 +92,7 @@
   Who are the most popular survivors
 </h2>
 
-{#await survivorsPromise}
-  <LoadingIndicator indicator text="Loading survivor data" />
-{:then survivors}
-  <PieChart
-    data={Object.entries(survivors).map(([survivor, count]) => ({
-      survivor: BODIES[survivor].displayName,
-      count,
-    }))}
-    key="survivor"
-    value="count"
-    height={300}
-    props={{
-      pie: { motion: "spring" },
-    }}
-    legend={{
-      orientation: "vertical",
-      placement: "right",
-      classes: { label: "text-xs", swatch: "h-2", items: "gap-0" },
-    }}
-    cRange={SURVIVOR_COLOURS}
-  />
-{/await}
+<StatsSurvivors />
 
 <hr class="my-8" />
 <h1 class="text-center tracking-tighter text-3xl">Difficulties</h1>
