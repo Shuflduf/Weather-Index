@@ -4,7 +4,7 @@
   import LoadingIndicator from "$lib/LoadingIndicator.svelte";
   import { BODIES, type Body, type RunReportWithUser } from "$lib/RoR2";
   import { onMount } from "svelte";
-  import { PieChart } from "layerchart";
+  import { LineChart, PieChart } from "layerchart";
 
   const SURVIVOR_COLOURS = [
     "var(--color-red-400)",
@@ -38,13 +38,18 @@
     new Promise(() => {}),
   );
 
+  let stagesPromise: Promise<Record<number, number>> = $state(
+    new Promise(() => {}),
+  );
+
   onMount(() => {
+    overallInfoPromise = fetch(api("stats/overall")).then((r) => r.json());
     statsPromise = Promise.all([
       fetch(api("stats/sum")).then((r) => r.json()),
       fetch(api("stats/avg")).then((r) => r.json()),
     ]).then(([sum, avg]) => ({ SUM: sum, AVG: avg }));
     survivorsPromise = fetch(api("stats/survivors")).then((r) => r.json());
-    overallInfoPromise = fetch(api("stats/overall")).then((r) => r.json());
+    stagesPromise = fetch(api("stats/stages")).then((r) => r.json());
   });
 </script>
 
@@ -66,7 +71,10 @@
 {/await}
 
 <hr class="my-8" />
-<h1 class="text-center tracking-tighter text-3xl mb-4">Survivors</h1>
+<h1 class="text-center tracking-tighter text-3xl">Survivors</h1>
+<h2 class="text-center italic text-secondary mb-4">
+  What are the most popular survivors
+</h2>
 
 {#await survivorsPromise}
   <LoadingIndicator indicator text="Loading survivor data" />
@@ -82,7 +90,35 @@
     props={{
       pie: { motion: "spring" },
     }}
-    legend={{ orientation: "vertical", placement: "right" }}
+    legend={{
+      orientation: "vertical",
+      placement: "right",
+      classes: { label: "text-xs", swatch: "h-2", items: "gap-0" },
+    }}
     cRange={SURVIVOR_COLOURS}
+  />
+{/await}
+
+<hr class="my-8" />
+<h1 class="text-center tracking-tighter text-3xl">Stages</h1>
+<h2 class="text-center italic text-secondary mb-4">When did each run end</h2>
+
+{#await stagesPromise}
+  <LoadingIndicator indicator text="Loading stage data" />
+{:then stages}
+  <LineChart
+    data={Object.entries(stages).map(([stage, count]) => ({
+      stage,
+      count,
+      name: `Stage ${stage}`,
+    }))}
+    x="stage"
+    y="count"
+    height={300}
+    axis={{
+      classes: {
+        tickLabel: "stroke-none",
+      },
+    }}
   />
 {/await}
