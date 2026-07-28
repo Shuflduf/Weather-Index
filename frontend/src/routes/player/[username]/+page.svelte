@@ -2,25 +2,19 @@
   import { page } from "$app/state";
   import PFP from "$lib/PFP.svelte";
   import { api, type PlayerInfoExtra, type StatsCategory } from "$lib";
-  import {
-    BODIES,
-    formatBig,
-    formatSeconds,
-    type RunReportWithUser,
-  } from "$lib/RoR2";
   import TableDifficulty from "$lib/TableDifficulty.svelte";
   import TableSurvivor from "$lib/TableSurvivor.svelte";
 
   import { onMount } from "svelte";
   import LoadingIndicator from "$lib/LoadingIndicator.svelte";
   import TableView from "$lib/TableView.svelte";
-  import StatsDisplay from "$lib/StatsDisplay.svelte";
   import StatsSurvivors from "$lib/StatsSurvivors.svelte";
+  import StatsCombined from "$lib/StatsCombined.svelte";
+  import StatsStages from "$lib/StatsStages.svelte";
+  import StatsDifficulties from "$lib/StatsDifficulties.svelte";
+  import StatsArtifacts from "$lib/StatsArtifacts.svelte";
 
   let playerInfoPromise: Promise<PlayerInfoExtra> = $state(
-    new Promise(() => {}),
-  );
-  let statsPromise: Promise<Record<StatsCategory, RunReportWithUser>> = $state(
     new Promise(() => {}),
   );
   let regionPromise: Promise<any> | null = $state(null);
@@ -28,9 +22,6 @@
   let username: string | undefined = $state(page.params.username);
 
   onMount(() => {
-    // if (!page.params.username) console.error("no username");
-    // username =  as string | undefined;
-
     playerInfoPromise = fetch(api(`player/${username}`))
       .then((r) => r.json())
       .then((info) => {
@@ -41,18 +32,6 @@
         }
         return info;
       });
-    statsPromise = Promise.all([
-      fetch(
-        api(
-          `stats/sum?${new URLSearchParams({ username: username! }).toString()}`,
-        ),
-      ).then((r) => r.json()),
-      fetch(
-        api(
-          `stats/avg?${new URLSearchParams({ username: username! }).toString()}`,
-        ),
-      ).then((r) => r.json()),
-    ]).then(([sum, avg]) => ({ SUM: sum, AVG: avg }));
   });
 </script>
 
@@ -143,15 +122,23 @@
 <hr class="my-8" />
 <h1 class="text-center tracking-tighter text-3xl mb-4">Combined Stats</h1>
 
-{#await statsPromise}
-  <LoadingIndicator indicator text="Loading stats" />
-{:then stats}
-  <StatsDisplay {stats} />
-{/await}
+<StatsCombined {username} />
 
 <hr class="my-8" />
 <h1 class="text-center tracking-tighter text-3xl mb-4">Survivors</h1>
 <StatsSurvivors {username} />
+
+<hr class="my-8" />
+<h1 class="text-center tracking-tighter text-3xl mb-4">Difficulties</h1>
+<StatsDifficulties {username} />
+
+<hr class="my-8" />
+<h1 class="text-center tracking-tighter text-3xl mb-4">Stages</h1>
+<StatsStages {username} />
+
+<hr class="my-8" />
+<h1 class="text-center tracking-tighter text-3xl mb-4">Artifacts</h1>
+<StatsArtifacts {username} />
 
 <hr class="my-8" />
 <h1 class="text-center tracking-tighter text-3xl mb-4">Recent Runs</h1>

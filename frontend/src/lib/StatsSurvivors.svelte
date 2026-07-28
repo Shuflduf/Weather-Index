@@ -32,7 +32,6 @@
   );
 
   onMount(() => {
-    console.log(username);
     survivorsPromise = fetch(
       username
         ? api(`stats/survivors?${new URLSearchParams({ username })}`)
