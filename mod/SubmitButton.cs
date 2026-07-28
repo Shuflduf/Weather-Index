@@ -33,7 +33,7 @@ namespace WeatherIndex
 
             HGButton btn = submitButtonObj.GetComponent<HGButton>();
             btn.onClick.RemoveAllListeners();
-            btn.onClick.AddListener(OnSubmitClicked);
+            btn.onClick.AddListener(WeatherIndex.PostRunReport);
             btn.interactable = !string.IsNullOrEmpty(WeatherIndex.accessToken?.Value);
 
             var label = submitButtonObj.GetComponentInChildren<LanguageTextMeshController>();
@@ -53,7 +53,5 @@ namespace WeatherIndex
                 glyph.gameObject.SetActive(false);
             }
         }
-
-        private void OnSubmitClicked() { }
     }
 }

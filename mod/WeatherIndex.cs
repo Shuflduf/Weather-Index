@@ -29,10 +29,12 @@ namespace WeatherIndex
 
         private static readonly HttpClient http = new();
         private static ConfigEntry<KeyboardShortcut>? endRunKeybind;
-        public static ConfigEntry<string>? accessToken;
+        internal static ConfigEntry<string>? accessToken;
         private static ConfigEntry<string>? backendURL;
         private static ConfigEntry<string>? connectionStatus;
         private static bool connecting = false;
+        private static string? lastRun;
+        private static bool uploadedRun = true;
 
         public void Awake()
         {
@@ -41,6 +43,7 @@ namespace WeatherIndex
             Run.onRunStartGlobal += (Run run) =>
             {
                 RunTracker.Reset();
+                uploadedRun = false;
             };
 
             Run.onClientGameOverGlobal += (Run run, RunReport report) =>
@@ -118,7 +121,8 @@ namespace WeatherIndex
                     }
                 );
                 Log.Info(json);
-                this.PostRunReport(json);
+                lastRun = json;
+                // this.PostRunReport(json);
             };
 
             On.RoR2.UI.GameEndReportPanelController.Awake += (orig, self) =>
@@ -173,7 +177,7 @@ namespace WeatherIndex
                         name = "Status",
                         category = "General",
                         description =
-                            "Status of Weather Index connection.\n\nPossible values: NOT CONNECTED, CONNECTED AS [username], CONNECTING, ERROR\n\n Automatically updated.",
+                            "Status of Weather Index connection.\n\nPossible values: NOT CONNECTED, CONNECTED AS [username], CONNECTING, LOADING, ERROR\n\n Automatically updated when this page is loaded. Exit settings and re-open this page for the proper updated value.",
                     }
                 )
             );
@@ -185,10 +189,18 @@ namespace WeatherIndex
             RefreshStatus();
         }
 
-        private async void PostRunReport(string json)
+        internal static async void PostRunReport()
         {
+            if (lastRun == null)
+                return;
+
+            uploadedRun = true;
+
+            Log.Info(lastRun);
+            Log.Info(accessToken?.Value);
+
             string url = $"{backendURL?.Value}/api/runs/new";
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var content = new StringContent(lastRun, Encoding.UTF8, "application/json");
             var request = new HttpRequestMessage(HttpMethod.Post, url) { Content = content };
             if (!string.IsNullOrEmpty(accessToken?.Value))
             {
@@ -203,6 +215,9 @@ namespace WeatherIndex
 
         private async void RefreshStatus()
         {
+            Log.Info("refreshing");
+            Log.Info(accessToken?.Value);
+
             connectionStatus?.Value = "LOADING";
             string url = $"{backendURL?.Value}/auth/get-session";
             var request = new HttpRequestMessage(HttpMethod.Get, url);
@@ -239,7 +254,6 @@ namespace WeatherIndex
             if (connecting)
                 return;
             connecting = true;
-
             connectionStatus?.Value = "CONNECTING";
 
             string url = $"{backendURL?.Value}/auth/device/code";
@@ -264,7 +278,6 @@ namespace WeatherIndex
             );
 
             var deviceUri = $"{body.verification_uri}?user_code={body.user_code}";
-            // Log.Info(deviceUri);
 
             Application.OpenURL(deviceUri);
 
@@ -274,7 +287,7 @@ namespace WeatherIndex
                 {
                     await Task.Delay(body.interval * 1000);
                     var poll = await http.PostAsync(
-                        $"{backendURL}/auth/device/token",
+                        $"{backendURL?.Value}/auth/device/token",
                         new StringContent(
                             JsonConvert.SerializeObject(
                                 new
@@ -288,6 +301,7 @@ namespace WeatherIndex
                             "application/json"
                         )
                     );
+                    Log.Info(await poll.Content.ReadAsStringAsync());
 
                     if (!poll.IsSuccessStatusCode)
                         continue;
@@ -296,6 +310,7 @@ namespace WeatherIndex
                         await poll.Content.ReadAsStringAsync(),
                         new { access_token = "" }
                     );
+                    Log.Info(JsonConvert.SerializeObject(tokenBody));
                     accessToken?.Value = tokenBody.access_token;
                     connecting = false;
                     RefreshStatus();
