@@ -132,25 +132,29 @@ namespace WeatherIndex
             Directory.CreateDirectory(outputDir);
             var bodies = new List<object>();
 
-            var survivorColors = new Dictionary<string, string>();
-            survivorColors.Add("CommandoBody", "#cb812e");
-            survivorColors.Add("HuntressBody", "#a12a29");
-            survivorColors.Add("BanditBody", "#3cd4cb");
-            survivorColors.Add("ToolbotBody", "#938929");
-            survivorColors.Add("EngiBody", "#6b399e");
-            survivorColors.Add("MageBody", "#d7dad8");
-            survivorColors.Add("MercBody", "#464669");
-            survivorColors.Add("TreebotBody", "#9a9f84");
-            survivorColors.Add("LoaderBody", "#b38931");
-            survivorColors.Add("CrocoBody", "#894352");
-            survivorColors.Add("CaptainBody", "#2b2e41");
-            survivorColors.Add("RailgunnerBody", "#f94c7f");
-            survivorColors.Add("VoidSurvivorBody", "#facdf5");
-            survivorColors.Add("SeekerBody", "#e3b46e");
-            survivorColors.Add("FalseSonBody", "#b78224");
-            survivorColors.Add("ChefBody", "#c1c7d9");
-            survivorColors.Add("DroneTechBody", "#0b0d0b");
-            survivorColors.Add("DrifterBody", "#ac883c");
+            // top color from each default skin diamond thing
+            // https://riskofrain2.wiki.gg/wiki/Survivors
+            var survivorColors = new Dictionary<string, string>
+            {
+                { "CommandoBody", "#cb812e" },
+                { "HuntressBody", "#a12a29" },
+                { "BanditBody", "#3cd4cb" },
+                { "ToolbotBody", "#938929" },
+                { "EngiBody", "#6b399e" },
+                { "MageBody", "#d7dad8" },
+                { "MercBody", "#464669" },
+                { "TreebotBody", "#9a9f84" },
+                { "LoaderBody", "#b38931" },
+                { "CrocoBody", "#894352" },
+                { "CaptainBody", "#2b2e41" },
+                { "RailgunnerBody", "#f94c7f" },
+                { "VoidSurvivorBody", "#facdf5" },
+                { "SeekerBody", "#e3b46e" },
+                { "FalseSonBody", "#b78224" },
+                { "ChefBody", "#c1c7d9" },
+                { "DroneTechBody", "#0b0d0b" },
+                { "DrifterBody", "#ac883c" },
+            };
 
             foreach (var bodyPrefab in RoR2.BodyCatalog.allBodyPrefabs)
             {
@@ -230,18 +234,20 @@ namespace WeatherIndex
             Directory.CreateDirectory(outputDir);
             var difficulties = new List<object>();
             // https://tailwindcss.com/docs/colors
-            var colors = new Dictionary<string, string>();
-            colors.Add("DIFFICULTY_EASY_NAME", "#4ade80");
-            colors.Add("DIFFICULTY_NORMAL_NAME", "#fb923c");
-            colors.Add("DIFFICULTY_HARD_NAME", "#ef4444");
-            colors.Add("ECLIPSE_1_NAME", "#f1f5f9");
-            colors.Add("ECLIPSE_2_NAME", "#e2e8f0");
-            colors.Add("ECLIPSE_3_NAME", "#cbd5e1");
-            colors.Add("ECLIPSE_4_NAME", "#94a3b8");
-            colors.Add("ECLIPSE_5_NAME", "#64748b");
-            colors.Add("ECLIPSE_6_NAME", "#475569");
-            colors.Add("ECLIPSE_7_NAME", "#334155");
-            colors.Add("ECLIPSE_8_NAME", "#1e293b");
+            var colors = new Dictionary<string, string>
+            {
+                { "DIFFICULTY_EASY_NAME", "#4ade80" },
+                { "DIFFICULTY_NORMAL_NAME", "#fb923c" },
+                { "DIFFICULTY_HARD_NAME", "#ef4444" },
+                { "ECLIPSE_1_NAME", "#f1f5f9" },
+                { "ECLIPSE_2_NAME", "#e2e8f0" },
+                { "ECLIPSE_3_NAME", "#cbd5e1" },
+                { "ECLIPSE_4_NAME", "#94a3b8" },
+                { "ECLIPSE_5_NAME", "#64748b" },
+                { "ECLIPSE_6_NAME", "#475569" },
+                { "ECLIPSE_7_NAME", "#334155" },
+                { "ECLIPSE_8_NAME", "#1e293b" },
+            };
 
             foreach (
                 RoR2.DifficultyIndex idx in System.Enum.GetValues(typeof(RoR2.DifficultyIndex))

@@ -82,6 +82,7 @@ export type Body = {
   name: string;
   nameToken: string;
   displayName: string;
+  survivorColor?: string;
   icon: string;
 };
 
