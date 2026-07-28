@@ -33,7 +33,7 @@ namespace WeatherIndex
 
             HGButton btn = submitButtonObj.GetComponent<HGButton>();
             btn.onClick.RemoveAllListeners();
-            btn.onClick.AddListener(WeatherIndex.PostRunReport);
+            btn.onClick.AddListener(OnSubmitClicked);
             btn.interactable = !string.IsNullOrEmpty(WeatherIndex.accessToken?.Value);
 
             var label = submitButtonObj.GetComponentInChildren<LanguageTextMeshController>();
@@ -52,6 +52,36 @@ namespace WeatherIndex
             {
                 glyph.gameObject.SetActive(false);
             }
+        }
+
+        private void OnSubmitClicked()
+        {
+            WeatherIndex.PostRunReport();
+            // TODO: reflect error messages and stuff
+            ShowPopup("Run submitted succesfully!");
+        }
+
+        private void ShowPopup(string message)
+        {
+            if (panel == null)
+                return;
+
+            var eventSystem = panel.GetComponent<MPEventSystemProvider>()?.eventSystem;
+            if (eventSystem == null)
+                return;
+
+            var dialog = SimpleDialogBox.Create(eventSystem);
+            dialog.headerToken = new SimpleDialogBox.TokenParamsPair
+            {
+                token = "Weather Index",
+                formatParams = System.Array.Empty<Object>(),
+            };
+            dialog.descriptionToken = new SimpleDialogBox.TokenParamsPair
+            {
+                token = message,
+                formatParams = System.Array.Empty<Object>(),
+            };
+            dialog.AddCancelButton("Close");
         }
     }
 }

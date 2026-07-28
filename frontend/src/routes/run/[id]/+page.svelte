@@ -273,27 +273,31 @@
       </thead>
       <tbody>
         {#each run.itemHistory as itemEvent}
-          <tr class="">
-            <td class="border px-4 bg-bg-secondary">
-              <img
-                src="/items/{ITEMS[itemEvent.id].icon}"
-                alt="stage"
-                class="h-8 inline"
-              />
-              <span class="">
-                {ITEMS[itemEvent.id].displayName}
-              </span>
-            </td>
-            <td class="border px-4 bg-bg-secondary">
-              <span class={itemEvent.count > 0 ? "text-success" : "text-error"}>
-                {itemEvent.count > 0 ? "+" : "-"}
-                {itemEvent.count.toString().replace("-", "")}
-              </span>
-            </td>
-            <td class="border px-4 bg-bg-secondary">
-              <span>{formatSeconds(itemEvent.time)}</span>
-            </td>
-          </tr>
+          {#if !ITEMS[itemEvent.id].helper}
+            <tr class="">
+              <td class="border px-4 bg-bg-secondary">
+                <img
+                  src="/items/{ITEMS[itemEvent.id].icon}"
+                  alt="stage"
+                  class="h-8 inline"
+                />
+                <span class="">
+                  {ITEMS[itemEvent.id].displayName}
+                </span>
+              </td>
+              <td class="border px-4 bg-bg-secondary">
+                <span
+                  class={itemEvent.count > 0 ? "text-success" : "text-error"}
+                >
+                  {itemEvent.count > 0 ? "+" : "-"}
+                  {itemEvent.count.toString().replace("-", "")}
+                </span>
+              </td>
+              <td class="border px-4 bg-bg-secondary">
+                <span>{formatSeconds(itemEvent.time)}</span>
+              </td>
+            </tr>
+          {/if}
         {/each}
       </tbody>
     </table>
