@@ -191,7 +191,7 @@ namespace WeatherIndex
 
         internal static async void PostRunReport()
         {
-            if (lastRun == null)
+            if (lastRun == null || uploadedRun == true)
                 return;
 
             uploadedRun = true;
