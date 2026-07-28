@@ -1,5 +1,7 @@
 ﻿#nullable enable
 
+using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
@@ -27,6 +29,7 @@ namespace WeatherIndex
         public const string PluginName = "WeatherIndex";
         public const string PluginVersion = "1.0.0";
 
+        private static readonly ConcurrentQueue<Action> mainThreadQueue = new();
         private static readonly HttpClient http = new();
         private static ConfigEntry<KeyboardShortcut>? endRunKeybind;
         internal static ConfigEntry<string>? accessToken;
@@ -186,38 +189,68 @@ namespace WeatherIndex
             Debug.Init();
             DataDumper.Init();
 
-            RefreshStatus();
+            RefreshStatus(false);
         }
 
-        internal static async void PostRunReport()
+        internal enum SubmitRunResult
         {
-            if (lastRun == null || uploadedRun == true)
-                return;
+            Success,
+            NotLoggedIn,
+            ServerError,
+            NetworkError,
+            AlreadyUploaded,
+        }
+
+        internal static async Task<SubmitRunResult> SubmitRun()
+        {
+            if (uploadedRun == true)
+                return SubmitRunResult.AlreadyUploaded;
 
             uploadedRun = true;
 
-            Log.Info(lastRun);
-            Log.Info(accessToken?.Value);
-
-            string url = $"{backendURL?.Value}/api/runs/new";
-            var content = new StringContent(lastRun, Encoding.UTF8, "application/json");
-            var request = new HttpRequestMessage(HttpMethod.Post, url) { Content = content };
-            if (!string.IsNullOrEmpty(accessToken?.Value))
+            if (string.IsNullOrEmpty(accessToken?.Value))
             {
-                request.Headers.Authorization = new AuthenticationHeaderValue(
-                    "Bearer",
-                    accessToken.Value
-                );
+                uploadedRun = false;
+                return SubmitRunResult.NotLoggedIn;
             }
-            var response = await http.SendAsync(request);
-            Log.Info(await response.Content.ReadAsStringAsync());
+
+            try
+            {
+                string url = $"{backendURL?.Value}/api/runs/new";
+                var content = new StringContent(lastRun, Encoding.UTF8, "application/json");
+                var request = new HttpRequestMessage(HttpMethod.Post, url) { Content = content };
+                if (!string.IsNullOrEmpty(accessToken?.Value))
+                {
+                    request.Headers.Authorization = new AuthenticationHeaderValue(
+                        "Bearer",
+                        accessToken.Value
+                    );
+                }
+                var response = await http.SendAsync(request);
+                Log.Info(await response.Content.ReadAsStringAsync());
+                if (response.IsSuccessStatusCode)
+                    return SubmitRunResult.Success;
+                else
+                {
+                    uploadedRun = false;
+                    return SubmitRunResult.ServerError;
+                }
+            }
+            catch (System.Exception e)
+            {
+                Log.Error(e);
+                uploadedRun = false;
+                return SubmitRunResult.NetworkError;
+            }
         }
 
-        private async void RefreshStatus()
+        internal static void MainThread(Action action)
         {
-            Log.Info("refreshing");
-            Log.Info(accessToken?.Value);
+            mainThreadQueue.Enqueue(action);
+        }
 
+        private async void RefreshStatus(bool popupEnabled = true)
+        {
             connectionStatus?.Value = "LOADING";
             string url = $"{backendURL?.Value}/auth/get-session";
             var request = new HttpRequestMessage(HttpMethod.Get, url);
@@ -232,6 +265,8 @@ namespace WeatherIndex
             switch (response.StatusCode)
             {
                 case HttpStatusCode.Unauthorized:
+                    if (popupEnabled)
+                        WIPopup.ShowMessage("Not connected. Please try again.");
                     connectionStatus?.Value = "NOT CONNECTED";
                     break;
                 case HttpStatusCode.OK:
@@ -240,11 +275,15 @@ namespace WeatherIndex
                         json,
                         new { user = new { username = "" } }
                     );
+                    if (popupEnabled)
+                        WIPopup.ShowMessage($"Connected succesfully as @{data.user.username}!");
                     connectionStatus?.Value = $"CONNECTED AS @{data.user.username}";
                     break;
                 default:
+                    string message = await response.Content.ReadAsStringAsync();
+                    if (popupEnabled)
+                        WIPopup.ShowMessage($"An error occured: {message}");
                     connectionStatus?.Value = "ERROR";
-                    Log.Info(await response.Content.ReadAsStringAsync());
                     break;
             }
         }
@@ -313,7 +352,7 @@ namespace WeatherIndex
                     Log.Info(JsonConvert.SerializeObject(tokenBody));
                     accessToken?.Value = tokenBody.access_token;
                     connecting = false;
-                    RefreshStatus();
+                    RefreshStatus(true);
                     break;
                 }
             });
@@ -334,6 +373,11 @@ namespace WeatherIndex
 
         private void Update()
         {
+            while (mainThreadQueue.TryDequeue(out var action))
+            {
+                action();
+            }
+
             if (Run.instance && endRunKeybind!.Value.IsDown())
             {
                 Run.instance.BeginGameOver(RoR2Content.GameEndings.MainEnding);
