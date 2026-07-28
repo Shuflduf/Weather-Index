@@ -5,20 +5,6 @@
   import { onMount } from "svelte";
   import { PieChart } from "layerchart";
 
-  const DIFFICULTY_COLOURS = [
-    "var(--color-green-400)",
-    "var(--color-orange-400)",
-    "var(--color-red-400)",
-    "var(--color-slate-100)",
-    "var(--color-slate-200)",
-    "var(--color-slate-300)",
-    "var(--color-slate-400)",
-    "var(--color-slate-500)",
-    "var(--color-slate-600)",
-    "var(--color-slate-700)",
-    "var(--color-slate-800)",
-  ];
-
   let { username }: { username?: string } = $props();
 
   let difficultiesPromise: Promise<Record<string, number>> = $state(
@@ -40,6 +26,7 @@
   <PieChart
     data={Object.entries(difficulties).map(([diff, count]) => ({
       diff: DIFFICULTIES[diff].displayName,
+      color: DIFFICULTIES[diff].color,
       count,
     }))}
     key="diff"
@@ -53,6 +40,6 @@
       placement: "right",
       classes: { label: "text-xs", swatch: "h-2", items: "gap-0" },
     }}
-    cRange={DIFFICULTY_COLOURS}
+    c="color"
   />
 {/await}

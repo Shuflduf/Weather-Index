@@ -75,7 +75,8 @@
     "name": "BanditBody",
     "nameToken": "BANDIT_BODY_NAME",
     "displayName": "Bandit",
-    "icon": "BanditBody.png"
+    "icon": "BanditBody.png",
+    "survivorColor": "#3cd4cb"
   },
   {
     "name": "BasePodBody",
@@ -201,13 +202,15 @@
     "name": "CaptainBody",
     "nameToken": "CAPTAIN_BODY_NAME",
     "displayName": "Captain",
-    "icon": "CaptainBody.png"
+    "icon": "CaptainBody.png",
+    "survivorColor": "#2b2e41"
   },
   {
     "name": "ChefBody",
     "nameToken": "CHEF_BODY_NAME",
     "displayName": "CHEF",
-    "icon": "ChefBody.png"
+    "icon": "ChefBody.png",
+    "survivorColor": "#c1c7d9"
   },
   {
     "name": "ChildBody",
@@ -255,7 +258,8 @@
     "name": "CommandoBody",
     "nameToken": "COMMANDO_BODY_NAME",
     "displayName": "Commando",
-    "icon": "CommandoBody.png"
+    "icon": "CommandoBody.png",
+    "survivorColor": "#cb812e"
   },
   {
     "name": "CommandoPerformanceTestBody",
@@ -285,7 +289,8 @@
     "name": "CrocoBody",
     "nameToken": "CROCO_BODY_NAME",
     "displayName": "Acrid",
-    "icon": "CrocoBody.png"
+    "icon": "CrocoBody.png",
+    "survivorColor": "#894352"
   },
   {
     "name": "DTGunnerDroneBody",
@@ -357,7 +362,8 @@
     "name": "DrifterBody",
     "nameToken": "DRIFTER_BODY_NAME",
     "displayName": "Drifter",
-    "icon": "DrifterBody.png"
+    "icon": "DrifterBody.png",
+    "survivorColor": "#ac883c"
   },
   {
     "name": "DrifterShieldTank",
@@ -417,7 +423,8 @@
     "name": "DroneTechBody",
     "nameToken": "DRONETECH_BODY_NAME",
     "displayName": "Operator",
-    "icon": "DroneTechBody.png"
+    "icon": "DroneTechBody.png",
+    "survivorColor": "#0b0d0b"
   },
   {
     "name": "DroneTechShield",
@@ -459,7 +466,8 @@
     "name": "EngiBody",
     "nameToken": "ENGI_BODY_NAME",
     "displayName": "Engineer",
-    "icon": "EngiBody.png"
+    "icon": "EngiBody.png",
+    "survivorColor": "#6b399e"
   },
   {
     "name": "EngiTurretBody",
@@ -513,7 +521,8 @@
     "name": "FalseSonBody",
     "nameToken": "FALSESON_BODY_NAME",
     "displayName": "False Son",
-    "icon": "FalseSonBody.png"
+    "icon": "FalseSonBody.png",
+    "survivorColor": "#b78224"
   },
   {
     "name": "FalseSonBossBody",
@@ -687,7 +696,8 @@
     "name": "HuntressBody",
     "nameToken": "HUNTRESS_BODY_NAME",
     "displayName": "Huntress",
-    "icon": "HuntressBody.png"
+    "icon": "HuntressBody.png",
+    "survivorColor": "#a12a29"
   },
   {
     "name": "ITBrotherBody",
@@ -765,7 +775,8 @@
     "name": "LoaderBody",
     "nameToken": "LOADER_BODY_NAME",
     "displayName": "Loader",
-    "icon": "LoaderBody.png"
+    "icon": "LoaderBody.png",
+    "survivorColor": "#b38931"
   },
   {
     "name": "LunarExploderBody",
@@ -807,7 +818,8 @@
     "name": "MageBody",
     "nameToken": "MAGE_BODY_NAME",
     "displayName": "Artificer",
-    "icon": "MageBody.png"
+    "icon": "MageBody.png",
+    "survivorColor": "#d7dad8"
   },
   {
     "name": "MagmaWormBody",
@@ -843,7 +855,8 @@
     "name": "MercBody",
     "nameToken": "MERC_BODY_NAME",
     "displayName": "Mercenary",
-    "icon": "MercBody.png"
+    "icon": "MercBody.png",
+    "survivorColor": "#464669"
   },
   {
     "name": "MinePodBody",
@@ -981,7 +994,8 @@
     "name": "RailgunnerBody",
     "nameToken": "RAILGUNNER_BODY_NAME",
     "displayName": "Railgunner",
-    "icon": "RailgunnerBody.png"
+    "icon": "RailgunnerBody.png",
+    "survivorColor": "#f94c7f"
   },
   {
     "name": "RechargeDroneBody",
@@ -1107,7 +1121,8 @@
     "name": "SeekerBody",
     "nameToken": "SEEKER_BODY_NAME",
     "displayName": "Seeker",
-    "icon": "SeekerBody.png"
+    "icon": "SeekerBody.png",
+    "survivorColor": "#e3b46e"
   },
   {
     "name": "ShopkeeperBody",
@@ -1281,13 +1296,15 @@
     "name": "ToolbotBody",
     "nameToken": "TOOLBOT_BODY_NAME",
     "displayName": "MUL-T",
-    "icon": "ToolbotBody.png"
+    "icon": "ToolbotBody.png",
+    "survivorColor": "#938929"
   },
   {
     "name": "TreebotBody",
     "nameToken": "TREEBOT_BODY_NAME",
     "displayName": "REX",
-    "icon": "TreebotBody.png"
+    "icon": "TreebotBody.png",
+    "survivorColor": "#9a9f84"
   },
   {
     "name": "Turret1Body",
@@ -1383,7 +1400,8 @@
     "name": "VoidSurvivorBody",
     "nameToken": "VOIDSURVIVOR_BODY_NAME",
     "displayName": "「V??oid Fiend』",
-    "icon": "VoidSurvivorBody.png"
+    "icon": "VoidSurvivorBody.png",
+    "survivorColor": "#facdf5"
   },
   {
     "name": "VultureBody",

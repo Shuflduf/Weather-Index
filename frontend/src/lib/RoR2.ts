@@ -99,6 +99,7 @@ export type Ending = {
 export type Difficulty = {
   nameToken: string;
   displayName: string;
+  color: string;
   icon: string;
 };
 

@@ -131,6 +131,27 @@ namespace WeatherIndex
             var outputDir = Path.Combine(pluginDir, "bodies");
             Directory.CreateDirectory(outputDir);
             var bodies = new List<object>();
+
+            var survivorColors = new Dictionary<string, string>();
+            survivorColors.Add("CommandoBody", "#cb812e");
+            survivorColors.Add("HuntressBody", "#a12a29");
+            survivorColors.Add("BanditBody", "#3cd4cb");
+            survivorColors.Add("ToolbotBody", "#938929");
+            survivorColors.Add("EngiBody", "#6b399e");
+            survivorColors.Add("MageBody", "#d7dad8");
+            survivorColors.Add("MercBody", "#464669");
+            survivorColors.Add("TreebotBody", "#9a9f84");
+            survivorColors.Add("LoaderBody", "#b38931");
+            survivorColors.Add("CrocoBody", "#894352");
+            survivorColors.Add("CaptainBody", "#2b2e41");
+            survivorColors.Add("RailgunnerBody", "#f94c7f");
+            survivorColors.Add("VoidSurvivorBody", "#facdf5");
+            survivorColors.Add("SeekerBody", "#e3b46e");
+            survivorColors.Add("FalseSonBody", "#b78224");
+            survivorColors.Add("ChefBody", "#c1c7d9");
+            survivorColors.Add("DroneTechBody", "#0b0d0b");
+            survivorColors.Add("DrifterBody", "#ac883c");
+
             foreach (var bodyPrefab in RoR2.BodyCatalog.allBodyPrefabs)
             {
                 var body = bodyPrefab.GetComponent<RoR2.CharacterBody>();
@@ -144,19 +165,22 @@ namespace WeatherIndex
                     filename = $"{bodyPrefab.name}.png";
                     writeTexture(Path.Combine(outputDir, filename), tex);
                 }
-                var survivor =
-                    RoR2.SurvivorCatalog.GetSurvivorIndexFromBodyIndex(body.bodyIndex)
-                    != RoR2.SurvivorIndex.None;
-                bodies.Add(
-                    new
-                    {
-                        name = body.name,
-                        nameToken = body.baseNameToken,
-                        survivor = survivor,
-                        displayName = RoR2.Language.GetString(body.baseNameToken),
-                        icon = filename,
-                    }
-                );
+                // var survivor =
+                //     RoR2.SurvivorCatalog.GetSurvivorIndexFromBodyIndex(body.bodyIndex)
+                //     != RoR2.SurvivorIndex.None;
+                var bodyInfo = new Dictionary<string, object?>
+                {
+                    { "name", body.name },
+                    { "nameToken", body.baseNameToken },
+                    // {"survivor", survivor},
+                    { "displayName", RoR2.Language.GetString(body.baseNameToken) },
+                    { "icon", filename },
+                };
+                if (survivorColors.TryGetValue(body.name, out var color))
+                {
+                    bodyInfo["survivorColor"] = color;
+                }
+                bodies.Add(bodyInfo);
             }
             var json = JsonConvert.SerializeObject(bodies);
             File.WriteAllText(Path.Combine(outputDir, "bodies.json"), json);
@@ -205,6 +229,20 @@ namespace WeatherIndex
             var outputDir = Path.Combine(pluginDir, "difficulties");
             Directory.CreateDirectory(outputDir);
             var difficulties = new List<object>();
+            // https://tailwindcss.com/docs/colors
+            var colors = new Dictionary<string, string>();
+            colors.Add("DIFFICULTY_EASY_NAME", "#4ade80");
+            colors.Add("DIFFICULTY_NORMAL_NAME", "#fb923c");
+            colors.Add("DIFFICULTY_HARD_NAME", "#ef4444");
+            colors.Add("ECLIPSE_1_NAME", "#f1f5f9");
+            colors.Add("ECLIPSE_2_NAME", "#e2e8f0");
+            colors.Add("ECLIPSE_3_NAME", "#cbd5e1");
+            colors.Add("ECLIPSE_4_NAME", "#94a3b8");
+            colors.Add("ECLIPSE_5_NAME", "#64748b");
+            colors.Add("ECLIPSE_6_NAME", "#475569");
+            colors.Add("ECLIPSE_7_NAME", "#334155");
+            colors.Add("ECLIPSE_8_NAME", "#1e293b");
+
             foreach (
                 RoR2.DifficultyIndex idx in System.Enum.GetValues(typeof(RoR2.DifficultyIndex))
             )
@@ -233,6 +271,7 @@ namespace WeatherIndex
                     {
                         nameToken = def.nameToken,
                         displayName = RoR2.Language.GetString(def.nameToken),
+                        color = colors[def.nameToken],
                         icon = filename,
                     }
                 );

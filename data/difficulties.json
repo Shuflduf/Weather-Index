@@ -2,56 +2,67 @@
   {
     "nameToken": "DIFFICULTY_EASY_NAME",
     "displayName": "Drizzle",
+    "color": "#4ade80",
     "icon": "DIFFICULTY_EASY_NAME.png"
   },
   {
     "nameToken": "DIFFICULTY_NORMAL_NAME",
     "displayName": "Rainstorm",
+    "color": "#fb923c",
     "icon": "DIFFICULTY_NORMAL_NAME.png"
   },
   {
     "nameToken": "DIFFICULTY_HARD_NAME",
     "displayName": "Monsoon",
+    "color": "#ef4444",
     "icon": "DIFFICULTY_HARD_NAME.png"
   },
   {
     "nameToken": "ECLIPSE_1_NAME",
     "displayName": "Eclipse (1)",
+    "color": "#f1f5f9",
     "icon": "ECLIPSE_1_NAME.png"
   },
   {
     "nameToken": "ECLIPSE_2_NAME",
     "displayName": "Eclipse (2)",
+    "color": "#e2e8f0",
     "icon": "ECLIPSE_2_NAME.png"
   },
   {
     "nameToken": "ECLIPSE_3_NAME",
     "displayName": "Eclipse (3)",
+    "color": "#cbd5e1",
     "icon": "ECLIPSE_3_NAME.png"
   },
   {
     "nameToken": "ECLIPSE_4_NAME",
     "displayName": "Eclipse (4)",
+    "color": "#94a3b8",
     "icon": "ECLIPSE_4_NAME.png"
   },
   {
     "nameToken": "ECLIPSE_5_NAME",
     "displayName": "Eclipse (5)",
+    "color": "#64748b",
     "icon": "ECLIPSE_5_NAME.png"
   },
   {
     "nameToken": "ECLIPSE_6_NAME",
     "displayName": "Eclipse (6)",
+    "color": "#475569",
     "icon": "ECLIPSE_6_NAME.png"
   },
   {
     "nameToken": "ECLIPSE_7_NAME",
     "displayName": "Eclipse (7)",
+    "color": "#334155",
     "icon": "ECLIPSE_7_NAME.png"
   },
   {
     "nameToken": "ECLIPSE_8_NAME",
     "displayName": "Eclipse (8)",
+    "color": "#1e293b",
     "icon": "ECLIPSE_8_NAME.png"
   }
 ]
