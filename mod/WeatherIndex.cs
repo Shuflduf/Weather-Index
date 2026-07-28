@@ -29,7 +29,7 @@ namespace WeatherIndex
 
         private static readonly HttpClient http = new();
         private static ConfigEntry<KeyboardShortcut>? endRunKeybind;
-        private static ConfigEntry<string>? accessToken;
+        public static ConfigEntry<string>? accessToken;
         private static ConfigEntry<string>? backendURL;
         private static ConfigEntry<string>? connectionStatus;
         private static bool connecting = false;
@@ -120,6 +120,13 @@ namespace WeatherIndex
                 Log.Info(json);
                 this.PostRunReport(json);
             };
+
+            On.RoR2.UI.GameEndReportPanelController.Awake += (orig, self) =>
+            {
+                orig(self);
+                self.gameObject.AddComponent<SubmitButton>().Init(self);
+            };
+
             endRunKeybind = Config.Bind<KeyboardShortcut>(
                 "Debug",
                 "End Run",
