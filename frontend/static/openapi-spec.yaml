@@ -1,0 +1,74 @@
+openapi: 3.0.4
+info:
+  title: Weather Index API
+  description: API to interact with the Weather Index platform
+  version: 1.9.0
+
+servers:
+  - url: https://wi-backend.shuflduf.hackclub.app
+    description: Production
+
+paths:
+  /api/stats/sum:
+    get:
+      summary: Summed stats of all runs
+      responses:
+        "200":
+          description: JSON object of certain summed stats
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "timeAliveSeconds":
+                    type: integer
+                  "stagesCompleted":
+                    type: integer
+                  "score":
+                    type: integer
+                  "itemsCollected": 
+                    type: integer
+                  "dronesPurchased": 
+                    type: integer
+                  "turretsPurchased": 
+                    type: integer
+                  "kills": 
+                    type: integer
+                  "eliteKills": 
+                    type: integer
+                  "minionKills": 
+                    type: integer
+                  "deaths": 
+                    type: integer
+                  "damageDealt": 
+                    type: integer
+                  "minionDamageDealt": 
+                    type: integer
+                  "damageTaken": 
+                    type: integer
+                  "highestDamageDealt":
+                    type: integer
+                  "healingRecieved":
+                    type: integer
+                  "highestLevel":
+                    type: integer
+                  "goldCollected":
+                    type: integer
+                  "purchases": 
+                    type: integer
+                  "goldPurchases": 
+                    type: integer
+                  "bloodPurchases": 
+                    type: integer
+                  "lunarPurchases": 
+                    type: integer
+                  "distanceTraveled":
+                    type: integer
+      parameters:
+        - name: username
+          in: query
+          description: Player Username
+          required: false
+          schema:
+            type: string
+

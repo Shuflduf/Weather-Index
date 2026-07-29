@@ -7,9 +7,13 @@
   import StatsStages from "$lib/StatsStages.svelte";
   import StatsArtifacts from "$lib/StatsArtifacts.svelte";
   import StatsCombined from "$lib/StatsCombined.svelte";
+  import { formatSeconds } from "$lib/RoR2";
 
-  let overallInfoPromise: Promise<{ runCount: number; winCount: number }> =
-    $state(new Promise(() => {}));
+  let overallInfoPromise: Promise<{
+    runCount: number;
+    winCount: number;
+    playtimeSeconds: number;
+  }> = $state(new Promise(() => {}));
 
   onMount(() => {
     overallInfoPromise = fetch(api("stats/overall")).then((r) => r.json());
@@ -30,7 +34,11 @@
     <b>
       {info.winCount}
     </b>
-    of which are wins, for a total of TODO hours.
+    of which are wins, for a total of
+    <b>
+      {formatSeconds(info.playtimeSeconds)}
+    </b>
+    of playtime.
   </p>
 {/await}
 

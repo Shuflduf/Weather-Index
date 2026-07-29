@@ -4,7 +4,7 @@
   import { auth } from "$lib";
 
   let userCode = $state("");
-  let status = $state("pending");
+  let status: "PENDING" | "APPROVED" | "ERROR" | "DENIED" = $state("PENDING");
 
   onMount(() => {
     const params = page.url.searchParams;
@@ -14,7 +14,7 @@
   });
 
   async function approve() {
-    status = "pending";
+    status = "PENDING";
     const resp = await fetch(auth("device/approve"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -22,38 +22,44 @@
       credentials: "include",
     });
     if (resp.ok) {
-      status = "approved";
+      status = "APPROVED";
     } else {
-      status = "error";
+      status = "ERROR";
       console.error(await resp.text());
     }
   }
   async function deny() {
-    status = "denied";
+    status = "DENIED";
     const resp = await fetch(auth("device/deny"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userCode }),
     });
     if (resp.ok) {
-      status = "denied";
+      status = "DENIED";
     } else {
-      status = "error";
+      status = "ERROR";
       console.error(await resp.text());
     }
   }
 </script>
 
-{status}
-<button
-  class="bg-default active:bg-active transition p-2 cursor-pointer hover:bg-hover border"
-  onclick={approve}
->
-  AGREE
-</button>
-<button
-  class="bg-default active:bg-active transition p-2 cursor-pointer hover:bg-hover border"
-  onclick={deny}
->
-  Cancel
-</button>
+<div class="flex justify-center items-center flex-col">
+  <span class="text-bold text-3xl tracking-tighter">
+    {status}
+  </span>
+  <div class="mt-4">
+    <button
+      class="bg-default active:bg-active transition p-2 cursor-pointer hover:bg-hover border"
+      onclick={approve}
+    >
+      Connect
+    </button>
+    <button
+      class="bg-default active:bg-active transition p-2 cursor-pointer hover:bg-hover border"
+      onclick={deny}
+    >
+      Cancel
+    </button>
+  </div>
+</div>

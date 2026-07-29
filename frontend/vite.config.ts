@@ -21,7 +21,10 @@ export default defineConfig(({ mode }) => {
         adapter: adapter(),
       }),
     ],
+    ssr: { noExternal: ["@scalar/api-reference"] },
+    optimizeDeps: { include: ["@scalar/api-reference"] },
     server: {
+
       proxy: {
         "/auth": { target: env.VITE_BACKEND_URL },
         "/api": { target: env.VITE_BACKEND_URL },
