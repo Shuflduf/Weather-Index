@@ -9,14 +9,12 @@ jobs:
     runs-on: codeberg-medium
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: https://github.com/denoland/setup-deno@v2
         with:
-          node-version: 22
-          cache: npm
-          cache-dependency-path: frontend/package-lock.json
-      - run: npm ci
+          deno-version: v2.x
+      - run: deno install
         working-directory: frontend
-      - run: npm run build
+      - run: deno run build
         working-directory: frontend
       - run: npx vercel deploy --prod --prebuilt
         working-directory: frontend
