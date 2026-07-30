@@ -2,7 +2,7 @@ openapi: 3.0.4
 info:
   title: Weather Index API
   description: API to interact with the Weather Index platform
-  version: 1.9.0
+  version: 1.0.0
 
 servers:
   - url: https://wi-backend.shuflduf.hackclub.app/api
@@ -218,6 +218,11 @@ components:
           type: integer
         "distanceTraveled":
           type: integer
+    ErrorResponse:
+      type: object
+      properties:
+        "error":
+          type: string
 
 paths:
   /runs:
@@ -237,6 +242,18 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/RunReport"
+        "400":
+          description: Invalid query parameters
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
       parameters:
         - name: by
           in: query
@@ -308,11 +325,15 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  "error":
-                    type: string
-                    example: Run 1 not found
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                error: "Run 1 not found"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 
       parameters:
         - name: id
@@ -372,12 +393,16 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  "error":
-                    type: string
-                    example: Player `username` not found
-                
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                error: "Player `username` not found"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
       parameters:
         - name: username
           in: path
@@ -403,18 +428,21 @@ paths:
                     type: integer
                   "playtimeSeconds":
                     type: integer
-                  
         "404":
           description: Specified player does not exist
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  "error":
-                    type: string
-                    example: Player `username` not found
-                 
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                error: "Player `username` not found"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
       parameters:
         - name: username
           in: query
@@ -439,12 +467,16 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  "error":
-                    type: string
-                    example: Player `username` not found
-                  
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                error: "Player `username` not found"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
       parameters:
         - name: username
           in: query
@@ -468,12 +500,16 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  "error":
-                    type: string
-                    example: Player `username` not found
-                  
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                error: "Player `username` not found"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
       parameters:
         - name: username
           in: query
@@ -502,12 +538,16 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  "error":
-                    type: string
-                    example: Player `username` not found
-                 
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                error: "Player `username` not found"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
       parameters:
         - name: username
           in: query
@@ -539,12 +579,16 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  "error":
-                    type: string
-                    example: Player `username` not found
-                 
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                error: "Player `username` not found"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
       parameters:
         - name: username
           in: query
@@ -572,12 +616,16 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  "error":
-                    type: string
-                    example: Player `username` not found
-                 
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                error: "Player `username` not found"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
       parameters:
         - name: username
           in: query
@@ -613,12 +661,16 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  "error":
-                    type: string
-                    example: Player `username` not found
-                 
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                error: "Player `username` not found"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
       parameters:
         - name: username
           in: query
