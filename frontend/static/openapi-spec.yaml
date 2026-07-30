@@ -679,4 +679,184 @@ paths:
           schema:
             type: string
 
+  /data/items:
+    get:
+      summary: RoR2 Items
+      responses:
+        "200":
+          description: JSON array of all Risk of Rain 2 items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    "id":
+                      type: integer
+                      example: 206
+                    "name":
+                      type: string
+                      example: "Syringe"
+                    "nameToken":
+                      type: string
+                      example: "ITEM_SYRINGE_NAME"
+                    "displayName":
+                      type: string
+                      example: "Soldier's Syringe"
+                    "tier":
+                      type: string
+                      enum:
+                        - "BossTierDef"
+                        - "LunarTierDef"
+                        - "Tier1Def"
+                        - "Tier2Def"
+                        - "Tier3Def"
+                        - "VoidBossDef"
+                        - "VoidTier1Def"
+                        - "VoidTier2Def"
+                        - "VoidTier3Def"
+                        - "FoodTier"
+                      nullable: true
+                      example: "Tier1Def"
+                    "helper":
+                      type: boolean
+                      example: false
+                    "icon":
+                      type: string
+                      example: "Syringe.png"
+              
+  /data/tiers:
+    get:
+      summary: RoR2 Item Tiers
+      responses:
+        "200":
+          description: JSON array of all Risk of Rain 2 item tiers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    "name":
+                      type: string
+                      example: "BossTierDef"
+                    "sort":
+                      type: integer
+                      example: 9
+                      description: Used for sorting items in descending order
 
+  /data/bodies:
+    get:
+      summary: RoR2 Characters
+      responses:
+        "200":
+          description: JSON array of all Risk of Rain 2 characters
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    "name":
+                      type: string
+                      example: "CrocoBody"
+                    "nameToken":
+                      type: string
+                      example: "CROCO_BODY_NAME"
+                    "displayName":
+                      type: string
+                      example: "Acrid"
+                    "icon":
+                      type: string
+                      example: "CrocoBody.png"
+                    "survivorColor":
+                      type: string
+                      example: "#894352"
+                      nullable: true
+                      description: Only available on survivors. Hardcoded from the top color of each survivors' default skin diamond thing.
+              
+  /data/endings:
+    get:
+      summary: RoR2 Endings
+      responses:
+        "200":
+          description: JSON array of all Risk of Rain 2 endings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    "name":
+                      type: string
+                      example: "MainEnding"
+                    "nameToken":
+                      type: string
+                      example: "GAME_RESULT_WON"
+                    "endingMessage":
+                      type: string
+                      example: "Victory!"
+                    "displayName":
+                      type: string
+                      example: "Victory"
+                    "isWin":
+                      type: string
+                      example: true
+                    "icon":
+                      type: string
+                      example: "MainEnding.png"
+                    "colorFg":
+                      type: string
+                      example: "#B0DD80"
+                    "colorBg":
+                      type: string
+                      example: "#8AC368"
+
+  /data/scoring:
+    get:
+      summary: RoR2 Scoring Table
+      responses:
+        "200":
+          description: JSON object of the Risk of Rain 2 scoring table
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "timeAliveSeconds":
+                    type: number
+                    example: 1
+                  "kills":
+                    type: number
+                    example: 10
+                  "minionKills":
+                    type: number
+                    example: 10
+                  "damageDealt":
+                    type: number
+                    example: 0.01
+                  "minionDamageDealt":
+                    type: number
+                    example: 0.01
+                  "highestDamageDealt":
+                    type: number
+                    example: 1
+                  "highestLevel":
+                    type: number
+                    example: 100
+                  "goldCollected":
+                    type: number
+                    example: 1
+                  "itemsCollected":
+                    type: number
+                    example: 110
+                  "stagesCompleted":
+                    type: number
+                    example: 100
+                  "purchases":
+                    type: number
+                    example: 35
