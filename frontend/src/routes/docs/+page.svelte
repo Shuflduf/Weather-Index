@@ -3,19 +3,24 @@
   import "@scalar/api-reference/style.css";
   import { onMount } from "svelte";
 
-  let openApiPromise: Promise<null> = $state(new Promise(() => {}));
   let app: HTMLElement | null = $state(null);
 
   onMount(() => {
-    openApiPromise = fetch("/openapi-spec.yaml")
+    fetch("/openapi-spec.yaml")
       .then((r) => r.text())
       .then((spec) => {
         createApiReference(app!, {
           content: spec,
           defaultOpenAllTags: true,
+          agent: { disabled: true },
+          mcp: { disabled: true },
+          hideClientButton: true,
         });
-        return null;
       });
+
+    return () => {
+      document.body.classList.remove("dark-mode", "light-mode");
+    };
   });
 </script>
 
