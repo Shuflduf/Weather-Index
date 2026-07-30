@@ -2,6 +2,8 @@ export let token: string | null = null;
 
 export function setToken(t: string | null) {
   token = t
+  if (t) localStorage.setItem("session-token", t);
+  else localStorage.removeItem("session-token");
 }
 
 export function authedFetch(input: RequestInfo, init?: RequestInit): Promise<Response> {
@@ -11,3 +13,5 @@ export function authedFetch(input: RequestInfo, init?: RequestInit): Promise<Res
   }
   return fetch(input, { ...init, headers, credentials: "include" })
 }
+
+token = localStorage.getItem("session-token");
