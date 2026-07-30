@@ -5,11 +5,223 @@ info:
   version: 1.9.0
 
 servers:
-  - url: https://wi-backend.shuflduf.hackclub.app
+  - url: https://wi-backend.shuflduf.hackclub.app/api
     description: Production
 
+components:
+  schemas:
+    RunReport:
+      type: object
+      properties:
+        "id":
+          type: integer
+        "artifacts":
+          type: array
+          items:
+            type: string
+          example:
+            - "Command"
+        "bloodPurchases":
+          type: integer
+        "damageDealt":
+          type: integer
+        "damageTaken":
+          type: integer
+        "deaths":
+          type: integer
+        "difficulty":
+          type: string
+          enum:
+            - "DIFFICULTY_EASY_NAME"
+            - "DIFFICULTY_NORMAL_NAME"
+            - "DIFFICULTY_HARD_NAME"
+            - "ECLIPSE_1_NAME"
+            - "ECLIPSE_2_NAME"
+            - "ECLIPSE_3_NAME"
+            - "ECLIPSE_4_NAME"
+            - "ECLIPSE_5_NAME"
+            - "ECLIPSE_6_NAME"
+            - "ECLIPSE_7_NAME"
+            - "ECLIPSE_8_NAME"
+        "distanceTraveled":
+          type: integer
+        "dronesPurchased":
+          type: integer
+        "eliteKills":
+          type: integer
+        "ending":
+          type: string
+          enum:
+            - "StandardLoss"
+            - "EscapeSequenceFailed"
+            - "PrismaticTrialEnding"
+            - "VoidEnding"
+            - "DecompileEnding"
+            - "RebirthEndingDef"
+            - "ObliterationEnding"
+            - "LimboEnding"
+            - "MainEnding"
+        "goldCollected":
+          type: integer
+        "goldPurchases":
+          type: integer
+        "healingRecieved":
+          type: integer
+        "highestDamageDealt":
+          type: integer
+        "highestLevel":
+          type: integer
+        "itemHistory":
+          type: array
+          items:
+            type: object
+            properties:
+              "count":
+                type: integer
+              "id":
+                type: integer
+                description: Internal RoR2 item id
+              "time":
+                type: integer
+                description: Time in seconds since the run started
+        "items":
+          type: object
+          additionalProperties:
+            type: integer
+          example:
+            "52": 1
+            "7": 2
+            "96": 1
+          description: Map of RoR2 item IDs to their count
+        "itemsCollected":
+          type: integer
+        "kills":
+          type: integer
+        "lunarPurchases":
+          type: integer
+        "minionDamageDealt":
+          type: integer
+        "minionKills":
+          type: integer
+        "purchases":
+          type: integer
+        "score":
+          type: integer
+        "stageHistory":
+          type: array
+          items:
+            type: string
+          example:
+            - "golemplains2"
+            - "goolake"
+        "stagesCompleted":
+          type: integer
+        "startTime":
+          type: string
+          format: date-time
+          description: RFC 3339 style datetime with microsecond precision, e.g. 2026-07-28T10:05:23.155584
+        "survivor":
+          type: string
+          example: "CommandoBody"
+        "timeAliveSeconds":
+          type: integer
+        "turretsPurchased":
+          type: integer
+        "uploadTime":
+          type: string
+          format: date-time
+          description: RFC 3339 style datetime with microsecond precision, e.g. 2026-07-28T10:05:23.155584
+        "userId":
+          type: string
+          format: uuid
+        "userImage":
+          type: string
+          format: uri
+        "userUsername":
+          type: string
+        "userDisplayUsername":
+          type: string
+          description: May not always be available
+
+
+
+        
+
 paths:
-  /api/stats/sum:
+  /runs:
+    get:
+      summary: Run reports
+      responses:
+        "200":
+          description: JSON array of paginated runs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "total":
+                    type: integer
+                  "runs":
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/RunReport"
+      parameters:
+        - name: by
+          in: query
+          schema:
+            type: string
+            default: "id"
+          description: Which field to sort by.
+
+        - name: sort
+          in: query
+          schema:
+            type: string
+            enum:
+              - "ASC"
+              - "DESC"
+            default: "DESC"
+          description: "Ascending or Descending sort"
+
+        - name: fallback_sort
+          in: query
+          schema:
+            type: string
+            enum:
+              - "ASC"
+              - "DESC"
+            default: "DESC"
+          description: Fallback sort direction when multiple runs have the same values. Sorts by id
+
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 0
+
+        - name: filters
+          in: query
+          schema:
+            type: string
+            default: "{}"
+          description: >
+            JSON object string.
+            The keys are the property names and the values are arrays of string filters, depending on the field being filtered. <br>
+            Ex. {"survivor": ["BanditBody","ToolbotBody"]} <br>
+            Ex. {"score": ["<1000"]}
+
+        - name: only
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+            default: "[]"
+          description: >
+            Which fields will be returned by the API. It's highly recommended to use this to avoid fetching unnecessary data. <br>
+            Always returns player info (id, username, display name)
+
+  /stats/sum:
     get:
       summary: Summed stats of all runs
       responses:
