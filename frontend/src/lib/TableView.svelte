@@ -1,7 +1,7 @@
 <script lang="ts">
   import { api, type Property, type SortMode } from "$lib";
   import { onMount } from "svelte";
-  import Table from "../routes/Table.svelte";
+  import Table from "$lib/Table.svelte";
   import { defaultProperties } from "./properties";
   import {
     BODIES,

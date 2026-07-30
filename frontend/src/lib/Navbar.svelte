@@ -49,6 +49,7 @@
     </a>
     <div class="border py-4"></div>
     <a class="text-xl tracking-tight text-secondary" href="/stats">Stats</a>
+    <a class="text-xl tracking-tight text-secondary" href="/docs">Docs</a>
   </div>
   {#if user}
     <button

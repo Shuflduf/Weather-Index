@@ -7,7 +7,7 @@
     type RunReportWithUser,
   } from "$lib/RoR2";
   import { ExternalLink } from "@lucide/svelte";
-  import TableBlock from "./TableBlock.svelte";
+  import TableBlock from "$lib/TableBlock.svelte";
   import UserDisplay from "$lib/UserDisplay.svelte";
   import ArtifactsDisplay from "$lib/ArtifactsDisplay.svelte";
   import { tick } from "svelte";

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import "./layout.css";
+  import "../layout.css";
   import "geist-svelte/font/sans";
   import "geist-svelte/font/mono";
   import favicon from "$lib/assets/favicon.svg";
@@ -9,6 +9,7 @@
 </script>
 
 <svelte:head><link rel="icon" href={favicon} /></svelte:head>
-<Navbar />
 
-{@render children()}
+<div class="p-8 text-primary">
+  {@render children()}
+</div>

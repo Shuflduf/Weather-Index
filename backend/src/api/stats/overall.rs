@@ -4,14 +4,13 @@ use axum::{
     extract::{Query, State},
     Json,
 };
-use reqwest::StatusCode;
 use sea_orm::{ColumnTrait, EntityTrait, ExprTrait, PaginatorTrait, QueryFilter, QuerySelect};
 use serde::Serialize;
 
 use crate::{
     api::{player::find_player, stats::UsernameQuery},
-    entity::{run_report, user},
-    error::{db_error, make_error, WIError},
+    entity::run_report,
+    error::{db_error, WIError},
     ror2::endings,
     WIState,
 };

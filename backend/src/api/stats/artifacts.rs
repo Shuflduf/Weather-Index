@@ -5,7 +5,6 @@ use axum::{
     Json,
 };
 use sea_orm::{ColumnTrait, EntityTrait, QueryFilter};
-use serde::Deserialize;
 
 use crate::{
     api::{player::find_player, stats::UsernameQuery},

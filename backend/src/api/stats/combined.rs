@@ -9,7 +9,7 @@ use sea_orm::{
     ColumnTrait, DatabaseConnection, EntityTrait, ExprTrait, FromQueryResult, QueryFilter,
     QuerySelect,
 };
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
 
 use crate::{
     api::{player::find_player, stats::UsernameQuery},
