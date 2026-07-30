@@ -142,15 +142,63 @@ components:
         "userDisplayUsername":
           type: string
           description: May not always be available
+    StatsRunReport:
+      type: object
+      properties:
+        "timeAliveSeconds":
+          type: integer
+        "stagesCompleted":
+          type: integer
+        "score":
+          type: integer
+        "itemsCollected": 
+          type: integer
+        "dronesPurchased": 
+          type: integer
+        "turretsPurchased": 
+          type: integer
+        "kills": 
+          type: integer
+        "eliteKills": 
+          type: integer
+        "minionKills": 
+          type: integer
+        "deaths": 
+          type: integer
+        "damageDealt": 
+          type: integer
+        "minionDamageDealt": 
+          type: integer
+        "damageTaken": 
+          type: integer
+        "highestDamageDealt":
+          type: integer
+        "healingRecieved":
+          type: integer
+        "highestLevel":
+          type: integer
+        "goldCollected":
+          type: integer
+        "purchases": 
+          type: integer
+        "goldPurchases": 
+          type: integer
+        "bloodPurchases": 
+          type: integer
+        "lunarPurchases": 
+          type: integer
+        "distanceTraveled":
+          type: integer
 
 
 
-        
+
+      
 
 paths:
   /runs:
     get:
-      summary: Run reports
+      summary: List of run reports
       responses:
         "200":
           description: JSON array of paginated runs
@@ -221,6 +269,36 @@ paths:
             Which fields will be returned by the API. It's highly recommended to use this to avoid fetching unnecessary data. <br>
             Always returns player info (id, username, display name)
 
+  /runs/{id}:
+    get:
+      summary: Run report by ID
+      responses:
+        "200":
+          description: JSON object of a run report
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RunReport"
+        "404":
+          description: Specific run does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "error":
+                    type: string
+                    example: Run 1 not found
+
+      parameters:
+        - name: id
+          in: path
+          description: Run ID
+          required: true
+          schema:
+            type: integer
+        
+
   /stats/sum:
     get:
       summary: Summed stats of all runs
@@ -230,52 +308,8 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  "timeAliveSeconds":
-                    type: integer
-                  "stagesCompleted":
-                    type: integer
-                  "score":
-                    type: integer
-                  "itemsCollected": 
-                    type: integer
-                  "dronesPurchased": 
-                    type: integer
-                  "turretsPurchased": 
-                    type: integer
-                  "kills": 
-                    type: integer
-                  "eliteKills": 
-                    type: integer
-                  "minionKills": 
-                    type: integer
-                  "deaths": 
-                    type: integer
-                  "damageDealt": 
-                    type: integer
-                  "minionDamageDealt": 
-                    type: integer
-                  "damageTaken": 
-                    type: integer
-                  "highestDamageDealt":
-                    type: integer
-                  "healingRecieved":
-                    type: integer
-                  "highestLevel":
-                    type: integer
-                  "goldCollected":
-                    type: integer
-                  "purchases": 
-                    type: integer
-                  "goldPurchases": 
-                    type: integer
-                  "bloodPurchases": 
-                    type: integer
-                  "lunarPurchases": 
-                    type: integer
-                  "distanceTraveled":
-                    type: integer
+                $ref: "#/components/schemas/StatsRunReport"
+                  
       parameters:
         - name: username
           in: query

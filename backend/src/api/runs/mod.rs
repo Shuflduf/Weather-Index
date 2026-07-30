@@ -5,9 +5,7 @@ use axum::{
     Json,
 };
 use reqwest::StatusCode;
-use sea_orm::{
-    ColumnTrait, EntityTrait, QueryFilter,
-};
+use sea_orm::{ColumnTrait, EntityTrait, QueryFilter};
 use serde::Serialize;
 
 use crate::{
