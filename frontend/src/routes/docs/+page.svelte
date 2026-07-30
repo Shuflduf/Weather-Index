@@ -12,6 +12,7 @@
       .then((spec) => {
         createApiReference(app!, {
           content: spec,
+          defaultOpenAllTags: true,
         });
         return null;
       });
