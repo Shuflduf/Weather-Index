@@ -1,14 +1,15 @@
 <script lang="ts">
   import { auth } from "$lib";
+  import { authedFetch, setToken } from "$lib/auth";
   import { onMount } from "svelte";
 
   let status: string = $state("Signing out...");
 
   onMount(async () => {
-    const resp = await fetch(auth("sign-out"), {
+    const resp = await authedFetch(auth("sign-out"), {
       method: "POST",
-      credentials: "include",
     });
+    setToken(null);
     if (resp.ok) {
       status = "Signed out! Redirecting to /";
     } else {

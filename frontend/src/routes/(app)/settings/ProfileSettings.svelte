@@ -3,13 +3,14 @@
   import { onMount } from "svelte";
   import PFP from "$lib/PFP.svelte";
   import { api, auth } from "$lib";
+  import { authedFetch } from "$lib/auth";
 
   let user: any = $state();
   let countries: { flag: string; name: string; alpha2Code: string }[] = $state(
     [],
   );
   onMount(async () => {
-    let resp = await fetch(auth("get-session"), { credentials: "include" });
+    let resp = await authedFetch(auth("get-session"));
     let body = await resp.json();
     if (body.user) {
       user = body.user;

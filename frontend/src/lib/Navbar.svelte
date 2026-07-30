@@ -4,11 +4,19 @@
   import PFP from "./PFP.svelte";
   import { User } from "@lucide/svelte";
   import { auth } from "$lib";
+  import { authedFetch, setToken } from "./auth";
 
   let user: any = $state(null);
 
   onMount(async () => {
-    let resp = await fetch(auth("get-session"), { credentials: "include" });
+    const params = new URLSearchParams(window.location.search);
+    const t = params.get("token");
+    if (t) {
+      setToken(t);
+      window.history.replaceState({}, "", window.location.pathname);
+    }
+
+    let resp = await authedFetch(auth("get-session"));
     let body = await resp.json();
     if (body.user) {
       user = body.user;

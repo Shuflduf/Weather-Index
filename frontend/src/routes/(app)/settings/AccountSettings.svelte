@@ -1,5 +1,6 @@
 <script lang="ts">
   import { auth } from "$lib";
+  import { authedFetch } from "$lib/auth";
   import {
     SiDiscord,
     SiGithub,
@@ -22,7 +23,7 @@
   });
 
   async function fetchAccounts() {
-    fetch(auth("list-accounts"), { credentials: "include" })
+    authedFetch(auth("list-accounts"))
       .then((r) => r.json())
       .then((j: any[]) => {
         accounts = j;
@@ -31,7 +32,7 @@
   }
 
   async function connectOauth(provider: string) {
-    let resp = await fetch(auth("link-social"), {
+    let resp = await authedFetch(auth("link-social"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ provider: provider }),
@@ -43,11 +44,10 @@
   async function changePassword() {
     changePasswordErrors = {};
     changePasswordMessage = "";
-    let resp = await fetch(auth("change-password"), {
+    let resp = await authedFetch(auth("change-password"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ newPassword, currentPassword }),
-      credentials: "include",
     });
     let body = await resp.json();
     if ("errors" in body) {

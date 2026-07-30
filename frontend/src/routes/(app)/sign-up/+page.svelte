@@ -30,8 +30,8 @@
     if ("message" in body) {
       errorMessage = body.message;
     }
-    if ("user" in body) {
-      window.location.href = "/";
+    if ("user" in body && "token" in body) {
+      window.location.href = body.token ? `/?token=${body.token}` : "/";
     }
   }
 </script>

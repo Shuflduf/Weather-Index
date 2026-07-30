@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
   import { page } from "$app/state";
   import { auth } from "$lib";
+  import { authedFetch } from "$lib/auth";
 
   let userCode = $state("");
   let status: "PENDING" | "APPROVED" | "ERROR" | "DENIED" = $state("PENDING");
@@ -15,11 +16,10 @@
 
   async function approve() {
     status = "PENDING";
-    const resp = await fetch(auth("device/approve"), {
+    const resp = await authedFetch(auth("device/approve"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userCode }),
-      credentials: "include",
     });
     if (resp.ok) {
       status = "APPROVED";
@@ -30,7 +30,7 @@
   }
   async function deny() {
     status = "DENIED";
-    const resp = await fetch(auth("device/deny"), {
+    const resp = await authedFetch(auth("device/deny"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userCode }),

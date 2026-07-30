@@ -147,11 +147,23 @@ async fn oauth_redirect_middleware(
 
     if path.starts_with("/callback") {
         let frontend_url = get_var("FRONTEND_URL").unwrap();
-        let (mut parts, _) = response.into_parts();
+        let (mut parts, body) = response.into_parts();
+        let token = axum::body::to_bytes(body, 1024 * 64)
+            .await
+            .ok()
+            .and_then(|bytes| serde_json::from_slice::<serde_json::Value>(&bytes).ok())
+            .and_then(|v| v["token"].as_str().map(String::from));
+
+        let redirect_url = if let Some(t) = &token {
+            format!("{}?token={}", frontend_url, t)
+        } else {
+            frontend_url
+        };
+
         parts.status = StatusCode::FOUND;
         parts
             .headers
-            .insert(header::LOCATION, frontend_url.parse().unwrap());
+            .insert(header::LOCATION, redirect_url.parse().unwrap());
         parts.headers.remove(header::CONTENT_TYPE);
 
         Ok(Response::from_parts(parts, ().into()))
