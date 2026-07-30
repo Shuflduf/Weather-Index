@@ -5,23 +5,17 @@ use axum::{
     Json,
 };
 use sea_orm::{ColumnTrait, EntityTrait, QueryFilter};
-use serde::Deserialize;
 
 use crate::{
-    api::player::find_player,
+    api::{player::find_player, stats::UsernameQuery},
     entity::run_report,
     error::{db_error, WIError},
     WIState,
 };
 
-#[derive(Deserialize, Default)]
-pub struct StagesParams {
-    username: Option<String>,
-}
-
 pub async fn get(
     State(state): State<Arc<WIState>>,
-    params: Query<StagesParams>,
+    params: Query<UsernameQuery>,
 ) -> Result<Json<serde_json::Value>, WIError> {
     let mut query = run_report::Entity::find();
 

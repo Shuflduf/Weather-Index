@@ -12,7 +12,7 @@ use sea_orm::{
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    api::player::find_player,
+    api::{player::find_player, stats::UsernameQuery},
     entity::run_report,
     error::{db_error, make_error, WIError},
     WIState,
@@ -71,11 +71,6 @@ pub struct GlobalStatsDTO {
     pub blood_purchases: i64,
     pub lunar_purchases: i64,
     pub distance_traveled: i64,
-}
-
-#[derive(Deserialize, Default)]
-pub struct StatsParams {
-    username: Option<String>,
 }
 
 impl From<GlobalStats> for GlobalStatsDTO {
@@ -173,7 +168,7 @@ pub async fn aggregate_stats(
 
 pub async fn sum(
     State(state): State<Arc<WIState>>,
-    params: Query<StatsParams>,
+    params: Query<UsernameQuery>,
 ) -> Result<Json<GlobalStatsDTO>, WIError> {
     let player_id = match &params.username {
         Some(username) => Some(find_player(&state.db, username).await?.id),
@@ -188,7 +183,7 @@ pub async fn sum(
 
 pub async fn avg(
     State(state): State<Arc<WIState>>,
-    params: Query<StatsParams>,
+    params: Query<UsernameQuery>,
 ) -> Result<Json<GlobalStatsDTO>, WIError> {
     let player_id = match &params.username {
         Some(username) => Some(find_player(&state.db, username).await?.id),
