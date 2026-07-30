@@ -698,6 +698,8 @@ paths:
   /data/items:
     get:
       summary: RoR2 Items
+      description: >
+        Items icon URL: http://localhost:5173/items/{item.icon}
       tags: [Data]
       responses:
         "200":
@@ -768,6 +770,8 @@ paths:
   /data/bodies:
     get:
       summary: RoR2 Characters
+      description: >
+        Characters icon URL: http://localhost:5173/bodies/{body.icon}
       tags: [Data]
       responses:
         "200":
@@ -800,6 +804,8 @@ paths:
   /data/endings:
     get:
       summary: RoR2 Endings
+      description: >
+        Endings icon URL: http://localhost:5173/endings/{ending.icon}
       tags: [Data]
       responses:
         "200":
@@ -885,6 +891,8 @@ paths:
   /data/artifacts:
     get:
       summary: RoR2 Artifacts
+      description: >
+        Artifacts icon URL: http://localhost:5173/artifacts/{artifact.icon}
       tags: [Data]
       responses:
         "200":
@@ -912,6 +920,8 @@ paths:
   /data/difficulties:
     get:
       summary: RoR2 Difficulties
+      description: >
+        Difficulties icon URL: http://localhost:5173/difficulties/{difficulty.icon}
       tags: [Data]
       responses:
         "200":
@@ -940,6 +950,8 @@ paths:
   /data/environments:
     get:
       summary: RoR2 Environments
+      description: >
+        Environments icon URL: http://localhost:5173/environments/{environment.icon}
       tags: [Data]
       responses:
         "200":
