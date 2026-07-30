@@ -10,6 +10,54 @@ servers:
 
 components:
   schemas:
+    Survivor:
+      type: string
+      enum:
+        - "CommandoBody"
+        - "HuntressBody"
+        - "BanditBody"
+        - "ToolbotBody"
+        - "EngiBody"
+        - "MageBody"
+        - "MercBody"
+        - "TreebotBody"
+        - "LoaderBody"
+        - "CrocoBody"
+        - "CaptainBody"
+        - "RailgunnerBody"
+        - "VoidSurvivorBody"
+        - "SeekerBody"
+        - "FalseSonBody"
+        - "ChefBody"
+        - "DroneTechBody"
+        - "DrifterBody"
+    Difficulty:
+      type: string
+      enum:
+        - "DIFFICULTY_EASY_NAME"
+        - "DIFFICULTY_NORMAL_NAME"
+        - "DIFFICULTY_HARD_NAME"
+        - "ECLIPSE_1_NAME"
+        - "ECLIPSE_2_NAME"
+        - "ECLIPSE_3_NAME"
+        - "ECLIPSE_4_NAME"
+        - "ECLIPSE_5_NAME"
+        - "ECLIPSE_6_NAME"
+        - "ECLIPSE_7_NAME"
+        - "ECLIPSE_8_NAME"
+    Ending:
+      type: string
+      enum:
+        - "StandardLoss"
+        - "EscapeSequenceFailed"
+        - "PrismaticTrialEnding"
+        - "VoidEnding"
+        - "DecompileEnding"
+        - "RebirthEndingDef"
+        - "ObliterationEnding"
+        - "LimboEnding"
+        - "MainEnding"
+
     RunReport:
       type: object
       properties:
@@ -31,18 +79,7 @@ components:
           type: integer
         "difficulty":
           type: string
-          enum:
-            - "DIFFICULTY_EASY_NAME"
-            - "DIFFICULTY_NORMAL_NAME"
-            - "DIFFICULTY_HARD_NAME"
-            - "ECLIPSE_1_NAME"
-            - "ECLIPSE_2_NAME"
-            - "ECLIPSE_3_NAME"
-            - "ECLIPSE_4_NAME"
-            - "ECLIPSE_5_NAME"
-            - "ECLIPSE_6_NAME"
-            - "ECLIPSE_7_NAME"
-            - "ECLIPSE_8_NAME"
+          $ref: "#/components/schemas/Difficulty"
         "distanceTraveled":
           type: integer
         "dronesPurchased":
@@ -51,16 +88,7 @@ components:
           type: integer
         "ending":
           type: string
-          enum:
-            - "StandardLoss"
-            - "EscapeSequenceFailed"
-            - "PrismaticTrialEnding"
-            - "VoidEnding"
-            - "DecompileEnding"
-            - "RebirthEndingDef"
-            - "ObliterationEnding"
-            - "LimboEnding"
-            - "MainEnding"
+          $ref: "#/components/schemas/Ending"
         "goldCollected":
           type: integer
         "goldPurchases":
@@ -122,6 +150,7 @@ components:
           description: RFC 3339 style datetime with microsecond precision, e.g. 2026-07-28T10:05:23.155584
         "survivor":
           type: string
+          $ref: "#/components/schemas/Survivor"
           example: "CommandoBody"
         "timeAliveSeconds":
           type: integer
@@ -137,11 +166,13 @@ components:
         "userImage":
           type: string
           format: uri
+          nullable: true
+          example: "https://example.com/image.png"
         "userUsername":
           type: string
         "userDisplayUsername":
           type: string
-          description: May not always be available
+          nullable: true
     StatsRunReport:
       type: object
       properties:
@@ -280,7 +311,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/RunReport"
         "404":
-          description: Specific run does not exist
+          description: Specified run does not exist
           content:
             application/json:
               schema:
@@ -297,6 +328,71 @@ paths:
           required: true
           schema:
             type: integer
+
+  /player/{username}:
+    get:
+      summary: Player info by username
+      responses:
+        "200":
+          description: JSON object of user info
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "id":
+                    type: string
+                    format: uuid
+                  "image":
+                    type: string
+                    format: uri
+                    nullable: true
+                    example: "https://example.com/image.png"
+                  "username":
+                    type: string
+                    example: "shuflduf"
+                  "display_username":
+                    type: string
+                    nullable: true
+                    example: "Shuflduf"
+                  "about_me":
+                    type: string
+                    nullable: true
+                    example: "how to close risky rain 2"
+                  "region":
+                    type: string
+                    nullable: true
+                    description: 2 letter country code
+                    example: "CA"
+                  "run_count":
+                    type: integer
+                  "win_count":
+                    type: integer
+                  "favourite_survivor":
+                    type: string
+                    $ref: "#/components/schemas/Survivor"
+                  "favourite_difficulty":
+                    type: string
+                    $ref: "#/components/schemas/Difficulty"
+        "404":
+          description: Specified player does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "error":
+                    type: string
+                    example: Player `username` not found
+                
+      parameters:
+        - name: username
+          in: path
+          description: Player Username
+          required: true
+          schema:
+            type: string
+
         
 
   /stats/sum:
