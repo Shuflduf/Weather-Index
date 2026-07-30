@@ -1,4 +1,4 @@
-use std::{env, error::Error, sync::Arc};
+use std::sync::Arc;
 
 use axum::{
     body::{self, Body},
@@ -29,11 +29,11 @@ use weather_index::{
     auth_entities::AppAdapter,
     db,
     error::{make_error, WIError},
-    WIState,
+    get_var, WIState,
 };
 
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn Error>> {
+async fn main() -> Result<(), WIError> {
     tracing_subscriber::fmt()
         .with_env_filter(tracing_subscriber::EnvFilter::new(
             "weather_index=debug,better_auth=debug,better_auth_core=debug,warn",
@@ -46,9 +46,9 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     let adapter = AppAdapter::from_pool(pg_pool.clone());
 
-    let mut auth_config = AuthConfig::new(env::var("ENCRYPTION_KEY")?)
-        .trusted_origins(vec![env::var("FRONTEND_URL")?])
-        .base_url(format!("{}/auth", env::var("BACKEND_URL")?));
+    let mut auth_config = AuthConfig::new(get_var("ENCRYPTION_KEY")?)
+        .trusted_origins(vec![get_var("FRONTEND_URL")?])
+        .base_url(format!("{}/auth", get_var("BACKEND_URL")?));
     auth_config.session.cookie_same_site = SameSite::None;
 
     let auth = Arc::new(
@@ -63,30 +63,36 @@ async fn main() -> Result<(), Box<dyn Error>> {
                 OAuthPlugin::new()
                     .add_provider(
                         "github",
-                        OAuthProvider::github(&env::var("GITHUB_ID")?, &env::var("GITHUB_SECRET")?),
+                        OAuthProvider::github(&get_var("GITHUB_ID")?, &get_var("GITHUB_SECRET")?),
                     )
                     .add_provider(
                         "discord",
                         OAuthProvider::discord(
-                            &env::var("DISCORD_ID")?,
-                            &env::var("DISCORD_SECRET")?,
+                            &get_var("DISCORD_ID")?,
+                            &get_var("DISCORD_SECRET")?,
                         ),
                     )
                     .add_provider(
                         "google",
-                        OAuthProvider::google(&env::var("GOOGLE_ID")?, &env::var("GOOGLE_SECRET")?),
+                        OAuthProvider::google(&get_var("GOOGLE_ID")?, &get_var("GOOGLE_SECRET")?),
                     ),
             )
             .plugin(DeviceAuthorizationPlugin::with_config(
                 DeviceAuthorizationConfig {
                     enabled: true,
-                    verification_uri: format!("{}/device", env::var("FRONTEND_URL")?),
+                    verification_uri: format!("{}/device", get_var("FRONTEND_URL")?),
                     interval: 5,
                     expires_in: 1800,
                 },
             ))
             .build()
-            .await?,
+            .await
+            .map_err(|e| {
+                make_error(
+                    StatusCode::INTERNAL_SERVER_ERROR,
+                    format!("Failed to create auth config: {e}"),
+                )
+            })?,
     );
 
     let auth_router = auth
@@ -101,7 +107,16 @@ async fn main() -> Result<(), Box<dyn Error>> {
     });
 
     let cors = CorsLayer::new()
-        .allow_origin(env::var("FRONTEND_URL")?.parse::<HeaderValue>()?)
+        .allow_origin(
+            get_var("FRONTEND_URL")?
+                .parse::<HeaderValue>()
+                .map_err(|e| {
+                    make_error(
+                        StatusCode::INTERNAL_SERVER_ERROR,
+                        format!("Failed to parse: {e}"),
+                    )
+                })?,
+        )
         .allow_methods([Method::GET, Method::POST, Method::DELETE])
         .allow_headers(AllowHeaders::list([
             header::CONTENT_TYPE,
@@ -131,7 +146,7 @@ async fn oauth_redirect_middleware(
     let response = next.run(req).await;
 
     if path.starts_with("/callback") {
-        let frontend_url = env::var("FRONTEND_URL").unwrap();
+        let frontend_url = get_var("FRONTEND_URL").unwrap();
         let (mut parts, _) = response.into_parts();
         parts.status = StatusCode::FOUND;
         parts
@@ -146,8 +161,7 @@ async fn oauth_redirect_middleware(
 }
 
 async fn cors_middleware(req: Request<body::Body>, next: Next) -> Result<Response<Body>, WIError> {
-    let frontend_url = env::var("FRONTEND_URL")
-        .map_err(|e| make_error(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    let frontend_url = get_var("FRONTEND_URL")?;
     let cors_config = CorsConfig::new().allowed_origin(frontend_url);
     if req.method() == Method::OPTIONS {
         return Ok(Response::builder()
