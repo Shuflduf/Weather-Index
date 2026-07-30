@@ -162,7 +162,7 @@ pub async fn aggregate_stats(
         .one(db)
         .await
         .map_err(db_error)?
-        .ok_or(make_error(StatusCode::NOT_FOUND, "oops".into()))?;
+        .ok_or(make_error(StatusCode::NOT_FOUND, "No runs found".into()))?;
     Ok(row)
 }
 

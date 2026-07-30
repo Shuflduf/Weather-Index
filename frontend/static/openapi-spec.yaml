@@ -114,8 +114,6 @@ components:
                 description: Time in seconds since the run started
         "items":
           type: object
-          additionalProperties:
-            type: integer
           example:
             "52": 1
             "7": 2
@@ -220,11 +218,6 @@ components:
           type: integer
         "distanceTraveled":
           type: integer
-
-
-
-
-      
 
 paths:
   /runs:
@@ -393,6 +386,42 @@ paths:
           schema:
             type: string
 
+  /stats/overall:
+    get:
+      summary: Overall info about all runs played
+      responses:
+        "200":
+          description: JSON object of various properties
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "runCount":
+                    type: integer
+                  "winCount":
+                    type: integer
+                  "playtimeSeconds":
+                    type: integer
+                  
+        "404":
+          description: Specified player does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "error":
+                    type: string
+                    example: Player `username` not found
+                 
+      parameters:
+        - name: username
+          in: query
+          description: Player Username
+          required: false
+          schema:
+            type: string
         
 
   /stats/sum:
@@ -405,6 +434,16 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/StatsRunReport"
+        "404":
+          description: Specified player does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "error":
+                    type: string
+                    example: Player `username` not found
                   
       parameters:
         - name: username
@@ -413,4 +452,179 @@ paths:
           required: false
           schema:
             type: string
+
+  /stats/avg:
+    get:
+      summary: Averaged stats of all runs
+      responses:
+        "200":
+          description: JSON object of certain averaged stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatsRunReport"
+        "404":
+          description: Specified player does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "error":
+                    type: string
+                    example: Player `username` not found
+                  
+      parameters:
+        - name: username
+          in: query
+          description: Player Username
+          required: false
+          schema:
+            type: string
+
+  /stats/survivors:
+    get:
+      summary: Survivors played for all runs
+      responses:
+        "200":
+          description: JSON object of survivors and their run counts
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  "CaptainBody": 3
+                  "CommandoBody": 1
+                  "RailgunnerBody": 2
+                  "SeekerBody": 1
+        "404":
+          description: Specified player does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "error":
+                    type: string
+                    example: Player `username` not found
+                 
+      parameters:
+        - name: username
+          in: query
+          description: Player Username
+          required: false
+          schema:
+            type: string
+
+  /stats/stages:
+    get:
+      summary: Stages played for all runs
+      description: More accurately described as "what stage did each run end on"
+      responses:
+        "200":
+          description: JSON object of stage number and how many runs ended there
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  "1": 5
+                  "2": 13
+                  "3": 1
+                  "4": 2
+                  "5": 51
+                  "6": 8
+        "404":
+          description: Specified player does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "error":
+                    type: string
+                    example: Player `username` not found
+                 
+      parameters:
+        - name: username
+          in: query
+          description: Player Username
+          required: false
+          schema:
+            type: string
+
+  /stats/artifacts:
+    get:
+      summary: Artifacts used for all runs
+      responses:
+        "200":
+          description: JSON object of artifact names and their usage counts
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  "Bomb": 2
+                  "Command": 545930459830945
+                  "EliteOnly": 1
+        "404":
+          description: Specified player does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "error":
+                    type: string
+                    example: Player `username` not found
+                 
+      parameters:
+        - name: username
+          in: query
+          description: Player Username
+          required: false
+          schema:
+            type: string
+
+  /stats/difficulties:
+    get:
+      summary: Difficulties played for all runs
+      responses:
+        "200":
+          description: JSON object of difficulties' names and how many times they were played
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  "DIFFICULTY_EASY_NAME": 9
+                  "DIFFICULTY_HARD_NAME": 12
+                  "DIFFICULTY_NORMAL_NAME": 16
+                  "ECLIPSE_1_NAME": 5
+                  "ECLIPSE_2_NAME": 7
+                  "ECLIPSE_3_NAME": 6
+                  "ECLIPSE_4_NAME": 6
+                  "ECLIPSE_5_NAME": 4
+                  "ECLIPSE_6_NAME": 2
+                  "ECLIPSE_7_NAME": 3
+                  "ECLIPSE_8_NAME": 5
+        "404":
+          description: Specified player does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  "error":
+                    type: string
+                    example: Player `username` not found
+                 
+      parameters:
+        - name: username
+          in: query
+          description: Player Username
+          required: false
+          schema:
+            type: string
+
 
