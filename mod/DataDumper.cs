@@ -27,6 +27,15 @@ namespace WeatherIndex
             );
             ModSettingsManager.AddOption(
                 new GenericButtonOption(
+                    "Dump Equipment",
+                    "Debug",
+                    "Dumps all equipments data into the plugin folder",
+                    "Dump",
+                    DataDumper.DumpEquipment
+                )
+            );
+            ModSettingsManager.AddOption(
+                new GenericButtonOption(
                     "Dump Bodies",
                     "Debug",
                     "Dumps all body data (survivors/enemies/etc) into the plugin folder",
@@ -124,6 +133,48 @@ namespace WeatherIndex
             }
             var json = JsonConvert.SerializeObject(items);
             File.WriteAllText(Path.Combine(outputDir, "items.json"), json);
+        }
+
+        public static void DumpEquipment()
+        {
+            var outputDir = Path.Combine(pluginDir, "equipment");
+            Directory.CreateDirectory(outputDir);
+            var equipment = new List<object>();
+            foreach (var idx in RoR2.EquipmentCatalog.allEquipment)
+            {
+                if (idx == RoR2.EquipmentIndex.None)
+                    continue;
+
+                var def = RoR2.EquipmentCatalog.GetEquipmentDef(idx);
+                if (def == null)
+                    continue;
+
+                string? filename = null;
+                var sprite = def.pickupIconSprite;
+                if (sprite == null || sprite.texture == null)
+                    continue;
+                Texture2D tex = sprite.texture;
+                if (tex != null)
+                {
+                    filename = $"{def.name}.png";
+                    writeTexture(Path.Combine(outputDir, filename), tex);
+                }
+
+                string displayName = RoR2.Language.GetString(def.nameToken);
+
+                equipment.Add(
+                    new
+                    {
+                        id = (int)idx,
+                        name = def.name,
+                        nameToken = def.nameToken,
+                        displayName = displayName,
+                        icon = filename,
+                    }
+                );
+            }
+            var json = JsonConvert.SerializeObject(equipment);
+            File.WriteAllText(Path.Combine(outputDir, "equipment.json"), json);
         }
 
         public static void DumpBodies()

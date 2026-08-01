@@ -1,0 +1,408 @@
+[
+  {
+    "id": 0,
+    "name": "BFG",
+    "nameToken": "EQUIPMENT_BFG_NAME",
+    "displayName": "Preon Accumulator",
+    "icon": "BFG.png"
+  },
+  {
+    "id": 1,
+    "name": "Blackhole",
+    "nameToken": "EQUIPMENT_BLACKHOLE_NAME",
+    "displayName": "Primordial Cube",
+    "icon": "Blackhole.png"
+  },
+  {
+    "id": 2,
+    "name": "BossHunter",
+    "nameToken": "EQUIPMENT_BOSSHUNTER_NAME",
+    "displayName": "Trophy Hunter's Tricorn",
+    "icon": "BossHunter.png"
+  },
+  {
+    "id": 3,
+    "name": "BossHunterConsumed",
+    "nameToken": "EQUIPMENT_BOSSHUNTERCONSUMED_NAME",
+    "displayName": "Trophy Hunter's Tricorn (Consumed)",
+    "icon": "BossHunterConsumed.png"
+  },
+  {
+    "id": 4,
+    "name": "BurnNearby",
+    "nameToken": "EQUIPMENT_BURNNEARBY_NAME",
+    "displayName": "Helfire Tincture",
+    "icon": "BurnNearby.png"
+  },
+  {
+    "id": 5,
+    "name": "Cleanse",
+    "nameToken": "EQUIPMENT_CLEANSE_NAME",
+    "displayName": "Blast Shower",
+    "icon": "Cleanse.png"
+  },
+  {
+    "id": 6,
+    "name": "CommandMissile",
+    "nameToken": "EQUIPMENT_COMMANDMISSILE_NAME",
+    "displayName": "Disposable Missile Launcher",
+    "icon": "CommandMissile.png"
+  },
+  {
+    "id": 7,
+    "name": "CrippleWard",
+    "nameToken": "EQUIPMENT_CRIPPLEWARD_NAME",
+    "displayName": "Effigy of Grief",
+    "icon": "CrippleWard.png"
+  },
+  {
+    "id": 8,
+    "name": "CritOnUse",
+    "nameToken": "EQUIPMENT_CRITONUSE_NAME",
+    "displayName": "Ocular HUD",
+    "icon": "CritOnUse.png"
+  },
+  {
+    "id": 9,
+    "name": "DeathProjectile",
+    "nameToken": "EQUIPMENT_DEATHPROJECTILE_NAME",
+    "displayName": "Forgive Me Please",
+    "icon": "DeathProjectile.png"
+  },
+  {
+    "id": 10,
+    "name": "DroneBackup",
+    "nameToken": "EQUIPMENT_DRONEBACKUP_NAME",
+    "displayName": "The Back-up",
+    "icon": "DroneBackup.png"
+  },
+  {
+    "id": 11,
+    "name": "DroneShockDamage",
+    "nameToken": "EQUIPMENT_DRONESHOCKDAMAGE_NAME",
+    "displayName": "Faulty Conductor",
+    "icon": "DroneShockDamage.png"
+  },
+  {
+    "id": 12,
+    "name": "EliteAurelioniteEquipment",
+    "nameToken": "EQUIPMENT_AFFIXAURELIONITE_NAME",
+    "displayName": "Aurelionite's Blessing",
+    "icon": "EliteAurelioniteEquipment.png"
+  },
+  {
+    "id": 13,
+    "name": "EliteBeadEquipment",
+    "nameToken": "EQUIPMENT_AFFIXBEAD_NAME",
+    "displayName": "His Spiteful Boon",
+    "icon": "EliteBeadEquipment.png"
+  },
+  {
+    "id": 14,
+    "name": "EliteCollectiveEquipment",
+    "nameToken": "EQUIPMENT_AFFIXCOLLECTIVE_NAME",
+    "displayName": "Of One Mind",
+    "icon": "EliteCollectiveEquipment.png"
+  },
+  {
+    "id": 15,
+    "name": "EliteEarthEquipment",
+    "nameToken": "EQUIPMENT_AFFIXEARTH_NAME",
+    "displayName": "His Reassurance",
+    "icon": "EliteEarthEquipment.png"
+  },
+  {
+    "id": 16,
+    "name": "EliteFireEquipment",
+    "nameToken": "EQUIPMENT_AFFIXRED_NAME",
+    "displayName": "Ifrit's Distinction",
+    "icon": "EliteFireEquipment.png"
+  },
+  {
+    "id": 17,
+    "name": "EliteGoldEquipment",
+    "nameToken": "EQUIPMENT_AFFIXGOLD_NAME",
+    "displayName": "Coven of Gold",
+    "icon": "EliteGoldEquipment.png"
+  },
+  {
+    "id": 18,
+    "name": "EliteHauntedEquipment",
+    "nameToken": "EQUIPMENT_AFFIXHAUNTED_NAME",
+    "displayName": "Spectral Circlet",
+    "icon": "EliteHauntedEquipment.png"
+  },
+  {
+    "id": 19,
+    "name": "EliteIceEquipment",
+    "nameToken": "EQUIPMENT_AFFIXWHITE_NAME",
+    "displayName": "Her Biting Embrace",
+    "icon": "EliteIceEquipment.png"
+  },
+  {
+    "id": 20,
+    "name": "EliteLightningEquipment",
+    "nameToken": "EQUIPMENT_AFFIXBLUE_NAME",
+    "displayName": "Silence Between Two Strikes",
+    "icon": "EliteLightningEquipment.png"
+  },
+  {
+    "id": 21,
+    "name": "EliteLunarEquipment",
+    "nameToken": "EQUIPMENT_AFFIXLUNAR_NAME",
+    "displayName": "Shared Design",
+    "icon": "EliteLunarEquipment.png"
+  },
+  {
+    "id": 22,
+    "name": "ElitePoisonEquipment",
+    "nameToken": "EQUIPMENT_AFFIXPOISON_NAME",
+    "displayName": "N'kuhana's Retort",
+    "icon": "ElitePoisonEquipment.png"
+  },
+  {
+    "id": 23,
+    "name": "EliteSecretSpeedEquipment",
+    "nameToken": "EQUIPMENT_AFFIXSECRETSPEED_NAME",
+    "displayName": "Beyond the Limits",
+    "icon": "EliteSecretSpeedEquipment.png"
+  },
+  {
+    "id": 24,
+    "name": "EliteVoidEquipment",
+    "nameToken": "EQUIPMENT_AFFIXVOID_NAME",
+    "displayName": "EQUIPMENT_AFFIXVOID_NAME",
+    "icon": "EliteVoidEquipment.png"
+  },
+  {
+    "id": 25,
+    "name": "EliteYellowEquipment",
+    "nameToken": "",
+    "displayName": "",
+    "icon": "EliteYellowEquipment.png"
+  },
+  {
+    "id": 27,
+    "name": "FireBallDash",
+    "nameToken": "EQUIPMENT_FIREBALLDASH_NAME",
+    "displayName": "Volcanic Egg",
+    "icon": "FireBallDash.png"
+  },
+  {
+    "id": 28,
+    "name": "Fruit",
+    "nameToken": "EQUIPMENT_FRUIT_NAME",
+    "displayName": "Foreign Fruit",
+    "icon": "Fruit.png"
+  },
+  {
+    "id": 29,
+    "name": "GainArmor",
+    "nameToken": "EQUIPMENT_GAINARMOR_NAME",
+    "displayName": "Jade Elephant",
+    "icon": "GainArmor.png"
+  },
+  {
+    "id": 30,
+    "name": "Gateway",
+    "nameToken": "EQUIPMENT_GATEWAY_NAME",
+    "displayName": "Eccentric Vase",
+    "icon": "Gateway.png"
+  },
+  {
+    "id": 31,
+    "name": "GhostGun",
+    "nameToken": "EQUIPMENT_GHOSTGUN_NAME",
+    "displayName": "Reaper's Remorse",
+    "icon": "GhostGun.png"
+  },
+  {
+    "id": 32,
+    "name": "GoldGat",
+    "nameToken": "EQUIPMENT_GOLDGAT_NAME",
+    "displayName": "The Crowdfunder",
+    "icon": "GoldGat.png"
+  },
+  {
+    "id": 33,
+    "name": "GroundEnemies",
+    "nameToken": "EQUIPMENT_GROUNDENEMIES_NAME",
+    "displayName": "G-Force Accelerator",
+    "icon": "GroundEnemies.png"
+  },
+  {
+    "id": 34,
+    "name": "GummyClone",
+    "nameToken": "EQUIPMENT_GUMMYCLONE_NAME",
+    "displayName": "Goobo Jr.",
+    "icon": "GummyClone.png"
+  },
+  {
+    "id": 35,
+    "name": "HealAndRevive",
+    "nameToken": "EQUIPMENT_HEALANDREVIVE_NAME",
+    "displayName": "Seed of Life",
+    "icon": "HealAndRevive.png"
+  },
+  {
+    "id": 36,
+    "name": "HealAndReviveConsumed",
+    "nameToken": "EQUIPMENT_HEALANDREVIVECONSUMED_NAME",
+    "displayName": "Seed of Life (Consumed)",
+    "icon": "HealAndReviveConsumed.png"
+  },
+  {
+    "id": 37,
+    "name": "IrradiatingLaser",
+    "nameToken": "EQUIPMENT_IRRADIATINGLASER_NAME",
+    "displayName": "Overloading Excavator",
+    "icon": "IrradiatingLaser.png"
+  },
+  {
+    "id": 38,
+    "name": "Jetpack",
+    "nameToken": "EQUIPMENT_JETPACK_NAME",
+    "displayName": "Milky Chrysalis",
+    "icon": "Jetpack.png"
+  },
+  {
+    "id": 39,
+    "name": "LifestealOnHit",
+    "nameToken": "EQUIPMENT_LIFESTEALONHIT_NAME",
+    "displayName": "Super Massive Leech",
+    "icon": "LifestealOnHit.png"
+  },
+  {
+    "id": 40,
+    "name": "Lightning",
+    "nameToken": "EQUIPMENT_LIGHTNING_NAME",
+    "displayName": "Royal Capacitor",
+    "icon": "Lightning.png"
+  },
+  {
+    "id": 41,
+    "name": "LunarPortalOnUse",
+    "nameToken": "EQUIPMENT_LUNARPORTALONUSE_NAME",
+    "displayName": "Elegy of Extinction",
+    "icon": "LunarPortalOnUse.png"
+  },
+  {
+    "id": 42,
+    "name": "LunarPotion",
+    "nameToken": "EQUIPMENT_LUNARPOTION_NAME",
+    "displayName": "EQUIPMENT_LUNARPOTION_NAME",
+    "icon": "LunarPotion.png"
+  },
+  {
+    "id": 43,
+    "name": "Meteor",
+    "nameToken": "EQUIPMENT_METEOR_NAME",
+    "displayName": "Glowing Meteorite",
+    "icon": "Meteor.png"
+  },
+  {
+    "id": 44,
+    "name": "Molotov",
+    "nameToken": "EQUIPMENT_MOLOTOV_NAME",
+    "displayName": "Molotov (6-Pack)",
+    "icon": "Molotov.png"
+  },
+  {
+    "id": 45,
+    "name": "MultiShopCard",
+    "nameToken": "EQUIPMENT_MULTISHOPCARD_NAME",
+    "displayName": "Executive Card",
+    "icon": "MultiShopCard.png"
+  },
+  {
+    "id": 46,
+    "name": "OrbOnUse",
+    "nameToken": "EQUIPMENT_ORBONUSE_NAME",
+    "displayName": "EQUIPMENT_ORBONUSE_NAME",
+    "icon": "OrbOnUse.png"
+  },
+  {
+    "id": 47,
+    "name": "OrbitalLaser",
+    "nameToken": "EQUIPMENT_ORBITALLASER_NAME",
+    "displayName": "EQUIPMENT_ORBITALLASER_NAME",
+    "icon": "OrbitalLaser.png"
+  },
+  {
+    "id": 48,
+    "name": "Parry",
+    "nameToken": "EQUIPMENT_PARRY_NAME",
+    "displayName": "Deus Ex Machina",
+    "icon": "Parry.png"
+  },
+  {
+    "id": 49,
+    "name": "PassiveHealing",
+    "nameToken": "EQUIPMENT_PASSIVEHEALING_NAME",
+    "displayName": "Gnarled Woodsprite",
+    "icon": "PassiveHealing.png"
+  },
+  {
+    "id": 50,
+    "name": "QuestVolatileBattery",
+    "nameToken": "EQUIPMENT_QUESTVOLATILEBATTERY_NAME",
+    "displayName": "Fuel Array",
+    "icon": "QuestVolatileBattery.png"
+  },
+  {
+    "id": 51,
+    "name": "Recycle",
+    "nameToken": "EQUIPMENT_RECYCLER_NAME",
+    "displayName": "Recycler",
+    "icon": "Recycle.png"
+  },
+  {
+    "id": 52,
+    "name": "Saw",
+    "nameToken": "EQUIPMENT_SAWMERANG_NAME",
+    "displayName": "Sawmerang",
+    "icon": "Saw.png"
+  },
+  {
+    "id": 53,
+    "name": "Scanner",
+    "nameToken": "EQUIPMENT_SCANNER_NAME",
+    "displayName": "Radar Scanner",
+    "icon": "Scanner.png"
+  },
+  {
+    "id": 54,
+    "name": "SoulCorruptor",
+    "nameToken": "EQUIPMENT_SOULCORRUPTOR_NAME",
+    "displayName": "EQUIPMENT_SOULCORRUPTOR_NAME",
+    "icon": "SoulCorruptor.png"
+  },
+  {
+    "id": 55,
+    "name": "SoulJar",
+    "nameToken": "EQUIPMENT_SOULJAR_NAME",
+    "displayName": "Jar of Souls",
+    "icon": "SoulJar.png"
+  },
+  {
+    "id": 56,
+    "name": "TeamWarCry",
+    "nameToken": "EQUIPMENT_TEAMWARCRY_NAME",
+    "displayName": "Gorag's Opus",
+    "icon": "TeamWarCry.png"
+  },
+  {
+    "id": 57,
+    "name": "Tonic",
+    "nameToken": "EQUIPMENT_TONIC_NAME",
+    "displayName": "Spinel Tonic",
+    "icon": "Tonic.png"
+  },
+  {
+    "id": 58,
+    "name": "VendingMachine",
+    "nameToken": "EQUIPMENT_VENDINGMACHINE_NAME",
+    "displayName": "Remote Caffeinator",
+    "icon": "VendingMachine.png"
+  }
+]

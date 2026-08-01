@@ -51,14 +51,20 @@ namespace WeatherIndex
 
                 foreach (var interaction in InstanceTracker.GetInstancesList<PurchaseInteraction>())
                 {
+                    // interaction.onDetailedPurchaseServer += (op) => {
+
+                    // }
                     if (interaction.TryGetComponent<ChestBehavior>(out ChestBehavior chest))
                     {
                         PickupDef pickup = PickupCatalog.GetPickupDef(
                             chest.currentPickup.pickupIndex
                         );
+                        Log.Info(interaction.displayNameToken);
+                        Log.Info(interaction.name);
                         Log.Info($"Item index: {pickup.itemIndex}");
                         Log.Info($"item tier: {pickup.itemTier}");
                         Log.Info($"equipment index: {pickup.equipmentIndex}");
+                        Log.Info("-------");
                     }
                 }
                 string stageName = RoR2.SceneCatalog.GetSceneDefForCurrentScene().cachedName;
