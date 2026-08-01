@@ -43,11 +43,24 @@ namespace WeatherIndex
 
         public static void Init()
         {
+            // On.RoR2.Run.
+
             On.RoR2.Run.OnStageStartGlobal += (orig, self, stage) =>
             {
                 orig(self, stage);
 
-                InstanceTracker.GetInstancesList<PurchaseInteraction>();
+                foreach (var interaction in InstanceTracker.GetInstancesList<PurchaseInteraction>())
+                {
+                    if (interaction.TryGetComponent<ChestBehavior>(out ChestBehavior chest))
+                    {
+                        PickupDef pickup = PickupCatalog.GetPickupDef(
+                            chest.currentPickup.pickupIndex
+                        );
+                        Log.Info($"Item index: {pickup.itemIndex}");
+                        Log.Info($"item tier: {pickup.itemTier}");
+                        Log.Info($"equipment index: {pickup.equipmentIndex}");
+                    }
+                }
                 string stageName = RoR2.SceneCatalog.GetSceneDefForCurrentScene().cachedName;
                 stages.Add(stageName);
             };
