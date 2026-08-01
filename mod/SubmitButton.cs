@@ -56,7 +56,7 @@ namespace WeatherIndex
 
         private async void OnSubmitClicked()
         {
-            var result = await WeatherIndex.SubmitRun();
+            var result = await WIBridge.SubmitRun();
             switch (result)
             {
                 case WeatherIndex.SubmitRunResult.Success:
