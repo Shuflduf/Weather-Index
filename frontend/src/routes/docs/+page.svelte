@@ -15,6 +15,7 @@
           agent: { disabled: true },
           mcp: { disabled: true },
           hideClientButton: true,
+          _integration: "rust",
         });
       });
 

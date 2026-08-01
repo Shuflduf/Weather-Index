@@ -9,6 +9,9 @@
   let countries: { flag: string; name: string; alpha2Code: string }[] = $state(
     [],
   );
+  let success: boolean = $state(true);
+  let updateResult: string | null = $state(null);
+
   onMount(async () => {
     let resp = await authedFetch(auth("get-session"));
     let body = await resp.json();
@@ -19,9 +22,31 @@
     }
     countries = await (await fetch("https://countries.dev/countries")).json();
   });
+
+  function updatePlayer() {
+    console.log(user);
+    authedFetch(api("player"), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        image: user.image,
+        username: user.username,
+        displayUsername: user.displayUsername,
+        aboutMe: user.aboutMe,
+        region: user.region,
+      }),
+    }).then(async (r) => {
+      success = r.ok;
+      if (r.ok) {
+        updateResult = "Profile updated succesfully";
+      } else {
+        r.json().then((j) => (updateResult = j.error));
+      }
+    });
+  }
 </script>
 
-<form action={api("player")} method="POST">
+<div>
   <h1 id="profile" class="text-3xl tracking-tighter">Profile</h1>
   <FormEntry label="Username" id="profile_username">
     <span class="bg-default flex flex-row border w-60">
@@ -43,7 +68,7 @@
         type="text"
         name="displayUsername"
         id="profile_display_username"
-        value={user.display_username}
+        bind:value={user.display_username}
         placeholder={user.username}
         class="p-2 bg-default flex flex-row border outline-none w-60"
       />
@@ -54,7 +79,7 @@
       <select
         name="region"
         id="profile_region"
-        value={user.region}
+        bind:value={user.region}
         class="w-60 bg-default border p-2 cursor-pointer"
       >
         <option value={null}>None</option>
@@ -88,13 +113,22 @@
       <textarea
         name="aboutMe"
         id="profile_about_me"
-        value={user.about_me}
+        bind:value={user.about_me}
         class="w-60 bg-default border p-2 outline-none"></textarea>
     {/if}
   </FormEntry>
-  <input
-    type="submit"
-    value="Save"
+  <button
+    onclick={updatePlayer}
+    type="button"
     class="bg-default hover:bg-hover active:bg-active p-2 cursor-pointer border"
-  />
-</form>
+  >
+    Save
+  </button>
+  {#if updateResult}
+    {#if success == true}
+      <span class="text-success ml-2">{updateResult}</span>
+    {:else}
+      <span class="text-error ml-2">{updateResult}</span>
+    {/if}
+  {/if}
+</div>

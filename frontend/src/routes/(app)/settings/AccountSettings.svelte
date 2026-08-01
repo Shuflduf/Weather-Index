@@ -70,7 +70,7 @@
   <div class="flex flex-col gap-2 mt-4 font-mono">
     <details>
       <summary class="text-xl cursor-pointer">Change Password</summary>
-      <form class="flex flex-col w-md border p-4 bg-bg-secondary">
+      <div class="flex flex-col w-md border p-4 bg-bg-secondary">
         <label
           for="currentPassword"
           class="text-lg tracking-tight flex flex-row gap-1 items-center font-sans"
@@ -113,7 +113,7 @@
           {/each}
         {/if}
         <button
-          type="submit"
+          type="button"
           onclick={changePassword}
           class="bg-default hover:bg-hover active:bg-active transition-colors border p-2 mt-4 cursor-pointer font-mono flex flex-row gap-1 justify-center"
         >
@@ -122,7 +122,7 @@
         <div class={changePasswordSuccess ? "text-success" : "text-error"}>
           {changePasswordMessage}
         </div>
-      </form>
+      </div>
     </details>
     <div class="flex flex-row bg-bg-secondary border p-2 gap-2 w-max">
       <SiGithub />

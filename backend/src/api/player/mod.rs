@@ -139,8 +139,8 @@ pub struct UpdatePlayer {
 pub async fn update(
     session: WISession,
     State(state): State<Arc<WIState>>,
-    Form(payload): Form<UpdatePlayer>,
-) -> Result<Redirect, WIError> {
+    Json(payload): Json<UpdatePlayer>,
+) -> Result<(), WIError> {
     let new_user = user::ActiveModel {
         id: Set(session.0.user.id),
         username: Set(payload.username),
@@ -162,9 +162,11 @@ pub async fn update(
         .await
         .map_err(db_error)?;
 
-    Ok(Redirect::permanent(&format!(
-        "{}/settings",
-        env::var("FRONTEND_URL")
-            .map_err(|e| make_error(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?
-    )))
+    // Ok(Redirect::permanent(&format!(
+    //     "{}/settings",
+    //     env::var("FRONTEND_URL")
+    //         .map_err(|e| make_error(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?
+    // )))
+    //
+    Ok(())
 }

@@ -39,7 +39,7 @@
 <div class="flex flex-col items-center">
   <h1 class="text-3xl tracking-tighter font-bold">Sign Up</h1>
   <a href="/sign-in" class="underline">Sign In here</a>
-  <form class="flex flex-col w-80">
+  <div class="flex flex-col w-80">
     <label
       for="email"
       class="text-xl tracking-tighter mt-4 flex flex-row gap-1 items-center font-mono"
@@ -123,7 +123,7 @@
       class="p-2 bg-default hover:bg-hover active:bg-active transition-colors border outline-none font-mono"
     />
     <button
-      type="submit"
+      type="button"
       onclick={signIn}
       class="bg-default hover:bg-hover active:bg-active transition-colors border p-2 mt-4 cursor-pointer font-mono flex flex-row gap-1 justify-center"
     >
@@ -134,6 +134,6 @@
     <div class="text-error">
       {errorMessage}
     </div>
-  </form>
+  </div>
   <OAuthMethods />
 </div>
