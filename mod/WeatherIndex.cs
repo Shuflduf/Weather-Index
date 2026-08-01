@@ -128,15 +128,6 @@ namespace WeatherIndex
             WIBridge.RefreshStatus(false);
         }
 
-        internal enum SubmitRunResult
-        {
-            Success,
-            NotLoggedIn,
-            ServerError,
-            NetworkError,
-            AlreadyUploaded,
-        }
-
         internal static void MainThread(Action action)
         {
             mainThreadQueue.Enqueue(action);

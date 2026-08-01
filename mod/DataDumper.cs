@@ -393,6 +393,40 @@ namespace WeatherIndex
             File.WriteAllText(Path.Combine(outputDir, "environments.json"), json);
         }
 
+        // public static void DumpInteractables()
+        // {
+        //     var outputDir = Path.Combine(pluginDir, "interactables");
+        //     Directory.CreateDirectory(outputDir);
+        //     var interactables = new List<object>();
+        //     foreach (var def in RoR2.)
+        //     {
+        //         if (def == null)
+        //             continue;
+
+        //         var tex = def.
+
+        //         string? filename = null;
+
+        //         if (tex != null)
+        //         {
+        //             filename = $"{def.cachedName}.png";
+        //             writeTexture(Path.Combine(outputDir, filename), tex);
+        //         }
+
+        //         interactables.Add(
+        //             new
+        //             {
+        //                 name = def.cachedName,
+        //                 nameToken = def.nameToken,
+        //                 displayName = RoR2.Language.GetString(def.nameToken),
+        //                 icon = filename,
+        //             }
+        //         );
+        //     }
+        //     var json = JsonConvert.SerializeObject(interactables);
+        //     File.WriteAllText(Path.Combine(outputDir, "interactables.json"), json);
+        // }
+
         private static void writeEndingTexture(string path, Texture2D tex, Color color)
         {
             var readable = new Texture2D(tex.width, tex.height, TextureFormat.RGBA32, false);

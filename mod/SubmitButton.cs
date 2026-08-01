@@ -59,21 +59,21 @@ namespace WeatherIndex
             var result = await WIBridge.SubmitRun();
             switch (result)
             {
-                case WeatherIndex.SubmitRunResult.Success:
+                case SubmitRunResult.Success:
                     WIPopup.ShowMessage("Run submitted succesfully!");
                     break;
-                case WeatherIndex.SubmitRunResult.AlreadyUploaded:
+                case SubmitRunResult.AlreadyUploaded:
                     WIPopup.ShowMessage("Run already submitted!");
                     break;
-                case WeatherIndex.SubmitRunResult.NotLoggedIn:
+                case SubmitRunResult.NotLoggedIn:
                     WIPopup.ShowMessage(
                         "Not signed in. Sign in from the settings page and re-submit!"
                     );
                     break;
-                case WeatherIndex.SubmitRunResult.NetworkError:
+                case SubmitRunResult.NetworkError:
                     WIPopup.ShowMessage("Could not reach the server. Please try again later.");
                     break;
-                case WeatherIndex.SubmitRunResult.ServerError:
+                case SubmitRunResult.ServerError:
                     WIPopup.ShowMessage("Server error. Please try again later.");
                     break;
             }

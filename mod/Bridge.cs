@@ -10,21 +10,30 @@ using UnityEngine;
 
 namespace WeatherIndex
 {
+    internal enum SubmitRunResult
+    {
+        Success,
+        NotLoggedIn,
+        ServerError,
+        NetworkError,
+        AlreadyUploaded,
+    }
+
     public class WIBridge
     {
         private static bool connecting = false;
 
-        internal static async Task<WeatherIndex.SubmitRunResult> SubmitRun()
+        internal static async Task<SubmitRunResult> SubmitRun()
         {
             if (WeatherIndex.uploadedRun == true)
-                return WeatherIndex.SubmitRunResult.AlreadyUploaded;
+                return SubmitRunResult.AlreadyUploaded;
 
             WeatherIndex.uploadedRun = true;
 
             if (string.IsNullOrEmpty(WIConfig.accessToken?.Value))
             {
                 WeatherIndex.uploadedRun = false;
-                return WeatherIndex.SubmitRunResult.NotLoggedIn;
+                return SubmitRunResult.NotLoggedIn;
             }
 
             try
@@ -46,18 +55,18 @@ namespace WeatherIndex
                 var response = await WeatherIndex.http.SendAsync(request);
                 Log.Info(await response.Content.ReadAsStringAsync());
                 if (response.IsSuccessStatusCode)
-                    return WeatherIndex.SubmitRunResult.Success;
+                    return SubmitRunResult.Success;
                 else
                 {
                     WeatherIndex.uploadedRun = false;
-                    return WeatherIndex.SubmitRunResult.ServerError;
+                    return SubmitRunResult.ServerError;
                 }
             }
             catch (System.Exception e)
             {
                 Log.Error(e);
                 WeatherIndex.uploadedRun = false;
-                return WeatherIndex.SubmitRunResult.NetworkError;
+                return SubmitRunResult.NetworkError;
             }
         }
 

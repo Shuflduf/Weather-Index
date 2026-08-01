@@ -23,11 +23,16 @@ namespace WeatherIndex
         }
     }
 
+    struct StageInteractables { }
+
     class RunTracker
     {
-        public static List<string> stages = new List<string>();
-        public static List<ItemEvent> items = new List<ItemEvent>();
-        static ItemList oldItems = new ItemList();
+        internal static List<string> stages = new List<string>();
+        internal static List<ItemEvent> items = new List<ItemEvent>();
+        internal static List<StageInteractables> stageInteractables =
+            new List<StageInteractables>();
+
+        private static ItemList oldItems = new ItemList();
 
         public static void Reset()
         {
@@ -42,6 +47,7 @@ namespace WeatherIndex
             {
                 orig(self, stage);
 
+                InstanceTracker.GetInstancesList<PurchaseInteraction>();
                 string stageName = RoR2.SceneCatalog.GetSceneDefForCurrentScene().cachedName;
                 stages.Add(stageName);
             };
