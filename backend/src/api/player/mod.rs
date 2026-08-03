@@ -1,9 +1,7 @@
-use std::{collections::HashMap, env, sync::Arc};
+use std::{collections::HashMap, sync::Arc};
 
 use axum::{
-    extract::{Path, State},
-    response::Redirect,
-    Form, Json,
+    extract::{Path, State}, Json,
 };
 use reqwest::StatusCode;
 use sea_orm::{ActiveValue::Set, ColumnTrait, DatabaseConnection, EntityTrait, QueryFilter};

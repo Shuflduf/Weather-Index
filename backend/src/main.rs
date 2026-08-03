@@ -2,7 +2,7 @@ use std::sync::Arc;
 
 use axum::{
     body::{self, Body},
-    http::{header, HeaderValue, Request, Response},
+    http::{header, Request, Response},
     middleware::{self, Next},
     routing::get,
     Router,
@@ -23,10 +23,8 @@ use reqwest::{
     Method, StatusCode,
 };
 
-use sqlx::any::AnyTypeInfoKind;
-use tower_http::cors::{self, AllowHeaders, CorsLayer};
 use weather_index::{
-    api::{self, private_router},
+    api::{self},
     auth_entities::AppAdapter,
     db,
     error::{make_error, WIError},
@@ -107,34 +105,28 @@ async fn main() -> Result<(), WIError> {
         auth: auth.clone(),
     });
 
-    let cors = CorsLayer::new()
-        .allow_origin(
-            get_var("FRONTEND_URL")?
-                .parse::<HeaderValue>()
-                .map_err(|e| {
-                    make_error(
-                        StatusCode::INTERNAL_SERVER_ERROR,
-                        format!("Failed to parse: {e}"),
-                    )
-                })?,
-        )
-        .allow_methods([Method::GET, Method::POST, Method::DELETE])
-        .allow_headers(AllowHeaders::list([
-            header::CONTENT_TYPE,
-            header::AUTHORIZATION,
-        ]))
-        .allow_credentials(true);
-    let public_cors = CorsLayer::new()
-        .allow_origin(cors::Any)
-        .allow_methods([Method::GET, Method::OPTIONS]);
+    // let cors = CorsLayer::new()
+    //     .allow_origin(
+    //         get_var("FRONTEND_URL")?
+    //             .parse::<HeaderValue>()
+    //             .map_err(|e| {
+    //                 make_error(
+    //                     StatusCode::INTERNAL_SERVER_ERROR,
+    //                     format!("Failed to parse: {e}"),
+    //                 )
+    //             })?,
+    //     )
+    //     .allow_methods([Method::GET, Method::POST, Method::DELETE])
+    //     .allow_headers(AllowHeaders::list([
+    //         header::CONTENT_TYPE,
+    //         header::AUTHORIZATION,
+    //     ]))
+    //     .allow_credentials(true);
 
-    let api_router = api::public_router()
-        .layer(public_cors)
-        .merge(private_router().layer(cors));
     let app = Router::new()
         .nest("/auth", auth_router)
-        .nest("/api", api_router)
-        // .layer(middleware::from_fn(cors_middleware))
+        .nest("/api", api::router())
+        .layer(middleware::from_fn(cors_middleware))
         .route("/", get(|| async { "Hello, World!" }))
         .with_state(state);
 
@@ -180,39 +172,62 @@ async fn oauth_redirect_middleware(
 
 async fn cors_middleware(req: Request<body::Body>, next: Next) -> Result<Response<Body>, WIError> {
     let frontend_url = get_var("FRONTEND_URL")?;
-    let cors_config = CorsConfig::new().allowed_origin(frontend_url);
+    let path = req.uri().path().to_string();
+    let is_public = path.starts_with("/api") && path != "/api/runs/new" && path != "/api/player";
+    let request_origin = req
+        .headers()
+        .get(header::ORIGIN)
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or_default();
+    let allowed_origin = if is_public {
+        "*"
+    } else {
+        frontend_url.as_str()
+    };
+    let cors_config = CorsConfig::new();
+
     if req.method() == Method::OPTIONS {
-        return Ok(Response::builder()
+        if !is_public && request_origin != frontend_url {
+            return Ok(Response::builder()
+                .status(StatusCode::FORBIDDEN)
+                .body(Body::empty())
+                .expect("Failed to build response"));
+        }
+
+        let mut res = Response::builder()
             .status(StatusCode::NO_CONTENT)
+            .header(ACCESS_CONTROL_ALLOW_ORIGIN, allowed_origin)
             .header(
-                ACCESS_CONTROL_ALLOW_ORIGIN.to_string(),
-                cors_config.allowed_origins.join(", "),
-            )
-            .header(
-                ACCESS_CONTROL_ALLOW_METHODS.to_string(),
+                ACCESS_CONTROL_ALLOW_METHODS,
                 cors_config.allowed_methods.join(", "),
             )
             .header(
-                ACCESS_CONTROL_ALLOW_HEADERS.to_string(),
+                ACCESS_CONTROL_ALLOW_HEADERS,
                 cors_config.allowed_headers.join(", "),
             )
             .header(
-                ACCESS_CONTROL_ALLOW_CREDENTIALS.to_string(),
+                ACCESS_CONTROL_ALLOW_CREDENTIALS,
                 cors_config.allow_credentials.to_string(),
             )
             .header(ACCESS_CONTROL_MAX_AGE, cors_config.max_age)
             .body(Body::empty())
-            .unwrap());
+            .unwrap();
+        if !is_public {
+            res.headers_mut().insert(
+                ACCESS_CONTROL_ALLOW_CREDENTIALS,
+                cors_config.allow_credentials.to_string().parse().unwrap(),
+            );
+        }
+        return Ok(res);
     }
     let mut response = next.run(req).await;
     let headers = response.headers_mut();
-    headers.insert(
-        ACCESS_CONTROL_ALLOW_ORIGIN,
-        cors_config.allowed_origins.join(", ").parse().unwrap(),
-    );
-    headers.insert(
-        ACCESS_CONTROL_ALLOW_CREDENTIALS,
-        cors_config.allow_credentials.to_string().parse().unwrap(),
-    );
+    headers.insert(ACCESS_CONTROL_ALLOW_ORIGIN, allowed_origin.parse().unwrap());
+    if !is_public {
+        headers.insert(
+            ACCESS_CONTROL_ALLOW_CREDENTIALS,
+            cors_config.allow_credentials.to_string().parse().unwrap(),
+        );
+    }
     Ok(response)
 }

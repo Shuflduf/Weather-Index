@@ -12,7 +12,7 @@ mod player;
 pub(crate) mod runs;
 mod stats;
 
-pub fn public_router() -> Router<Arc<WIState>> {
+fn public_router() -> Router<Arc<WIState>> {
     Router::new()
         .route("/runs", get(runs::list::get))
         .route("/runs/{id}", get(runs::get))
@@ -34,7 +34,7 @@ pub fn public_router() -> Router<Arc<WIState>> {
         .route("/data/environments", get(data::environments))
 }
 
-pub fn private_router() -> Router<Arc<WIState>> {
+fn private_router() -> Router<Arc<WIState>> {
     Router::new()
         .route("/player", post(player::update))
         .route("/runs/new", post(runs::new::post))
