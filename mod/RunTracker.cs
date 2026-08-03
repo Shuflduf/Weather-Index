@@ -9,18 +9,11 @@ namespace WeatherIndex
 {
     using ItemList = Dictionary<ItemIndex, int>;
 
-    struct ItemEvent
+    internal class ItemEvent
     {
-        public ItemIndex id;
-        public int count;
-        public int time;
-
-        public ItemEvent(ItemIndex Id, int Count, int Time)
-        {
-            id = Id;
-            count = Count;
-            time = Time;
-        }
+        public ItemIndex? id;
+        public int? count;
+        public int? time;
     }
 
     internal class StageInteractable
@@ -160,11 +153,12 @@ namespace WeatherIndex
                 ItemEvent last = items[items.Count - 1];
                 if (last.id == diff.id)
                 {
-                    items[items.Count - 1] = new ItemEvent(
-                        last.id,
-                        last.count + diff.count,
-                        last.time
-                    );
+                    items[items.Count - 1] = new ItemEvent()
+                    {
+                        id = last.id,
+                        count = last.count + diff.count,
+                        time = last.time,
+                    };
                 }
                 else
                 {
@@ -201,11 +195,25 @@ namespace WeatherIndex
                 }
                 else if (oldItems.ContainsKey(item) && !newItems.ContainsKey(item))
                 {
-                    diffs.Add(new ItemEvent(item, -oldItems[item], timestamp));
+                    diffs.Add(
+                        new ItemEvent()
+                        {
+                            id = item,
+                            count = -oldItems[item],
+                            time = timestamp,
+                        }
+                    );
                 }
                 else if (!oldItems.ContainsKey(item) && newItems.ContainsKey(item))
                 {
-                    diffs.Add(new ItemEvent(item, newItems[item], timestamp));
+                    diffs.Add(
+                        new ItemEvent()
+                        {
+                            id = item,
+                            count = newItems[item],
+                            time = timestamp,
+                        }
+                    );
                 }
                 else if (oldItems[item] == newItems[item])
                 {
@@ -213,7 +221,14 @@ namespace WeatherIndex
                 }
                 else
                 {
-                    diffs.Add(new ItemEvent(item, newItems[item] - oldItems[item], timestamp));
+                    diffs.Add(
+                        new ItemEvent()
+                        {
+                            id = item,
+                            count = newItems[item] - oldItems[item],
+                            time = timestamp,
+                        }
+                    );
                 }
             }
             return diffs;
