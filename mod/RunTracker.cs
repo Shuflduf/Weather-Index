@@ -16,6 +16,12 @@ namespace WeatherIndex
         public int? time;
     }
 
+    internal class EquipmentEvent
+    {
+        public EquipmentIndex? id;
+        public int? time;
+    }
+
     internal class StageInteractable
     {
         public string? name;

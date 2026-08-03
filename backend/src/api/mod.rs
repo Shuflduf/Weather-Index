@@ -12,13 +12,11 @@ mod player;
 pub(crate) mod runs;
 mod stats;
 
-pub fn router() -> Router<Arc<WIState>> {
+pub fn public_router() -> Router<Arc<WIState>> {
     Router::new()
         .route("/runs", get(runs::list::get))
         .route("/runs/{id}", get(runs::get))
-        .route("/runs/new", post(runs::new::post))
         .route("/player/{username}", get(player::get))
-        .route("/player", post(player::update))
         .route("/stats/sum", get(stats::combined::sum))
         .route("/stats/avg", get(stats::combined::avg))
         .route("/stats/survivors", get(stats::survivors::get))
@@ -34,4 +32,14 @@ pub fn router() -> Router<Arc<WIState>> {
         .route("/data/artifacts", get(data::artifacts))
         .route("/data/difficulties", get(data::difficulties))
         .route("/data/environments", get(data::environments))
+}
+
+pub fn private_router() -> Router<Arc<WIState>> {
+    Router::new()
+        .route("/player", post(player::update))
+        .route("/runs/new", post(runs::new::post))
+}
+
+pub fn router() -> Router<Arc<WIState>> {
+    public_router().merge(private_router())
 }

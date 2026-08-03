@@ -23,9 +23,10 @@ use reqwest::{
     Method, StatusCode,
 };
 
-use tower_http::cors::{AllowHeaders, CorsLayer};
+use sqlx::any::AnyTypeInfoKind;
+use tower_http::cors::{self, AllowHeaders, CorsLayer};
 use weather_index::{
-    api,
+    api::{self, private_router},
     auth_entities::AppAdapter,
     db,
     error::{make_error, WIError},
@@ -123,12 +124,17 @@ async fn main() -> Result<(), WIError> {
             header::AUTHORIZATION,
         ]))
         .allow_credentials(true);
+    let public_cors = CorsLayer::new()
+        .allow_origin(cors::Any)
+        .allow_methods([Method::GET, Method::OPTIONS]);
 
-    let api_router = api::router().layer(cors);
+    let api_router = api::public_router()
+        .layer(public_cors)
+        .merge(private_router().layer(cors));
     let app = Router::new()
         .nest("/auth", auth_router)
         .nest("/api", api_router)
-        .layer(middleware::from_fn(cors_middleware))
+        // .layer(middleware::from_fn(cors_middleware))
         .route("/", get(|| async { "Hello, World!" }))
         .with_state(state);
 
