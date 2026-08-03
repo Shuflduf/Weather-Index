@@ -1,0 +1,47 @@
+{
+  "name": "village",
+  "interactables": [
+    { "type": "CHEST1_NAME", "opened": false, "time": null, "items": 219 },
+    { "type": "CHEST1_NAME", "opened": true, "time": null, "items": 217 },
+    {
+      "type": "CATEGORYCHEST_HEALING_NAME",
+      "opened": false,
+      "time": null,
+      "items": 95
+    },
+    { "type": "CHEST1_NAME", "opened": false, "time": null, "items": 19 },
+    {
+      "type": "CATEGORYCHEST_UTILITY_NAME",
+      "opened": false,
+      "time": null,
+      "items": 153
+    },
+    { "type": "CHEST1_NAME", "opened": false, "time": null, "items": 206 },
+    { "type": "CHEST1_NAME", "opened": false, "time": null, "items": 206 },
+    {
+      "type": "CATEGORYCHEST_HEALING_NAME",
+      "opened": true,
+      "time": null,
+      "items": 95
+    },
+    { "type": "CHEST1_NAME", "opened": false, "time": null, "items": 67 },
+    {
+      "type": "EQUIPMENTBARREL_NAME",
+      "opened": false,
+      "time": null,
+      "items": -1
+    },
+    {
+      "type": "EQUIPMENTBARREL_NAME",
+      "opened": false,
+      "time": null,
+      "items": -1
+    },
+    {
+      "type": "EQUIPMENTBARREL_NAME",
+      "opened": false,
+      "time": null,
+      "items": -1
+    }
+  ]
+}

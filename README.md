@@ -11,6 +11,7 @@
   - [TailwindCSS](https://tailwindcss.com/) for styling
   - [Lucide](https://lucide.dev/) icons for non-brand icons
   - [Simple Icons](https://simpleicons.org/) for brand-icons
+  - [Scalar](https://scalar.com/) for API documentation
 - Risk of Rain 2 mod
   - Tracks all sorts of data, from kills, to distance traveled, to stage order, to which items where picked up and when
     - Full table can be found at [backend/src/entity/run_report.rs]
@@ -19,7 +20,6 @@
 
 # Installation
 TODO: ACTUALLY PUBLISH THE FUCKING MOD
-TODO: PUBLISH THE SITE TOO
 1. Sign in on the [website](https://weather-index-ror2.vercel.app)
 2. Ensure that [r2modman](https://old.thunderstore.io/c/riskofrain2/p/ebkr/r2modman/) is installed.
 3. Make a new profile (or use an existing profile)
@@ -37,14 +37,17 @@ Weather-Index/
 ```
 
 # Development Setup
-1. Clone from `ssh://git@codeberg.org/Shuflduf/Weather-Index.git`
+For all of the components, you will need a clone of `https://github.com/Shuflduf/Weather-Index.git`
+## Backend
+1. Make `backend/.env` from `backend/.env.example` and fill in all the fields
+2. Run `cargo build` in `backend/` to install the dependencies
+3. Run `cargo run` in `backend/` to start the backend
+## Frontend
+1. Make `frontend/.env` from `frontend/.env.example` and fill in all the fields
+2. Run `deno install` in `frontend/` to install the dependencies
+3. Run `deno run dev` in `frontend/` to start the frontend
+## Mod
+1. Run `dotnet build` in `mod/` to install the dependencies and build the mod
+2. TODO
 
 [^1]: The official library is so buggy, this project instead uses [a fork](https://github.com/Shuflduf/better-auth-rs)
-
-# API Routes
-- `/auth`: Better Auth routes
-- `/api`: Weather Index api routes
-  - `/runs`: Get list of runs. Supports filtering, sorting by a specific propery (ASC or DESC), and requesting only specific columns
-  - `/runs/{id}`: Get detailed info for a specific run. Has items, item history, and stage history
-  - `/player/{username}`: Get info about a specific user, by username. Has most played survivor, difficulty, and winrate
-  - `/player/lifetime/{username}`: Get lifetime stats for a specific user, aggregated from all runs

@@ -23,52 +23,98 @@ namespace WeatherIndex
         }
     }
 
-    struct StageInteractables { }
+    internal class StageInteractable
+    {
+        public string? name;
+        public int? time;
+        public int? item;
+    }
+
+    internal class StageInfo
+    {
+        public string name = "";
+        public List<StageInteractable> interactables = new List<StageInteractable>();
+    }
 
     class RunTracker
     {
-        internal static List<string> stages = new List<string>();
+        internal static List<StageInfo> stages = new List<StageInfo>();
         internal static List<ItemEvent> items = new List<ItemEvent>();
-        internal static List<StageInteractables> stageInteractables =
-            new List<StageInteractables>();
 
         private static ItemList oldItems = new ItemList();
+        private static Dictionary<int, StageInteractable>? currentStage;
+        private static string? currentStageName;
 
         public static void Reset()
         {
-            stages = new List<string>();
+            stages = new List<StageInfo>();
             items = new List<ItemEvent>();
             oldItems = new ItemList();
         }
 
         public static void Init()
         {
-            // On.RoR2.Run.
+            On.RoR2.Run.AdvanceStage += (orig, self, stage) =>
+            {
+                orig(self, stage);
 
+                StageInfo info = new StageInfo();
+                info.name = currentStageName!;
+                info.interactables = new List<StageInteractable>(currentStage!.Count);
+                foreach (StageInteractable si in currentStage!.Values)
+                {
+                    info.interactables.Add(si);
+                }
+                stages.Add(info);
+                // Log.Info(JsonConvert.SerializeObject(info));
+            };
             On.RoR2.Run.OnStageStartGlobal += (orig, self, stage) =>
             {
                 orig(self, stage);
 
-                foreach (var interaction in InstanceTracker.GetInstancesList<PurchaseInteraction>())
-                {
-                    // interaction.onDetailedPurchaseServer += (op) => {
+                currentStage = new Dictionary<int, StageInteractable>();
 
-                    // }
+                PurchaseInteraction[] interactions = InstanceTracker
+                    .GetInstancesList<PurchaseInteraction>()
+                    .ToArray();
+                for (int i = 0; i < interactions.Length; i++)
+                {
+                    int id = i;
+                    PurchaseInteraction interaction = interactions[i];
+
+                    interaction.onDetailedPurchaseServer.AddListener(
+                        (ctx, res) =>
+                        {
+                            if (currentStage.TryGetValue(id, out StageInteractable si))
+                            {
+                                int timestamp = (int)Math.Floor(Run.TimeStamp.tNow);
+                                si.time = timestamp;
+                                currentStage[id] = si;
+
+                                Log.Info(JsonConvert.SerializeObject(currentStage));
+                            }
+                        }
+                    );
                     if (interaction.TryGetComponent<ChestBehavior>(out ChestBehavior chest))
                     {
                         PickupDef pickup = PickupCatalog.GetPickupDef(
                             chest.currentPickup.pickupIndex
                         );
-                        Log.Info(interaction.displayNameToken);
-                        Log.Info(interaction.name);
-                        Log.Info($"Item index: {pickup.itemIndex}");
-                        Log.Info($"item tier: {pickup.itemTier}");
-                        Log.Info($"equipment index: {pickup.equipmentIndex}");
-                        Log.Info("-------");
+
+                        StageInteractable si = new StageInteractable();
+                        si.name = interaction.displayNameToken;
+                        si.item =
+                            pickup.itemIndex != ItemIndex.None
+                                ? (int)pickup.itemIndex
+                                : (int)pickup.equipmentIndex;
+
+                        currentStage.Add(id, si);
                     }
                 }
-                string stageName = RoR2.SceneCatalog.GetSceneDefForCurrentScene().cachedName;
-                stages.Add(stageName);
+                currentStageName = RoR2.SceneCatalog.GetSceneDefForCurrentScene().cachedName;
+                // StageInfo info = new StageInfo();
+                // info.name = stageName;
+                // info.interactables = stages.Add(stageName);
             };
 
             RoR2.Inventory.onInventoryChangedGlobal += (inv) =>

@@ -19,6 +19,21 @@ pub struct ItemEvent {
     time: i32,
 }
 
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct StageInteractable {
+    name: String,
+    time: i32,
+    item: i16,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct StageInfo {
+    name: String,
+    interactables: Vec<StageInteractable>,
+}
+
 #[derive(Deserialize, Debug, Clone, Dummy)]
 #[serde(rename_all = "camelCase")]
 pub struct RunReportDTO {
@@ -41,7 +56,7 @@ pub struct RunReportDTO {
     #[dummy(faker = "1..1000i16")]
     pub stages_completed: i16,
     #[dummy(expr = "vec![]")]
-    pub stage_history: Vec<String>,
+    pub stage_history: Vec<StageInfo>,
 
     // items
     #[dummy(expr = "serde_json::json!({})")]
@@ -119,14 +134,24 @@ impl TryFrom<RunReportDTO> for run_report::ActiveModel {
             time_alive_seconds: Set(dto.time_alive_seconds),
             artifacts: Set(dto.artifacts),
             stages_completed: Set(dto.stages_completed),
-            stage_history: Set(dto.stage_history),
+            stage_history: Set(dto
+                .stage_history
+                .iter()
+                .map(|e| {
+                    serde_json::to_value(e)
+                        .expect("Cast from StageInteractable to serde_json::Value failed")
+                })
+                .collect()),
             score: Set(score),
             items: Set(dto.items),
             items_collected: Set(dto.items_collected),
             item_history: Set(dto
                 .item_history
-                .into_iter()
-                .map(|e| serde_json::to_value(e).unwrap())
+                .iter()
+                .map(|e| {
+                    serde_json::to_value(e)
+                        .expect("Cast from ItemEvent to serde_json::Value failed")
+                })
                 .collect()),
             drones_purchased: Set(dto.drones_purchased),
             turrets_purchased: Set(dto.turrets_purchased),

@@ -20,7 +20,7 @@ pub struct Model {
     pub time_alive_seconds: i64,
     pub artifacts: Vec<String>,
     pub stages_completed: i16,
-    pub stage_history: Vec<String>,
+    pub stage_history: Vec<Json>,
     pub score: i64,
     // pub run_time_seconds: u32,
 
