@@ -6,11 +6,18 @@ import items from "../../../data/items.json";
 import scoring_table from "../../../data/scoring.json";
 import tiers from "../../../data/tiers.json";
 import environments from "../../../data/environments.json";
+import equipment from "../../../data/equipment.json";
 
 type ItemEvent = {
   id: number;
   count: number;
   time: number;
+}
+
+export type StageInteractable = {
+  name: string;
+  time?: number;
+  item: number;
 }
 
 export type RunReportWithUser = {
@@ -29,7 +36,7 @@ export type RunReportWithUser = {
   timeAliveSeconds: number;
   artifacts: string[];
   stagesCompleted: number;
-  stageHistory: string[];
+  stageHistory: { name: string; interactables: StageInteractable[] }[];
   score: number;
 
   // items
@@ -137,6 +144,14 @@ export type Environment = {
   icon: string;
 };
 
+export type Equipment = {
+  id: number;
+  name: string;
+  nameToken: string;
+  displayName: string;
+  icon: string;
+};
+
 export const ITEMS = Object.fromEntries(
   items.map((item: Item) => [item.id, item]),
 );
@@ -161,6 +176,9 @@ export const ARTIFACTS = Object.fromEntries(
 );
 export const ENVIRONMENTS = Object.fromEntries(
   environments.map((environment: Environment) => [environment.name, environment]),
+);
+export const EQUIPMENTS = Object.fromEntries(
+  equipment.map((equipment: Equipment) => [equipment.id, equipment]),
 );
 
 export const ORDERED_SURVIVORS: string[] = [
@@ -252,4 +270,8 @@ export function formatBig(big: number): string {
   return Math.round(big)
     .toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+export function sortStageInteractables(a: StageInteractable, b: StageInteractable): number {
+  return (a.time ?? Infinity) - (b.time ?? Infinity) || 0.0;
 }

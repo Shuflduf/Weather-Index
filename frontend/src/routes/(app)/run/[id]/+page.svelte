@@ -8,23 +8,29 @@
     DIFFICULTIES,
     ENDINGS,
     ENVIRONMENTS,
+    EQUIPMENTS,
     formatBig,
     formatSeconds,
     ITEMS,
     SCORING_TABLE,
     sortItems,
+    sortStageInteractables,
     type RunReportWithUser,
   } from "$lib/RoR2";
   import UserDisplay from "$lib/UserDisplay.svelte";
   import { onMount } from "svelte";
+  import StageItemContextMenu from "./StageItemContextMenu.svelte";
 
   let runPromise: Promise<RunReportWithUser> = $state(new Promise(() => {}));
+  let contextMenu: any = $state();
 
   onMount(async () => {
     const runId = page.params.id;
     runPromise = fetch(api(`runs/${runId}`)).then((resp) => resp.json());
   });
 </script>
+
+<StageItemContextMenu bind:this={contextMenu} />
 
 {#await runPromise}
   <LoadingIndicator indicator text="Loading run report!" />
@@ -225,83 +231,98 @@
     </div>
   </div>
 
-  <hr class="mt-8" />
+  <hr class="my-8" />
 
-  <div class="mt-8">
-    <h1 class="text-3xl text-center">Stage History</h1>
+  <h1 class="text-3xl text-center mb-4">Stage History</h1>
 
-    <div class="flex flex-row overflow-x-auto gap-2 mt-4">
-      {#each run.stageHistory as stage}
-        <div class="shrink-0">
+  <div class="flex flex-col gap-8">
+    {#each run.stageHistory as stage}
+      <div class="flex flex-row gap-4">
+        <div>
           <img
-            src="/environments/{ENVIRONMENTS[stage].icon}"
+            src="/environments/{ENVIRONMENTS[stage.name].icon}"
             alt="stage"
             class="h-32 border"
           />
           <span class="text-secondary italic block text-center mb-4">
-            {ENVIRONMENTS[stage].displayName}
+            {ENVIRONMENTS[stage.name].displayName}
           </span>
         </div>
+        <div class="flex flex-row flex-wrap flex-1">
+          {#each stage.interactables.toSorted(sortStageInteractables) as interactable}
+            {@const table =
+              interactable.name == "EQUIPMENTBARREL_NAME" ? EQUIPMENTS : ITEMS}
+            {@const imgPath =
+              interactable.name == "EQUIPMENTBARREL_NAME"
+                ? "equipment"
+                : "items"}
+            <img
+              onmouseenter={(e) => contextMenu?.show(e, interactable)}
+              onmousemove={(e) => contextMenu?.update(e)}
+              onmouseleave={(_) => contextMenu.hide()}
+              src="/{imgPath}/{table[interactable.item].icon}"
+              alt={table[interactable.item].displayName}
+              class="size-16"
+              style="filter: grayscale({interactable.time != null ? 0 : 1});"
+            />
+          {/each}
+        </div>
+      </div>
+    {/each}
+  </div>
+
+  <hr class="my-8" />
+
+  <h1 class="text-3xl text-center">Item History</h1>
+
+  <table class="w-full">
+    <thead>
+      <tr>
+        <th
+          class="text-xl tracking-tight text-center font-bold px-2 relative z-2"
+        >
+          Item
+        </th>
+        <th
+          class="text-xl tracking-tight text-center font-bold px-2 relative z-2"
+        >
+          Count
+        </th>
+        <th
+          class="text-xl tracking-tight text-center font-bold px-2 relative z-2"
+        >
+          Time
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {#each run.itemHistory as itemEvent}
+        {#if !ITEMS[itemEvent.id].helper}
+          <tr class="">
+            <td class="border px-4 bg-bg-secondary">
+              <img
+                src="/items/{ITEMS[itemEvent.id].icon}"
+                alt="stage"
+                class="h-8 inline"
+              />
+              <span class="">
+                {ITEMS[itemEvent.id].displayName}
+              </span>
+            </td>
+            <td class="border px-4 bg-bg-secondary">
+              <span class={itemEvent.count > 0 ? "text-success" : "text-error"}>
+                {itemEvent.count > 0 ? "+" : "-"}
+                {itemEvent.count.toString().replace("-", "")}
+              </span>
+            </td>
+            <td class="border px-4 bg-bg-secondary">
+              <span>{formatSeconds(itemEvent.time)}</span>
+            </td>
+          </tr>
+        {/if}
       {/each}
-    </div>
-  </div>
-
-  <hr />
-
-  <div class="mt-8">
-    <h1 class="text-3xl text-center">Item History</h1>
-
-    <table class="w-full">
-      <thead>
-        <tr>
-          <th
-            class="text-xl tracking-tight text-center font-bold px-2 relative z-2"
-          >
-            Item
-          </th>
-          <th
-            class="text-xl tracking-tight text-center font-bold px-2 relative z-2"
-          >
-            Count
-          </th>
-          <th
-            class="text-xl tracking-tight text-center font-bold px-2 relative z-2"
-          >
-            Time
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {#each run.itemHistory as itemEvent}
-          {#if !ITEMS[itemEvent.id].helper}
-            <tr class="">
-              <td class="border px-4 bg-bg-secondary">
-                <img
-                  src="/items/{ITEMS[itemEvent.id].icon}"
-                  alt="stage"
-                  class="h-8 inline"
-                />
-                <span class="">
-                  {ITEMS[itemEvent.id].displayName}
-                </span>
-              </td>
-              <td class="border px-4 bg-bg-secondary">
-                <span
-                  class={itemEvent.count > 0 ? "text-success" : "text-error"}
-                >
-                  {itemEvent.count > 0 ? "+" : "-"}
-                  {itemEvent.count.toString().replace("-", "")}
-                </span>
-              </td>
-              <td class="border px-4 bg-bg-secondary">
-                <span>{formatSeconds(itemEvent.time)}</span>
-              </td>
-            </tr>
-          {/if}
-        {/each}
-      </tbody>
-    </table>
-  </div>
+    </tbody>
+  </table>
 {:catch err}
   {err}
 {/await}
