@@ -54,19 +54,17 @@ namespace WeatherIndex
 
         public static void Init()
         {
+            On.RoR2.Run.OnClientGameOver += (orig, self, runReport) =>
+            {
+                addCurrentStage();
+
+                orig(self, runReport);
+            };
             On.RoR2.Run.AdvanceStage += (orig, self, stage) =>
             {
                 orig(self, stage);
 
-                StageInfo info = new StageInfo();
-                info.name = currentStageName!;
-                info.interactables = new List<StageInteractable>(currentStage!.Count);
-                foreach (StageInteractable si in currentStage!.Values)
-                {
-                    info.interactables.Add(si);
-                }
-                stages.Add(info);
-                // Log.Info(JsonConvert.SerializeObject(info));
+                addCurrentStage();
             };
             On.RoR2.Run.OnStageStartGlobal += (orig, self, stage) =>
             {
@@ -135,6 +133,18 @@ namespace WeatherIndex
 
                 oldItems = newItems;
             };
+        }
+
+        static void addCurrentStage()
+        {
+            StageInfo info = new StageInfo();
+            info.name = currentStageName!;
+            info.interactables = new List<StageInteractable>(currentStage!.Count);
+            foreach (StageInteractable si in currentStage!.Values)
+            {
+                info.interactables.Add(si);
+            }
+            stages.Add(info);
         }
 
         static void addItemEvents(List<ItemEvent> diffs)

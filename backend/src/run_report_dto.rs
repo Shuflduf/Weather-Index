@@ -23,7 +23,7 @@ pub struct ItemEvent {
 #[serde(rename_all = "camelCase")]
 pub struct StageInteractable {
     name: String,
-    time: i32,
+    time: Option<i32>,
     item: i16,
 }
 

@@ -68,6 +68,18 @@ namespace WeatherIndex
                     }
                 )
             );
+
+            ModSettingsManager.AddOption(
+                new StringInputFieldOption(
+                    backendURL,
+                    new InputFieldConfig
+                    {
+                        name = "Backend URL",
+                        category = "Debug",
+                        description = "URL of Weather Index server.",
+                    }
+                )
+            );
         }
     }
 }
