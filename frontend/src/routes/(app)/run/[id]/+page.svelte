@@ -13,6 +13,7 @@
     formatSeconds,
     ITEMS,
     SCORING_TABLE,
+    SKILLS,
     sortItems,
     sortStageInteractables,
     type RunReportWithUser,
@@ -160,7 +161,7 @@
     <div class="border bg-bg-secondary w-full p-2">
       <h1 class="text-3xl text-center">Info</h1>
       <div class="flex flex-row items-center justify-between p-2">
-        <div class="gap-4">
+        <div>
           <img
             src={`/bodies/${BODIES[run.survivor].icon}`}
             alt={BODIES[run.survivor].displayName}
@@ -174,18 +175,34 @@
             </span>
           </span>
         </div>
-        <div class="flex flex-row items-center">
-          {#if run.equipment}
+
+        <div>
+          {#each run.skills as skill}
             <img
-              src="/equipment/{EQUIPMENTS[run.equipment].icon}"
-              alt={EQUIPMENTS[run.equipment].displayName}
-              title={EQUIPMENTS[run.equipment].displayName}
-              class="size-16"
+              src="/skills/{SKILLS[skill].icon}"
+              alt={SKILLS[skill].displayName}
+              class="inline h-12"
+              title={SKILLS[skill].displayName}
             />
-            <span>{EQUIPMENTS[run.equipment].displayName}</span>
-          {/if}
+          {/each}
         </div>
       </div>
+      {#if run.equipment}
+        <div>
+          <img
+            src="/equipment/{EQUIPMENTS[run.equipment].icon}"
+            alt={EQUIPMENTS[run.equipment].displayName}
+            title={EQUIPMENTS[run.equipment].displayName}
+            class="h-12 inline mr-2"
+          />
+          <span class="text-lg">
+            Equipment:
+            <span class="text-yellow-200">
+              {EQUIPMENTS[run.equipment].displayName}
+            </span>
+          </span>
+        </div>
+      {/if}
       <h1 class="text-2xl text-center">Items Collected</h1>
       <ul class="flex flex-row flex-wrap mt-4">
         {#each sortItems(run.items) as [itemId, itemCount] (itemId)}

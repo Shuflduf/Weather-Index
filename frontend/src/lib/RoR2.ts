@@ -7,6 +7,7 @@ import scoring_table from "../../../data/scoring.json";
 import tiers from "../../../data/tiers.json";
 import environments from "../../../data/environments.json";
 import equipment from "../../../data/equipment.json";
+import skills from "../../../data/skills.json";
 
 type ItemEvent = {
   id: number;
@@ -34,6 +35,7 @@ export type RunReportWithUser = {
 
   // run info
   survivor: string;
+  skills: number[];
   startTime: Date;
   ending: string;
   difficulty: string;
@@ -158,6 +160,14 @@ export type Equipment = {
   icon: string;
 };
 
+export type Skill = {
+  id: number;
+  name: string;
+  nameToken: string;
+  displayName: string;
+  icon: string;
+};
+
 export const ITEMS = Object.fromEntries(
   items.map((item: Item) => [item.id, item]),
 );
@@ -185,6 +195,9 @@ export const ENVIRONMENTS = Object.fromEntries(
 );
 export const EQUIPMENTS = Object.fromEntries(
   equipment.map((equipment: Equipment) => [equipment.id, equipment]),
+);
+export const SKILLS = Object.fromEntries(
+  skills.map((skill: Skill) => [skill.id, skill]),
 );
 
 export const ORDERED_SURVIVORS: string[] = [

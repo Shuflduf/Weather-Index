@@ -48,6 +48,9 @@ pub struct RunReportDTO {
         expr = "ORDERED_SURVIVORS[Faker.fake::<usize>() % ORDERED_SURVIVORS.len()].to_string()"
     )]
     pub survivor: String,
+
+    #[dummy(expr = "vec![]")]
+    pub skills: Vec<i32>,
     #[dummy(expr = "endings()[Faker.fake::<usize>() % endings().len()].name.clone()")]
     pub ending: String,
     #[dummy(expr = "chrono::Utc::now().to_rfc3339()")]
@@ -135,6 +138,7 @@ impl TryFrom<RunReportDTO> for run_report::ActiveModel {
             upload_time: Set(chrono::Utc::now().naive_utc()),
 
             survivor: Set(dto.survivor),
+            skills: Set(dto.skills),
             ending: Set(dto.ending),
             start_time: Set(dto
                 .start_time

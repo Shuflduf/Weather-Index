@@ -52,14 +52,14 @@ namespace WeatherIndex
                     }
                 }
 
+                List<int> skillList = new List<int>();
                 Loadout.BodyLoadoutManager loadout = player.master.loadout.bodyLoadoutManager;
                 GenericSkill[] slots = BodyCatalog.GetBodyPrefabSkillSlots(player.bodyIndex);
                 for (int i = 0; i < slots.Length; i++)
                 {
                     uint variant = loadout.GetSkillVariant(player.bodyIndex, i);
                     SkillDef def = slots[i].skillFamily.variants[variant].skillDef;
-                    Log.Info(def.skillName);
-                    Log.Info(def.skillNameToken);
+                    skillList.Add(def.skillIndex);
                 }
 
                 // player.master.inventory.abili
@@ -67,6 +67,7 @@ namespace WeatherIndex
                 {
                     // run info
                     survivor = player.bodyName,
+                    skills = skillList,
                     ending = report.gameEnding.cachedName,
                     startTime = report.runStartTimeUtc,
                     difficulty = DifficultyCatalog
