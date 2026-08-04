@@ -1,10 +1,12 @@
 #nullable enable
 
+using RoR2;
+
 namespace WeatherIndex
 {
     class Debug
     {
-        public static bool enabled = true;
+        public static bool enabled = false;
 
         public static void Init()
         {
@@ -25,6 +27,14 @@ namespace WeatherIndex
                     self.outer.SetNextState(new EntityStates.GameOver.ShowReport());
                 }
             };
+        }
+
+        internal static void SkipKeybind()
+        {
+            if (Run.instance && WIConfig.endRunKeybind!.Value.IsDown() && enabled)
+            {
+                Run.instance.BeginGameOver(RoR2Content.GameEndings.MainEnding);
+            }
         }
     }
 }

@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using BepInEx;
 using Newtonsoft.Json;
@@ -21,7 +20,7 @@ namespace WeatherIndex
         public const string PluginName = "WeatherIndex";
         public const string PluginVersion = "1.0.0";
 
-        private static readonly ConcurrentQueue<Action> mainThreadQueue = new();
+        internal static readonly ConcurrentQueue<Action> mainThreadQueue = new();
         internal static readonly HttpClient http = new();
         internal static string? lastRun;
         internal static bool uploadedRun = true;
@@ -160,10 +159,7 @@ namespace WeatherIndex
                 action();
             }
 
-            if (Run.instance && WIConfig.endRunKeybind!.Value.IsDown())
-            {
-                Run.instance.BeginGameOver(RoR2Content.GameEndings.MainEnding);
-            }
+            Debug.SkipKeybind();
         }
     }
 }

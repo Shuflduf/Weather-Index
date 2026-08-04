@@ -6,7 +6,9 @@
   import { authedFetch, setToken } from "./auth";
 
   let user: any = $state(null);
-  let commit: string = $state("");
+  let devBuild: boolean = $state(true);
+  let commitHash: string = $state("");
+  let commitUrl: string = $state("https://github.com/Shuflduf/Weather-Index");
 
   onMount(async () => {
     const params = new URLSearchParams(window.location.search);
@@ -18,7 +20,16 @@
 
     fetch("/env")
       .then((r) => r.json())
-      .then((j) => (commit = j["VERCEL_GIT_COMMIT_SHA"] ?? "Development"));
+      .then((env) => {
+        if ("VERCEL" in env) devBuild = false;
+        if (devBuild) {
+          commitHash = "Development";
+        } else {
+          const fullCommitHash = env["VERCEL_GIT_COMMIT_SHA"];
+          commitUrl = `${commitUrl}/commit/${fullCommitHash}`;
+          commitHash = fullCommitHash.slice(0, 8);
+        }
+      });
     let resp = await authedFetch(auth("get-session"));
     let body = await resp.json();
     if (body.user) {
@@ -62,31 +73,35 @@
     <a class="text-xl tracking-tight text-secondary" href="/stats">Stats</a>
     <a class="text-xl tracking-tight text-secondary" href="/docs">Docs</a>
   </div>
-  {commit}
-  {#if user}
-    <button
-      class="h-full border-l px-4 flex items-center cursor-pointer transition-colors bg-bg-secondary hover:bg-hover active:bg-active"
-      popovertarget="user-menu"
-      style="anchor-name: --user-menu;"
-    >
-      <div
-        class="inline-flex flex-row justify-center items-center gap-2 w-max h-14"
-      >
-        <PFP src={user.image} class="h-full border" />
-        <span class="text-primary text-lg">
-          {user.display_username && user.display_username.length > 0
-            ? user.display_username
-            : user.username}
-        </span>
-      </div>
-    </button>
-  {:else}
-    <a
-      class={`flex bg-bg-secondary hover:bg-default flex-row gap-2 text-xl border-l px-4 h-full text-primary transition justify-center items-center ${user == false ? "cursor-pointer" : "cursor-not-allowed"}`}
-      href={user == false ? "/sign-in" : ""}
-    >
-      <User />
-      <span>Sign In</span>
+  <div class="flex flex-row items-center h-full">
+    <a href={commitUrl} class="text-secondary mr-4 underline">
+      {commitHash}
     </a>
-  {/if}
+    {#if user}
+      <button
+        class="h-full border-l px-4 flex items-center cursor-pointer transition-colors bg-bg-secondary hover:bg-hover active:bg-active"
+        popovertarget="user-menu"
+        style="anchor-name: --user-menu;"
+      >
+        <div
+          class="inline-flex flex-row justify-center items-center gap-2 w-max h-14"
+        >
+          <PFP src={user.image} class="h-full border" />
+          <span class="text-primary text-lg">
+            {user.display_username && user.display_username.length > 0
+              ? user.display_username
+              : user.username}
+          </span>
+        </div>
+      </button>
+    {:else}
+      <a
+        class={`flex bg-bg-secondary hover:bg-default flex-row gap-2 text-xl border-l px-4 h-full text-primary transition justify-center items-center ${user == false ? "cursor-pointer" : "cursor-not-allowed"}`}
+        href={user == false ? "/sign-in" : ""}
+      >
+        <User />
+        <span>Sign In</span>
+      </a>
+    {/if}
+  </div>
 </div>
