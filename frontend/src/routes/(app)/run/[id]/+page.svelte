@@ -286,7 +286,7 @@
 
   <hr class="my-8" />
 
-  <h1 class="text-3xl text-center">Item History</h1>
+  <h1 class="text-3xl text-center mb-4">Item History</h1>
 
   <table class="w-full">
     <thead>
@@ -333,6 +333,46 @@
             </td>
           </tr>
         {/if}
+      {/each}
+    </tbody>
+  </table>
+
+  <hr class="my-8" />
+
+  <h1 class="text-3xl text-center mb-4">Equipment History</h1>
+
+  <table class="w-full">
+    <thead>
+      <tr>
+        <th
+          class="text-xl tracking-tight text-center font-bold px-2 relative z-2"
+        >
+          Item
+        </th>
+        <th
+          class="text-xl tracking-tight text-center font-bold px-2 relative z-2"
+        >
+          Time
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {#each run.equipmentHistory as equipmentEvent}
+        <tr class="">
+          <td class="border px-4 bg-bg-secondary">
+            <img
+              src="/equipment/{EQUIPMENTS[equipmentEvent.id].icon}"
+              alt="stage"
+              class="h-12 inline"
+            />
+            <span class="">
+              {EQUIPMENTS[equipmentEvent.id].displayName}
+            </span>
+          </td>
+          <td class="border px-4 bg-bg-secondary">
+            <span>{formatSeconds(equipmentEvent.time)}</span>
+          </td>
+        </tr>
       {/each}
     </tbody>
   </table>
