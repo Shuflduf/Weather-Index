@@ -326,7 +326,7 @@
     "name": "FireArrowSnipe",
     "nameToken": "HUNTRESS_SPECIAL_ALT1_NAME",
     "displayName": "Ballista",
-    "icon": "HUNTRESS_SPECIAL_ALT1_NAME_67.png"
+    "icon": "HUNTRESS_SPECIAL_ALT1_NAME.png"
   },
   {
     "id": 69,
@@ -690,14 +690,14 @@
     "name": "CaptainPrepAirstrike",
     "nameToken": "CAPTAIN_UTILITY_NAME",
     "displayName": "Orbital Probe",
-    "icon": "CAPTAIN_UTILITY_NAME_145.png"
+    "icon": "CAPTAIN_UTILITY_NAME.png"
   },
   {
     "id": 146,
     "name": "CaptainPrepAirstrike",
     "nameToken": "CAPTAIN_UTILITY_ALT1_NAME",
     "displayName": "OGM-72 'DIABLO' Strike",
-    "icon": "CAPTAIN_UTILITY_ALT1_NAME_146.png"
+    "icon": "CAPTAIN_UTILITY_ALT1_NAME.png"
   },
   {
     "id": 147,
@@ -935,14 +935,14 @@
     "name": "FireGrenade",
     "nameToken": "ENGI_PRIMARY_NAME",
     "displayName": "Bouncing Grenades",
-    "icon": "ENGI_PRIMARY_NAME_197.png"
+    "icon": "ENGI_PRIMARY_NAME.png"
   },
   {
     "id": 198,
     "name": "PlaceMine",
     "nameToken": "ENGI_SECONDARY_NAME",
     "displayName": "Pressure Mines",
-    "icon": "ENGI_SECONDARY_NAME_198.png"
+    "icon": "ENGI_SECONDARY_NAME.png"
   },
   {
     "id": 201,
@@ -984,7 +984,7 @@
     "name": "",
     "nameToken": "LOADER_UTILITY_NAME",
     "displayName": "Charged Gauntlet",
-    "icon": "LOADER_UTILITY_NAME_206.png"
+    "icon": "LOADER_UTILITY_NAME.png"
   },
   {
     "id": 207,
@@ -1026,35 +1026,35 @@
     "name": "SweepBarrage",
     "nameToken": "COMMANDO_SPECIAL_ALT1_NAME",
     "displayName": "Frag Grenade",
-    "icon": "COMMANDO_SPECIAL_ALT1_NAME_214.png"
+    "icon": "COMMANDO_SPECIAL_ALT1_NAME.png"
   },
   {
     "id": 215,
     "name": "Barrage",
     "nameToken": "COMMANDO_SPECIAL_NAME",
     "displayName": "Suppressive Fire",
-    "icon": "COMMANDO_SPECIAL_NAME_215.png"
+    "icon": "COMMANDO_SPECIAL_NAME.png"
   },
   {
     "id": 216,
     "name": "FireFMJ",
     "nameToken": "COMMANDO_SECONDARY_NAME",
     "displayName": "Phase Round",
-    "icon": "COMMANDO_SECONDARY_NAME_216.png"
+    "icon": "COMMANDO_SECONDARY_NAME.png"
   },
   {
     "id": 217,
     "name": "FirePistol",
     "nameToken": "COMMANDO_PRIMARY_NAME",
     "displayName": "Double Tap",
-    "icon": "COMMANDO_PRIMARY_NAME_217.png"
+    "icon": "COMMANDO_PRIMARY_NAME.png"
   },
   {
     "id": 218,
     "name": "Roll",
     "nameToken": "COMMANDO_UTILITY_NAME",
     "displayName": "Tactical Dive",
-    "icon": "COMMANDO_UTILITY_NAME_218.png"
+    "icon": "COMMANDO_UTILITY_NAME.png"
   },
   {
     "id": 220,
@@ -1117,7 +1117,7 @@
     "name": "LunarSpecialReplacement",
     "nameToken": "SKILL_LUNAR_SPECIAL_REPLACEMENT_NAME",
     "displayName": "Ruin",
-    "icon": "SKILL_LUNAR_SPECIAL_REPLACEMENT_NAME_229.png"
+    "icon": "SKILL_LUNAR_SPECIAL_REPLACEMENT_NAME.png"
   },
   {
     "id": 230,
@@ -1131,7 +1131,7 @@
     "name": "GroundLight",
     "nameToken": "MERC_PRIMARY_NAME",
     "displayName": "Laser Sword",
-    "icon": "MERC_PRIMARY_NAME_231.png"
+    "icon": "MERC_PRIMARY_NAME.png"
   },
   {
     "id": 235,
@@ -1180,14 +1180,14 @@
     "name": "ThrowGrenade",
     "nameToken": "COMMANDO_SPECIAL_ALT1_NAME",
     "displayName": "Frag Grenade",
-    "icon": "COMMANDO_SPECIAL_ALT1_NAME_243.png"
+    "icon": "COMMANDO_SPECIAL_ALT1_NAME.png"
   },
   {
     "id": 244,
     "name": "SonicPull",
     "nameToken": "TREEBOT_UTILITY_ALT1_NAME",
     "displayName": "Bramble Volley",
-    "icon": "TREEBOT_UTILITY_ALT1_NAME_244.png"
+    "icon": "TREEBOT_UTILITY_ALT1_NAME.png"
   },
   {
     "id": 245,
@@ -1229,7 +1229,7 @@
     "name": "CrocoLeap",
     "nameToken": "VOIDSURVIVOR_SPECIAL_NAME",
     "displayName": "【Sup??ress』",
-    "icon": "VOIDSURVIVOR_SPECIAL_NAME_250.png"
+    "icon": "VOIDSURVIVOR_SPECIAL_NAME.png"
   },
   {
     "id": 251,
@@ -1257,7 +1257,7 @@
     "name": "CrocoDisease",
     "nameToken": "VOIDSURVIVOR_SECONDARY_NAME",
     "displayName": "『Floo?d」",
-    "icon": "VOIDSURVIVOR_SECONDARY_NAME_254.png"
+    "icon": "VOIDSURVIVOR_SECONDARY_NAME.png"
   },
   {
     "id": 255,
@@ -1278,7 +1278,7 @@
     "name": "FireBlaster",
     "nameToken": "VOIDSURVIVOR_PRIMARY_NAME",
     "displayName": "【D??row?n」",
-    "icon": "VOIDSURVIVOR_PRIMARY_NAME_257.png"
+    "icon": "VOIDSURVIVOR_PRIMARY_NAME.png"
   },
   {
     "id": 258,
@@ -1495,7 +1495,7 @@
     "name": "FireBlaster",
     "nameToken": "VOIDSURVIVOR_PRIMARY_NAME",
     "displayName": "【D??row?n」",
-    "icon": "VOIDSURVIVOR_PRIMARY_NAME_288.png"
+    "icon": "VOIDSURVIVOR_PRIMARY_NAME.png"
   },
   {
     "id": 289,
@@ -1537,7 +1537,7 @@
     "name": "Vent",
     "nameToken": "VOIDSURVIVOR_UTILITY_NAME",
     "displayName": "「?Tr?espass】",
-    "icon": "VOIDSURVIVOR_UTILITY_NAME_294.png"
+    "icon": "VOIDSURVIVOR_UTILITY_NAME.png"
   },
   {
     "id": 295,
@@ -1586,7 +1586,7 @@
     "name": "Dice",
     "nameToken": "CHEF_PRIMARY_NAME",
     "displayName": "Dice",
-    "icon": "CHEF_PRIMARY_NAME_301.png"
+    "icon": "CHEF_PRIMARY_NAME.png"
   },
   {
     "id": 302,
@@ -1607,7 +1607,7 @@
     "name": "Ice Box",
     "nameToken": "CHEF_SECONDARY_ALT_NAME",
     "displayName": "Ice Box",
-    "icon": "CHEF_SECONDARY_ALT_NAME_304.png"
+    "icon": "CHEF_SECONDARY_ALT_NAME.png"
   },
   {
     "id": 305,
@@ -1621,7 +1621,7 @@
     "name": "OilSpill",
     "nameToken": "CHEF_UTILITY_ALT_NAME",
     "displayName": "Oil Spill",
-    "icon": "CHEF_UTILITY_ALT_NAME_306.png"
+    "icon": "CHEF_UTILITY_ALT_NAME.png"
   },
   {
     "id": 307,
@@ -1635,7 +1635,7 @@
     "name": "RolyPoly",
     "nameToken": "CHEF_UTILITY_NAME",
     "displayName": "Roll",
-    "icon": "CHEF_UTILITY_NAME_308.png"
+    "icon": "CHEF_UTILITY_NAME.png"
   },
   {
     "id": 309,
@@ -1649,14 +1649,14 @@
     "name": "Sear",
     "nameToken": "CHEF_SECONDARY_NAME",
     "displayName": "Sear",
-    "icon": "CHEF_SECONDARY_NAME_310.png"
+    "icon": "CHEF_SECONDARY_NAME.png"
   },
   {
     "id": 313,
     "name": "DisabledSkill",
     "nameToken": "CAPTAIN_SKILL_USED_UP_NAME",
     "displayName": "Unavailable",
-    "icon": "CAPTAIN_SKILL_USED_UP_NAME_313.png"
+    "icon": "CAPTAIN_SKILL_USED_UP_NAME.png"
   },
   {
     "id": 314,
@@ -1712,7 +1712,7 @@
     "name": "CorruptedPaths",
     "nameToken": "FALSESON_UTILITY_NAME",
     "displayName": "Step of the Brothers",
-    "icon": "FALSESON_UTILITY_NAME_321.png"
+    "icon": "FALSESON_UTILITY_NAME.png"
   },
   {
     "id": 322,
@@ -1740,14 +1740,14 @@
     "name": "CorruptedPaths",
     "nameToken": "FALSESON_UTILITY_NAME",
     "displayName": "Step of the Brothers",
-    "icon": "FALSESON_UTILITY_NAME_327.png"
+    "icon": "FALSESON_UTILITY_NAME.png"
   },
   {
     "id": 328,
     "name": "CorruptedPaths",
     "nameToken": "FALSESON_UTILITY_NAME",
     "displayName": "Step of the Brothers",
-    "icon": "FALSESON_UTILITY_NAME_328.png"
+    "icon": "FALSESON_UTILITY_NAME.png"
   },
   {
     "id": 329,
@@ -1852,7 +1852,7 @@
     "name": "SoulSearch",
     "nameToken": "SEEKER_PRIMARY_ALT1_NAME",
     "displayName": "Soul Search",
-    "icon": "SEEKER_PRIMARY_ALT1_NAME_349.png"
+    "icon": "SEEKER_PRIMARY_ALT1_NAME.png"
   },
   {
     "id": 350,
@@ -1873,7 +1873,7 @@
     "name": "SpiritPunch",
     "nameToken": "SEEKER_PRIMARY_NAME",
     "displayName": "Spirit Punch",
-    "icon": "SEEKER_PRIMARY_NAME_352.png"
+    "icon": "SEEKER_PRIMARY_NAME.png"
   },
   {
     "id": 354,
@@ -1943,7 +1943,7 @@
     "name": "BombardmentDroneSkill",
     "nameToken": "DRONE_BOMBARDMENT_PRIMARY_SKILL_NAME",
     "displayName": "Bombardment",
-    "icon": "DRONE_BOMBARDMENT_PRIMARY_SKILL_NAME_363.png"
+    "icon": "DRONE_BOMBARDMENT_PRIMARY_SKILL_NAME.png"
   },
   {
     "id": 364,
@@ -1971,7 +1971,7 @@
     "name": "Cancel",
     "nameToken": "SKILL_GENERIC_CANCEL_NAME",
     "displayName": "Cancel",
-    "icon": "SKILL_GENERIC_CANCEL_NAME_367.png"
+    "icon": "SKILL_GENERIC_CANCEL_NAME.png"
   },
   {
     "id": 368,
@@ -1992,7 +1992,7 @@
     "name": "Cleanup",
     "nameToken": "DRIFTER_SECONDARY_NAME",
     "displayName": "Cleanup",
-    "icon": "DRIFTER_SECONDARY_NAME_370.png"
+    "icon": "DRIFTER_SECONDARY_NAME.png"
   },
   {
     "id": 371,
@@ -2048,28 +2048,28 @@
     "name": "ComboP2_SWEEEP(Horizontal)",
     "nameToken": "ComboP2_SWEEEP(Horizontal)",
     "displayName": "ComboP2_SWEEEP(Horizontal)",
-    "icon": "ComboP2_SWEEEP(Horizontal)_378.png"
+    "icon": "ComboP2_SWEEEP(Horizontal).png"
   },
   {
     "id": 379,
     "name": "ComboP1_ARENA",
     "nameToken": "ComboP1_ARENA",
     "displayName": "ComboP1_ARENA",
-    "icon": "ComboP1_ARENA_379.png"
+    "icon": "ComboP1_ARENA.png"
   },
   {
     "id": 380,
     "name": "ComboP1_GUARD",
     "nameToken": "ComboP1_GUARD",
     "displayName": "ComboP1_GUARD",
-    "icon": "ComboP1_GUARD_380.png"
+    "icon": "ComboP1_GUARD.png"
   },
   {
     "id": 381,
     "name": "ComboP1_GUARD",
     "nameToken": "ComboP1_GUARD",
     "displayName": "ComboP1_GUARD",
-    "icon": "ComboP1_GUARD_381.png"
+    "icon": "ComboP1_GUARD.png"
   },
   {
     "id": 382,
@@ -2097,56 +2097,56 @@
     "name": "",
     "nameToken": "DRONE_COMMAND_SKILL_NAME",
     "displayName": "Activate",
-    "icon": "DRONE_COMMAND_SKILL_NAME_385.png"
+    "icon": "DRONE_COMMAND_SKILL_NAME.png"
   },
   {
     "id": 386,
     "name": "Command Elevate",
     "nameToken": "DRONE_COMMAND_SKILL_NAME",
     "displayName": "Activate",
-    "icon": "DRONE_COMMAND_SKILL_NAME_386.png"
+    "icon": "DRONE_COMMAND_SKILL_NAME.png"
   },
   {
     "id": 387,
     "name": "",
     "nameToken": "DRONE_COMMAND_SKILL_NAME",
     "displayName": "Activate",
-    "icon": "DRONE_COMMAND_SKILL_NAME_387.png"
+    "icon": "DRONE_COMMAND_SKILL_NAME.png"
   },
   {
     "id": 388,
     "name": "Command Fire Turret",
     "nameToken": "DRONE_COMMAND_SKILL_NAME",
     "displayName": "Activate",
-    "icon": "DRONE_COMMAND_SKILL_NAME_388.png"
+    "icon": "DRONE_COMMAND_SKILL_NAME.png"
   },
   {
     "id": 389,
     "name": "Command Fire Turret",
     "nameToken": "DRONE_COMMAND_SKILL_NAME",
     "displayName": "Activate",
-    "icon": "DRONE_COMMAND_SKILL_NAME_389.png"
+    "icon": "DRONE_COMMAND_SKILL_NAME.png"
   },
   {
     "id": 390,
     "name": "",
     "nameToken": "DRONE_COMMAND_SKILL_NAME",
     "displayName": "Activate",
-    "icon": "DRONE_COMMAND_SKILL_NAME_390.png"
+    "icon": "DRONE_COMMAND_SKILL_NAME.png"
   },
   {
     "id": 391,
     "name": "",
     "nameToken": "DRONE_COMMAND_SKILL_NAME",
     "displayName": "Activate",
-    "icon": "DRONE_COMMAND_SKILL_NAME_391.png"
+    "icon": "DRONE_COMMAND_SKILL_NAME.png"
   },
   {
     "id": 392,
     "name": "CommandHaul",
     "nameToken": "DRONE_COMMAND_SKILL_NAME",
     "displayName": "Activate",
-    "icon": "DRONE_COMMAND_SKILL_NAME_392.png"
+    "icon": "DRONE_COMMAND_SKILL_NAME.png"
   },
   {
     "id": 393,
@@ -2160,21 +2160,21 @@
     "name": "Command Stim",
     "nameToken": "DRONE_COMMAND_SKILL_NAME",
     "displayName": "Activate",
-    "icon": "DRONE_COMMAND_SKILL_NAME_394.png"
+    "icon": "DRONE_COMMAND_SKILL_NAME.png"
   },
   {
     "id": 395,
     "name": "Command Heal",
     "nameToken": "DRONE_COMMAND_SKILL_NAME",
     "displayName": "Activate",
-    "icon": "DRONE_COMMAND_SKILL_NAME_395.png"
+    "icon": "DRONE_COMMAND_SKILL_NAME.png"
   },
   {
     "id": 396,
     "name": "Command Recharge",
     "nameToken": "DRONE_COMMAND_SKILL_NAME",
     "displayName": "Activate",
-    "icon": "DRONE_COMMAND_SKILL_NAME_396.png"
+    "icon": "DRONE_COMMAND_SKILL_NAME.png"
   },
   {
     "id": 397,
@@ -2188,28 +2188,28 @@
     "name": "Command Stim",
     "nameToken": "DRONE_COMMAND_SKILL_NAME",
     "displayName": "Activate",
-    "icon": "DRONE_COMMAND_SKILL_NAME_398.png"
+    "icon": "DRONE_COMMAND_SKILL_NAME.png"
   },
   {
     "id": 399,
     "name": "DronJailerTrap",
     "nameToken": "DRONE_COMMAND_SKILL_NAME",
     "displayName": "Activate",
-    "icon": "DRONE_COMMAND_SKILL_NAME_399.png"
+    "icon": "DRONE_COMMAND_SKILL_NAME.png"
   },
   {
     "id": 400,
     "name": "",
     "nameToken": "DRONE_COMMAND_SKILL_NAME",
     "displayName": "Activate",
-    "icon": "DRONE_COMMAND_SKILL_NAME_400.png"
+    "icon": "DRONE_COMMAND_SKILL_NAME.png"
   },
   {
     "id": 401,
     "name": "",
     "nameToken": "DRONE_COMMAND_SKILL_NAME",
     "displayName": "Activate",
-    "icon": "DRONE_COMMAND_SKILL_NAME_401.png"
+    "icon": "DRONE_COMMAND_SKILL_NAME.png"
   },
   {
     "id": 402,
@@ -2300,7 +2300,7 @@
     "name": "Drone Leap Repeat",
     "nameToken": "DRONETECH_UTILITY_NAME",
     "displayName": "Ascent Protocol",
-    "icon": "DRONETECH_UTILITY_NAME_414.png"
+    "icon": "DRONETECH_UTILITY_NAME.png"
   },
   {
     "id": 415,
@@ -2314,7 +2314,7 @@
     "name": "RecycleEnemiesRemoteOp",
     "nameToken": "DRONE_CLEANUP_PRIMARY_SKILL_NAME",
     "displayName": "Recycle",
-    "icon": "DRONE_CLEANUP_PRIMARY_SKILL_NAME_416.png"
+    "icon": "DRONE_CLEANUP_PRIMARY_SKILL_NAME.png"
   },
   {
     "id": 417,
@@ -2384,7 +2384,7 @@
     "name": "JailerPrimaryRemoteOpSkillDef",
     "nameToken": "DRONE_JAILER_PRIMARY_SKILL_NAME",
     "displayName": "Lockdown",
-    "icon": "DRONE_JAILER_PRIMARY_SKILL_NAME_428.png"
+    "icon": "DRONE_JAILER_PRIMARY_SKILL_NAME.png"
   },
   {
     "id": 429,
@@ -2426,7 +2426,7 @@
     "name": "",
     "nameToken": "DRONE_COMMAND_SKILL_NAME",
     "displayName": "Activate",
-    "icon": "DRONE_COMMAND_SKILL_NAME_434.png"
+    "icon": "DRONE_COMMAND_SKILL_NAME.png"
   },
   {
     "id": 435,
@@ -2447,7 +2447,7 @@
     "name": "",
     "nameToken": "DRONE_COMMAND_SKILL_NAME",
     "displayName": "Activate",
-    "icon": "DRONE_COMMAND_SKILL_NAME_437.png"
+    "icon": "DRONE_COMMAND_SKILL_NAME.png"
   },
   {
     "id": 438,
@@ -2699,14 +2699,14 @@
     "name": "",
     "nameToken": "DRONE_COMMAND_SKILL_NAME",
     "displayName": "Activate",
-    "icon": "DRONE_COMMAND_SKILL_NAME_474.png"
+    "icon": "DRONE_COMMAND_SKILL_NAME.png"
   },
   {
     "id": 475,
     "name": "Suffocate",
     "nameToken": "DRIFTER_UTILITY_NAME",
     "displayName": "Repossess",
-    "icon": "DRIFTER_UTILITY_NAME_475.png"
+    "icon": "DRIFTER_UTILITY_NAME.png"
   },
   {
     "id": 476,
@@ -2748,7 +2748,7 @@
     "name": "Tinker",
     "nameToken": "DRIFTER_SPECIAL_ALT_NAME",
     "displayName": "Tinker",
-    "icon": "DRIFTER_SPECIAL_ALT_NAME_481.png"
+    "icon": "DRIFTER_SPECIAL_ALT_NAME.png"
   },
   {
     "id": 482,

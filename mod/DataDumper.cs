@@ -505,7 +505,8 @@ namespace WeatherIndex
             Directory.CreateDirectory(outputDir);
 
             List<object> skills = new List<object>();
-            HashSet<string> usedFilenames = new HashSet<string>();
+            Dictionary<string, string> tokenToFile = new Dictionary<string, string>();
+            // HashSet<string> usedFilenames = new HashSet<string>();
 
             foreach (var def in RoR2.Skills.SkillCatalog.allSkillDefs)
             {
@@ -516,14 +517,20 @@ namespace WeatherIndex
                 if (sprite == null || sprite.texture == null)
                     continue;
 
-                string baseName = string.IsNullOrEmpty(def.skillNameToken)
-                    ? $"skill_{def.skillIndex}"
-                    : def.skillNameToken;
-                string filename = $"{baseName}.png";
-                if (!usedFilenames.Add(filename))
-                    filename = $"{baseName}_{def.skillIndex}.png";
-
-                writeSprite(Path.Combine(outputDir, filename), sprite);
+                string filename;
+                if (
+                    string.IsNullOrEmpty(def.skillNameToken)
+                    || !tokenToFile.TryGetValue(def.skillNameToken, out filename)
+                )
+                {
+                    string baseName = string.IsNullOrEmpty(def.skillNameToken)
+                        ? $"skill_{def.skillIndex}"
+                        : def.skillNameToken;
+                    filename = $"{baseName}.png";
+                    writeSprite(Path.Combine(outputDir, filename), sprite);
+                    if (!string.IsNullOrEmpty(def.skillNameToken))
+                        tokenToFile[def.skillNameToken] = filename;
+                }
 
                 skills.Add(
                     new
@@ -555,7 +562,11 @@ namespace WeatherIndex
             var rt = RenderTexture.GetTemporary(tex.width, tex.height);
             Graphics.Blit(tex, rt);
             RenderTexture.active = rt;
-            readable.ReadPixels(new Rect(rect.x, rect.y, rect.width, rect.height), 0, 0);
+            readable.ReadPixels(
+                new Rect(rect.x, tex.height - rect.y - rect.height, rect.width, rect.height),
+                0,
+                0
+            );
             readable.Apply();
             RenderTexture.active = current;
             RenderTexture.ReleaseTemporary(rt);
