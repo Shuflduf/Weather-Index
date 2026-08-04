@@ -35,7 +35,7 @@ namespace WeatherIndex
             backendURL = plugin.Config.Bind<string>(
                 "Debug",
                 "Backend URL",
-                "https://wi-backend.shuflduf.hackclub.app",
+                "https://wi-api.shuflduf.xyz",
                 "Weather Index backend URL"
             );
 

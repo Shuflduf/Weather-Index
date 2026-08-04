@@ -1,4 +1,4 @@
-use std::sync::Arc;
+use std::{net::AddrParseError, sync::Arc};
 
 use axum::{
     body::{self, Body},
@@ -9,9 +9,9 @@ use axum::{
 };
 use better_auth::{
     plugins::{
-        oauth::OAuthProvider, AccountManagementPlugin, DeviceAuthorizationConfig,
-        DeviceAuthorizationPlugin, EmailPasswordPlugin, OAuthPlugin, PasswordManagementPlugin,
-        SessionManagementPlugin,
+        oauth::{OAuthProvider, OAuthUserInfo},
+        AccountManagementPlugin, DeviceAuthorizationConfig, DeviceAuthorizationPlugin,
+        EmailPasswordPlugin, OAuthPlugin, PasswordManagementPlugin, SessionManagementPlugin,
     },
     AuthBuilder, AuthConfig, AxumIntegration, CorsConfig, CsrfConfig, SameSite,
 };
@@ -74,6 +74,10 @@ async fn main() -> Result<(), WIError> {
                     .add_provider(
                         "google",
                         OAuthProvider::google(&get_var("GOOGLE_ID")?, &get_var("GOOGLE_SECRET")?),
+                    )
+                    .add_provider(
+                        "hca",
+                        better_auth_hca::oauth(get_var("HCA_ID")?, get_var("HCA_SECRET")?),
                     ),
             )
             .plugin(DeviceAuthorizationPlugin::with_config(
