@@ -13,6 +13,10 @@ type ItemEvent = {
   count: number;
   time: number;
 }
+type EquipmentEvent = {
+  id: number;
+  time: number;
+}
 
 export type StageInteractable = {
   name: string;
@@ -41,8 +45,10 @@ export type RunReportWithUser = {
 
   // items
   items: Record<string, number>;
+  equipment?: number;
   itemsCollected: number;
   itemHistory: ItemEvent[];
+  equipmentHistory: EquipmentEvent[];
 
   // drones
   dronesPurchased: number;

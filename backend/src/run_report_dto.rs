@@ -21,6 +21,13 @@ pub struct ItemEvent {
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
+pub struct EquipmentEvent {
+    id: i16,
+    time: i32,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct StageInteractable {
     name: String,
     time: Option<i32>,
@@ -61,10 +68,14 @@ pub struct RunReportDTO {
     // items
     #[dummy(expr = "serde_json::json!({})")]
     pub items: serde_json::Value,
+    #[dummy(expr = "-1")]
+    pub equipment: i32,
     #[dummy(faker = "1..1000i32")]
     pub items_collected: i32,
     #[dummy(expr = "vec![]")]
     pub item_history: Vec<ItemEvent>,
+    #[dummy(expr = "vec![]")]
+    pub equipment_history: Vec<EquipmentEvent>,
 
     //
     // drones
@@ -134,25 +145,17 @@ impl TryFrom<RunReportDTO> for run_report::ActiveModel {
             time_alive_seconds: Set(dto.time_alive_seconds),
             artifacts: Set(dto.artifacts),
             stages_completed: Set(dto.stages_completed),
-            stage_history: Set(dto
-                .stage_history
-                .iter()
-                .map(|e| {
-                    serde_json::to_value(e)
-                        .expect("Cast from StageInteractable to serde_json::Value failed")
-                })
-                .collect()),
+            stage_history: Set(normalize_json(dto.stage_history)),
             score: Set(score),
             items: Set(dto.items),
+            equipment: Set(if dto.equipment == -1 {
+                None
+            } else {
+                Some(dto.equipment)
+            }),
             items_collected: Set(dto.items_collected),
-            item_history: Set(dto
-                .item_history
-                .iter()
-                .map(|e| {
-                    serde_json::to_value(e)
-                        .expect("Cast from ItemEvent to serde_json::Value failed")
-                })
-                .collect()),
+            item_history: Set(normalize_json(dto.item_history)),
+            equipment_history: Set(normalize_json(dto.equipment_history)),
             drones_purchased: Set(dto.drones_purchased),
             turrets_purchased: Set(dto.turrets_purchased),
             kills: Set(dto.kills),
@@ -191,4 +194,11 @@ fn total_run_score(dto: &RunReportDTO) -> i64 {
         + dto.stages_completed as f32 * s.stages_completed
         + dto.purchases as f32 * s.purchases;
     score as i64
+}
+
+fn normalize_json<'a, T: Deserialize<'a> + Serialize>(thing: Vec<T>) -> Vec<serde_json::Value> {
+    thing
+        .iter()
+        .map(|e| serde_json::to_value(e).expect("Cast to serde_json::Value failed"))
+        .collect()
 }

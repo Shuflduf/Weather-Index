@@ -159,19 +159,32 @@
     </div>
     <div class="border bg-bg-secondary w-full p-2">
       <h1 class="text-3xl text-center">Info</h1>
-      <div class="flex flex-row items-center p-2 gap-4">
-        <img
-          src={`/bodies/${BODIES[run.survivor].icon}`}
-          alt={BODIES[run.survivor].displayName}
-          class="h-12 inline mr-2"
-        />
+      <div class="flex flex-row items-center justify-between p-2">
+        <div class="gap-4">
+          <img
+            src={`/bodies/${BODIES[run.survivor].icon}`}
+            alt={BODIES[run.survivor].displayName}
+            class="h-12 inline mr-2"
+          />
 
-        <span class="text-lg">
-          Class:
-          <span class="text-yellow-200">
-            {BODIES[run.survivor].displayName}
+          <span class="text-lg">
+            Class:
+            <span class="text-yellow-200">
+              {BODIES[run.survivor].displayName}
+            </span>
           </span>
-        </span>
+        </div>
+        <div class="flex flex-row items-center">
+          {#if run.equipment}
+            <img
+              src="/equipment/{EQUIPMENTS[run.equipment].icon}"
+              alt={EQUIPMENTS[run.equipment].displayName}
+              title={EQUIPMENTS[run.equipment].displayName}
+              class="size-16"
+            />
+            <span>{EQUIPMENTS[run.equipment].displayName}</span>
+          {/if}
+        </div>
       </div>
       <h1 class="text-2xl text-center">Items Collected</h1>
       <ul class="flex flex-row flex-wrap mt-4">
@@ -182,7 +195,7 @@
               <img
                 src={`/items/${item.icon}`}
                 alt={item.displayName}
-                class="w-16 inline"
+                class="size-16 inline"
                 title={item.displayName}
               />
               {#if itemCount != 1}

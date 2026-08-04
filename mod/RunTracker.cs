@@ -39,8 +39,10 @@ namespace WeatherIndex
     {
         internal static List<StageInfo> stages = new List<StageInfo>();
         internal static List<ItemEvent> items = new List<ItemEvent>();
+        internal static List<EquipmentEvent> equipments = new List<EquipmentEvent>();
 
         private static ItemList oldItems = new ItemList();
+        private static EquipmentIndex oldEquip = EquipmentIndex.None;
         private static Dictionary<int, StageInteractable>? currentStage;
         private static string? currentStageName;
 
@@ -48,6 +50,7 @@ namespace WeatherIndex
         {
             stages = new List<StageInfo>();
             items = new List<ItemEvent>();
+            equipments = new List<EquipmentEvent>();
             oldItems = new ItemList();
         }
 
@@ -84,8 +87,7 @@ namespace WeatherIndex
                         {
                             if (currentStage.TryGetValue(id, out StageInteractable si))
                             {
-                                int timestamp = (int)Math.Floor(Run.TimeStamp.tNow);
-                                si.time = timestamp;
+                                si.time = timestamp();
                                 currentStage[id] = si;
 
                                 Log.Info(JsonConvert.SerializeObject(currentStage));
@@ -125,6 +127,12 @@ namespace WeatherIndex
 
                 var stacks = inv.permanentItemStacks;
                 var newItems = itemList(stacks);
+                var equip = inv.GetEquipmentIndex();
+                if (equip != oldEquip)
+                {
+                    equipments.Add(new EquipmentEvent() { id = equip, time = timestamp() });
+                    oldEquip = equip;
+                }
 
                 List<ItemEvent> diffs = itemDifference(oldItems, newItems);
                 addItemEvents(diffs);
@@ -190,7 +198,6 @@ namespace WeatherIndex
 
         static List<ItemEvent> itemDifference(ItemList oldItems, ItemList newItems)
         {
-            int timestamp = (int)Math.Floor(Run.TimeStamp.tNow);
             List<ItemEvent> diffs = new List<ItemEvent>();
             for (int i = 0; i < ItemCatalog.itemCount; i++)
             {
@@ -206,7 +213,7 @@ namespace WeatherIndex
                         {
                             id = item,
                             count = -oldItems[item],
-                            time = timestamp,
+                            time = timestamp(),
                         }
                     );
                 }
@@ -217,7 +224,7 @@ namespace WeatherIndex
                         {
                             id = item,
                             count = newItems[item],
-                            time = timestamp,
+                            time = timestamp(),
                         }
                     );
                 }
@@ -232,12 +239,17 @@ namespace WeatherIndex
                         {
                             id = item,
                             count = newItems[item] - oldItems[item],
-                            time = timestamp,
+                            time = timestamp(),
                         }
                     );
                 }
             }
             return diffs;
+        }
+
+        static int timestamp()
+        {
+            return (int)Math.Floor(Run.TimeStamp.tNow);
         }
     }
 }

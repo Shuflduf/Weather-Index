@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using BepInEx;
 using Newtonsoft.Json;
@@ -37,7 +38,9 @@ namespace WeatherIndex
 
             Run.onClientGameOverGlobal += (Run run, RunReport report) =>
             {
+                Log.Info(JsonConvert.SerializeObject(RunTracker.equipments));
                 var player = report.playerInfos?[0];
+
                 var stats = player!.statSheet;
                 var itemCounts = getItemCounts(player.itemStacks);
                 List<string> artifacts = new List<string>();
@@ -65,8 +68,12 @@ namespace WeatherIndex
 
                     // items
                     items = itemCounts,
+                    equipment = player.equipment.Length > 0
+                        ? player.equipment[0]
+                        : EquipmentIndex.None,
                     itemsCollected = stats.GetStatValueULong(StatDef.totalItemsCollected),
                     itemHistory = RunTracker.items,
+                    equipmentHistory = RunTracker.equipments,
 
                     // drones
                     dronesPurchased = stats.GetStatValueULong(StatDef.totalDronesPurchased),
