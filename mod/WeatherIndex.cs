@@ -7,6 +7,7 @@ using System.Net.Http;
 using BepInEx;
 using Newtonsoft.Json;
 using RoR2;
+using RoR2.Skills;
 using RoR2.Stats;
 
 namespace WeatherIndex
@@ -51,6 +52,17 @@ namespace WeatherIndex
                     }
                 }
 
+                Loadout.BodyLoadoutManager loadout = player.master.loadout.bodyLoadoutManager;
+                GenericSkill[] slots = BodyCatalog.GetBodyPrefabSkillSlots(player.bodyIndex);
+                for (int i = 0; i < slots.Length; i++)
+                {
+                    uint variant = loadout.GetSkillVariant(player.bodyIndex, i);
+                    SkillDef def = slots[i].skillFamily.variants[variant].skillDef;
+                    Log.Info(def.skillName);
+                    Log.Info(def.skillNameToken);
+                }
+
+                // player.master.inventory.abili
                 var info = new
                 {
                     // run info

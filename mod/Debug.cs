@@ -6,7 +6,7 @@ namespace WeatherIndex
 {
     class Debug
     {
-        public static bool enabled = false;
+        public static bool enabled = true;
 
         public static void Init()
         {

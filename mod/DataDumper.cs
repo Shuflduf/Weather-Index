@@ -97,6 +97,15 @@ namespace WeatherIndex
                     DataDumper.DumpInteractables
                 )
             );
+            ModSettingsManager.AddOption(
+                new GenericButtonOption(
+                    "Dump Skills",
+                    "Debug",
+                    "skills/abilites",
+                    "Dump",
+                    DataDumper.DumpSkills
+                )
+            );
         }
 
         public static void DumpItems()
@@ -488,6 +497,70 @@ namespace WeatherIndex
             }
             var json = JsonConvert.SerializeObject(interactables);
             File.WriteAllText(Path.Combine(outputDir, "interactables.json"), json);
+        }
+
+        public static void DumpSkills()
+        {
+            var outputDir = Path.Combine(pluginDir, "skills");
+            Directory.CreateDirectory(outputDir);
+
+            List<object> skills = new List<object>();
+            HashSet<string> usedFilenames = new HashSet<string>();
+
+            foreach (var def in RoR2.Skills.SkillCatalog.allSkillDefs)
+            {
+                if (def == null)
+                    continue;
+
+                var sprite = def.icon;
+                if (sprite == null || sprite.texture == null)
+                    continue;
+
+                string baseName = string.IsNullOrEmpty(def.skillNameToken)
+                    ? $"skill_{def.skillIndex}"
+                    : def.skillNameToken;
+                string filename = $"{baseName}.png";
+                if (!usedFilenames.Add(filename))
+                    filename = $"{baseName}_{def.skillIndex}.png";
+
+                writeSprite(Path.Combine(outputDir, filename), sprite);
+
+                skills.Add(
+                    new
+                    {
+                        id = def.skillIndex,
+                        name = def.skillName,
+                        nameToken = def.skillNameToken,
+                        displayName = RoR2.Language.GetString(def.skillNameToken),
+                        icon = filename,
+                    }
+                );
+            }
+            var json = JsonConvert.SerializeObject(skills);
+            File.WriteAllText(Path.Combine(outputDir, "skills.json"), json);
+        }
+
+        private static void writeSprite(string path, Sprite sprite)
+        {
+            Texture2D tex = sprite.texture;
+            Rect rect = sprite.textureRect;
+
+            Texture2D readable = new Texture2D(
+                (int)rect.width,
+                (int)rect.height,
+                TextureFormat.RGBA32,
+                false
+            );
+            RenderTexture current = RenderTexture.active;
+            var rt = RenderTexture.GetTemporary(tex.width, tex.height);
+            Graphics.Blit(tex, rt);
+            RenderTexture.active = rt;
+            readable.ReadPixels(new Rect(rect.x, rect.y, rect.width, rect.height), 0, 0);
+            readable.Apply();
+            RenderTexture.active = current;
+            RenderTexture.ReleaseTemporary(rt);
+            File.WriteAllBytes(path, readable.EncodeToPNG());
+            Object.Destroy(readable);
         }
 
         private static void writeEndingTexture(string path, Texture2D tex, Color color)
