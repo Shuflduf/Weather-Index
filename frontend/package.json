@@ -16,6 +16,8 @@
   "dependencies": {
     "@lucide/svelte": "^1.23.0",
     "@scalar/api-reference": "^1.63.0",
+    "@sveltejs/adapter-vercel": "^6.3.4",
+    "@vercel/analytics": "^2.0.1",
     "layerchart": "^2.0.2"
   },
   "devDependencies": {

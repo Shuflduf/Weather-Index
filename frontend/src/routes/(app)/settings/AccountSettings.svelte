@@ -8,7 +8,6 @@
   } from "@icons-pack/svelte-simple-icons";
   import { onMount } from "svelte";
 
-  // let accounts: any[] = $state([]);
   let providers: string[] = $state([]);
 
   let newPassword: string = $state("");
@@ -26,7 +25,6 @@
     authedFetch(auth("list-accounts"))
       .then((r) => r.json())
       .then((j: any[]) => {
-        // accounts = j;
         providers = j.map((a) => a.provider);
       });
   }
@@ -50,7 +48,6 @@
     authedFetch(auth("list-accounts"))
       .then((r) => r.json())
       .then((j: any[]) => {
-        // accounts = j;
         providers = j.map((a) => a.provider);
       });
   }
