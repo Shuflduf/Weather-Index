@@ -4,10 +4,9 @@
   import { User } from "@lucide/svelte";
   import { auth } from "$lib";
   import { authedFetch, setToken } from "./auth";
-  import { env } from "$env/dynamic/public";
 
   let user: any = $state(null);
-  let commit: string = $state(env.VERCEL_GIT_COMMIT_MESSAGE);
+  let commit: string = $state("");
 
   onMount(async () => {
     const params = new URLSearchParams(window.location.search);
@@ -17,6 +16,9 @@
       window.history.replaceState({}, "", window.location.pathname);
     }
 
+    fetch("/env")
+      .then((r) => r.json())
+      .then((j) => (commit = j["VERCEL_GIT_COMMIT_SHA"] ?? "Development"));
     let resp = await authedFetch(auth("get-session"));
     let body = await resp.json();
     if (body.user) {
