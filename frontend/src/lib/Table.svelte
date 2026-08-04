@@ -147,7 +147,7 @@
 </script>
 
 <div
-  class="grid"
+  class="grid overflow-x-auto"
   style="grid-template-columns: repeat({columnCount}, auto); user-select: {drag.dragging
     ? 'none'
     : ''};"
@@ -164,7 +164,7 @@
       oncontextmenu={(e) => e.preventDefault()}
       {id}
       data-col-header
-      class="items-center justify-center h-12 active:bg-active hover:bg-hover transition-colors flex"
+      class="items-center justify-center h-full py-2 active:bg-active hover:bg-hover transition-colors flex"
       style="order: {properties[id].order}; grid-row: 1; cursor: {drag.dragging
         ? 'grabbing'
         : 'grab'}"
