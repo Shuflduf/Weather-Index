@@ -699,7 +699,7 @@ paths:
     get:
       summary: RoR2 Items
       description: >
-        Items icon URL: http://localhost:5173/items/{item.icon}
+        Items icon URL: https://weather-index-ror2.vercel.app/items/{item.icon}
       tags: [Data]
       responses:
         "200":
@@ -771,7 +771,7 @@ paths:
     get:
       summary: RoR2 Characters
       description: >
-        Characters icon URL: http://localhost:5173/bodies/{body.icon}
+        Characters icon URL: https://weather-index-ror2.vercel.app/bodies/{body.icon}
       tags: [Data]
       responses:
         "200":
@@ -805,7 +805,7 @@ paths:
     get:
       summary: RoR2 Endings
       description: >
-        Endings icon URL: http://localhost:5173/endings/{ending.icon}
+        Endings icon URL: https://weather-index-ror2.vercel.app/endings/{ending.icon}
       tags: [Data]
       responses:
         "200":
@@ -892,7 +892,7 @@ paths:
     get:
       summary: RoR2 Artifacts
       description: >
-        Artifacts icon URL: http://localhost:5173/artifacts/{artifact.icon}
+        Artifacts icon URL: https://weather-index-ror2.vercel.app/artifacts/{artifact.icon}
       tags: [Data]
       responses:
         "200":
@@ -921,7 +921,7 @@ paths:
     get:
       summary: RoR2 Difficulties
       description: >
-        Difficulties icon URL: http://localhost:5173/difficulties/{difficulty.icon}
+        Difficulties icon URL: https://weather-index-ror2.vercel.app/difficulties/{difficulty.icon}
       tags: [Data]
       responses:
         "200":
@@ -951,7 +951,7 @@ paths:
     get:
       summary: RoR2 Environments
       description: >
-        Environments icon URL: http://localhost:5173/environments/{environment.icon}
+        Environments icon URL: https://weather-index-ror2.vercel.app/environments/{environment.icon}
       tags: [Data]
       responses:
         "200":
@@ -975,3 +975,67 @@ paths:
                     "icon":
                       type: string
                       example: "wispgraveyard.png"
+
+  /data/equipment:
+    get:
+      summary: RoR2 Equipment
+      description: >
+        Equipment icon URL: https://weather-index-ror2.vercel.app/equipment/{equipment.icon}
+      tags: [Data]
+      responses:
+        "200":
+          description: JSON array of all Risk of Rain 2 equipment
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    "id":
+                      type: number
+                      example: 0
+                    "name":
+                      type: string
+                      example: "BFG"
+                    "nameToken":
+                      type: string
+                      example: "EQUIPMENT_BFG_NAME"
+                    "displayName":
+                      type: string
+                      example: "Preon Accumulator"
+                    "icon":
+                      type: string
+                      example: "BFG.png"
+
+  /data/skills:
+    get:
+      summary: RoR2 Skills
+      description: >
+        Skills icon URL: https://weather-index-ror2.vercel.app/skills/{skill.icon}
+      tags: [Data]
+      responses:
+        "200":
+          description: JSON array of all Risk of Rain 2 skills
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    "id":
+                      type: number
+                      example: 37
+                    "name":
+                      type: string
+                      example: "FirePiston"
+                    "nameToken":
+                      type: string
+                      example: "COMMANDO_PRIMARY_NAME"
+                    "displayName":
+                      type: string
+                      example: "Double Tap"
+                    "icon":
+                      type: string
+                      example: "COMMANDO_PRIMARY_NAME.png"

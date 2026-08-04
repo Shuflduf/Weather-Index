@@ -506,7 +506,6 @@ namespace WeatherIndex
 
             List<object> skills = new List<object>();
             Dictionary<string, string> tokenToFile = new Dictionary<string, string>();
-            // HashSet<string> usedFilenames = new HashSet<string>();
 
             foreach (var def in RoR2.Skills.SkillCatalog.allSkillDefs)
             {
