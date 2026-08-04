@@ -38,7 +38,7 @@ namespace WeatherIndex
 
             try
             {
-                string url = $"{WIConfig.backendURL?.Value}/api/runs/new";
+                string url = $"{WIConfig.backendURL?.Value}/runs/new";
                 var content = new StringContent(
                     WeatherIndex.lastRun,
                     Encoding.UTF8,

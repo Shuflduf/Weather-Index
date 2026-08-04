@@ -1,4 +1,4 @@
-use std::{net::AddrParseError, sync::Arc};
+use std::sync::Arc;
 
 use axum::{
     body::{self, Body},
@@ -9,9 +9,9 @@ use axum::{
 };
 use better_auth::{
     plugins::{
-        oauth::{OAuthProvider, OAuthUserInfo},
-        AccountManagementPlugin, DeviceAuthorizationConfig, DeviceAuthorizationPlugin,
-        EmailPasswordPlugin, OAuthPlugin, PasswordManagementPlugin, SessionManagementPlugin,
+        oauth::OAuthProvider, AccountManagementPlugin, DeviceAuthorizationConfig,
+        DeviceAuthorizationPlugin, EmailPasswordPlugin, OAuthPlugin, PasswordManagementPlugin,
+        SessionManagementPlugin,
     },
     AuthBuilder, AuthConfig, AxumIntegration, CorsConfig, CsrfConfig, SameSite,
 };
@@ -109,24 +109,6 @@ async fn main() -> Result<(), WIError> {
         auth: auth.clone(),
     });
 
-    // let cors = CorsLayer::new()
-    //     .allow_origin(
-    //         get_var("FRONTEND_URL")?
-    //             .parse::<HeaderValue>()
-    //             .map_err(|e| {
-    //                 make_error(
-    //                     StatusCode::INTERNAL_SERVER_ERROR,
-    //                     format!("Failed to parse: {e}"),
-    //                 )
-    //             })?,
-    //     )
-    //     .allow_methods([Method::GET, Method::POST, Method::DELETE])
-    //     .allow_headers(AllowHeaders::list([
-    //         header::CONTENT_TYPE,
-    //         header::AUTHORIZATION,
-    //     ]))
-    //     .allow_credentials(true);
-
     let app = Router::new()
         .nest("/auth", auth_router)
         .merge(api::router())
@@ -177,7 +159,7 @@ async fn oauth_redirect_middleware(
 async fn cors_middleware(req: Request<body::Body>, next: Next) -> Result<Response<Body>, WIError> {
     let frontend_url = get_var("FRONTEND_URL")?;
     let path = req.uri().path().to_string();
-    let is_public = path.starts_with("/api") && path != "/api/runs/new" && path != "/api/player";
+    let is_public = !path.starts_with("/auth") && path != "/runs/new" && path != "/player";
     let request_origin = req
         .headers()
         .get(header::ORIGIN)
