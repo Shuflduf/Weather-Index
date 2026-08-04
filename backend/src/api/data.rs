@@ -35,3 +35,11 @@ pub async fn difficulties() -> Json<serde_json::Value> {
 pub async fn environments() -> Json<serde_json::Value> {
     parse(include_str!("../../../data/environments.json"))
 }
+
+pub async fn equipment() -> Json<serde_json::Value> {
+    parse(include_str!("../../../data/equipment.json"))
+}
+
+pub async fn skills() -> Json<serde_json::Value> {
+    parse(include_str!("../../../data/skills.json"))
+}

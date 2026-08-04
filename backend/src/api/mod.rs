@@ -32,6 +32,8 @@ fn public_router() -> Router<Arc<WIState>> {
         .route("/data/artifacts", get(data::artifacts))
         .route("/data/difficulties", get(data::difficulties))
         .route("/data/environments", get(data::environments))
+        .route("/data/equipment", get(data::equipment))
+        .route("/data/skills", get(data::skills))
 }
 
 fn private_router() -> Router<Arc<WIState>> {
