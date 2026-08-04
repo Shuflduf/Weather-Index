@@ -37,7 +37,7 @@ export function validUrl(url: string | undefined): boolean {
 }
 
 export function api(route: string): string {
-	return `${env.PUBLIC_BACKEND_URL}/api/${route}`;
+	return `${env.PUBLIC_BACKEND_URL}/${route}`;
 }
 
 

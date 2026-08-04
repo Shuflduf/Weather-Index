@@ -125,7 +125,7 @@ async fn main() -> Result<(), WIError> {
 
     let app = Router::new()
         .nest("/auth", auth_router)
-        .nest("/api", api::router())
+        .merge(api::router())
         .layer(middleware::from_fn(cors_middleware))
         .route("/", get(|| async { "Hello, World!" }))
         .with_state(state);
