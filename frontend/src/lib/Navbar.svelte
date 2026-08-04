@@ -1,12 +1,13 @@
 <script lang="ts">
-  import { SiGithub } from "@icons-pack/svelte-simple-icons";
   import { onMount } from "svelte";
   import PFP from "./PFP.svelte";
   import { User } from "@lucide/svelte";
   import { auth } from "$lib";
   import { authedFetch, setToken } from "./auth";
+  import { env } from "$env/dynamic/public";
 
   let user: any = $state(null);
+  let commit: string = $state(env.VERCEL_GIT_COMMIT_MESSAGE);
 
   onMount(async () => {
     const params = new URLSearchParams(window.location.search);
@@ -59,6 +60,7 @@
     <a class="text-xl tracking-tight text-secondary" href="/stats">Stats</a>
     <a class="text-xl tracking-tight text-secondary" href="/docs">Docs</a>
   </div>
+  {commit}
   {#if user}
     <button
       class="h-full border-l px-4 flex items-center cursor-pointer transition-colors bg-bg-secondary hover:bg-hover active:bg-active"
