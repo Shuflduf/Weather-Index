@@ -39,7 +39,7 @@
 
   let fallbackSort: Sort = $state({
     by: "id",
-    sort: "ASC",
+    sort: "DESC",
   });
   let loaded = $state(false);
   let pageNumber: number = $state(0);
