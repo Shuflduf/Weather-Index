@@ -8,7 +8,7 @@
   } from "@icons-pack/svelte-simple-icons";
   import { onMount } from "svelte";
 
-  let accounts: any[] = $state([]);
+  // let accounts: any[] = $state([]);
   let providers: string[] = $state([]);
 
   let newPassword: string = $state("");
@@ -26,7 +26,7 @@
     authedFetch(auth("list-accounts"))
       .then((r) => r.json())
       .then((j: any[]) => {
-        accounts = j;
+        // accounts = j;
         providers = j.map((a) => a.provider);
       });
   }
@@ -39,6 +39,20 @@
     });
     let { url } = await resp.json();
     if (url) window.location.href = url;
+  }
+
+  async function disconnectOauth(provider: string) {
+    await authedFetch(auth("unlink-account"), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ providerId: provider }),
+    });
+    authedFetch(auth("list-accounts"))
+      .then((r) => r.json())
+      .then((j: any[]) => {
+        // accounts = j;
+        providers = j.map((a) => a.provider);
+      });
   }
 
   async function changePassword() {
@@ -124,47 +138,36 @@
         </div>
       </div>
     </details>
-    <div class="flex flex-row bg-bg-secondary border p-2 gap-2 w-max">
-      <SiGithub />
-      <span>Github:</span>
-      {#if providers.includes("github")}
+    {#snippet providerStatus(name: string, display: string)}
+      <span>{display}:</span>
+      {#if providers.includes(name)}
         Connected
+        <button
+          onclick={() => disconnectOauth(name)}
+          class="px-2 bg-default hover:bg-red-800 active:bg-red-600 border cursor-pointer transition-colors"
+        >
+          Disconnect
+        </button>
       {:else}
         <button
-          onclick={() => connectOauth("github")}
-          class="px-2 bg-default hover:bg-hover active:bg-hover border cursor-pointer"
+          onclick={() => connectOauth(name)}
+          class="px-2 bg-default hover:bg-hover active:bg-hover border cursor-pointer transition-colors"
         >
           Connect
         </button>
       {/if}
+    {/snippet}
+    <div class="flex flex-row bg-bg-secondary border p-2 gap-2 w-max">
+      <SiGithub />
+      {@render providerStatus("github", "GitHub")}
     </div>
     <div class="flex flex-row bg-bg-secondary border p-2 gap-2 w-max">
       <SiDiscord />
-      <span>Discord:</span>
-      {#if providers.includes("discord")}
-        Connected
-      {:else}
-        <button
-          onclick={() => connectOauth("discord")}
-          class="px-2 bg-default hover:bg-hover active:bg-hover border cursor-pointer"
-        >
-          Connect
-        </button>
-      {/if}
+      {@render providerStatus("discord", "Discord")}
     </div>
     <div class="flex flex-row bg-bg-secondary border p-2 gap-2 w-max">
       <SiGoogle />
-      <span>Google:</span>
-      {#if providers.includes("google")}
-        Connected
-      {:else}
-        <button
-          onclick={() => connectOauth("google")}
-          class="px-2 bg-default hover:bg-hover active:bg-hover border cursor-pointer"
-        >
-          Connect
-        </button>
-      {/if}
+      {@render providerStatus("google", "Google")}
     </div>
   </div>
 </div>
