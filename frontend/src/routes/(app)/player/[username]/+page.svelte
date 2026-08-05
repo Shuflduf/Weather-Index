@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from "$app/state";
   import PFP from "$lib/PFP.svelte";
-  import { api, type PlayerInfoExtra, type StatsCategory } from "$lib";
+  import { api, type PlayerInfoExtra } from "$lib";
   import TableDifficulty from "$lib/TableDifficulty.svelte";
   import TableSurvivor from "$lib/TableSurvivor.svelte";
 
@@ -34,6 +34,10 @@
       });
   });
 </script>
+
+<svelte:head>
+  <title>WI | @{username}</title>
+</svelte:head>
 
 {#await playerInfoPromise}
   <LoadingIndicator indicator text="Loading user info" />

@@ -1,5 +1,6 @@
 #nullable enable
 
+using System.IO;
 using BepInEx;
 using BepInEx.Configuration;
 using RiskOfOptions;
@@ -16,8 +17,23 @@ namespace WeatherIndex
         internal static ConfigEntry<string>? backendURL;
         internal static ConfigEntry<string>? connectionStatus;
 
+        private static Sprite loadLogo()
+        {
+            string path = Path.Combine(WeatherIndex.pluginDir, "logo_full.png");
+            byte[] bytes = File.ReadAllBytes(path);
+            Texture2D tex = new Texture2D(2, 2);
+            ImageConversion.LoadImage(tex, bytes);
+            return Sprite.Create(
+                tex,
+                new Rect(0, 0, tex.width, tex.height),
+                new Vector2(0.5f, 0.5f)
+            );
+        }
+
         internal static void Init(BaseUnityPlugin plugin)
         {
+            ModSettingsManager.SetModIcon(loadLogo());
+
             endRunKeybind = plugin.Config.Bind<KeyboardShortcut>(
                 "Debug",
                 "End Run",

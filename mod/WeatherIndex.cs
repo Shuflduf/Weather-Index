@@ -25,6 +25,7 @@ namespace WeatherIndex
         internal static readonly HttpClient http = new();
         internal static string? lastRun;
         internal static bool uploadedRun = true;
+        internal static string pluginDir = System.IO.Path.Combine(Paths.PluginPath, "WeatherIndex");
 
         public void Awake()
         {

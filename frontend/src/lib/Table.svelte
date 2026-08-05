@@ -196,7 +196,7 @@
           href={`/run/${run.id}`}
           class="flex flex-row gap-2 text-lg underline"
         >
-          {run.id}
+          #{run.id}
           <ExternalLink />
         </a>
       </TableBlock>

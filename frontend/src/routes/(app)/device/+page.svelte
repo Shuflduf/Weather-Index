@@ -50,6 +50,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>WI | Connect</title>
+</svelte:head>
+
 {#await currentUserPromise}
   <LoadingIndicator text="Loading user" indicator />
 {:then currentUser}

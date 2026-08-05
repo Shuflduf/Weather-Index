@@ -27,6 +27,7 @@
 		<PackageReference Include="MMHOOK.RoR2" Version="*" NoWarn="NU1701" />
     <PackageReference Include="RoR2BepInExPack" Version="*" />
     <PackageReference Include="Rune580.Mods.RiskOfRain2.RiskOfOptions" Version="2.8.*" />
+    <None Include="logo_full.png" CopyToOutputDirectory="PreserveNewest" />
 	</ItemGroup>
 
 </Project>

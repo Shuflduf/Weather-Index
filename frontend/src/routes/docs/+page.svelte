@@ -25,4 +25,8 @@
   });
 </script>
 
+<svelte:head>
+  <title>WI | Docs</title>
+</svelte:head>
+
 <div bind:this={app}></div>

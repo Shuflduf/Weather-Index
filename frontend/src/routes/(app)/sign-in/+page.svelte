@@ -32,6 +32,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>WI | Sign In</title>
+</svelte:head>
+
 <div class="flex flex-col items-center">
   <h1 class="text-3xl font-bold tracking-tighter">Sign In</h1>
   <a href="/sign-up" class="underline">Sign Up here</a>

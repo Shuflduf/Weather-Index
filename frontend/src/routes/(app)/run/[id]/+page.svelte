@@ -31,6 +31,10 @@
   });
 </script>
 
+<svelte:head>
+  <title>WI | Run #{page.params.id}</title>
+</svelte:head>
+
 <StageItemContextMenu bind:this={contextMenu} />
 
 {#await runPromise}

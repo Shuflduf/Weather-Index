@@ -2,7 +2,6 @@
 
 using System.Collections.Generic;
 using System.IO;
-using BepInEx;
 using Newtonsoft.Json;
 using RiskOfOptions;
 using RiskOfOptions.Options;
@@ -12,8 +11,6 @@ namespace WeatherIndex
 {
     class DataDumper
     {
-        private static string pluginDir = Path.Combine(Paths.PluginPath, "WeatherIndex");
-
         public static void Init()
         {
             ModSettingsManager.AddOption(
@@ -110,7 +107,7 @@ namespace WeatherIndex
 
         public static void DumpItems()
         {
-            var outputDir = Path.Combine(pluginDir, "items");
+            var outputDir = Path.Combine(WeatherIndex.pluginDir, "items");
             Directory.CreateDirectory(outputDir);
             var items = new List<object>();
             foreach (var idx in RoR2.ItemCatalog.allItems)
@@ -155,7 +152,7 @@ namespace WeatherIndex
 
         public static void DumpEquipment()
         {
-            var outputDir = Path.Combine(pluginDir, "equipment");
+            var outputDir = Path.Combine(WeatherIndex.pluginDir, "equipment");
             Directory.CreateDirectory(outputDir);
             var equipment = new List<object>();
             foreach (var idx in RoR2.EquipmentCatalog.allEquipment)
@@ -197,7 +194,7 @@ namespace WeatherIndex
 
         public static void DumpBodies()
         {
-            var outputDir = Path.Combine(pluginDir, "bodies");
+            var outputDir = Path.Combine(WeatherIndex.pluginDir, "bodies");
             Directory.CreateDirectory(outputDir);
             var bodies = new List<object>();
 
@@ -261,7 +258,7 @@ namespace WeatherIndex
 
         public static void DumpEndings()
         {
-            var outputDir = Path.Combine(pluginDir, "endings");
+            var outputDir = Path.Combine(WeatherIndex.pluginDir, "endings");
             Directory.CreateDirectory(outputDir);
             var endings = new List<object>();
             foreach (var def in RoR2.GameEndingCatalog.gameEndingDefs)
@@ -299,7 +296,7 @@ namespace WeatherIndex
 
         public static void DumpDifficulties()
         {
-            var outputDir = Path.Combine(pluginDir, "difficulties");
+            var outputDir = Path.Combine(WeatherIndex.pluginDir, "difficulties");
             Directory.CreateDirectory(outputDir);
             var difficulties = new List<object>();
             // https://tailwindcss.com/docs/colors
@@ -357,7 +354,7 @@ namespace WeatherIndex
 
         public static void DumpItemTiers()
         {
-            var outputDir = Path.Combine(pluginDir, "tiers");
+            var outputDir = Path.Combine(WeatherIndex.pluginDir, "tiers");
             Directory.CreateDirectory(outputDir);
             var tiers = new List<object>();
             var tierOrder = new RoR2.ItemTier[]
@@ -387,7 +384,7 @@ namespace WeatherIndex
 
         public static void DumpArtifacts()
         {
-            var outputDir = Path.Combine(pluginDir, "artifacts");
+            var outputDir = Path.Combine(WeatherIndex.pluginDir, "artifacts");
             Directory.CreateDirectory(outputDir);
             var artifacts = new List<object>();
             foreach (var def in RoR2.ArtifactCatalog.artifactDefs)
@@ -423,7 +420,7 @@ namespace WeatherIndex
 
         public static void DumpEnvironments()
         {
-            var outputDir = Path.Combine(pluginDir, "environments");
+            var outputDir = Path.Combine(WeatherIndex.pluginDir, "environments");
             Directory.CreateDirectory(outputDir);
             var environments = new List<object>();
             foreach (var def in RoR2.SceneCatalog.allStageSceneDefs)
@@ -464,7 +461,7 @@ namespace WeatherIndex
 
         public static void DumpInteractables()
         {
-            var outputDir = Path.Combine(pluginDir, "interactables");
+            var outputDir = Path.Combine(WeatherIndex.pluginDir, "interactables");
             Directory.CreateDirectory(outputDir);
             var interactables = new List<object>();
             foreach (
@@ -501,7 +498,7 @@ namespace WeatherIndex
 
         public static void DumpSkills()
         {
-            var outputDir = Path.Combine(pluginDir, "skills");
+            var outputDir = Path.Combine(WeatherIndex.pluginDir, "skills");
             Directory.CreateDirectory(outputDir);
 
             List<object> skills = new List<object>();
