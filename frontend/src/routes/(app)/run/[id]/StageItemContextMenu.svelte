@@ -34,7 +34,7 @@
 
 {#if shown}
   <div
-    class="border bg-bg-secondary p-4 fixed z-10 pointer-events-none"
+    class="pointer-events-none fixed z-10 border bg-bg-secondary p-4"
     style="left: {pos[0]}px; top: {pos[1]}px;"
     bind:this={popup}
   >

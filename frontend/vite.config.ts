@@ -1,4 +1,4 @@
-import adapter from "@sveltejs/adapter-vercel";
+import adapter from "@sveltejs/adapter-auto";
 import { sveltekit } from "@sveltejs/kit/vite";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, loadEnv } from "vite";
@@ -24,7 +24,6 @@ export default defineConfig(({ mode }) => {
     ssr: { noExternal: ["@scalar/api-reference"] },
     optimizeDeps: { include: ["@scalar/api-reference"] },
     server: {
-
       proxy: {
         "/auth": { target: env.VITE_BACKEND_URL },
         "/api": { target: env.VITE_BACKEND_URL },

@@ -7,7 +7,7 @@
 <img
   src={`/difficulties/${DIFFICULTIES[difficulty].icon}`}
   alt={difficulty}
-  class="h-12 inline mr-2"
+  class="mr-2 inline h-12"
 />
 <span class="text-lg">
   {DIFFICULTIES[difficulty].displayName}

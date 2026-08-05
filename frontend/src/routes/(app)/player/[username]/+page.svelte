@@ -59,29 +59,29 @@
               {playerInfo.username}
             {/if}
           </h2>
-          <h3 class="text-secondary text-xl">@{playerInfo.username}</h3>
+          <h3 class="text-xl text-secondary">@{playerInfo.username}</h3>
           <h2 class="mt-4 text-2xl tracking-tighter">About Me</h2>
           {#if playerInfo.about_me}
             {playerInfo.about_me}
           {:else}
-            <span class="italic text-secondary">None yet!</span>
+            <span class="text-secondary italic">None yet!</span>
           {/if}
         </div>
       </div>
       <table>
         {#snippet playerDataHeader(name: string)}
-          <td class="p-4 text-lg tracking-tighter text-right">{name}</td>
+          <td class="p-4 text-right text-lg tracking-tighter">{name}</td>
         {/snippet}
         <tbody>
           <tr>
             {@render playerDataHeader("Runs")}
-            <td class="bg-bg-secondary p-4 border">
+            <td class="border bg-bg-secondary p-4">
               {playerInfo.run_count}
             </td>
           </tr>
           <tr>
             {@render playerDataHeader("Wins")}
-            <td class="bg-bg-secondary p-4 border">
+            <td class="border bg-bg-secondary p-4">
               {playerInfo.win_count}
               {#if playerInfo.run_count != 0}
                 ({(
@@ -93,7 +93,7 @@
           </tr>
           <tr>
             {@render playerDataHeader("Favourite Survivor")}
-            <td class="bg-bg-secondary p-4 border">
+            <td class="border bg-bg-secondary p-4">
               {#if playerInfo.favourite_survivor}
                 <TableSurvivor survivor={playerInfo.favourite_survivor} />
               {:else}
@@ -103,7 +103,7 @@
           </tr>
           <tr>
             {@render playerDataHeader("Favourite Difficulty")}
-            <td class="bg-bg-secondary p-4 border">
+            <td class="border bg-bg-secondary p-4">
               {#if playerInfo.favourite_difficulty}
                 <TableDifficulty difficulty={playerInfo.favourite_difficulty} />
               {:else}
@@ -120,28 +120,28 @@
 {/await}
 
 <hr class="my-8" />
-<h1 class="text-center tracking-tighter text-3xl mb-4">Combined Stats</h1>
+<h1 class="mb-4 text-center text-3xl tracking-tighter">Combined Stats</h1>
 
 <StatsCombined {username} />
 
 <hr class="my-8" />
-<h1 class="text-center tracking-tighter text-3xl mb-4">Survivors</h1>
+<h1 class="mb-4 text-center text-3xl tracking-tighter">Survivors</h1>
 <StatsSurvivors {username} />
 
 <hr class="my-8" />
-<h1 class="text-center tracking-tighter text-3xl mb-4">Difficulties</h1>
+<h1 class="mb-4 text-center text-3xl tracking-tighter">Difficulties</h1>
 <StatsDifficulties {username} />
 
 <hr class="my-8" />
-<h1 class="text-center tracking-tighter text-3xl mb-4">Stages</h1>
+<h1 class="mb-4 text-center text-3xl tracking-tighter">Stages</h1>
 <StatsStages {username} />
 
 <hr class="my-8" />
-<h1 class="text-center tracking-tighter text-3xl mb-4">Artifacts</h1>
+<h1 class="mb-4 text-center text-3xl tracking-tighter">Artifacts</h1>
 <StatsArtifacts {username} />
 
 <hr class="my-8" />
-<h1 class="text-center tracking-tighter text-3xl mb-4">Recent Runs</h1>
+<h1 class="mb-4 text-center text-3xl tracking-tighter">Recent Runs</h1>
 
 {#if username}
   <TableView

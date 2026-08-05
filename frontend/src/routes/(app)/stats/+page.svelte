@@ -20,7 +20,7 @@
   });
 </script>
 
-<h1 class="text-center tracking-tighter text-3xl mb-4">Overall Info</h1>
+<h1 class="mb-4 text-center text-3xl tracking-tighter">Overall Info</h1>
 
 {#await overallInfoPromise}
   <LoadingIndicator indicator text="Loading info" />
@@ -43,35 +43,35 @@
 {/await}
 
 <hr class="my-8" />
-<h1 class="text-center tracking-tighter text-3xl mb-4">Combined Stats</h1>
+<h1 class="mb-4 text-center text-3xl tracking-tighter">Combined Stats</h1>
 
 <StatsCombined />
 
 <hr class="my-8" />
-<h1 class="text-center tracking-tighter text-3xl">Survivors</h1>
-<h2 class="text-center italic text-secondary mb-4">
+<h1 class="text-center text-3xl tracking-tighter">Survivors</h1>
+<h2 class="mb-4 text-center text-secondary italic">
   Who are the most popular survivors
 </h2>
 
 <StatsSurvivors />
 
 <hr class="my-8" />
-<h1 class="text-center tracking-tighter text-3xl">Difficulties</h1>
-<h2 class="text-center italic text-secondary mb-4">
+<h1 class="text-center text-3xl tracking-tighter">Difficulties</h1>
+<h2 class="mb-4 text-center text-secondary italic">
   What difficulties do people play
 </h2>
 
 <StatsDifficulties />
 
 <hr class="my-8" />
-<h1 class="text-center tracking-tighter text-3xl">Stages</h1>
-<h2 class="text-center italic text-secondary mb-4">When did each run end</h2>
+<h1 class="text-center text-3xl tracking-tighter">Stages</h1>
+<h2 class="mb-4 text-center text-secondary italic">When did each run end</h2>
 
 <StatsStages />
 
 <hr class="my-8" />
-<h1 class="text-center tracking-tighter text-3xl">Artifacts</h1>
-<h2 class="text-center italic text-secondary mb-4">
+<h1 class="text-center text-3xl tracking-tighter">Artifacts</h1>
+<h2 class="mb-4 text-center text-secondary italic">
   What artifacts do people play
 </h2>
 

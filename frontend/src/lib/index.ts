@@ -6,41 +6,40 @@ export type StatsCategory = "AVG" | "SUM";
 
 export type SortMode = "ASC" | "DESC";
 export type Property = {
-	enabled: boolean;
-	order: number;
-	name: string;
-	category: string;
-	filter: string[];
+  enabled: boolean;
+  order: number;
+  name: string;
+  category: string;
+  filter: string[];
 };
 
 export type PlayerInfoExtra = {
-	id: string;
-	image?: string;
-	username?: string;
-	display_username?: string;
-	about_me?: string;
-	region?: string;
-	run_count: number;
-	win_count: number;
-	favourite_survivor?: string;
-	favourite_difficulty?: string;
+  id: string;
+  image?: string;
+  username?: string;
+  display_username?: string;
+  about_me?: string;
+  region?: string;
+  run_count: number;
+  win_count: number;
+  favourite_survivor?: string;
+  favourite_difficulty?: string;
 };
 
 export function validUrl(url: string | undefined): boolean {
-	if (!url) return false;
-	try {
-		const parsed = new URL(url);
-		return parsed.protocol === 'http:' || parsed.protocol === 'https:';
-	} catch {
-		return false;
-	}
+  if (!url) return false;
+  try {
+    const parsed = new URL(url);
+    return parsed.protocol === "http:" || parsed.protocol === "https:";
+  } catch {
+    return false;
+  }
 }
 
 export function api(route: string): string {
-	return `${env.PUBLIC_BACKEND_URL}/${route}`;
+  return `${env.PUBLIC_BACKEND_URL}/${route}`;
 }
 
-
 export function auth(route: string): string {
-	return `${env.PUBLIC_BACKEND_URL}/auth/${route}`;
+  return `${env.PUBLIC_BACKEND_URL}/auth/${route}`;
 }

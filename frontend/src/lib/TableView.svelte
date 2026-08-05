@@ -195,15 +195,15 @@
 <div
   id="visible-properties"
   popover
-  class="fixed bg-bg-secondary border text-primary p-2"
+  class="fixed border bg-bg-secondary p-2 text-primary"
   style="position-anchor: --visible-properties; position-area: bottom span-right;"
 >
   <div class="flex flex-row gap-8">
     {#each Object.entries(propsByCategory) as [category, props] (category)}
-      <div class="w-40 flex flex-col gap-1">
+      <div class="flex w-40 flex-col gap-1">
         <h2 class="text-xl font-bold tracking-tighter">{category}</h2>
         {#each props as prop (prop.name)}
-          <div class="flex flex-row justify-between relative items-center">
+          <div class="relative flex flex-row items-center justify-between">
             <span>{prop.name}</span>
             <input
               type="checkbox"
@@ -215,7 +215,7 @@
               class=""
             />
             <Check
-              class="absolute right-0 w-4 h-4 pointer-events-none"
+              class="pointer-events-none absolute right-0 h-4 w-4"
               strokeWidth="2"
             />
           </div>
@@ -224,23 +224,23 @@
     {/each}
   </div>
   <button
-    class="p-2 bg-default hover:bg-hover active:bg-active cursor-pointer font-mono transition-colors"
+    class="cursor-pointer bg-default p-2 font-mono transition-colors hover:bg-hover active:bg-active"
     onclick={resetProperties}
   >
     Reset
   </button>
 </div>
 
-<div class="flex flex-row gap-4 flex-wrap gap-y-2 mb-4 items-center">
+<div class="mb-4 flex flex-row flex-wrap items-center gap-4 gap-y-2">
   <button
     popovertarget="visible-properties"
-    class="cursor-pointer bg-default hover:bg-hover active:bg-active p-2 font-mono border"
+    class="cursor-pointer border bg-default p-2 font-mono hover:bg-hover active:bg-active"
     style="anchor-name: --visible-properties;"
   >
     Visible Properties
   </button>
   {#if sort == null}
-    <span class="font-mono p-2 text-secondary flex flex-row gap-2 h-min">
+    <span class="flex h-min flex-row gap-2 p-2 font-mono text-secondary">
       <span>
         Sorting By: {properties[fallbackSort.by].name}
       </span>
@@ -260,10 +260,10 @@
             prop.filter = [];
             resetTable();
           }}
-          class="p-2 bg-default hover:bg-hover active:bg-active border cursor-pointer flex flex-row gap-2 items-center font-mono"
+          class="flex cursor-pointer flex-row items-center gap-2 border bg-default p-2 font-mono hover:bg-hover active:bg-active"
           title="Click to remove filter"
         >
-          <span class="font-bold text-lg">
+          <span class="text-lg font-bold">
             {prop.name}
           </span>
           {#if prop.filter[0].startsWith("<")}
@@ -344,13 +344,13 @@
   {/if}
 </div>
 
-<div class="text-secondary text-right">
+<div class="text-right text-secondary">
   Showing
-  <span class="font-mono bg-default p-1">
+  <span class="bg-default p-1 font-mono">
     {runs.length}
   </span>
   out of
-  <span class="font-mono bg-default p-1">
+  <span class="bg-default p-1 font-mono">
     {totalRuns}
   </span>
   total runs

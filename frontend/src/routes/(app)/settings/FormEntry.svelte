@@ -2,7 +2,7 @@
   let { children, id, label } = $props();
 </script>
 
-<div class="flex flex-row justify-between w-md items-center">
+<div class="flex w-md flex-row items-center justify-between">
   <label for={id} class="font-mono">{label}</label>
   {@render children?.()}
 </div>

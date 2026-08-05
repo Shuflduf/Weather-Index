@@ -7,12 +7,12 @@
   }: { artifacts: string[]; class: string } = $props();
 </script>
 
-<div class="flex flex-col max-h-16 {className}">
+<div class="flex max-h-16 flex-col {className}">
   {#each artifacts as artifact (artifact)}
     <img
       src={`/artifacts/${ARTIFACTS[artifact].icon}`}
       alt={ARTIFACTS[artifact].displayName}
-      class="h-8 inline-block mr-2"
+      class="mr-2 inline-block h-8"
     />
   {/each}
 </div>

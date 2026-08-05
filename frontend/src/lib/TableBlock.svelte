@@ -8,7 +8,7 @@
 </script>
 
 <div
-  class="border p-4 bg-bg-secondary flex items-center transition-transform"
+  class="flex items-center border bg-bg-secondary p-4 transition-transform"
   style="order: {order}; grid-row: {idx + 2}; {styleName}"
   data-col-cell
 >

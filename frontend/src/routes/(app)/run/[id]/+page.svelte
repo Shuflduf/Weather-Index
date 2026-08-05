@@ -42,32 +42,32 @@
   >
     <img
       src={`/endings/${ENDINGS[run.ending].icon}`}
-      class="h-24 inline cursor-help"
+      class="inline h-24 cursor-help"
       alt={ENDINGS[run.ending].name}
       title={ENDINGS[run.ending].name}
     />
     <h1
-      class="inline text-4xl align-middle tracking-wide font-mono italic font-medium"
+      class="inline align-middle font-mono text-4xl font-medium tracking-wide italic"
     >
       {ENDINGS[run.ending].endingMessage}
     </h1>
   </div>
 
-  <div class="flex flex-row gap-4 mt-4">
-    <div class="border bg-bg-secondary w-full p-2">
-      <h1 class="text-3xl text-center">Stats</h1>
-      <div class="flex flex-row justify-between items-center p-2">
+  <div class="mt-4 flex flex-row gap-4">
+    <div class="w-full border bg-bg-secondary p-2">
+      <h1 class="text-center text-3xl">Stats</h1>
+      <div class="flex flex-row items-center justify-between p-2">
         <span class="text-lg">
           {DIFFICULTIES[run.difficulty].displayName}
         </span>
         <img
           src={`/difficulties/${DIFFICULTIES[run.difficulty].icon}`}
           alt={run.difficulty}
-          class="h-12 inline mr-2"
+          class="mr-2 inline h-12"
         />
       </div>
       {#if run.artifacts.length > 0}
-        <div class="flex flex-row justify-between items-center p-2">
+        <div class="flex flex-row items-center justify-between p-2">
           <span class="text-lg">Artifacts:</span>
           <ArtifactsDisplay
             artifacts={run.artifacts}
@@ -76,7 +76,7 @@
         </div>
       {/if}
       {#snippet score(label: string, value: string, points: string)}
-        <div class="flex flex-row justify-between items-center p-2">
+        <div class="flex flex-row items-center justify-between p-2">
           <span>
             {label}:
             <span class="text-yellow-200">
@@ -148,7 +148,7 @@
         formatBig(run.purchases),
         formatBig(run.purchases * SCORING_TABLE.purchases),
       )}
-      <div class="flex flex-row justify-around items-center p-2 mt-2 text-xl">
+      <div class="mt-2 flex flex-row items-center justify-around p-2 text-xl">
         <span>Total</span>
         <span>
           <span class="text-yellow-200">
@@ -158,14 +158,14 @@
         </span>
       </div>
     </div>
-    <div class="border bg-bg-secondary w-full p-2">
-      <h1 class="text-3xl text-center">Info</h1>
+    <div class="w-full border bg-bg-secondary p-2">
+      <h1 class="text-center text-3xl">Info</h1>
       <div class="flex flex-row items-center justify-between p-2">
         <div>
           <img
             src={`/bodies/${BODIES[run.survivor].icon}`}
             alt={BODIES[run.survivor].displayName}
-            class="h-12 inline mr-2"
+            class="mr-2 inline h-12"
           />
 
           <span class="text-lg">
@@ -193,7 +193,7 @@
             src="/equipment/{EQUIPMENTS[run.equipment].icon}"
             alt={EQUIPMENTS[run.equipment].displayName}
             title={EQUIPMENTS[run.equipment].displayName}
-            class="h-12 inline mr-2"
+            class="mr-2 inline h-12"
           />
           <span class="text-lg">
             Equipment:
@@ -203,8 +203,8 @@
           </span>
         </div>
       {/if}
-      <h1 class="text-2xl text-center">Items Collected</h1>
-      <ul class="flex flex-row flex-wrap mt-4">
+      <h1 class="text-center text-2xl">Items Collected</h1>
+      <ul class="mt-4 flex flex-row flex-wrap">
         {#each sortItems(run.items) as [itemId, itemCount] (itemId)}
           {@const item = ITEMS[Number(itemId)]}
           {#if !item.helper}
@@ -212,12 +212,12 @@
               <img
                 src={`/items/${item.icon}`}
                 alt={item.displayName}
-                class="size-16 inline"
+                class="inline size-16"
                 title={item.displayName}
               />
               {#if itemCount != 1}
                 <p
-                  class="text-xl font-bold absolute top-0 right-0 text-shadow-lg/50 font-mono"
+                  class="absolute top-0 right-0 font-mono text-xl font-bold text-shadow-lg/50"
                 >
                   x{itemCount}
                 </p>
@@ -226,8 +226,8 @@
           {/if}
         {/each}
       </ul>
-      <h1 class="text-2xl text-center mt-4">Metadata</h1>
-      <div class="flex flex-row justify-between items-center p-2">
+      <h1 class="mt-4 text-center text-2xl">Metadata</h1>
+      <div class="flex flex-row items-center justify-between p-2">
         <span>Player:</span>
         <span>
           <UserDisplay
@@ -240,7 +240,7 @@
           />
         </span>
       </div>
-      <div class="flex flex-row justify-between items-center p-2">
+      <div class="flex flex-row items-center justify-between p-2">
         <span>Started:</span>
         <span
           class="text-yellow-200"
@@ -249,7 +249,7 @@
           {new Date(run.startTime).toLocaleString()}
         </span>
       </div>
-      <div class="flex flex-row justify-between items-center p-2">
+      <div class="flex flex-row items-center justify-between p-2">
         <span>Uploaded:</span>
         <span
           class="text-yellow-200"
@@ -263,7 +263,7 @@
 
   <hr class="my-8" />
 
-  <h1 class="text-3xl text-center mb-4">Stage History</h1>
+  <h1 class="mb-4 text-center text-3xl">Stage History</h1>
 
   <div class="flex flex-col gap-8">
     {#each run.stageHistory as stage}
@@ -274,11 +274,11 @@
             alt="stage"
             class="h-32 border"
           />
-          <span class="text-secondary italic block text-center mb-4">
+          <span class="mb-4 block text-center text-secondary italic">
             {ENVIRONMENTS[stage.name].displayName}
           </span>
         </div>
-        <div class="flex flex-row flex-wrap flex-1">
+        <div class="flex flex-1 flex-row flex-wrap">
           {#each stage.interactables.toSorted(sortStageInteractables) as interactable}
             {@const table =
               interactable.name == "EQUIPMENTBARREL_NAME" ? EQUIPMENTS : ITEMS}
@@ -303,23 +303,23 @@
 
   <hr class="my-8" />
 
-  <h1 class="text-3xl text-center mb-4">Item History</h1>
+  <h1 class="mb-4 text-center text-3xl">Item History</h1>
 
   <table class="w-full">
     <thead>
       <tr>
         <th
-          class="text-xl tracking-tight text-center font-bold px-2 relative z-2"
+          class="relative z-2 px-2 text-center text-xl font-bold tracking-tight"
         >
           Item
         </th>
         <th
-          class="text-xl tracking-tight text-center font-bold px-2 relative z-2"
+          class="relative z-2 px-2 text-center text-xl font-bold tracking-tight"
         >
           Count
         </th>
         <th
-          class="text-xl tracking-tight text-center font-bold px-2 relative z-2"
+          class="relative z-2 px-2 text-center text-xl font-bold tracking-tight"
         >
           Time
         </th>
@@ -329,23 +329,23 @@
       {#each run.itemHistory as itemEvent}
         {#if !ITEMS[itemEvent.id].helper}
           <tr class="">
-            <td class="border px-4 bg-bg-secondary">
+            <td class="border bg-bg-secondary px-4">
               <img
                 src="/items/{ITEMS[itemEvent.id].icon}"
                 alt="stage"
-                class="h-8 inline"
+                class="inline h-8"
               />
               <span class="">
                 {ITEMS[itemEvent.id].displayName}
               </span>
             </td>
-            <td class="border px-4 bg-bg-secondary">
+            <td class="border bg-bg-secondary px-4">
               <span class={itemEvent.count > 0 ? "text-success" : "text-error"}>
                 {itemEvent.count > 0 ? "+" : "-"}
                 {itemEvent.count.toString().replace("-", "")}
               </span>
             </td>
-            <td class="border px-4 bg-bg-secondary">
+            <td class="border bg-bg-secondary px-4">
               <span>{formatSeconds(itemEvent.time)}</span>
             </td>
           </tr>
@@ -356,18 +356,18 @@
 
   <hr class="my-8" />
 
-  <h1 class="text-3xl text-center mb-4">Equipment History</h1>
+  <h1 class="mb-4 text-center text-3xl">Equipment History</h1>
 
   <table class="w-full">
     <thead>
       <tr>
         <th
-          class="text-xl tracking-tight text-center font-bold px-2 relative z-2"
+          class="relative z-2 px-2 text-center text-xl font-bold tracking-tight"
         >
           Item
         </th>
         <th
-          class="text-xl tracking-tight text-center font-bold px-2 relative z-2"
+          class="relative z-2 px-2 text-center text-xl font-bold tracking-tight"
         >
           Time
         </th>
@@ -376,17 +376,17 @@
     <tbody>
       {#each run.equipmentHistory as equipmentEvent}
         <tr class="">
-          <td class="border px-4 bg-bg-secondary">
+          <td class="border bg-bg-secondary px-4">
             <img
               src="/equipment/{EQUIPMENTS[equipmentEvent.id].icon}"
               alt="stage"
-              class="h-12 inline"
+              class="inline h-12"
             />
             <span class="">
               {EQUIPMENTS[equipmentEvent.id].displayName}
             </span>
           </td>
-          <td class="border px-4 bg-bg-secondary">
+          <td class="border bg-bg-secondary px-4">
             <span>{formatSeconds(equipmentEvent.time)}</span>
           </td>
         </tr>

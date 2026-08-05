@@ -112,7 +112,7 @@
   tabindex="-1"
   id="context-menu"
   popover
-  class="fixed bg-bg-secondary border text-primary p-2 w-40"
+  class="fixed w-40 border bg-bg-secondary p-2 text-primary"
   style="left: {contextMenu.pos[0]}px; top: {contextMenu.pos[1]}px;"
   oncontextmenu={(e) => e.preventDefault()}
 >
@@ -127,14 +127,14 @@
         bind:checked={properties[contextMenu.id].enabled}
       />
       <Check
-        class="absolute right-2 w-4 h-4 pointer-events-none"
+        class="pointer-events-none absolute right-2 h-4 w-4"
         strokeWidth="2"
       />
     </div>
     {#if sortEnabled}
       {#snippet sortButton(sort: SortMode)}
         <button
-          class={`border w-full p-2 cursor-pointer transition-colors flex flex-row gap-4 ${
+          class={`flex w-full cursor-pointer flex-row gap-4 border p-2 transition-colors ${
             sortProperty.by == contextMenu.id && sortProperty.sort == sort
               ? "bg-active"
               : "bg-default hover:bg-hover "
@@ -158,7 +158,7 @@
       {#if contextMenu.id == "survivor"}
         <div class="mt-2">
           {#each ORDERED_SURVIVORS as survivor}
-            <div class="flex flex-row items-center gap-2 relative">
+            <div class="relative flex flex-row items-center gap-2">
               <input
                 type="checkbox"
                 class="aspect-square"
@@ -184,7 +184,7 @@
                 }}
               />
               <Check
-                class="absolute left-0 w-4 h-4 pointer-events-none"
+                class="pointer-events-none absolute left-0 h-4 w-4"
                 strokeWidth="2"
               />
               <img
@@ -201,7 +201,7 @@
       {#if contextMenu.id == "difficulty"}
         <div class="mt-2">
           {#each ORDERED_DIFFICULTIES as difficulty}
-            <div class="flex flex-row items-center gap-2 relative">
+            <div class="relative flex flex-row items-center gap-2">
               <input
                 type="checkbox"
                 class="aspect-square"
@@ -227,7 +227,7 @@
                 }}
               />
               <Check
-                class="absolute left-0 w-4 h-4 pointer-events-none"
+                class="pointer-events-none absolute left-0 h-4 w-4"
                 strokeWidth="2"
               />
               <img
@@ -244,7 +244,7 @@
         <div class="mt-2">
           {#each ORDERED_ENDINGS as ending}
             <div
-              class="flex flex-row items-center gap-2 relative px-2 border"
+              class="relative flex flex-row items-center gap-2 border px-2"
               style="background-color: {ENDINGS[ending].colorBg};"
             >
               <input
@@ -270,7 +270,7 @@
                 }}
               />
               <Check
-                class="absolute left-2 w-4 h-4 pointer-events-none"
+                class="pointer-events-none absolute left-2 h-4 w-4"
                 strokeWidth="2"
               />
               <img
@@ -292,7 +292,7 @@
             value={properties["player"].filter.length != 0
               ? properties["player"].filter[0]
               : ""}
-            class="w-full bg-default hover:bg-hover active:bg-active transition-colors p-2 outline-none font-mono text-sm"
+            class="w-full bg-default p-2 font-mono text-sm transition-colors outline-none hover:bg-hover active:bg-active"
             onchange={(e) => {
               const value = e.currentTarget.value;
               setFilter("player", [value]);
@@ -303,7 +303,7 @@
 
       {#snippet numberFilter(prop: string)}
         {#if contextMenu.id == prop}
-          <div class="mt-2 flex flex-row w-full">
+          <div class="mt-2 flex w-full flex-row">
             <!--
           <span class="h-full block p-2 font-bold">
             {properties[prop].name}
@@ -311,7 +311,7 @@
           -->
             <button
               onclick={() => swapSign(prop)}
-              class="p-2 cursor-pointer border bg-default hover:bg-hover active:bg-hover transition-colors"
+              class="cursor-pointer border bg-default p-2 transition-colors hover:bg-hover active:bg-hover"
             >
               {#if properties[prop].filter.length == 0 || properties[prop].filter[0].startsWith(">")}
                 <ChevronRight />
@@ -325,7 +325,7 @@
               value={properties[prop].filter.length != 0
                 ? properties[prop].filter[0].slice(1)
                 : 0}
-              class="p-2 border bg-default hover:bg-hover active:bg-active outline-none font-mono w-full transition-colors text-xs"
+              class="w-full border bg-default p-2 font-mono text-xs transition-colors outline-none hover:bg-hover active:bg-active"
               onchange={(e) => {
                 const value = Math.abs(
                   Math.floor(Number(e.currentTarget.value)),
@@ -349,7 +349,7 @@
           <div class="mt-2 w-full">
             <button
               onclick={() => swapSign(prop)}
-              class="p-2 cursor-pointer border bg-default hover:bg-hover active:bg-hover transition-colors w-full flex justify-center"
+              class="flex w-full cursor-pointer justify-center border bg-default p-2 transition-colors hover:bg-hover active:bg-hover"
             >
               {#if properties[prop].filter.length == 0 || properties[prop].filter[0].startsWith(">")}
                 <ChevronRight />

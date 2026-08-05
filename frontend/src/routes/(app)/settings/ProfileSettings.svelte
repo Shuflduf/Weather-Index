@@ -49,7 +49,7 @@
 <div>
   <h1 id="profile" class="text-3xl tracking-tighter">Profile</h1>
   <FormEntry label="Username" id="profile_username">
-    <span class="bg-default flex flex-row border w-60">
+    <span class="flex w-60 flex-row border bg-default">
       <span class="p-2 pr-0">@</span>
       {#if user}
         <input
@@ -70,7 +70,7 @@
         id="profile_display_username"
         bind:value={user.display_username}
         placeholder={user.username}
-        class="p-2 bg-default flex flex-row border outline-none w-60"
+        class="flex w-60 flex-row border bg-default p-2 outline-none"
       />
     {/if}
   </FormEntry>
@@ -80,7 +80,7 @@
         name="region"
         id="profile_region"
         bind:value={user.region}
-        class="w-60 bg-default border p-2 cursor-pointer"
+        class="w-60 cursor-pointer border bg-default p-2"
       >
         <option value={null}>None</option>
         {#each countries as country}
@@ -96,14 +96,14 @@
     {#if user}
       <div class="relative">
         {#if user.image}
-          <PFP src={user.image} class="absolute h-full right-full border" />
+          <PFP src={user.image} class="absolute right-full h-full border" />
         {/if}
         <input
           type="text"
           name="image"
           id="profile_image_url"
           bind:value={user.image}
-          class="p-2 bg-default flex flex-row border outline-none w-60 text-xs font-mono"
+          class="flex w-60 flex-row border bg-default p-2 font-mono text-xs outline-none"
         />
       </div>
     {/if}
@@ -114,21 +114,21 @@
         name="aboutMe"
         id="profile_about_me"
         bind:value={user.about_me}
-        class="w-60 bg-default border p-2 outline-none"></textarea>
+        class="w-60 border bg-default p-2 outline-none"></textarea>
     {/if}
   </FormEntry>
   <button
     onclick={updatePlayer}
     type="button"
-    class="bg-default hover:bg-hover active:bg-active p-2 cursor-pointer border"
+    class="cursor-pointer border bg-default p-2 hover:bg-hover active:bg-active"
   >
     Save
   </button>
   {#if updateResult}
     {#if success == true}
-      <span class="text-success ml-2">{updateResult}</span>
+      <span class="ml-2 text-success">{updateResult}</span>
     {:else}
-      <span class="text-error ml-2">{updateResult}</span>
+      <span class="ml-2 text-error">{updateResult}</span>
     {/if}
   {/if}
 </div>

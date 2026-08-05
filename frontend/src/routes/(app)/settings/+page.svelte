@@ -7,14 +7,14 @@
 <div class="fixed flex flex-col">
   <a
     href="#profile"
-    class="p-2 justify-center border bg-default hover:bg-hover active:bg-active flex flex-row gap-2 w-full"
+    class="flex w-full flex-row justify-center gap-2 border bg-default p-2 hover:bg-hover active:bg-active"
   >
     <User />
     Profile
   </a>
   <a
     href="#account"
-    class="p-2 justify-center border bg-default hover:bg-hover active:bg-active flex flex-row gap-2 w-full"
+    class="flex w-full flex-row justify-center gap-2 border bg-default p-2 hover:bg-hover active:bg-active"
   >
     <ShieldUser />
     Account

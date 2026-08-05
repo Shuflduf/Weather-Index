@@ -33,25 +33,25 @@
 {:then stats}
   <div class="flex flex-row flex-wrap gap-4">
     <button
-      class="w-full border font-mono cursor-pointer transition-colors hover:bg-hover flex-1 min-w-60 p-2 {mode ==
+      class="w-full min-w-60 flex-1 cursor-pointer border p-2 font-mono transition-colors hover:bg-hover {mode ==
       'AVG'
-        ? 'active:bg-active bg-default text-secondary'
-        : 'bg-active active:bg-default text-primary'}"
+        ? 'bg-default text-secondary active:bg-active'
+        : 'bg-active text-primary active:bg-default'}"
       onclick={() => (mode = "SUM")}
     >
       Total
     </button>
     <button
-      class="w-full border font-mono cursor-pointer transition-colors hover:bg-hover flex-1 min-w-60 p-2 {mode ==
+      class="w-full min-w-60 flex-1 cursor-pointer border p-2 font-mono transition-colors hover:bg-hover {mode ==
       'SUM'
-        ? 'active:bg-active bg-default text-secondary'
-        : 'bg-active active:bg-default text-primary'}"
+        ? 'bg-default text-secondary active:bg-active'
+        : 'bg-active text-primary active:bg-default'}"
       onclick={() => (mode = "AVG")}
     >
       Average
     </button>
   </div>
-  <div class="flex flex-row flex-wrap mt-4">
+  <div class="mt-4 flex flex-row flex-wrap">
     {#each Object.entries(stats[mode]) as [stat, value]}
       {#snippet basicStat(name: string)}
         {#if stat == name}
@@ -59,7 +59,7 @@
         {/if}
       {/snippet}
       <div
-        class="min-w-80 p-4 bg-bg-secondary border flex flex-row justify-between flex-1"
+        class="flex min-w-80 flex-1 flex-row justify-between border bg-bg-secondary p-4"
       >
         <span>{defaultProperties[stat].name}</span>
 

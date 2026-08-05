@@ -78,13 +78,13 @@
 
 <div>
   <h1 id="account" class="text-3xl tracking-tighter">Account</h1>
-  <div class="flex flex-col gap-2 mt-4 font-mono">
+  <div class="mt-4 flex flex-col gap-2 font-mono">
     <details>
-      <summary class="text-xl cursor-pointer">Change Password</summary>
-      <div class="flex flex-col w-md border p-4 bg-bg-secondary">
+      <summary class="cursor-pointer text-xl">Change Password</summary>
+      <div class="flex w-md flex-col border bg-bg-secondary p-4">
         <label
           for="currentPassword"
-          class="text-lg tracking-tight flex flex-row gap-1 items-center font-sans"
+          class="flex flex-row items-center gap-1 font-sans text-lg tracking-tight"
         >
           Current Password
         </label>
@@ -92,7 +92,7 @@
           type="password"
           name="currentPassword"
           id="currentPassword"
-          class="p-2 bg-default hover:bg-hover active:bg-active transition-colors border outline-none font-mono"
+          class="border bg-default p-2 font-mono transition-colors outline-none hover:bg-hover active:bg-active"
           bind:value={currentPassword}
         />
         {#if "current_password" in changePasswordErrors}
@@ -105,7 +105,7 @@
 
         <label
           for="newPassword"
-          class="text-lg tracking-tight mt-4 flex flex-row gap-1 items-center font-sans"
+          class="mt-4 flex flex-row items-center gap-1 font-sans text-lg tracking-tight"
         >
           New Password
         </label>
@@ -113,7 +113,7 @@
           type="password"
           name="newPassword"
           id="newPassword"
-          class="p-2 bg-default hover:bg-hover active:bg-active transition-colors border outline-none font-mono"
+          class="border bg-default p-2 font-mono transition-colors outline-none hover:bg-hover active:bg-active"
           bind:value={newPassword}
         />
         {#if "new_password" in changePasswordErrors}
@@ -126,7 +126,7 @@
         <button
           type="button"
           onclick={changePassword}
-          class="bg-default hover:bg-hover active:bg-active transition-colors border p-2 mt-4 cursor-pointer font-mono flex flex-row gap-1 justify-center"
+          class="mt-4 flex cursor-pointer flex-row justify-center gap-1 border bg-default p-2 font-mono transition-colors hover:bg-hover active:bg-active"
         >
           Submit
         </button>
@@ -141,28 +141,28 @@
         Connected
         <button
           onclick={() => disconnectOauth(name)}
-          class="px-2 bg-default hover:bg-red-800 active:bg-red-600 border cursor-pointer transition-colors"
+          class="cursor-pointer border bg-default px-2 transition-colors hover:bg-red-800 active:bg-red-600"
         >
           Disconnect
         </button>
       {:else}
         <button
           onclick={() => connectOauth(name)}
-          class="px-2 bg-default hover:bg-hover active:bg-hover border cursor-pointer transition-colors"
+          class="cursor-pointer border bg-default px-2 transition-colors hover:bg-hover active:bg-hover"
         >
           Connect
         </button>
       {/if}
     {/snippet}
-    <div class="flex flex-row bg-bg-secondary border p-2 gap-2 w-max">
+    <div class="flex w-max flex-row gap-2 border bg-bg-secondary p-2">
       <SiGithub />
       {@render providerStatus("github", "GitHub")}
     </div>
-    <div class="flex flex-row bg-bg-secondary border p-2 gap-2 w-max">
+    <div class="flex w-max flex-row gap-2 border bg-bg-secondary p-2">
       <SiDiscord />
       {@render providerStatus("discord", "Discord")}
     </div>
-    <div class="flex flex-row bg-bg-secondary border p-2 gap-2 w-max">
+    <div class="flex w-max flex-row gap-2 border bg-bg-secondary p-2">
       <SiGoogle />
       {@render providerStatus("google", "Google")}
     </div>

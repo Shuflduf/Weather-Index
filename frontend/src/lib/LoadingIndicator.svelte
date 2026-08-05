@@ -4,9 +4,9 @@
     $props();
 </script>
 
-<div class="flex flex-row justify-center gap-4 italic mt-4 text-secondary">
+<div class="mt-4 flex flex-row justify-center gap-4 text-secondary italic">
   {#if indicator}
-    <div class="animate-spin w-min">
+    <div class="w-min animate-spin">
       <LoaderCircle />
     </div>
   {/if}

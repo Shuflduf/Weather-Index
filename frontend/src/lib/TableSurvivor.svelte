@@ -6,7 +6,7 @@
 <img
   src={`/bodies/${BODIES[survivor].icon}`}
   alt={BODIES[survivor].displayName}
-  class="h-12 inline mr-2"
+  class="mr-2 inline h-12"
 />
 <span class="text-lg">
   {BODIES[survivor].displayName}

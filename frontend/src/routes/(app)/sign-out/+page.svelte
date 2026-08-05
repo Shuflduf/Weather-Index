@@ -19,4 +19,4 @@
   });
 </script>
 
-<span class="text-3xl block">{status}</span>
+<span class="block text-3xl">{status}</span>

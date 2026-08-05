@@ -53,7 +53,7 @@
 {#await currentUserPromise}
   <LoadingIndicator text="Loading user" indicator />
 {:then currentUser}
-  <div class="flex justify-center items-center flex-col">
+  <div class="flex flex-col items-center justify-center">
     <span>
       Connecting as <b>@{currentUser.user.username}</b>
     </span>
@@ -62,13 +62,13 @@
     </span>
     <div class="mt-4">
       <button
-        class="bg-default active:bg-active transition p-2 cursor-pointer hover:bg-hover border"
+        class="cursor-pointer border bg-default p-2 transition hover:bg-hover active:bg-active"
         onclick={approve}
       >
         Connect
       </button>
       <button
-        class="bg-default active:bg-active transition p-2 cursor-pointer hover:bg-hover border"
+        class="cursor-pointer border bg-default p-2 transition hover:bg-hover active:bg-active"
         onclick={deny}
       >
         Cancel

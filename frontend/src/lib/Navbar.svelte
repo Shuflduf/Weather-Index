@@ -50,7 +50,7 @@
     <a
       data-sveltekit-reload
       {href}
-      class="bg-default hover:bg-hover active:bg-active p-2 block border"
+      class="block border bg-default p-2 hover:bg-hover active:bg-active"
     >
       {text}
     </a>
@@ -63,31 +63,31 @@
 </div>
 
 <div
-  class="bg-bg-secondary flex flex-row items-center border justify-between h-18"
+  class="flex h-18 flex-row items-center justify-between border bg-bg-secondary"
 >
-  <div class="flex flex-row gap-8 items-end pl-4">
-    <a class="text-primary text-2xl font-bold tracking-tighter" href="/">
+  <div class="flex flex-row items-end gap-8 pl-4">
+    <a class="text-2xl font-bold tracking-tighter text-primary" href="/">
       Weather Index
     </a>
     <div class="border py-4"></div>
     <a class="text-xl tracking-tight text-secondary" href="/stats">Stats</a>
     <a class="text-xl tracking-tight text-secondary" href="/docs">Docs</a>
   </div>
-  <div class="flex flex-row items-center h-full">
-    <a href={commitUrl} class="text-secondary mr-4 underline">
+  <div class="flex h-full flex-row items-center">
+    <a href={commitUrl} class="mr-4 text-secondary underline">
       {commitHash}
     </a>
     {#if user}
       <button
-        class="h-full border-l px-4 flex items-center cursor-pointer transition-colors bg-bg-secondary hover:bg-hover active:bg-active"
+        class="flex h-full cursor-pointer items-center border-l bg-bg-secondary px-4 transition-colors hover:bg-hover active:bg-active"
         popovertarget="user-menu"
         style="anchor-name: --user-menu;"
       >
         <div
-          class="inline-flex flex-row justify-center items-center gap-2 w-max h-14"
+          class="inline-flex h-14 w-max flex-row items-center justify-center gap-2"
         >
           <PFP src={user.image} class="h-full border" />
-          <span class="text-primary text-lg">
+          <span class="text-lg text-primary">
             {user.display_username && user.display_username.length > 0
               ? user.display_username
               : user.username}
@@ -96,7 +96,7 @@
       </button>
     {:else}
       <a
-        class={`flex bg-bg-secondary hover:bg-default flex-row gap-2 text-xl border-l px-4 h-full text-primary transition justify-center items-center ${user == false ? "cursor-pointer" : "cursor-not-allowed"}`}
+        class={`flex h-full flex-row items-center justify-center gap-2 border-l bg-bg-secondary px-4 text-xl text-primary transition hover:bg-default ${user == false ? "cursor-pointer" : "cursor-not-allowed"}`}
         href={user == false ? "/sign-in" : ""}
       >
         <User />

@@ -164,13 +164,13 @@
       oncontextmenu={(e) => e.preventDefault()}
       {id}
       data-col-header
-      class="items-center justify-center h-full py-2 active:bg-active hover:bg-hover transition-colors flex"
+      class="flex h-full items-center justify-center py-2 transition-colors hover:bg-hover active:bg-active"
       style="order: {properties[id].order}; grid-row: 1; cursor: {drag.dragging
         ? 'grabbing'
         : 'grab'}"
     >
       <h2
-        class="text-xl tracking-tight text-center font-bold px-2 relative z-2"
+        class="relative z-2 px-2 text-center text-xl font-bold tracking-tight"
       >
         {properties[id].name}
       </h2>
@@ -194,7 +194,7 @@
       <TableBlock order={properties.id.order} {idx}>
         <a
           href={`/run/${run.id}`}
-          class="flex flex-row gap-2 underline text-lg"
+          class="flex flex-row gap-2 text-lg underline"
         >
           {run.id}
           <ExternalLink />
@@ -263,9 +263,9 @@
         <img
           src={`/endings/${ENDINGS[run.ending].icon}`}
           alt={run.ending}
-          class="h-12 inline mr-2"
+          class="mr-2 inline h-12"
         />
-        <span class="text-shadow-lg text-lg">
+        <span class="text-lg text-shadow-lg">
           {ENDINGS[run.ending].displayName}
         </span>
       </TableBlock>
@@ -295,7 +295,7 @@
       <TableBlock order={properties.artifacts.order} {idx}>
         <ArtifactsDisplay
           artifacts={run.artifacts}
-          class="w-full overflow-x-auto flex-wrap"
+          class="w-full flex-wrap overflow-x-auto"
         />
       </TableBlock>
     {/each}
@@ -329,7 +329,7 @@
     {#each runs as run, idx (run.id)}
       <TableBlock order={properties.distanceTraveled.order} {idx}>
         {formatBig(run.distanceTraveled)}
-        <span class="text-yellow-200 ml-1">metres</span>
+        <span class="ml-1 text-yellow-200">metres</span>
       </TableBlock>
     {/each}
   {/if}

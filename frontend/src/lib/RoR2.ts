@@ -13,17 +13,17 @@ type ItemEvent = {
   id: number;
   count: number;
   time: number;
-}
+};
 type EquipmentEvent = {
   id: number;
   time: number;
-}
+};
 
 export type StageInteractable = {
   name: string;
   time?: number;
   item: number;
-}
+};
 
 export type RunReportWithUser = {
   userImage: string;
@@ -191,7 +191,10 @@ export const ARTIFACTS = Object.fromEntries(
   artifacts.map((artifact: Artifact) => [artifact.name, artifact]),
 );
 export const ENVIRONMENTS = Object.fromEntries(
-  environments.map((environment: Environment) => [environment.name, environment]),
+  environments.map((environment: Environment) => [
+    environment.name,
+    environment,
+  ]),
 );
 export const EQUIPMENTS = Object.fromEntries(
   equipment.map((equipment: Equipment) => [equipment.id, equipment]),
@@ -291,6 +294,9 @@ export function formatBig(big: number): string {
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-export function sortStageInteractables(a: StageInteractable, b: StageInteractable): number {
+export function sortStageInteractables(
+  a: StageInteractable,
+  b: StageInteractable,
+): number {
   return (a.time ?? Infinity) - (b.time ?? Infinity) || 0.0;
 }
