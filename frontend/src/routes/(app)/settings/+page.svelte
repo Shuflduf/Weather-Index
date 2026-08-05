@@ -4,6 +4,10 @@
   import { ShieldUser, User } from "@lucide/svelte";
 </script>
 
+<svelte:head>
+  <title>WI | Settings</title>
+</svelte:head>
+
 <div class="fixed flex flex-col">
   <a
     href="#profile"

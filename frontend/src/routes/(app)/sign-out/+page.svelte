@@ -19,4 +19,8 @@
   });
 </script>
 
+<svelte:head>
+  <title>WI | Signing Out...</title>
+</svelte:head>
+
 <span class="block text-3xl">{status}</span>

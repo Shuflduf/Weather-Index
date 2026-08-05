@@ -20,6 +20,10 @@
   });
 </script>
 
+<svelte:head>
+  <title>WI | Stats</title>
+</svelte:head>
+
 <h1 class="mb-4 text-center text-3xl tracking-tighter">Overall Info</h1>
 
 {#await overallInfoPromise}
