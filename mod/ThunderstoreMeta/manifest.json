@@ -1,0 +1,7 @@
+{
+  "name": "WeatherIndex",
+  "version_number": "0.1.0",
+  "description": "Unified platform for Risk of Rain 2 runs",
+  "website_url": "https://wi.shuflduf.xyz/",
+  "dependencies": ["Rune580-Risk_Of_Options-2.8.5"]
+}

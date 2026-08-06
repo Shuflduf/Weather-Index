@@ -1,33 +1,71 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
-	<PropertyGroup>
-		<TargetFramework>netstandard2.1</TargetFramework>
-		<LangVersion>preview</LangVersion>
-		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-
+﻿<?xml version="1.0"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>preview</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <RestoreAdditionalProjectSources>
 			https://api.nuget.org/v3/index.json;
 			https://nuget.bepinex.dev/v3/index.json
 		</RestoreAdditionalProjectSources>
-	</PropertyGroup>
-
-	<ItemGroup>
-		<PackageReference Include="BepInEx.Analyzers" Version="1.0.*">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
-
-		<PackageReference Include="BepInEx.Core" Version="5.4.21" />
-
-		<PackageReference Include="R2API.Items" Version="1.0.*" />
-		<PackageReference Include="R2API.Language" Version="1.0.*" />
-
-		<PackageReference Include="UnityEngine.Modules" Version="2021.3.33" IncludeAssets="compile" />
-		<PackageReference Include="RiskOfRain2.GameLibs" Version="*-*" />
-		<PackageReference Include="MMHOOK.RoR2" Version="*" NoWarn="NU1701" />
-    <PackageReference Include="RoR2BepInExPack" Version="*" />
-    <PackageReference Include="Rune580.Mods.RiskOfRain2.RiskOfOptions" Version="2.8.*" />
-    <None Include="icon_full.png" CopyToOutputDirectory="PreserveNewest" />
-	</ItemGroup>
-
+    <Version>0.1.0</Version>
+    <PackageBaseName>WeatherIndex</PackageBaseName>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="BepInEx.Analyzers" Version="1.0.*">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="BepInEx.Core" Version="5.4.21"/>
+    <PackageReference Include="R2API.Items" Version="1.0.*"/>
+    <PackageReference Include="R2API.Language" Version="1.0.*"/>
+    <PackageReference Include="UnityEngine.Modules" Version="2021.3.33" IncludeAssets="compile"/>
+    <PackageReference Include="RiskOfRain2.GameLibs" Version="*-*"/>
+    <PackageReference Include="MMHOOK.RoR2" Version="*" NoWarn="NU1701"/>
+    <PackageReference Include="RoR2BepInExPack" Version="*"/>
+    <PackageReference Include="Rune580.Mods.RiskOfRain2.RiskOfOptions" Version="2.8.*"/>
+    <None Include="icon_full.png" CopyToOutputDirectory="PreserveNewest"/>
+  </ItemGroup>
+  <Target Name="Release_Package" AfterTargets="Build" Condition="'$(Configuration)'=='Release'">
+    <PropertyGroup>
+      <!-- $(TargetDir) already points to bin\Release\netstandard2.1\ -->
+      <!-- This creates the parent dir , the one we do not zip -->
+      <PackageDir>$(TargetDir)Package\</PackageDir>
+      <!-- Where your thunderstore files live -->
+      <ThunderstoreMeta>$(ProjectDir)\ThunderstoreMeta\</ThunderstoreMeta>
+      <!-- To create and place our dll in an inner folder -->
+      <InnerFolder>$(PackageBaseName)\</InnerFolder>
+      <InnerDest>$(PackageDir)$(InnerFolder)</InnerDest>
+      <!-- From MyMod_0.0.0 to MyMod_0_0_0 -->
+      <PackageName>$(PackageBaseName)_$([System.String]::Copy('$(Version)').Replace('.','_'))</PackageName>
+      <ZipPath>$(TargetDir)$(PackageName).zip</ZipPath>
+    </PropertyGroup>
+    <!-- Clean fresh -->
+    <RemoveDir Directories="$(PackageDir)" Condition="Exists('$(PackageDir)')"/>
+    <MakeDir Directories="$(PackageDir)"/>
+    <!-- DLL In inner folder -->
+    <ItemGroup>
+      <DllFiles Include="$(TargetPath)"/>
+    </ItemGroup>
+    <Copy SourceFiles="@(DllFiles)" DestinationFolder="$(InnerDest)" SkipUnchangedFiles="true"/>
+    <!-- Thunderstore Mod Extras -->
+    <ItemGroup>
+      <ThunderstoreFiles Include="$(ThunderstoreMeta)README.md" Condition="Exists('$(ThunderstoreMeta)README.md')"/>
+      <ThunderstoreFiles Include="$(ThunderstoreMeta)manifest.json" Condition="Exists('$(ThunderstoreMeta)manifest.json')"/>
+      <ThunderstoreFiles Include="$(ThunderstoreMeta)icon.png" Condition="Exists('$(ThunderstoreMeta)icon.png')"/>
+      <ThunderstoreFiles Include="$(ThunderstoreMeta)CHANGELOG.md" Condition="Exists('$(ThunderstoreMeta)CHANGELOG.md')"/>
+    </ItemGroup>
+    <!-- copy our files -->
+    <Copy SourceFiles="@(ThunderstoreFiles)" DestinationFolder="$(PackageDir)" SkipUnchangedFiles="true"/>
+    <!-- Asset bundles -->
+    <!-- <ItemGroup> -->
+    <!-- <AssetBundles Include="$(ProjectDir)\assetbundles\mybundle.bundle"/> -->
+    <!-- </ItemGroup> -->
+    <!-- Has to land next to dll -->
+    <!-- <Copy SourceFiles="@(AssetBundles)" DestinationFolder="$(InnerDest)" SkipUnchangedFiles="true"/> -->
+    <!-- Zipadelphia -->
+    <Delete Files="$(ZipPath)" ContinueOnError="true" Condition="Exists('$(ZipPath)')"/>
+    <ZipDirectory SourceDirectory="$(PackageDir)" DestinationFile="$(ZipPath)" Overwrite="true"/>
+    <Message Text="Packaged $(ZipPath)" Importance="High"/>
+  </Target>
 </Project>
