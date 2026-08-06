@@ -17,9 +17,9 @@ namespace WeatherIndex
         internal static ConfigEntry<string>? backendURL;
         internal static ConfigEntry<string>? connectionStatus;
 
-        private static Sprite loadLogo()
+        private static Sprite loadIcon()
         {
-            string path = Path.Combine(WeatherIndex.pluginDir, "logo_full.png");
+            string path = Path.Combine(WeatherIndex.pluginDir, "icon_full.png");
             byte[] bytes = File.ReadAllBytes(path);
             Texture2D tex = new Texture2D(2, 2);
             ImageConversion.LoadImage(tex, bytes);
@@ -32,7 +32,7 @@ namespace WeatherIndex
 
         internal static void Init(BaseUnityPlugin plugin)
         {
-            ModSettingsManager.SetModIcon(loadLogo());
+            ModSettingsManager.SetModIcon(loadIcon());
 
             endRunKeybind = plugin.Config.Bind<KeyboardShortcut>(
                 "Debug",

@@ -11,7 +11,7 @@
   let { children } = $props();
 </script>
 
-<svelte:head><link rel="icon" href="/logo.png" /></svelte:head>
+<svelte:head><link rel="icon" href="/icon.png" /></svelte:head>
 <Navbar />
 
 {@render children()}
