@@ -19,6 +19,7 @@ pub mod error;
 pub mod ror2;
 pub mod run_report_dto;
 pub mod scoring_table;
+pub mod slack_oauth;
 
 pub struct WIState {
     pub db: DatabaseConnection,

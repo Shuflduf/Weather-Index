@@ -28,7 +28,7 @@ use weather_index::{
     auth_entities::AppAdapter,
     db,
     error::{make_error, WIError},
-    get_var, WIState,
+    get_var, slack_oauth, WIState,
 };
 
 #[tokio::main]
@@ -78,6 +78,10 @@ async fn main() -> Result<(), WIError> {
                     .add_provider(
                         "hca",
                         better_auth_hca::oauth(get_var("HCA_ID")?, get_var("HCA_SECRET")?),
+                    )
+                    .add_provider(
+                        "slack",
+                        slack_oauth::oauth(get_var("SLACK_ID")?, get_var("SLACK_SECRET")?),
                     ),
             )
             .plugin(DeviceAuthorizationPlugin::with_config(
