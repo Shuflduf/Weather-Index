@@ -43,6 +43,12 @@
     onclick={() => startOauth("hca")}
     class="cursor-pointer border bg-default p-2 transition-colors hover:bg-hover active:bg-active"
   >
-    <SiHackclub title="Hack Club Auth" />
+    <SiHackclub title="Hack Club" />
+  </button>
+  <button
+    onclick={() => startOauth("slack")}
+    class="cursor-pointer border bg-default p-2 transition-colors hover:bg-hover active:bg-active"
+  >
+    <img src="/slack.svg" alt="Slack" class="size-6" />
   </button>
 </div>

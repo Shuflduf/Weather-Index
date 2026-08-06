@@ -5,6 +5,7 @@
     SiDiscord,
     SiGithub,
     SiGoogle,
+    SiHackclub,
   } from "@icons-pack/svelte-simple-icons";
   import { onMount } from "svelte";
 
@@ -165,6 +166,14 @@
     <div class="flex w-max flex-row gap-2 border bg-bg-secondary p-2">
       <SiGoogle />
       {@render providerStatus("google", "Google")}
+    </div>
+    <div class="flex w-max flex-row gap-2 border bg-bg-secondary p-2">
+      <SiHackclub />
+      {@render providerStatus("hca", "Hack Club")}
+    </div>
+    <div class="flex w-max flex-row gap-2 border bg-bg-secondary p-2">
+      <img src="slack.svg" alt="Slack" class="size-6" />
+      {@render providerStatus("slack", "Slack")}
     </div>
   </div>
 </div>
