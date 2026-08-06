@@ -5,6 +5,7 @@ using System.IO;
 using Newtonsoft.Json;
 using RiskOfOptions;
 using RiskOfOptions.Options;
+using RoR2;
 using UnityEngine;
 
 namespace WeatherIndex
@@ -107,30 +108,30 @@ namespace WeatherIndex
 
         public static void DumpItems()
         {
-            var outputDir = Path.Combine(WeatherIndex.pluginDir, "items");
+            string outputDir = System.IO.Path.Combine(WeatherIndex.pluginDir, "items");
             Directory.CreateDirectory(outputDir);
-            var items = new List<object>();
-            foreach (var idx in RoR2.ItemCatalog.allItems)
+            List<object> items = new List<object>();
+            foreach (ItemIndex idx in ItemCatalog.allItems)
             {
-                if (idx == RoR2.ItemIndex.None)
+                if (idx == ItemIndex.None)
                     continue;
 
-                var def = RoR2.ItemCatalog.GetItemDef(idx);
+                ItemDef def = ItemCatalog.GetItemDef(idx);
                 if (def == null)
                     continue;
 
                 string? filename = null;
-                var sprite = def.pickupIconSprite;
+                Sprite sprite = def.pickupIconSprite;
                 if (sprite == null || sprite.texture == null)
                     continue;
                 Texture2D tex = sprite.texture;
                 if (tex != null)
                 {
                     filename = $"{def.name}.png";
-                    writeTexture(Path.Combine(outputDir, filename), tex);
+                    writeTexture(System.IO.Path.Combine(outputDir, filename), tex);
                 }
 
-                string displayName = RoR2.Language.GetString(def.nameToken);
+                string displayName = Language.GetString(def.nameToken);
                 bool helper = string.IsNullOrEmpty(def.nameToken) || displayName == def.nameToken;
 
                 items.Add(
@@ -140,42 +141,42 @@ namespace WeatherIndex
                         name = def.name,
                         nameToken = def.nameToken,
                         displayName = displayName,
-                        tier = RoR2.ItemTierCatalog.GetItemTierDef(def.tier)?.name,
+                        tier = ItemTierCatalog.GetItemTierDef(def.tier)?.name,
                         helper = helper,
                         icon = filename,
                     }
                 );
             }
-            var json = JsonConvert.SerializeObject(items);
-            File.WriteAllText(Path.Combine(outputDir, "items.json"), json);
+            string json = JsonConvert.SerializeObject(items);
+            File.WriteAllText(System.IO.Path.Combine(outputDir, "items.json"), json);
         }
 
         public static void DumpEquipment()
         {
-            var outputDir = Path.Combine(WeatherIndex.pluginDir, "equipment");
+            string outputDir = System.IO.Path.Combine(WeatherIndex.pluginDir, "equipment");
             Directory.CreateDirectory(outputDir);
-            var equipment = new List<object>();
-            foreach (var idx in RoR2.EquipmentCatalog.allEquipment)
+            List<object> equipment = new List<object>();
+            foreach (EquipmentIndex idx in EquipmentCatalog.allEquipment)
             {
-                if (idx == RoR2.EquipmentIndex.None)
+                if (idx == EquipmentIndex.None)
                     continue;
 
-                var def = RoR2.EquipmentCatalog.GetEquipmentDef(idx);
+                EquipmentDef def = EquipmentCatalog.GetEquipmentDef(idx);
                 if (def == null)
                     continue;
 
                 string? filename = null;
-                var sprite = def.pickupIconSprite;
+                Sprite sprite = def.pickupIconSprite;
                 if (sprite == null || sprite.texture == null)
                     continue;
                 Texture2D tex = sprite.texture;
                 if (tex != null)
                 {
                     filename = $"{def.name}.png";
-                    writeTexture(Path.Combine(outputDir, filename), tex);
+                    writeTexture(System.IO.Path.Combine(outputDir, filename), tex);
                 }
 
-                string displayName = RoR2.Language.GetString(def.nameToken);
+                string displayName = Language.GetString(def.nameToken);
 
                 equipment.Add(
                     new
@@ -188,19 +189,19 @@ namespace WeatherIndex
                     }
                 );
             }
-            var json = JsonConvert.SerializeObject(equipment);
-            File.WriteAllText(Path.Combine(outputDir, "equipment.json"), json);
+            string json = JsonConvert.SerializeObject(equipment);
+            File.WriteAllText(System.IO.Path.Combine(outputDir, "equipment.json"), json);
         }
 
         public static void DumpBodies()
         {
-            var outputDir = Path.Combine(WeatherIndex.pluginDir, "bodies");
+            string outputDir = System.IO.Path.Combine(WeatherIndex.pluginDir, "bodies");
             Directory.CreateDirectory(outputDir);
-            var bodies = new List<object>();
+            List<object> bodies = new List<object>();
 
             // top color from each default skin diamond thing
             // https://riskofrain2.wiki.gg/wiki/Survivors
-            var survivorColors = new Dictionary<string, string>
+            Dictionary<string, string> survivorColors = new Dictionary<string, string>
             {
                 { "CommandoBody", "#cb812e" },
                 { "HuntressBody", "#a12a29" },
@@ -222,9 +223,9 @@ namespace WeatherIndex
                 { "DrifterBody", "#ac883c" },
             };
 
-            foreach (var bodyPrefab in RoR2.BodyCatalog.allBodyPrefabs)
+            foreach (GameObject bodyPrefab in BodyCatalog.allBodyPrefabs)
             {
-                var body = bodyPrefab.GetComponent<RoR2.CharacterBody>();
+                CharacterBody body = bodyPrefab.GetComponent<CharacterBody>();
                 if (body == null)
                     continue;
 
@@ -233,40 +234,40 @@ namespace WeatherIndex
                 if (tex != null)
                 {
                     filename = $"{bodyPrefab.name}.png";
-                    writeTexture(Path.Combine(outputDir, filename), tex);
+                    writeTexture(System.IO.Path.Combine(outputDir, filename), tex);
                 }
                 // var survivor =
-                //     RoR2.SurvivorCatalog.GetSurvivorIndexFromBodyIndex(body.bodyIndex)
-                //     != RoR2.SurvivorIndex.None;
-                var bodyInfo = new Dictionary<string, object?>
+                //     SurvivorCatalog.GetSurvivorIndexFromBodyIndex(body.bodyIndex)
+                //     != SurvivorIndex.None;
+                Dictionary<string, object?> bodyInfo = new Dictionary<string, object?>
                 {
                     { "name", body.name },
                     { "nameToken", body.baseNameToken },
                     // {"survivor", survivor},
-                    { "displayName", RoR2.Language.GetString(body.baseNameToken) },
+                    { "displayName", Language.GetString(body.baseNameToken) },
                     { "icon", filename },
                 };
-                if (survivorColors.TryGetValue(body.name, out var color))
+                if (survivorColors.TryGetValue(body.name, out string color))
                 {
                     bodyInfo["survivorColor"] = color;
                 }
                 bodies.Add(bodyInfo);
             }
-            var json = JsonConvert.SerializeObject(bodies);
-            File.WriteAllText(Path.Combine(outputDir, "bodies.json"), json);
+            string json = JsonConvert.SerializeObject(bodies);
+            File.WriteAllText(System.IO.Path.Combine(outputDir, "bodies.json"), json);
         }
 
         public static void DumpEndings()
         {
-            var outputDir = Path.Combine(WeatherIndex.pluginDir, "endings");
+            string outputDir = System.IO.Path.Combine(WeatherIndex.pluginDir, "endings");
             Directory.CreateDirectory(outputDir);
-            var endings = new List<object>();
-            foreach (var def in RoR2.GameEndingCatalog.gameEndingDefs)
+            List<object> endings = new List<object>();
+            foreach (GameEndingDef def in GameEndingCatalog.gameEndingDefs)
             {
                 if (def == null)
                     continue;
 
-                var sprite = def.icon;
+                Sprite sprite = def.icon;
                 if (sprite == null || sprite.texture == null)
                     continue;
 
@@ -275,14 +276,18 @@ namespace WeatherIndex
                     continue;
 
                 string filename = $"{def.cachedName}.png";
-                writeEndingTexture(Path.Combine(outputDir, filename), tex, def.foregroundColor);
+                writeEndingTexture(
+                    System.IO.Path.Combine(outputDir, filename),
+                    tex,
+                    def.foregroundColor
+                );
 
                 endings.Add(
                     new
                     {
                         name = def.cachedName,
                         nameToken = def.endingTextToken,
-                        endingMessage = RoR2.Language.GetString(def.endingTextToken),
+                        endingMessage = Language.GetString(def.endingTextToken),
                         isWin = def.isWin,
                         icon = filename,
                         colorFg = ToHex(def.foregroundColor),
@@ -290,17 +295,17 @@ namespace WeatherIndex
                     }
                 );
             }
-            var json = JsonConvert.SerializeObject(endings);
-            File.WriteAllText(Path.Combine(outputDir, "endings.json"), json);
+            string json = JsonConvert.SerializeObject(endings);
+            File.WriteAllText(System.IO.Path.Combine(outputDir, "endings.json"), json);
         }
 
         public static void DumpDifficulties()
         {
-            var outputDir = Path.Combine(WeatherIndex.pluginDir, "difficulties");
+            string outputDir = System.IO.Path.Combine(WeatherIndex.pluginDir, "difficulties");
             Directory.CreateDirectory(outputDir);
-            var difficulties = new List<object>();
+            List<object> difficulties = new List<object>();
             // https://tailwindcss.com/docs/colors
-            var colors = new Dictionary<string, string>
+            Dictionary<string, string> colors = new Dictionary<string, string>
             {
                 { "DIFFICULTY_EASY_NAME", "#4ade80" },
                 { "DIFFICULTY_NORMAL_NAME", "#fb923c" },
@@ -315,18 +320,16 @@ namespace WeatherIndex
                 { "ECLIPSE_8_NAME", "#1e293b" },
             };
 
-            foreach (
-                RoR2.DifficultyIndex idx in System.Enum.GetValues(typeof(RoR2.DifficultyIndex))
-            )
+            foreach (DifficultyIndex idx in System.Enum.GetValues(typeof(DifficultyIndex)))
             {
-                if (idx == RoR2.DifficultyIndex.Invalid || idx == RoR2.DifficultyIndex.Count)
+                if (idx == DifficultyIndex.Invalid || idx == DifficultyIndex.Count)
                     continue;
 
-                var def = RoR2.DifficultyCatalog.GetDifficultyDef(idx);
+                DifficultyDef def = DifficultyCatalog.GetDifficultyDef(idx);
                 if (def == null)
                     continue;
 
-                var sprite = def.GetIconSprite();
+                Sprite sprite = def.GetIconSprite();
                 if (sprite == null)
                     continue;
 
@@ -335,64 +338,64 @@ namespace WeatherIndex
                 if (tex != null)
                 {
                     filename = $"{def.nameToken}.png";
-                    writeTexture(Path.Combine(outputDir, filename), tex);
+                    writeTexture(System.IO.Path.Combine(outputDir, filename), tex);
                 }
 
                 difficulties.Add(
                     new
                     {
                         nameToken = def.nameToken,
-                        displayName = RoR2.Language.GetString(def.nameToken),
+                        displayName = Language.GetString(def.nameToken),
                         color = colors[def.nameToken],
                         icon = filename,
                     }
                 );
             }
-            var json = JsonConvert.SerializeObject(difficulties);
-            File.WriteAllText(Path.Combine(outputDir, "difficulties.json"), json);
+            string json = JsonConvert.SerializeObject(difficulties);
+            File.WriteAllText(System.IO.Path.Combine(outputDir, "difficulties.json"), json);
         }
 
         public static void DumpItemTiers()
         {
-            var outputDir = Path.Combine(WeatherIndex.pluginDir, "tiers");
+            string outputDir = System.IO.Path.Combine(WeatherIndex.pluginDir, "tiers");
             Directory.CreateDirectory(outputDir);
-            var tiers = new List<object>();
-            var tierOrder = new RoR2.ItemTier[]
+            List<object> tiers = new List<object>();
+            ItemTier[] tierOrder = new ItemTier[]
             {
-                RoR2.ItemTier.NoTier,
-                RoR2.ItemTier.AssignedAtRuntime,
-                RoR2.ItemTier.Lunar,
-                RoR2.ItemTier.Tier1,
-                RoR2.ItemTier.VoidTier1,
-                RoR2.ItemTier.Tier2,
-                RoR2.ItemTier.VoidTier2,
-                RoR2.ItemTier.Tier3,
-                RoR2.ItemTier.VoidTier3,
-                RoR2.ItemTier.Boss,
-                RoR2.ItemTier.VoidBoss,
-                RoR2.ItemTier.FoodTier,
+                ItemTier.NoTier,
+                ItemTier.AssignedAtRuntime,
+                ItemTier.Lunar,
+                ItemTier.Tier1,
+                ItemTier.VoidTier1,
+                ItemTier.Tier2,
+                ItemTier.VoidTier2,
+                ItemTier.Tier3,
+                ItemTier.VoidTier3,
+                ItemTier.Boss,
+                ItemTier.VoidBoss,
+                ItemTier.FoodTier,
             };
-            foreach (var def in RoR2.ItemTierCatalog.allItemTierDefs)
+            foreach (ItemTierDef def in ItemTierCatalog.allItemTierDefs)
             {
                 tiers.Add(
                     new { name = def.name, sort = System.Array.IndexOf(tierOrder, def.tier) }
                 );
             }
-            var json = JsonConvert.SerializeObject(tiers);
-            File.WriteAllText(Path.Combine(outputDir, "tiers.json"), json);
+            string json = JsonConvert.SerializeObject(tiers);
+            File.WriteAllText(System.IO.Path.Combine(outputDir, "tiers.json"), json);
         }
 
         public static void DumpArtifacts()
         {
-            var outputDir = Path.Combine(WeatherIndex.pluginDir, "artifacts");
+            string outputDir = System.IO.Path.Combine(WeatherIndex.pluginDir, "artifacts");
             Directory.CreateDirectory(outputDir);
-            var artifacts = new List<object>();
-            foreach (var def in RoR2.ArtifactCatalog.artifactDefs)
+            List<object> artifacts = new List<object>();
+            foreach (ArtifactDef def in ArtifactCatalog.artifactDefs)
             {
                 if (def == null)
                     continue;
 
-                var sprite = def.smallIconSelectedSprite;
+                Sprite sprite = def.smallIconSelectedSprite;
                 if (sprite == null)
                     continue;
 
@@ -401,7 +404,7 @@ namespace WeatherIndex
                 if (tex != null)
                 {
                     filename = $"{def.cachedName}.png";
-                    writeTexture(Path.Combine(outputDir, filename), tex);
+                    writeTexture(System.IO.Path.Combine(outputDir, filename), tex);
                 }
 
                 artifacts.Add(
@@ -409,21 +412,21 @@ namespace WeatherIndex
                     {
                         name = def.cachedName,
                         nameToken = def.nameToken,
-                        displayName = RoR2.Language.GetString(def.nameToken),
+                        displayName = Language.GetString(def.nameToken),
                         icon = filename,
                     }
                 );
             }
-            var json = JsonConvert.SerializeObject(artifacts);
-            File.WriteAllText(Path.Combine(outputDir, "artifacts.json"), json);
+            string json = JsonConvert.SerializeObject(artifacts);
+            File.WriteAllText(System.IO.Path.Combine(outputDir, "artifacts.json"), json);
         }
 
         public static void DumpEnvironments()
         {
-            var outputDir = Path.Combine(WeatherIndex.pluginDir, "environments");
+            string outputDir = System.IO.Path.Combine(WeatherIndex.pluginDir, "environments");
             Directory.CreateDirectory(outputDir);
-            var environments = new List<object>();
-            foreach (var def in RoR2.SceneCatalog.allStageSceneDefs)
+            List<object> environments = new List<object>();
+            foreach (SceneDef def in SceneCatalog.allStageSceneDefs)
             {
                 if (def == null)
                     continue;
@@ -442,7 +445,7 @@ namespace WeatherIndex
                 if (tex != null)
                 {
                     filename = $"{def.cachedName}.png";
-                    writeTexture(Path.Combine(outputDir, filename), tex);
+                    writeTexture(System.IO.Path.Combine(outputDir, filename), tex);
                 }
 
                 environments.Add(
@@ -450,22 +453,22 @@ namespace WeatherIndex
                     {
                         name = def.cachedName,
                         nameToken = def.nameToken,
-                        displayName = RoR2.Language.GetString(def.nameToken),
+                        displayName = Language.GetString(def.nameToken),
                         icon = filename,
                     }
                 );
             }
-            var json = JsonConvert.SerializeObject(environments);
-            File.WriteAllText(Path.Combine(outputDir, "environments.json"), json);
+            string json = JsonConvert.SerializeObject(environments);
+            File.WriteAllText(System.IO.Path.Combine(outputDir, "environments.json"), json);
         }
 
         public static void DumpInteractables()
         {
-            var outputDir = Path.Combine(WeatherIndex.pluginDir, "interactables");
+            string outputDir = System.IO.Path.Combine(WeatherIndex.pluginDir, "interactables");
             Directory.CreateDirectory(outputDir);
-            var interactables = new List<object>();
+            List<object> interactables = new List<object>();
             foreach (
-                var obj in Resources.LoadAll<RoR2.InteractableSpawnCard>(
+                InteractableSpawnCard obj in Resources.LoadAll<InteractableSpawnCard>(
                     "SpawnCards/InteractableSpawnCard/"
                 )
             )
@@ -474,12 +477,12 @@ namespace WeatherIndex
                     continue;
 
                 // var tex = def.
-                var interaction = obj.prefab.GetComponent<RoR2.PurchaseInteraction>();
+                PurchaseInteraction interaction = obj.prefab.GetComponent<PurchaseInteraction>();
 
                 // if (tex != null)
                 // {
                 //     filename = $"{def.cachedName}.png";
-                //     writeTexture(Path.Combine(outputDir, filename), tex);
+                //     writeTexture(System.IO.Path.Combine(outputDir, filename), tex);
                 // }
 
                 interactables.Add(
@@ -492,24 +495,24 @@ namespace WeatherIndex
                     }
                 );
             }
-            var json = JsonConvert.SerializeObject(interactables);
-            File.WriteAllText(Path.Combine(outputDir, "interactables.json"), json);
+            string json = JsonConvert.SerializeObject(interactables);
+            File.WriteAllText(System.IO.Path.Combine(outputDir, "interactables.json"), json);
         }
 
         public static void DumpSkills()
         {
-            var outputDir = Path.Combine(WeatherIndex.pluginDir, "skills");
+            string outputDir = System.IO.Path.Combine(WeatherIndex.pluginDir, "skills");
             Directory.CreateDirectory(outputDir);
 
             List<object> skills = new List<object>();
             Dictionary<string, string> tokenToFile = new Dictionary<string, string>();
 
-            foreach (var def in RoR2.Skills.SkillCatalog.allSkillDefs)
+            foreach (RoR2.Skills.SkillDef def in RoR2.Skills.SkillCatalog.allSkillDefs)
             {
                 if (def == null)
                     continue;
 
-                var sprite = def.icon;
+                Sprite sprite = def.icon;
                 if (sprite == null || sprite.texture == null)
                     continue;
 
@@ -523,7 +526,7 @@ namespace WeatherIndex
                         ? $"skill_{def.skillIndex}"
                         : def.skillNameToken;
                     filename = $"{baseName}.png";
-                    writeSprite(Path.Combine(outputDir, filename), sprite);
+                    writeSprite(System.IO.Path.Combine(outputDir, filename), sprite);
                     if (!string.IsNullOrEmpty(def.skillNameToken))
                         tokenToFile[def.skillNameToken] = filename;
                 }
@@ -534,13 +537,13 @@ namespace WeatherIndex
                         id = def.skillIndex,
                         name = def.skillName,
                         nameToken = def.skillNameToken,
-                        displayName = RoR2.Language.GetString(def.skillNameToken),
+                        displayName = Language.GetString(def.skillNameToken),
                         icon = filename,
                     }
                 );
             }
-            var json = JsonConvert.SerializeObject(skills);
-            File.WriteAllText(Path.Combine(outputDir, "skills.json"), json);
+            string json = JsonConvert.SerializeObject(skills);
+            File.WriteAllText(System.IO.Path.Combine(outputDir, "skills.json"), json);
         }
 
         private static void writeSprite(string path, Sprite sprite)
@@ -555,7 +558,7 @@ namespace WeatherIndex
                 false
             );
             RenderTexture current = RenderTexture.active;
-            var rt = RenderTexture.GetTemporary(tex.width, tex.height);
+            RenderTexture rt = RenderTexture.GetTemporary(tex.width, tex.height);
             Graphics.Blit(tex, rt);
             RenderTexture.active = rt;
             readable.ReadPixels(
@@ -572,9 +575,9 @@ namespace WeatherIndex
 
         private static void writeEndingTexture(string path, Texture2D tex, Color color)
         {
-            var readable = new Texture2D(tex.width, tex.height, TextureFormat.RGBA32, false);
+            Texture2D readable = new Texture2D(tex.width, tex.height, TextureFormat.RGBA32, false);
             RenderTexture current = RenderTexture.active;
-            var rt = RenderTexture.GetTemporary(tex.width, tex.height);
+            RenderTexture rt = RenderTexture.GetTemporary(tex.width, tex.height);
             Graphics.Blit(tex, rt);
             RenderTexture.active = rt;
             readable.ReadPixels(new Rect(0, 0, rt.width, rt.height), 0, 0);
@@ -582,7 +585,7 @@ namespace WeatherIndex
             RenderTexture.active = current;
             RenderTexture.ReleaseTemporary(rt);
 
-            var pixels = readable.GetPixels32();
+            Color32[] pixels = readable.GetPixels32();
             for (int i = 0; i < pixels.Length; i++)
             {
                 float luminance = (pixels[i].r + pixels[i].g + pixels[i].b) / (3f * 255f);
@@ -602,9 +605,9 @@ namespace WeatherIndex
 
         private static void writeTexture(string path, Texture2D tex)
         {
-            var readable = new Texture2D(tex.width, tex.height, TextureFormat.RGBA32, false);
+            Texture2D readable = new Texture2D(tex.width, tex.height, TextureFormat.RGBA32, false);
             RenderTexture current = RenderTexture.active;
-            var rt = RenderTexture.GetTemporary(tex.width, tex.height);
+            RenderTexture rt = RenderTexture.GetTemporary(tex.width, tex.height);
             Graphics.Blit(tex, rt);
             RenderTexture.active = rt;
             readable.ReadPixels(new Rect(0, 0, rt.width, rt.height), 0, 0);

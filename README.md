@@ -14,7 +14,7 @@
   - [Scalar](https://scalar.com/) for API documentation
 - Risk of Rain 2 mod
   - Tracks all sorts of data, from kills, to distance traveled, to stage order, to which items where picked up and when
-    - Full table can be found at [backend/src/entity/run_report.rs]
+    - Full table can be found [here](backend/src/entity/run_report.rs)
   - Data dumper to extract item data, enemy/survivor data, and more
 - CORS support
 
