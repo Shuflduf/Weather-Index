@@ -40,12 +40,12 @@ namespace WeatherIndex
             Run.onClientGameOverGlobal += (Run run, RunReport report) =>
             {
                 Log.Info(JsonConvert.SerializeObject(RunTracker.equipments));
-                var player = report.playerInfos?[0];
+                RunReport.PlayerInfo? player = report.playerInfos?[0];
 
-                var stats = player!.statSheet;
-                var itemCounts = getItemCounts(player.itemStacks);
+                StatSheet stats = player!.statSheet;
+                Dictionary<int, int> itemCounts = getItemCounts(player.itemStacks);
                 List<string> artifacts = new List<string>();
-                foreach (var def in RoR2.ArtifactCatalog.artifactDefs)
+                foreach (ArtifactDef def in RoR2.ArtifactCatalog.artifactDefs)
                 {
                     if (report.ruleBook.GenerateArtifactMask().HasArtifact(def.artifactIndex))
                     {
@@ -64,7 +64,7 @@ namespace WeatherIndex
                 }
 
                 // player.master.inventory.abili
-                var info = new
+                object info = new
                 {
                     // run info
                     survivor = player.bodyName,
@@ -120,7 +120,7 @@ namespace WeatherIndex
                         stats.GetStatValueAsDouble(StatDef.totalDistanceTraveled),
                 };
 
-                var json = JsonConvert.SerializeObject(
+                string json = JsonConvert.SerializeObject(
                     info,
                     Formatting.None,
                     new JsonSerializerSettings
@@ -168,7 +168,7 @@ namespace WeatherIndex
 
         private void Update()
         {
-            while (mainThreadQueue.TryDequeue(out var action))
+            while (mainThreadQueue.TryDequeue(out Action action))
             {
                 action();
             }

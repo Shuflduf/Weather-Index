@@ -118,16 +118,16 @@ namespace WeatherIndex
 
             RoR2.Inventory.onInventoryChangedGlobal += (inv) =>
             {
-                var master = inv.GetComponent<RoR2.CharacterMaster>();
+                CharacterMaster master = inv.GetComponent<CharacterMaster>();
                 if (
                     master == null
                     || !RoR2.NetworkUser.localPlayers.Exists(nu => nu.master == master)
                 )
                     return;
 
-                var stacks = inv.permanentItemStacks;
-                var newItems = itemList(stacks);
-                var equip = inv.GetEquipmentIndex();
+                ItemCollection stacks = inv.permanentItemStacks;
+                Dictionary<ItemIndex, int> newItems = itemList(stacks);
+                EquipmentIndex equip = inv.GetEquipmentIndex();
                 if (equip != oldEquip)
                 {
                     equipments.Add(new EquipmentEvent() { id = equip, time = timestamp() });
@@ -183,7 +183,7 @@ namespace WeatherIndex
 
         static ItemList itemList(ItemCollection stacks)
         {
-            var list = new Dictionary<ItemIndex, int>();
+            Dictionary<ItemIndex, int> list = new Dictionary<ItemIndex, int>();
             for (int i = 0; i < ItemCatalog.itemCount; i++)
             {
                 ItemIndex item = (ItemIndex)i;

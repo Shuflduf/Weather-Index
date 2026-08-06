@@ -236,9 +236,6 @@ namespace WeatherIndex
                     filename = $"{bodyPrefab.name}.png";
                     writeTexture(System.IO.Path.Combine(outputDir, filename), tex);
                 }
-                // var survivor =
-                //     SurvivorCatalog.GetSurvivorIndexFromBodyIndex(body.bodyIndex)
-                //     != SurvivorIndex.None;
                 Dictionary<string, object?> bodyInfo = new Dictionary<string, object?>
                 {
                     { "name", body.name },
@@ -476,7 +473,6 @@ namespace WeatherIndex
                 if (obj == null)
                     continue;
 
-                // var tex = def.
                 PurchaseInteraction interaction = obj.prefab.GetComponent<PurchaseInteraction>();
 
                 // if (tex != null)

@@ -36,12 +36,14 @@ namespace WeatherIndex
             btn.onClick.AddListener(OnSubmitClicked);
             // btn.interactable = !string.IsNullOrEmpty(WeatherIndex.accessToken?.Value);
 
-            var label = submitButtonObj.GetComponentInChildren<LanguageTextMeshController>();
+            LanguageTextMeshController label =
+                submitButtonObj.GetComponentInChildren<LanguageTextMeshController>();
             if (label != null)
             {
                 label.token = "Submit";
             }
-            var image = submitButtonObj.GetComponentInChildren<UnityEngine.UI.Image>();
+            UnityEngine.UI.Image image =
+                submitButtonObj.GetComponentInChildren<UnityEngine.UI.Image>();
             if (image != null)
             {
                 image.color = new Color(0.5f, 0.9f, 1.0f, 1.0f);
@@ -56,7 +58,7 @@ namespace WeatherIndex
 
         private async void OnSubmitClicked()
         {
-            var result = await WIBridge.SubmitRun();
+            SubmitRunResult result = await WIBridge.SubmitRun();
             switch (result)
             {
                 case SubmitRunResult.Success:

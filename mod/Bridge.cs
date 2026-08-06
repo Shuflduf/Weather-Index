@@ -39,12 +39,15 @@ namespace WeatherIndex
             try
             {
                 string url = $"{WIConfig.backendURL?.Value}/runs/new";
-                var content = new StringContent(
+                StringContent content = new StringContent(
                     WeatherIndex.lastRun,
                     Encoding.UTF8,
                     "application/json"
                 );
-                var request = new HttpRequestMessage(HttpMethod.Post, url) { Content = content };
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, url)
+                {
+                    Content = content,
+                };
                 if (!string.IsNullOrEmpty(WIConfig.accessToken?.Value))
                 {
                     request.Headers.Authorization = new AuthenticationHeaderValue(
@@ -52,7 +55,7 @@ namespace WeatherIndex
                         WIConfig.accessToken.Value
                     );
                 }
-                var response = await WeatherIndex.http.SendAsync(request);
+                HttpResponseMessage response = await WeatherIndex.http.SendAsync(request);
                 Log.Info(await response.Content.ReadAsStringAsync());
                 if (response.IsSuccessStatusCode)
                     return SubmitRunResult.Success;
@@ -74,7 +77,7 @@ namespace WeatherIndex
         {
             WIConfig.connectionStatus?.Value = "LOADING";
             string url = $"{WIConfig.backendURL?.Value}/auth/get-session";
-            var request = new HttpRequestMessage(HttpMethod.Get, url);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, url);
             if (!string.IsNullOrEmpty(WIConfig.accessToken?.Value))
             {
                 request.Headers.Authorization = new AuthenticationHeaderValue(
@@ -82,7 +85,7 @@ namespace WeatherIndex
                     WIConfig.accessToken.Value
                 );
             }
-            var response = await WeatherIndex.http.SendAsync(request);
+            HttpResponseMessage response = await WeatherIndex.http.SendAsync(request);
             switch (response.StatusCode)
             {
                 case HttpStatusCode.Unauthorized:
@@ -91,7 +94,7 @@ namespace WeatherIndex
                     WIConfig.connectionStatus?.Value = "NOT CONNECTED";
                     break;
                 case HttpStatusCode.OK:
-                    var json = await response.Content.ReadAsStringAsync();
+                    string json = await response.Content.ReadAsStringAsync();
                     var data = JsonConvert.DeserializeAnonymousType(
                         json,
                         new { user = new { username = "" } }
@@ -117,7 +120,7 @@ namespace WeatherIndex
             WIConfig.connectionStatus?.Value = "CONNECTING";
 
             string url = $"{WIConfig.backendURL?.Value}/auth/device/code";
-            var resp = await WeatherIndex.http.PostAsync(
+            HttpResponseMessage resp = await WeatherIndex.http.PostAsync(
                 url,
                 new StringContent(
                     JsonConvert.SerializeObject(new { client_id = "weather-index-mod" }),
@@ -137,7 +140,7 @@ namespace WeatherIndex
                 }
             );
 
-            var deviceUri = $"{body.verification_uri}?user_code={body.user_code}";
+            string deviceUri = $"{body.verification_uri}?user_code={body.user_code}";
 
             Application.OpenURL(deviceUri);
 
@@ -146,7 +149,7 @@ namespace WeatherIndex
                 while (true)
                 {
                     await Task.Delay(body.interval * 1000);
-                    var poll = await WeatherIndex.http.PostAsync(
+                    HttpResponseMessage poll = await WeatherIndex.http.PostAsync(
                         $"{WIConfig.backendURL?.Value}/auth/device/token",
                         new StringContent(
                             JsonConvert.SerializeObject(

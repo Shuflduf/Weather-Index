@@ -11,7 +11,7 @@ namespace WeatherIndex
         {
             WeatherIndex.MainThread(() =>
             {
-                var dialog = SimpleDialogBox.Create();
+                SimpleDialogBox dialog = SimpleDialogBox.Create();
                 dialog.headerToken = new SimpleDialogBox.TokenParamsPair
                 {
                     token = "Weather Index",
