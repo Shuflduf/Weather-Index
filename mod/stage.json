@@ -1,9 +1,0 @@
-[
-  {
-    "name": "blackbeach",
-    "interactables": [
-      { "type": "chest:dtChestTier1", "opened": true, "items": [5] },
-      { "type": "chest:dtChestTier1", "opened": false, "items": [3] },
-    ],
-  },
-];

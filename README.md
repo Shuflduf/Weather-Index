@@ -23,7 +23,7 @@ TODO: ACTUALLY PUBLISH THE FUCKING MOD
 1. Sign in on the [website](https://weather-index-ror2.vercel.app)
 2. Ensure that [r2modman](https://old.thunderstore.io/c/riskofrain2/p/ebkr/r2modman/) is installed.
 3. Make a new profile (or use an existing profile)
-4. Install "Weather Index" from the `Online` tab
+4. Install "WeatherIndex" from the `Online` tab
 5. `Start Modded`
 6. In the game's `Mod Settings`, find `WeatherIndex` and click `Link Account`. This will open your web browser for authentication.
 
@@ -41,13 +41,16 @@ For all of the components, you will need a clone of `https://github.com/Shuflduf
 ## Backend
 1. Make `backend/.env` from `backend/.env.example` and fill in all the fields
 2. Run `cargo build` in `backend/` to install the dependencies
-3. Run `cargo run` in `backend/` to start the backend
+3. Run `cargo run` in `backend/` to start the backend on http://localhost:3000
 ## Frontend
 1. Make `frontend/.env` from `frontend/.env.example` and fill in all the fields
 2. Run `deno install` in `frontend/` to install the dependencies
-3. Run `deno run dev` in `frontend/` to start the frontend
+3. Run `deno run dev` in `frontend/` to start the frontend on http://localhost:5173
 ## Mod
-1. Run `dotnet build` in `mod/` to install the dependencies and build the mod
-2. TODO
+1. Run `dotnet build -c Release` in `mod/` to install the dependencies, build the mod, and package it.
+2. In your r2modman profile, click `Settings` and click `Import Local Mod`
+3. Select the generated zip under `mod/bin/Release/netstandard2.1/WeatherIndex_[VERSION].zip`
+4. `Start Modded`
+5. Change the `Debug > Backend URL` option to `http://localhost:3000` if interacting with the backend (which you probably are)
 
 [^1]: The official library is so buggy, this project instead uses [a fork](https://github.com/Shuflduf/better-auth-rs)
