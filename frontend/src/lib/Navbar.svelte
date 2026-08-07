@@ -40,26 +40,45 @@
   });
 </script>
 
+{#snippet item(href: string, text: string)}
+  <a
+    data-sveltekit-reload
+    {href}
+    class="block border bg-default p-2 hover:bg-hover active:bg-active"
+  >
+    {text}
+  </a>
+{/snippet}
+
+{#snippet hash()}
+  <a href={commitUrl} class="block w-full border bg-default p-2 text-secondary">
+    {commitHash}
+  </a>
+{/snippet}
+
 <div
   class="bg-bg-secondary text-primary"
   popover
   id="user-menu"
   style="position-anchor: --user-menu; position-area: bottom span-left;"
 >
-  {#snippet item(href: string, text: string)}
-    <a
-      data-sveltekit-reload
-      {href}
-      class="block border bg-default p-2 hover:bg-hover active:bg-active"
-    >
-      {text}
-    </a>
-  {/snippet}
   {#if user}
     {@render item(`/player/${user.username}`, "Open Profile")}
   {/if}
   {@render item("/settings", "Settings")}
   {@render item("/sign-out", "Sign Out")}
+  {@render hash()}
+</div>
+
+<div
+  class="bg-bg-secondary text-primary"
+  popover
+  id="anon-menu"
+  style="position-anchor: --anon-menu; position-area: bottom span-left;"
+>
+  {@render item("/sign-in", "Sign In")}
+  {@render item("/sign-up", "Sign Up")}
+  {@render hash()}
 </div>
 
 <div
@@ -75,9 +94,6 @@
     <a class="text-xl tracking-tight text-secondary" href="/docs">Docs</a>
   </div>
   <div class="flex h-full flex-row items-center">
-    <a href={commitUrl} class="mr-4 text-secondary underline">
-      {commitHash}
-    </a>
     {#if user}
       <button
         class="flex h-full cursor-pointer items-center border-l bg-bg-secondary px-4 transition-colors hover:bg-hover active:bg-active"
@@ -96,13 +112,25 @@
         </div>
       </button>
     {:else}
-      <a
+      <button
+        class="flex h-full cursor-pointer items-center border-l bg-bg-secondary px-4 transition-colors hover:bg-hover active:bg-active"
+        popovertarget="anon-menu"
+        style="anchor-name: --anon-menu;"
+      >
+        <div
+          class="inline-flex h-14 w-max flex-row items-center justify-center gap-2 text-lg text-primary"
+        >
+          <User />
+          Not Signed In
+        </div>
+      </button>
+      <!-- <a
         class={`flex h-full flex-row items-center justify-center gap-2 border-l bg-bg-secondary px-4 text-xl text-primary transition hover:bg-default ${user == false ? "cursor-pointer" : "cursor-not-allowed"}`}
         href={user == false ? "/sign-in" : ""}
       >
         <User />
         <span>Sign In</span>
-      </a>
+      </a> -->
     {/if}
   </div>
 </div>
