@@ -19,6 +19,7 @@
       <li>Creating a profile</li>
       <li>Downloading Weather Index</li>
       <li>Configuring Weather Index</li>
+      <li>Submitting runs</li>
       </ul>
       <p class="text-center"> Is this your first time modding Risk of Rain 2? </p>
       `,
@@ -45,6 +46,7 @@
       <li>Select the "Online" tab on the sidebar and search for "Weather Index"</li>
       <li> Select it and click "Download"</li>
       </ol>
+      <video src="/guide/creatingProfile.webm" autoplay controls>
       <p class="text-center">Proceed when you are ready.</p>
       `,
 
@@ -92,6 +94,7 @@
       Under the Weather Index category, click the "Connect" button to begin linking Risk of Rain 2 to Weather Index. <br>
       This will open a new tab in your web browser, with a prompt to connect RoR2. Approve it. <br><br>
        <b>You have to be signed in for this to work.</b> If you aren't signed in, sign in / sign up, navigate back to the page that was opened, and approve it.
+      <video src="/guide/configureWeatherIndex.mp4" autoplay controls>
       <p class="text-center">Proceed once you get a popup confirming the connection.</p>
        `,
       next: [{ name: "submittingRuns", button: "Proceed" }],
@@ -105,6 +108,7 @@
       <li>Your mods. If you have any mods that add extra content to the game, it may not work.</li>
       </ul>
       You can only submit a run once.
+      <p class="text-center">Congratulations on getting through the Weather Index guide!<br> I hope you enjoy what I made :D</p>
 `,
       next: [],
     },
