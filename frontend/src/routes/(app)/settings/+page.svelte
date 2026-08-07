@@ -9,7 +9,7 @@
   <title>WI | Settings</title>
 </svelte:head>
 
-<div class="fixed flex flex-col">
+<div class="absolute flex flex-col">
   <a
     href="#profile"
     class="flex w-full flex-row justify-center gap-2 border bg-default p-2 hover:bg-hover active:bg-active"
