@@ -57,6 +57,7 @@
     </ItemGroup>
     <!-- copy our files -->
     <Copy SourceFiles="@(ThunderstoreFiles)" DestinationFolder="$(PackageDir)" SkipUnchangedFiles="true"/>
+    <Copy SourceFiles="$(ProjectDir)icon_full.png" DestinationFolder="$(PackageDir)" SkipUnchangedFiles="true"/>
     <!-- Asset bundles -->
     <!-- <ItemGroup> -->
     <!-- <AssetBundles Include="$(ProjectDir)\assetbundles\mybundle.bundle"/> -->
