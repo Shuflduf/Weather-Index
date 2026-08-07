@@ -9,6 +9,7 @@
     "npm:@sveltejs/adapter-vercel@^6.3.4": "6.3.4_@sveltejs+kit@2.70.1__@sveltejs+vite-plugin-svelte@7.2.0___svelte@5.56.8___vite@8.1.5____@types+node@24.13.3____esbuild@0.28.1___@types+node@24.13.3___esbuild@0.28.1__svelte@5.56.8__typescript@6.0.3__vite@8.1.5___@types+node@24.13.3___esbuild@0.28.1__@types+node@24.13.3__esbuild@0.28.1_@sveltejs+vite-plugin-svelte@7.2.0__svelte@5.56.8__vite@8.1.5___@types+node@24.13.3___esbuild@0.28.1__@types+node@24.13.3__esbuild@0.28.1_@types+node@24.13.3_svelte@5.56.8_typescript@6.0.3_vite@8.1.5__@types+node@24.13.3__esbuild@0.28.1",
     "npm:@sveltejs/kit@^2.63.0": "2.70.1_@sveltejs+vite-plugin-svelte@7.2.0__svelte@5.56.8__vite@8.1.5___@types+node@24.13.3___esbuild@0.28.1__@types+node@24.13.3__esbuild@0.28.1_svelte@5.56.8_typescript@6.0.3_vite@8.1.5__@types+node@24.13.3__esbuild@0.28.1_@types+node@24.13.3_esbuild@0.28.1",
     "npm:@sveltejs/vite-plugin-svelte@^7.1.2": "7.2.0_svelte@5.56.8_vite@8.1.5__@types+node@24.13.3__esbuild@0.28.1_@types+node@24.13.3_esbuild@0.28.1",
+    "npm:@tailwindcss/typography@~0.5.19": "0.5.20_tailwindcss@4.3.3",
     "npm:@tailwindcss/vite@^4.3.0": "4.3.3_vite@8.1.5__@types+node@24.13.3__esbuild@0.28.1_@types+node@24.13.3",
     "npm:@types/node@24": "24.13.3",
     "npm:@vercel/analytics@^2.0.1": "2.0.1_@sveltejs+kit@2.70.1__@sveltejs+vite-plugin-svelte@7.2.0___svelte@5.56.8___vite@8.1.5____@types+node@24.13.3____esbuild@0.28.1___@types+node@24.13.3___esbuild@0.28.1__svelte@5.56.8__typescript@6.0.3__vite@8.1.5___@types+node@24.13.3___esbuild@0.28.1__@types+node@24.13.3__esbuild@0.28.1_svelte@5.56.8_vue@3.5.40__typescript@6.0.3_@sveltejs+vite-plugin-svelte@7.2.0__svelte@5.56.8__vite@8.1.5___@types+node@24.13.3___esbuild@0.28.1__@types+node@24.13.3__esbuild@0.28.1_@types+node@24.13.3_typescript@6.0.3_vite@8.1.5__@types+node@24.13.3__esbuild@0.28.1",
@@ -1205,6 +1206,13 @@
         "@tailwindcss/oxide-wasm32-wasi",
         "@tailwindcss/oxide-win32-arm64-msvc",
         "@tailwindcss/oxide-win32-x64-msvc"
+      ]
+    },
+    "@tailwindcss/typography@0.5.20_tailwindcss@4.3.3": {
+      "integrity": "sha512-hwbzQuNUfcPvbegQFatVPl/MY/tcM9KLl963hQ5laJKPh81TEZ1+dNG9PirGvcaDBkp+BCshExAyKVPW91dozw==",
+      "dependencies": [
+        "postcss-selector-parser@6.0.10",
+        "tailwindcss"
       ]
     },
     "@tailwindcss/vite@4.3.3_vite@8.1.5__@types+node@24.13.3__esbuild@0.28.1_@types+node@24.13.3": {
@@ -3159,6 +3167,13 @@
         "postcss"
       ]
     },
+    "postcss-selector-parser@6.0.10": {
+      "integrity": "sha512-IQ7TZdoaqbT+LCpShg46jnZVlhWD2w6iQYAcYXfHARZ7X1t/UGhhceQDs5X0cGqKvYlHNOuv7Oa1xmb0oQuA3w==",
+      "dependencies": [
+        "cssesc",
+        "util-deprecate"
+      ]
+    },
     "postcss-selector-parser@7.1.4": {
       "integrity": "sha512-HeP7D2wyhkR+XaK6v4W8oRF62Dsz4flyuczALJp61GckGm42u1saSSJ/0auvcBqxs3jMRFEcPK34At/0JBKdOg==",
       "dependencies": [
@@ -3463,7 +3478,7 @@
         "espree@10.4.0",
         "postcss",
         "postcss-scss",
-        "postcss-selector-parser",
+        "postcss-selector-parser@7.1.4",
         "semver",
         "svelte"
       ],
@@ -3806,6 +3821,7 @@
         "npm:@sveltejs/adapter-vercel@^6.3.4",
         "npm:@sveltejs/kit@^2.63.0",
         "npm:@sveltejs/vite-plugin-svelte@^7.1.2",
+        "npm:@tailwindcss/typography@~0.5.19",
         "npm:@tailwindcss/vite@^4.3.0",
         "npm:@types/node@24",
         "npm:@vercel/analytics@^2.0.1",

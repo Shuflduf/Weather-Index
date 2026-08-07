@@ -1,55 +1,42 @@
 @import "tailwindcss";
-
+@plugin "@tailwindcss/typography";
+@import "tailwindcss";
 @font-face {
   font-family: "Bombardier";
   src: url("/fonts/Bombardier.woff2");
 }
-
 @theme inline {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-ror2: "Bombardier";
-
-  /* page backgrounds */
   --color-bg-main: #000000;
   --color-bg-secondary: #0a0a0a;
-
-  /* text */
   --color-primary: #ededed;
   --color-secondary: #a1a1a1;
-
-  /* element backgrounds */
   --color-default: #1a1a1a;
   --color-hover: #1f1f1f;
   --color-active: #292929;
-
-  /* borders */
   --color-default-border: #2e2e2e;
   --color-hover-border: #3d3d3d;
   --color-active-border: #828282;
-
   --color-checked: #0091ff;
   --color-error: #e5484d;
   --color-success: #46a758;
 }
-
 @layer base {
   *,
   ::before,
   ::after {
     @apply dark:border-default-border;
   }
-
   input[type="checkbox"] {
     @apply h-4 w-4 cursor-pointer appearance-none border bg-primary checked:bg-checked;
   }
-
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
-
   input[type="number"] {
     -moz-appearance: textfield;
   }

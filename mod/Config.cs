@@ -80,7 +80,7 @@ namespace WeatherIndex
                         name = "Status",
                         category = "General",
                         description =
-                            "Status of Weather Index connection.\n\nPossible values: NOT CONNECTED, CONNECTED AS [username], CONNECTING, LOADING, ERROR\n\n Automatically updated when this page is loaded. Exit settings and re-open this page for the proper updated value.",
+                            "Status of Weather Index connection.\n\nPossible values: NOT CONNECTED, CONNECTED AS @[username], CONNECTING, LOADING, ERROR\n\n Automatically updated when this page is loaded. Exit settings and re-open this page for the proper updated value.",
                     }
                 )
             );

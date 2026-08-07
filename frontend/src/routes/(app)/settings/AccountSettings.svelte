@@ -22,7 +22,7 @@
     fetchAccounts();
   });
 
-  async function fetchAccounts() {
+  function fetchAccounts() {
     authedFetch(auth("list-accounts"))
       .then((r) => r.json())
       .then((j: any[]) => {
