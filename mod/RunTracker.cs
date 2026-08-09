@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 using RoR2;
 
 namespace WeatherIndex
@@ -161,20 +160,29 @@ namespace WeatherIndex
 
             foreach (ItemEvent diff in diffs)
             {
-                ItemEvent last = items[items.Count - 1];
-                if (last.id == diff.id)
+                if (items.Count > 0)
                 {
-                    items[items.Count - 1] = new ItemEvent()
+                    ItemEvent last = items[items.Count - 1];
+                    if (last.id == diff.id && last.time == diff.time)
                     {
-                        id = last.id,
-                        count = last.count + diff.count,
-                        time = last.time,
-                    };
+                        int merged = (last.count ?? 0) + (diff.count ?? 0);
+                        if (merged == 0)
+                        {
+                            items.RemoveAt(items.Count - 1);
+                        }
+                        else
+                        {
+                            items[items.Count - 1] = new ItemEvent()
+                            {
+                                id = last.id,
+                                count = merged,
+                                time = last.time,
+                            };
+                        }
+                        continue;
+                    }
                 }
-                else
-                {
-                    items.Add(diff);
-                }
+                items.Add(diff);
             }
         }
 
