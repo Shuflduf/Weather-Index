@@ -2,7 +2,7 @@ openapi: 3.0.4
 info:
   title: Weather Index API
   description: API to interact with the Weather Index platform
-  version: 0.1.2
+  version: 1.0.0
 
 servers:
   - url: https://wi-api.shuflduf.xyz
