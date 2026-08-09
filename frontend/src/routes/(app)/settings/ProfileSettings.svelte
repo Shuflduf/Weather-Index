@@ -25,15 +25,14 @@
   });
 
   function updatePlayer(user: any) {
-    console.log(user);
     authedFetch(api("player"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         image: user.image,
         username: user.username,
-        displayUsername: user.displayUsername,
-        aboutMe: user.aboutMe,
+        displayUsername: user.display_username,
+        aboutMe: user.about_me,
         region: user.region,
       }),
     }).then(async (r) => {
