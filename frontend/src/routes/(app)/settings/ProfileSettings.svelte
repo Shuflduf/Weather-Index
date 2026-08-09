@@ -103,6 +103,7 @@
             <PFP src={user.image} class="absolute right-full h-full border" />
           {/if}
           <input
+            placeholder="https://..."
             type="text"
             name="image"
             id="profile_image_url"
