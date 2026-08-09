@@ -271,37 +271,41 @@
 
   <div class="flex flex-col gap-8">
     {#each run.stageHistory as stage}
-      <div class="flex flex-row gap-4">
-        <div>
-          <img
-            src="/environments/{ENVIRONMENTS[stage.name].icon}"
-            alt="stage"
-            class="h-32 border"
-          />
-          <span class="mb-4 block text-center text-secondary italic">
-            {ENVIRONMENTS[stage.name].displayName}
-          </span>
-        </div>
-        <div class="flex flex-1 flex-row flex-wrap">
-          {#each stage.interactables.toSorted(sortStageInteractables) as interactable}
-            {@const table =
-              interactable.name == "EQUIPMENTBARREL_NAME" ? EQUIPMENTS : ITEMS}
-            {@const imgPath =
-              interactable.name == "EQUIPMENTBARREL_NAME"
-                ? "equipment"
-                : "items"}
+      {#if stage.name in ENVIRONMENTS}
+        <div class="flex flex-row gap-4">
+          <div>
             <img
-              onmouseenter={(e) => contextMenu?.show(e, interactable)}
-              onmousemove={(e) => contextMenu?.update(e)}
-              onmouseleave={(_) => contextMenu.hide()}
-              src="/{imgPath}/{table[interactable.item].icon}"
-              alt={table[interactable.item].displayName}
-              class="size-16"
-              style="filter: grayscale({interactable.time != null ? 0 : 1});"
+              src="/environments/{ENVIRONMENTS[stage.name].icon}"
+              alt="stage"
+              class="h-32 border"
             />
-          {/each}
+            <span class="mb-4 block text-center text-secondary italic">
+              {ENVIRONMENTS[stage.name].displayName}
+            </span>
+          </div>
+          <div class="flex flex-1 flex-row flex-wrap">
+            {#each stage.interactables.toSorted(sortStageInteractables) as interactable}
+              {@const table =
+                interactable.name == "EQUIPMENTBARREL_NAME"
+                  ? EQUIPMENTS
+                  : ITEMS}
+              {@const imgPath =
+                interactable.name == "EQUIPMENTBARREL_NAME"
+                  ? "equipment"
+                  : "items"}
+              <img
+                onmouseenter={(e) => contextMenu?.show(e, interactable)}
+                onmousemove={(e) => contextMenu?.update(e)}
+                onmouseleave={(_) => contextMenu.hide()}
+                src="/{imgPath}/{table[interactable.item].icon}"
+                alt={table[interactable.item].displayName}
+                class="size-16"
+                style="filter: grayscale({interactable.time != null ? 0 : 1});"
+              />
+            {/each}
+          </div>
         </div>
-      </div>
+      {/if}
     {/each}
   </div>
 
