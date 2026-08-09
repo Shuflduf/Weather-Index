@@ -1,4 +1,4 @@
-use std::sync::Arc;
+use std::sync::{Arc, OnceLock};
 
 use async_trait::async_trait;
 use better_auth::{AuthResult, CreateUser, DatabaseHooks, UserOps};
@@ -7,15 +7,21 @@ use rand::thread_rng;
 
 use crate::auth_entities::AppAdapter;
 
-const WORDS: &[&str] = &["amber", "azure", "breezy"];
+static WORDS: OnceLock<Vec<String>> = OnceLock::new();
 
 fn random_username() -> String {
     let mut rng = thread_rng();
+    let words = WORDS.get_or_init(|| {
+        include_str!("../gems.txt")
+            .split("\n")
+            .map(String::from)
+            .collect()
+    });
     format!(
         "{}-{}-{}",
-        WORDS.choose(&mut rng).unwrap(),
-        WORDS.choose(&mut rng).unwrap(),
-        WORDS.choose(&mut rng).unwrap()
+        words.choose(&mut rng).unwrap(),
+        words.choose(&mut rng).unwrap(),
+        words.choose(&mut rng).unwrap()
     )
 }
 

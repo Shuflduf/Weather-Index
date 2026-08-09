@@ -5,7 +5,7 @@ use reqwest::StatusCode;
 use sea_orm::DatabaseConnection;
 
 use crate::{
-    auth_entities::{AppAdapter, AppHookedAdapter},
+    auth_entities::AppHookedAdapter,
     error::{make_error, WIError},
 };
 
