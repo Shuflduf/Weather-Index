@@ -343,13 +343,13 @@ dependencies = [
 
 [[package]]
 name = "async-trait"
-version = "0.1.89"
+version = "0.1.92"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9035ad2d096bed7955a320ee7e2230574d28fd3c3a0f186cbea1ff3c7eed5dbb"
+checksum = "82f6aeea286b8eb4dd3431a1be1b59d290ace00f5bfd8e2a159bc2a05e2c1667"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.117",
+ "syn 3.0.3",
 ]
 
 [[package]]
@@ -458,7 +458,7 @@ checksum = "2af50177e190e07a26ab74f8b1efbfe2ef87da2116221318cb1c2e82baf7de06"
 [[package]]
 name = "better-auth"
 version = "0.10.0"
-source = "git+https://github.com/Shuflduf/better-auth-rs?branch=master#74928344989125fcfecfb2e33b65669cd67fae74"
+source = "git+https://github.com/Shuflduf/better-auth-rs?branch=fix-hook#2e0298c8fea1da93076ed9fb58b3a709fc13d71f"
 dependencies = [
  "argon2",
  "async-trait",
@@ -485,7 +485,7 @@ dependencies = [
 [[package]]
 name = "better-auth-api"
 version = "0.10.0"
-source = "git+https://github.com/Shuflduf/better-auth-rs?branch=master#74928344989125fcfecfb2e33b65669cd67fae74"
+source = "git+https://github.com/Shuflduf/better-auth-rs?branch=fix-hook#2e0298c8fea1da93076ed9fb58b3a709fc13d71f"
 dependencies = [
  "aes-gcm",
  "argon2",
@@ -515,7 +515,7 @@ dependencies = [
 [[package]]
 name = "better-auth-core"
 version = "0.10.0"
-source = "git+https://github.com/Shuflduf/better-auth-rs?branch=master#74928344989125fcfecfb2e33b65669cd67fae74"
+source = "git+https://github.com/Shuflduf/better-auth-rs?branch=fix-hook#2e0298c8fea1da93076ed9fb58b3a709fc13d71f"
 dependencies = [
  "argon2",
  "async-trait",
@@ -543,7 +543,7 @@ dependencies = [
 [[package]]
 name = "better-auth-derive"
 version = "0.10.0"
-source = "git+https://github.com/Shuflduf/better-auth-rs?branch=master#74928344989125fcfecfb2e33b65669cd67fae74"
+source = "git+https://github.com/Shuflduf/better-auth-rs?branch=fix-hook#2e0298c8fea1da93076ed9fb58b3a709fc13d71f"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -552,9 +552,9 @@ dependencies = [
 
 [[package]]
 name = "better-auth-hca"
-version = "0.1.2"
+version = "0.1.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "373e9319f5e89de00be100b9c5f5d646ec60b4aa2ffd24c936b7a6b068e13270"
+checksum = "bc1902ad876b6fd78ee018903701863eaf5543f83c1ef22c7383ecf244840344"
 dependencies = [
  "better-auth",
 ]
@@ -3435,6 +3435,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "syn"
+version = "3.0.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "53e9bae58849f64dfa4f5d5ae372c8341f7305f82a3868709269343628b659a3"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "unicode-ident",
+]
+
+[[package]]
 name = "sync_wrapper"
 version = "1.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4019,6 +4030,7 @@ dependencies = [
 name = "weather-index"
 version = "0.1.2"
 dependencies = [
+ "async-trait",
  "axum",
  "better-auth",
  "better-auth-core",

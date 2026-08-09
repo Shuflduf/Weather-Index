@@ -16,8 +16,7 @@ pub fn oauth(client_id: impl Into<String>, client_secret: impl Into<String>) -> 
                 return Err(format!(
                     "Slack userinfo error: {}",
                     v["error"].as_str().unwrap_or("Unknown")
-                )
-                .into());
+                ));
             }
             Ok(OAuthUserInfo {
                 id: v["sub"].as_str().ok_or("Missing sub")?.to_string(),

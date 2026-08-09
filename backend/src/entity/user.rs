@@ -18,9 +18,11 @@ pub struct Model {
     pub username: Option<String>,
     pub display_username: Option<String>,
     #[auth(default = "false")]
+    #[sea_orm(default_value = "false")]
     pub two_factor_enabled: bool,
     pub role: Option<String>,
     #[auth(default = "false")]
+    #[sea_orm(default_value = "false")]
     pub banned: bool,
     pub ban_reason: Option<String>,
     pub ban_expires: Option<DateTimeUtc>,

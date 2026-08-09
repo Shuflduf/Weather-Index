@@ -8,12 +8,13 @@ license = "GPL-3.0-or-later"
 default-run = "weather-index"
 
 [dependencies]
+async-trait = "0.1.92"
 axum = { version = "0.8.9", features = ["macros"] }
 better-auth-core = {
   git = "https://github.com/Shuflduf/better-auth-rs",
-  branch = "master"
+  branch = "fix-hook"
 }
-better-auth-hca = "0.1.2"
+better-auth-hca = "0.1.3"
 chrono = "0.4"
 dotenvy = "0.15"
 fake = { version = "5.1.0", features = ["chrono", "derive", "serde_json"] }
@@ -27,7 +28,7 @@ tracing-subscriber = { version = "0.3.23", features = ["env-filter"] }
 
 [dependencies.better-auth]
 git = "https://github.com/Shuflduf/better-auth-rs"
-branch = "master"
+branch = "fix-hook"
 default-features = false
 features = ["axum", "derive", "rustls", "sqlx-postgres"]
 
@@ -50,17 +51,17 @@ features = [
 [patch.crates-io]
 better-auth = {
   git = "https://github.com/Shuflduf/better-auth-rs",
-  branch = "master"
+  branch = "fix-hook"
 }
 better-auth-api = {
   git = "https://github.com/Shuflduf/better-auth-rs",
-  branch = "master"
+  branch = "fix-hook"
 }
 better-auth-core = {
   git = "https://github.com/Shuflduf/better-auth-rs",
-  branch = "master"
+  branch = "fix-hook"
 }
 better-auth-derive = {
   git = "https://github.com/Shuflduf/better-auth-rs",
-  branch = "master"
+  branch = "fix-hook"
 }

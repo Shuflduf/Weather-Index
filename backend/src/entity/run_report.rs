@@ -14,13 +14,16 @@ pub struct Model {
 
     // run info
     pub survivor: String,
+    #[sea_orm(default = "{}")]
     pub skills: Vec<i32>,
     pub start_time: DateTime,
     pub ending: String,
     pub difficulty: String,
     pub time_alive_seconds: i64,
+    #[sea_orm(default = "{}")]
     pub artifacts: Vec<String>,
     pub stages_completed: i16,
+    #[sea_orm(default = "{}")]
     pub stage_history: Vec<Json>,
     pub score: i64,
     // pub run_time_seconds: u32,
@@ -29,7 +32,9 @@ pub struct Model {
     pub items: serde_json::Value,
     pub equipment: Option<i32>,
     pub items_collected: i32,
+    #[sea_orm(default = "{}")]
     pub item_history: Vec<Json>,
+    #[sea_orm(default = "{}")]
     pub equipment_history: Vec<Json>,
     // pub items_scrapped: u16,
     // pub chests_left_behind: u16,

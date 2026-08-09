@@ -33,6 +33,7 @@
       content: `Managing RoR2 mods is simple when using a mod manager such as r2modman or Thunderstore.
       <br>Download r2modman from <a href="https://thunderstore.io/c/riskofrain2/p/ebkr/r2modman/">this link</a> and continue once you're ready.
       <br><br>If you need any help, consult <a href="https://github.com/ebkr/r2modmanPlus#installing">the r2modman installation guide</a>.
+      <img src="/guide/r2modmanNotInstalled.png" />
       <p class="text-center">Proceed when r2modman is installed.</p>
       `,
       next: [{ name: "creatingProfile", button: "Proceed" }],
@@ -46,7 +47,7 @@
       <li>Select the "Online" tab on the sidebar and search for "Weather Index"</li>
       <li> Select it and click "Download"</li>
       </ol>
-      <video src="/guide/creatingProfile.webm" autoplay controls>
+      <video src="/guide/creatingProfile.webm" autoplay controls></video>
       <p class="text-center">Proceed when you are ready.</p>
       `,
 
@@ -83,6 +84,7 @@
       title: "Launching",
       content: `In r2modman, with the desired profile being active, click "Start Modded" in the top left corner. <br>
       If an extra window shows up, everything worked
+      <img src="/guide/launchNormally.png" />
 
       <p class="text-center">Proceed once the game has loaded.</p>
       `,
@@ -94,7 +96,7 @@
       Under the Weather Index category, click the "Connect" button to begin linking Risk of Rain 2 to Weather Index. <br>
       This will open a new tab in your web browser, with a prompt to connect RoR2. Approve it. <br><br>
        <b>You have to be signed in for this to work.</b> If you aren't signed in, sign in / sign up, navigate back to the page that was opened, and approve it.
-      <video src="/guide/configureWeatherIndex.mp4" autoplay controls>
+      <video src="/guide/configureWeatherIndex.mp4" autoplay controls></video>
       <p class="text-center">Proceed once you get a popup confirming the connection.</p>
        `,
       next: [{ name: "submittingRuns", button: "Proceed" }],
@@ -139,7 +141,7 @@
   {/if}
   <hr class="my-4" />
   <div
-    class="prose text-lg text-primary marker:text-secondary prose-a:cursor-pointer prose-a:text-blue-500 prose-a:transition-colors prose-a:hover:text-blue-400 prose-a:active:text-blue-300"
+    class="prose text-lg text-primary marker:text-secondary prose-a:cursor-pointer prose-a:text-blue-500 prose-a:transition-colors prose-a:hover:text-blue-400 prose-a:active:text-blue-300 prose-img:mx-auto"
   >
     {@html guide[currentPart].content}
   </div>

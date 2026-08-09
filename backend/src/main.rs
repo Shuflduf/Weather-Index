@@ -13,7 +13,8 @@ use better_auth::{
         DeviceAuthorizationPlugin, EmailPasswordPlugin, OAuthPlugin, PasswordManagementPlugin,
         SessionManagementPlugin,
     },
-    AuthBuilder, AuthConfig, AxumIntegration, CorsConfig, CsrfConfig, SameSite,
+    AuthBuilder, AuthConfig, AxumIntegration, CorsConfig, CsrfConfig, HookedDatabaseAdapter,
+    SameSite,
 };
 use reqwest::{
     header::{
@@ -26,6 +27,7 @@ use reqwest::{
 use weather_index::{
     api::{self},
     auth_entities::AppAdapter,
+    auth_hooks::RandomUsernameHook,
     db,
     error::{make_error, WIError},
     get_var, slack_oauth, WIState,
@@ -43,7 +45,9 @@ async fn main() -> Result<(), WIError> {
     let db = db::init_db().await.expect("Failed to initialize database");
     let pg_pool = db.get_postgres_connection_pool();
 
-    let adapter = AppAdapter::from_pool(pg_pool.clone());
+    let adapter = Arc::new(AppAdapter::from_pool(pg_pool.clone()));
+    let hooked = HookedDatabaseAdapter::new(adapter.clone())
+        .with_hook(Arc::new(RandomUsernameHook::new(adapter.clone())));
 
     let mut auth_config = AuthConfig::new(get_var("ENCRYPTION_KEY")?)
         .trusted_origins(vec![get_var("FRONTEND_URL")?])
@@ -53,7 +57,7 @@ async fn main() -> Result<(), WIError> {
     let auth = Arc::new(
         AuthBuilder::new(auth_config)
             .csrf(CsrfConfig::new().enabled(false))
-            .database(adapter)
+            .database(hooked)
             .plugin(EmailPasswordPlugin::new())
             .plugin(PasswordManagementPlugin::new())
             .plugin(SessionManagementPlugin::new())
