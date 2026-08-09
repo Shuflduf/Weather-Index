@@ -89,8 +89,6 @@ namespace WeatherIndex
                             {
                                 si.time = timestamp();
                                 currentStage[id] = si;
-
-                                Log.Info(JsonConvert.SerializeObject(currentStage));
                             }
                         }
                     );
@@ -136,7 +134,6 @@ namespace WeatherIndex
 
                 List<ItemEvent> diffs = itemDifference(oldItems, newItems);
                 addItemEvents(diffs);
-                Log.Info(JsonConvert.SerializeObject(items));
 
                 oldItems = newItems;
             };

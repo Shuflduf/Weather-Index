@@ -41,7 +41,6 @@ namespace WeatherIndex
 
             Run.onClientGameOverGlobal += (Run run, RunReport report) =>
             {
-                Log.Info(JsonConvert.SerializeObject(RunTracker.equipments));
                 RunReport.PlayerInfo? player = report.playerInfos?[0];
 
                 StatSheet stats = player!.statSheet;
@@ -131,9 +130,8 @@ namespace WeatherIndex
                         NullValueHandling = NullValueHandling.Ignore,
                     }
                 );
-                Log.Info(json);
+                Log.Debug(json);
                 lastRun = json;
-                // this.PostRunReport(json);
             };
 
             On.RoR2.UI.GameEndReportPanelController.Awake += (orig, self) =>

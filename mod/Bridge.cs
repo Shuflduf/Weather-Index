@@ -56,7 +56,7 @@ namespace WeatherIndex
                     );
                 }
                 HttpResponseMessage response = await WeatherIndex.http.SendAsync(request);
-                Log.Info(await response.Content.ReadAsStringAsync());
+                Log.Debug(await response.Content.ReadAsStringAsync());
                 if (response.IsSuccessStatusCode)
                     return SubmitRunResult.Success;
                 else
@@ -164,7 +164,7 @@ namespace WeatherIndex
                             "application/json"
                         )
                     );
-                    Log.Info(await poll.Content.ReadAsStringAsync());
+                    Log.Debug(await poll.Content.ReadAsStringAsync());
 
                     if (!poll.IsSuccessStatusCode)
                         continue;
@@ -173,7 +173,7 @@ namespace WeatherIndex
                         await poll.Content.ReadAsStringAsync(),
                         new { access_token = "" }
                     );
-                    Log.Info(JsonConvert.SerializeObject(tokenBody));
+                    Log.Debug(JsonConvert.SerializeObject(tokenBody));
                     WIConfig.accessToken?.Value = tokenBody.access_token;
                     connecting = false;
                     RefreshStatus(true);
