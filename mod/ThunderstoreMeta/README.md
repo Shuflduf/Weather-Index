@@ -1,10 +1,13 @@
 # Weather Index
 *Unified platform for Risk of Rain 2 runs*
 
+https://wi.shuflduf.xyz/
+
 # Features
 - Rust backend
   - [axum](https://github.com/tokio-rs/axum) routing
   - [better-auth-rs](https://github.com/better-auth-rs/better-auth-rs)[^1] for auth
+    - OAuth providers: Discord, Google, GitHub, [Hack Club Auth](https://auth.hackclub.com/), and Slack (Hack Club workspace)
   - [sea-orm](https://github.com/SeaQL/sea-orm) for database handling
 - SvelteKit frontend
   - [Geist](https://vercel.com/geist/introduction) design systems
@@ -19,7 +22,7 @@
 - CORS support
 
 # Installation
-TODO: ACTUALLY PUBLISH THE FUCKING MOD
+*Full interactive guide is available on the website [here](https://wi.shuflduf.xyz/guide)*
 1. Sign in on the [website](https://weather-index-ror2.vercel.app)
 2. Ensure that [r2modman](https://old.thunderstore.io/c/riskofrain2/p/ebkr/r2modman/) is installed.
 3. Make a new profile (or use an existing profile)
