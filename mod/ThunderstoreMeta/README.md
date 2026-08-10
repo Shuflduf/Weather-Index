@@ -8,6 +8,11 @@
 </p>
 <p align="center">https://wi.shuflduf.xyz/</p>
 
+# Links
+- **Frontend**: https://wi.shuflduf.xyz/
+- **Backend**: https://wi-api.shuflduf.xyz/
+- **Mod**: https://thunderstore.io/c/riskofrain2/p/Shuflduf/WeatherIndex/
+
 # Features
 - Rust backend
   - [axum](https://github.com/tokio-rs/axum) routing
