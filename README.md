@@ -14,12 +14,14 @@
   - [better-auth-rs](https://github.com/better-auth-rs/better-auth-rs) [^1] for auth
     - OAuth providers: Discord, Google, GitHub, [Hack Club Auth](https://auth.hackclub.com/), and Slack (Hack Club workspace)
   - [sea-orm](https://github.com/SeaQL/sea-orm) for database handling
+  - Full documented API routes, docs available on the frontend
 - SvelteKit frontend
   - [Geist](https://vercel.com/geist/introduction) design systems
   - [TailwindCSS](https://tailwindcss.com/) for styling
   - [Lucide](https://lucide.dev/) icons for non-brand icons
   - [Simple Icons](https://simpleicons.org/) for brand-icons
   - [Scalar](https://scalar.com/) for API documentation
+  - Interactive guide to get started with Risk of Rain 2 modding and Weather Index
 - Risk of Rain 2 mod
   - Tracks all sorts of data, from kills, to distance traveled, to stage order, to which items where picked up and when
     - Full table can be found [here](backend/src/entity/run_report.rs)

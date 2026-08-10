@@ -383,21 +383,23 @@
     </thead>
     <tbody>
       {#each run.equipmentHistory as equipmentEvent}
-        <tr class="">
-          <td class="border bg-bg-secondary px-4">
-            <img
-              src="/equipment/{EQUIPMENTS[equipmentEvent.id].icon}"
-              alt="stage"
-              class="inline h-12"
-            />
-            <span class="">
-              {EQUIPMENTS[equipmentEvent.id].displayName}
-            </span>
-          </td>
-          <td class="border bg-bg-secondary px-4">
-            <span>{formatSeconds(equipmentEvent.time)}</span>
-          </td>
-        </tr>
+        {#if equipmentEvent.id != -1}
+          <tr class="">
+            <td class="border bg-bg-secondary px-4">
+              <img
+                src="/equipment/{EQUIPMENTS[equipmentEvent.id].icon}"
+                alt="stage"
+                class="inline h-12"
+              />
+              <span class="">
+                {EQUIPMENTS[equipmentEvent.id].displayName}
+              </span>
+            </td>
+            <td class="border bg-bg-secondary px-4">
+              <span>{formatSeconds(equipmentEvent.time)}</span>
+            </td>
+          </tr>
+        {/if}
       {/each}
     </tbody>
   </table>
