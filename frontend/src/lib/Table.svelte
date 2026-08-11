@@ -158,7 +158,7 @@
       tabindex="-1"
       onpointerdown={(e) => {
         startDrag(e, id);
-        openContextMenu(e, id);
+        openContextMenu?.(e, id);
       }}
       onkeydown={null}
       oncontextmenu={(e) => e.preventDefault()}
