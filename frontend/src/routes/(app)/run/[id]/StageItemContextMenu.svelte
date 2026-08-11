@@ -40,9 +40,9 @@
   >
     <b>
       {#if isEquipment}
-        {EQUIPMENTS[info!.item].displayName}
+        {EQUIPMENTS[info!.item]?.displayName ?? `Unknown (${info!.item})`}
       {:else}
-        {ITEMS[info!.item].displayName}
+        {ITEMS[info!.item]?.displayName ?? `Unknown (${info!.item})`}
       {/if}
     </b>
     <p>

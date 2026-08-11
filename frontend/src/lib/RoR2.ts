@@ -252,7 +252,7 @@ export const ORDERED_ENDINGS: string[] = [
 
 export function countRealItems(items: Record<string, number>): number {
   return Object.entries(items)
-    .filter(([id, _]) => !ITEMS[id].helper)
+    .filter(([id, _]) => !(ITEMS[Number(id)]?.helper ?? false))
     .reduce((accum, [_, current]) => accum + current, 0);
 }
 
@@ -265,14 +265,19 @@ export function sortItems(items: Record<string, number>): [number, number][] {
 }
 
 function removeHelpers([id, _count]: [number, number]): boolean {
-  return !ITEMS[id].helper;
+  return !(ITEMS[id]?.helper ?? false);
+}
+
+function tierSort(id: number): number {
+  const item = ITEMS[id];
+  return item?.tier && TIERS[item.tier] ? TIERS[item.tier].sort : -Infinity;
 }
 
 function sortByTier(
   [id_1, _count_1]: [number, number],
   [id_2, _count_2]: [number, number],
 ): number {
-  return TIERS[ITEMS[id_2].tier!].sort - TIERS[ITEMS[id_1].tier!].sort;
+  return tierSort(id_2) - tierSort(id_1);
 }
 function sortByCount(
   [_id_1, count_1]: [number, number],

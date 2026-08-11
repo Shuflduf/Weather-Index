@@ -25,8 +25,8 @@
 {:then difficulties}
   <PieChart
     data={Object.entries(difficulties).map(([diff, count]) => ({
-      diff: DIFFICULTIES[diff].displayName,
-      color: DIFFICULTIES[diff].color,
+      diff: DIFFICULTIES[diff]?.displayName ?? diff,
+      color: DIFFICULTIES[diff]?.color ?? "gray",
       count,
     }))}
     key="diff"

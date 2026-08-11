@@ -41,20 +41,30 @@
   <LoadingIndicator indicator text="Loading run report!" />
 {:then run}
   <div
-    style={`background-color: ${ENDINGS[run.ending].colorBg};`}
+    style={`background-color: ${
+      ENDINGS[run.ending] ? ENDINGS[run.ending].colorBg : ""
+    };`}
     class="border p-2"
   >
-    <img
-      src={`/endings/${ENDINGS[run.ending].icon}`}
-      class="inline h-24 cursor-help"
-      alt={ENDINGS[run.ending].name}
-      title={ENDINGS[run.ending].name}
-    />
-    <h1
-      class="inline align-middle font-mono text-4xl font-medium tracking-wide italic"
-    >
-      {ENDINGS[run.ending].endingMessage}
-    </h1>
+    {#if ENDINGS[run.ending]}
+      <img
+        src={`/endings/${ENDINGS[run.ending].icon}`}
+        class="inline h-24 cursor-help"
+        alt={ENDINGS[run.ending].name}
+        title={ENDINGS[run.ending].name}
+      />
+      <h1
+        class="inline align-middle font-mono text-4xl font-medium tracking-wide italic"
+      >
+        {ENDINGS[run.ending].endingMessage}
+      </h1>
+    {:else}
+      <h1
+        class="inline align-middle font-mono text-4xl font-medium tracking-wide italic"
+      >
+        {run.ending}
+      </h1>
+    {/if}
   </div>
 
   <div class="mt-4 flex flex-row gap-4">
@@ -62,13 +72,15 @@
       <h1 class="text-center text-3xl">Stats</h1>
       <div class="flex flex-row items-center justify-between p-2">
         <span class="text-lg">
-          {DIFFICULTIES[run.difficulty].displayName}
+          {DIFFICULTIES[run.difficulty]?.displayName ?? run.difficulty}
         </span>
-        <img
-          src={`/difficulties/${DIFFICULTIES[run.difficulty].icon}`}
-          alt={run.difficulty}
-          class="mr-2 inline h-12"
-        />
+        {#if DIFFICULTIES[run.difficulty]}
+          <img
+            src={`/difficulties/${DIFFICULTIES[run.difficulty].icon}`}
+            alt={run.difficulty}
+            class="mr-2 inline h-12"
+          />
+        {/if}
       </div>
       {#if run.artifacts.length > 0}
         <div class="flex flex-row items-center justify-between p-2">
@@ -166,43 +178,56 @@
       <h1 class="text-center text-3xl">Info</h1>
       <div class="flex flex-row items-center justify-between p-2">
         <div>
-          <img
-            src={`/bodies/${BODIES[run.survivor].icon}`}
-            alt={BODIES[run.survivor].displayName}
-            class="mr-2 inline h-12"
-          />
-
+          {#if BODIES[run.survivor]}
+            <img
+              src={`/bodies/${BODIES[run.survivor].icon}`}
+              alt={BODIES[run.survivor].displayName}
+              class="mr-2 inline h-12"
+            />
+          {/if}
           <span class="text-lg">
             Class:
             <span class="text-yellow-200">
-              {BODIES[run.survivor].displayName}
+              {BODIES[run.survivor]?.displayName ?? run.survivor}
             </span>
           </span>
         </div>
 
         <div>
           {#each run.skills as skill}
-            <img
-              src="/skills/{SKILLS[skill].icon}"
-              alt={SKILLS[skill].displayName}
-              class="inline h-12"
-              title={SKILLS[skill].displayName}
-            />
+            {#if SKILLS[skill]}
+              <img
+                src="/skills/{SKILLS[skill].icon}"
+                alt={SKILLS[skill].displayName}
+                class="inline h-12"
+                title={SKILLS[skill].displayName}
+              />
+            {:else}
+              <span
+                class="inline-flex h-12 items-center text-xs text-secondary"
+                title={`Unknown skill ${skill}`}
+              >
+                Unknown ({skill})
+              </span>
+            {/if}
           {/each}
         </div>
       </div>
       {#if run.equipment}
         <div>
-          <img
-            src="/equipment/{EQUIPMENTS[run.equipment].icon}"
-            alt={EQUIPMENTS[run.equipment].displayName}
-            title={EQUIPMENTS[run.equipment].displayName}
-            class="mr-2 inline h-12"
-          />
+          {#if EQUIPMENTS[run.equipment]}
+            <img
+              src="/equipment/{EQUIPMENTS[run.equipment].icon}"
+              alt={EQUIPMENTS[run.equipment].displayName}
+              title={EQUIPMENTS[run.equipment].displayName}
+              class="mr-2 inline h-12"
+            />
+          {/if}
           <span class="text-lg">
             Equipment:
             <span class="text-yellow-200">
-              {EQUIPMENTS[run.equipment].displayName}
+              {EQUIPMENTS[run.equipment]?.displayName ??
+                `Unknown (${run.equipment})`}
             </span>
           </span>
         </div>
@@ -211,14 +236,23 @@
       <ul class="mt-4 flex flex-row flex-wrap">
         {#each sortItems(run.items) as [itemId, itemCount] (itemId)}
           {@const item = ITEMS[Number(itemId)]}
-          {#if !item.helper}
+          {#if !(item?.helper ?? false)}
             <li class="relative">
-              <img
-                src={`/items/${item.icon}`}
-                alt={item.displayName}
-                class="inline size-16"
-                title={item.displayName}
-              />
+              {#if item}
+                <img
+                  src={`/items/${item.icon}`}
+                  alt={item.displayName}
+                  class="inline size-16"
+                  title={item.displayName}
+                />
+              {:else}
+                <span
+                  class="flex size-16 items-center justify-center text-center text-xs text-secondary"
+                  title={`Unknown item ${itemId}`}
+                >
+                  Unknown ({itemId})
+                </span>
+              {/if}
               {#if itemCount != 1}
                 <p
                   class="absolute top-0 right-0 font-mono text-xl font-bold text-shadow-lg/50"
@@ -271,9 +305,9 @@
 
   <div class="flex flex-col gap-8">
     {#each run.stageHistory as stage}
-      {#if stage.name in ENVIRONMENTS}
-        <div class="flex flex-row gap-4">
-          <div>
+      <div class="flex flex-row gap-4">
+        <div>
+          {#if stage.name in ENVIRONMENTS}
             <img
               src="/environments/{ENVIRONMENTS[stage.name].icon}"
               alt="stage"
@@ -282,17 +316,21 @@
             <span class="mb-4 block text-center text-secondary italic">
               {ENVIRONMENTS[stage.name].displayName}
             </span>
-          </div>
-          <div class="flex flex-1 flex-row flex-wrap">
-            {#each stage.interactables.toSorted(sortStageInteractables) as interactable}
-              {@const table =
-                interactable.name == "EQUIPMENTBARREL_NAME"
-                  ? EQUIPMENTS
-                  : ITEMS}
-              {@const imgPath =
-                interactable.name == "EQUIPMENTBARREL_NAME"
-                  ? "equipment"
-                  : "items"}
+          {:else}
+            <span class="mb-4 block text-secondary italic">
+              {stage.name}
+            </span>
+          {/if}
+        </div>
+        <div class="flex flex-1 flex-row flex-wrap">
+          {#each stage.interactables.toSorted(sortStageInteractables) as interactable}
+            {@const table =
+              interactable.name == "EQUIPMENTBARREL_NAME" ? EQUIPMENTS : ITEMS}
+            {@const imgPath =
+              interactable.name == "EQUIPMENTBARREL_NAME"
+                ? "equipment"
+                : "items"}
+            {#if table[interactable.item]}
               <img
                 onmouseenter={(e) => contextMenu?.show(e, interactable)}
                 onmousemove={(e) => contextMenu?.update(e)}
@@ -302,10 +340,17 @@
                 class="size-16"
                 style="filter: grayscale({interactable.time != null ? 0 : 1});"
               />
-            {/each}
-          </div>
+            {:else}
+              <span
+                class="flex size-16 items-center justify-center text-center text-xs text-secondary"
+                title={`Unknown ${interactable.name} ${interactable.item}`}
+              >
+                Unknown ({interactable.item})
+              </span>
+            {/if}
+          {/each}
         </div>
-      {/if}
+      </div>
     {/each}
   </div>
 
@@ -335,16 +380,19 @@
     </thead>
     <tbody>
       {#each run.itemHistory as itemEvent}
-        {#if !ITEMS[itemEvent.id].helper}
+        {#if !(ITEMS[itemEvent.id]?.helper ?? false)}
           <tr class="">
             <td class="border bg-bg-secondary px-4">
-              <img
-                src="/items/{ITEMS[itemEvent.id].icon}"
-                alt="stage"
-                class="inline h-8"
-              />
+              {#if ITEMS[itemEvent.id]}
+                <img
+                  src="/items/{ITEMS[itemEvent.id].icon}"
+                  alt="stage"
+                  class="inline h-8"
+                />
+              {/if}
               <span class="">
-                {ITEMS[itemEvent.id].displayName}
+                {ITEMS[itemEvent.id]?.displayName ??
+                  `Unknown (${itemEvent.id})`}
               </span>
             </td>
             <td class="border bg-bg-secondary px-4">
@@ -386,13 +434,16 @@
         {#if equipmentEvent.id != -1}
           <tr class="">
             <td class="border bg-bg-secondary px-4">
-              <img
-                src="/equipment/{EQUIPMENTS[equipmentEvent.id].icon}"
-                alt="stage"
-                class="inline h-12"
-              />
+              {#if EQUIPMENTS[equipmentEvent.id]}
+                <img
+                  src="/equipment/{EQUIPMENTS[equipmentEvent.id].icon}"
+                  alt="stage"
+                  class="inline h-12"
+                />
+              {/if}
               <span class="">
-                {EQUIPMENTS[equipmentEvent.id].displayName}
+                {EQUIPMENTS[equipmentEvent.id]?.displayName ??
+                  `Unknown (${equipmentEvent.id})`}
               </span>
             </td>
             <td class="border bg-bg-secondary px-4">

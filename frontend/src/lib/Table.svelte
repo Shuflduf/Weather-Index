@@ -258,16 +258,22 @@
       <TableBlock
         order={properties.ending.order}
         {idx}
-        style="background-color: {ENDINGS[run.ending].colorBg};"
+        style={ENDINGS[run.ending]
+          ? `background-color: ${ENDINGS[run.ending].colorBg};`
+          : ""}
       >
-        <img
-          src={`/endings/${ENDINGS[run.ending].icon}`}
-          alt={run.ending}
-          class="mr-2 inline h-12"
-        />
-        <span class="text-lg text-shadow-lg">
-          {ENDINGS[run.ending].displayName}
-        </span>
+        {#if ENDINGS[run.ending]}
+          <img
+            src={`/endings/${ENDINGS[run.ending].icon}`}
+            alt={run.ending}
+            class="mr-2 inline h-12"
+          />
+          <span class="text-lg text-shadow-lg">
+            {ENDINGS[run.ending].displayName}
+          </span>
+        {:else}
+          <span class="text-lg">{run.ending}</span>
+        {/if}
       </TableBlock>
     {/each}
   {/if}

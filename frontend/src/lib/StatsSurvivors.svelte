@@ -25,8 +25,8 @@
 {:then survivors}
   <PieChart
     data={Object.entries(survivors).map(([survivor, count]) => ({
-      survivor: BODIES[survivor].displayName,
-      color: BODIES[survivor].survivorColor ?? "black",
+      survivor: BODIES[survivor]?.displayName ?? survivor,
+      color: BODIES[survivor]?.survivorColor ?? "gray",
       count,
     }))}
     key="survivor"

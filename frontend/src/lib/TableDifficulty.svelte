@@ -4,11 +4,15 @@
   let { difficulty }: { difficulty: string } = $props();
 </script>
 
-<img
-  src={`/difficulties/${DIFFICULTIES[difficulty].icon}`}
-  alt={difficulty}
-  class="mr-2 inline h-12"
-/>
-<span class="text-lg">
-  {DIFFICULTIES[difficulty].displayName}
-</span>
+{#if DIFFICULTIES[difficulty]}
+  <img
+    src={`/difficulties/${DIFFICULTIES[difficulty].icon}`}
+    alt={difficulty}
+    class="mr-2 inline h-12"
+  />
+  <span class="text-lg">
+    {DIFFICULTIES[difficulty].displayName}
+  </span>
+{:else}
+  <span class="text-lg">{difficulty}</span>
+{/if}

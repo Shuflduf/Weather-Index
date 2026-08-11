@@ -25,7 +25,7 @@
 {:then artifacts}
   <BarChart
     data={Object.entries(artifacts).map(([artif, count]) => ({
-      artif: ARTIFACTS[artif].displayName,
+      artif: ARTIFACTS[artif]?.displayName ?? artif,
       count,
     }))}
     x="artif"

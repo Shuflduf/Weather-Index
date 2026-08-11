@@ -295,12 +295,16 @@
             <div class="flex flex-row gap-1">
               {#each prop.filter as survivor}
                 <div class="flex flex-row items-center gap-1">
-                  <img
-                    src="/bodies/{BODIES[survivor].icon}"
-                    alt=""
-                    class="h-8"
-                  />
-                  <!-- <span>{BODIES[survivor].displayName}</span> -->
+                  {#if BODIES[survivor]}
+                    <img
+                      src="/bodies/{BODIES[survivor].icon}"
+                      alt=""
+                      class="h-8"
+                    />
+                    <!-- <span>{BODIES[survivor].displayName}</span> -->
+                  {:else}
+                    <span class="text-xs">{survivor}</span>
+                  {/if}
                 </div>
               {/each}
             </div>
@@ -309,17 +313,21 @@
             <span>:</span>
             <div class="flex flex-row gap-4">
               {#each prop.filter as ending}
-                <div
-                  class="flex flex-row items-center gap-1 px-2"
-                  style="background-color: {ENDINGS[ending].colorBg};"
-                >
-                  <img
-                    src="/endings/{ENDINGS[ending].icon}"
-                    alt=""
-                    class="h-8"
-                  />
-                  <span>{ENDINGS[ending].displayName}</span>
-                </div>
+                {#if ENDINGS[ending]}
+                  <div
+                    class="flex flex-row items-center gap-1 px-2"
+                    style="background-color: {ENDINGS[ending].colorBg};"
+                  >
+                    <img
+                      src="/endings/{ENDINGS[ending].icon}"
+                      alt=""
+                      class="h-8"
+                    />
+                    <span>{ENDINGS[ending].displayName}</span>
+                  </div>
+                {:else}
+                  <span class="text-xs">{ending}</span>
+                {/if}
               {/each}
             </div>
           {/if}
@@ -328,12 +336,16 @@
             <div class="flex flex-row gap-1">
               {#each prop.filter as difficulty}
                 <div class="flex flex-row items-center gap-1">
-                  <img
-                    src="/difficulties/{DIFFICULTIES[difficulty].icon}"
-                    alt=""
-                    class="h-8"
-                  />
-                  <!-- <span>{DIFFICULTIES[difficulty].displayName}</span> -->
+                  {#if DIFFICULTIES[difficulty]}
+                    <img
+                      src="/difficulties/{DIFFICULTIES[difficulty].icon}"
+                      alt=""
+                      class="h-8"
+                    />
+                    <!-- <span>{DIFFICULTIES[difficulty].displayName}</span> -->
+                  {:else}
+                    <span class="text-xs">{difficulty}</span>
+                  {/if}
                 </div>
               {/each}
             </div>
