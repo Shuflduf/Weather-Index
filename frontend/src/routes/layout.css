@@ -45,3 +45,14 @@
 html {
   background-color: var(--color-bg-main);
 }
+
+
+.lc-tooltip-container {
+  @apply bg-bg-secondary border text-primary rounded-none;
+}
+
+
+.lc-tooltip-container {
+  @apply text-secondary;
+}
+
