@@ -163,7 +163,10 @@ namespace WeatherIndex
                 if (items.Count > 0)
                 {
                     ItemEvent last = items[items.Count - 1];
-                    if (last.id == diff.id && last.time == diff.time)
+                    if (
+                        last.id == diff.id
+                        && Math.Sign((decimal)last.count!) == Math.Sign((decimal)diff.count!)
+                    )
                     {
                         int merged = (last.count ?? 0) + (diff.count ?? 0);
                         if (merged == 0)
