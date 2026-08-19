@@ -62,7 +62,7 @@
 
 # Installation
 *Full interactive guide is available on the website [here](https://wi.shuflduf.xyz/guide)*
-1. Sign in on the [website](https://weather-index-ror2.vercel.app)
+1. Sign in on the [website](https://wi.shuflduf.xyz)
 2. Ensure that [r2modman](https://old.thunderstore.io/c/riskofrain2/p/ebkr/r2modman/) is installed.
 3. Make a new profile (or use an existing profile)
 4. Install "WeatherIndex" from the `Online` tab

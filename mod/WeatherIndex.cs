@@ -19,7 +19,7 @@ namespace WeatherIndex
         public const string PluginGUID = PluginAuthor + "." + PluginName;
         public const string PluginAuthor = "Shuflduf";
         public const string PluginName = "WeatherIndex";
-        public const string PluginVersion = "1.0.1";
+        public const string PluginVersion = "1.0.2";
 
         internal static readonly ConcurrentQueue<Action> mainThreadQueue = new();
         internal static readonly HttpClient http = new();
