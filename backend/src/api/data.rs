@@ -43,3 +43,13 @@ pub async fn equipment() -> Json<serde_json::Value> {
 pub async fn skills() -> Json<serde_json::Value> {
     parse(include_str!("../../../data/skills.json"))
 }
+
+pub async fn mods() -> Json<serde_json::Value> {
+    Json(serde_json::json!(
+        include_str!("../../../data/vanilla_mods.txt")
+            .lines()
+            .filter(|l| !l.trim().is_empty() && !l.trim().starts_with('#'))
+            .map(|l| l.trim().to_string())
+            .collect::<Vec<_>>()
+    ))
+}

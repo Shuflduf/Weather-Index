@@ -64,6 +64,12 @@ namespace WeatherIndex
                     skillList.Add(def.skillIndex);
                 }
 
+                List<string> installedMods = new List<string>();
+                foreach (var plugin in BepInEx.Bootstrap.Chainloader.PluginInfos)
+                {
+                    installedMods.Add(plugin.Key);
+                }
+
                 // player.master.inventory.abili
                 object info = new
                 {
@@ -77,6 +83,7 @@ namespace WeatherIndex
                         .nameToken,
                     timeAliveSeconds = (ulong)stats.GetStatValueAsDouble(StatDef.totalTimeAlive),
                     artifacts = artifacts,
+                    mods = installedMods,
                     stagesCompleted = stats.GetStatValueULong(StatDef.totalStagesCompleted),
                     stageHistory = RunTracker.stages,
 

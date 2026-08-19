@@ -1,0 +1,35 @@
+# Vanilla-compatible QoL mods (BepInEx GUIDs)
+# One per line. Lines starting with # are ignored.
+
+# Autosprint variants
+com.score.AutoSprint
+com.johnedwa.RTAutoSprintEx
+
+# Wolfo QoL
+Wolfo.WolfoQualityOfLife
+Wolfo.WolfoQoL_Gameplay
+
+# UI / HUD
+com.rune580.riskofoptions
+
+# Client-side fixes
+com.rune580.stopstealingmymouse
+com.Moffein.Fix_Playercount
+
+# Gameplay QoL
+com.johnedwa.ProperSave
+com.johnedwa.QuickRestart
+com.Faustvii.QoLChests
+com.johnedwa.SkipIntroDeluxe
+com.johnedwa.SillyItems
+com.johnedwa.NoItemPickUpOnCollision
+com.johnedwa.TeleporterBeam
+com.johnedwa.SeeSaw
+com.johnedwa.SurvivorSortOrder
+com.johnedwa.BetterRaincoatIcon
+com.johnedwa.HealthBarViewer
+
+# Server-side vanilla-compatible
+com.Terminal.MagneticPickups
+com.Terminal.AutoSkipCredits
+com.Terminal.BossKillTimer

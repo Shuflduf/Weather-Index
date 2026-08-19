@@ -22,6 +22,8 @@ pub struct Model {
     pub time_alive_seconds: i64,
     #[sea_orm(default = "{}")]
     pub artifacts: Vec<String>,
+    #[sea_orm(default = "{}")]
+    pub mods: Vec<String>,
     pub stages_completed: i16,
     #[sea_orm(default = "{}")]
     pub stage_history: Vec<Json>,

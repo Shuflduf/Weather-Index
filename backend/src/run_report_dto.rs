@@ -63,6 +63,8 @@ pub struct RunReportDTO {
     pub time_alive_seconds: i64,
     #[dummy(expr = "vec![]")]
     pub artifacts: Vec<String>,
+    #[dummy(expr = "vec![]")]
+    pub mods: Vec<String>,
     #[dummy(faker = "1..1000i16")]
     pub stages_completed: i16,
     #[dummy(expr = "vec![]")]
@@ -148,6 +150,7 @@ impl TryFrom<RunReportDTO> for run_report::ActiveModel {
             difficulty: Set(dto.difficulty),
             time_alive_seconds: Set(dto.time_alive_seconds),
             artifacts: Set(dto.artifacts),
+            mods: Set(dto.mods),
             stages_completed: Set(dto.stages_completed),
             stage_history: Set(normalize_json(dto.stage_history)),
             score: Set(score),

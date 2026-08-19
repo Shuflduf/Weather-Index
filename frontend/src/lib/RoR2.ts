@@ -41,6 +41,7 @@ export type RunReportWithUser = {
   difficulty: string;
   timeAliveSeconds: number;
   artifacts: string[];
+  mods: string[];
   stagesCompleted: number;
   stageHistory: { name: string; interactables: StageInteractable[] }[];
   score: number;

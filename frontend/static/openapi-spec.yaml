@@ -75,6 +75,13 @@ components:
             type: string
           example:
             - "Command"
+        "mods":
+          type: array
+          items:
+            type: string
+          description: BepInEx GUIDs of installed mods
+          example:
+            - "com.johnedwa.RTAutoSprintEx"
         "bloodPurchases":
           type: integer
         "damageDealt":
@@ -1039,3 +1046,23 @@ paths:
                     "icon":
                       type: string
                       example: "COMMANDO_PRIMARY_NAME.png"
+
+  /data/mods:
+    get:
+      summary: Allowed vanilla QoL mod GUIDs
+      description: >
+        List of BepInEx plugin GUIDs considered vanilla-compatible.
+        Used to determine if a run is modded.
+      tags: [Data]
+      responses:
+        "200":
+          description: JSON array of mod GUID strings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                example:
+                  - "com.johnedwa.RTAutoSprintEx"
+                  - "Wolfo.WolfoQualityOfLife"
